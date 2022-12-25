@@ -6,10 +6,9 @@ import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
 import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
-import Content from '../../components/template/Content'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { ButtonGroup, Button, Modal } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
@@ -22,15 +21,13 @@ const UserListScreen = () => {
     // User List
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
-
     // User Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
     // Datatables
     const [pending, setPending] = useState(true);
 	const [rows, setRows] = useState([]);
-    //
+    // Modal
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -93,21 +90,16 @@ const UserListScreen = () => {
             {
 				// cell: () => <button onClick={handleButtonClick}>Action</button>,
 				cell: (row, i) => {
-                    console.log(row);
+                    console.log(row.id);
                     return <>
-                        {/* <DropdownButton className='btn-link' variant='secondary' id="dropdown-basic-button" title={ <FontAwesomeIcon icon={faEllipsisV} /> }>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        </DropdownButton> */}
-                        <div class="dropdown">
-                            <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div className="dropdown">
+                            <button className="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#">Action</a></li>
+                                <li><a className="dropdown-item" href="#">Another action</a></li>
+                                <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </div>
                     </>
@@ -172,7 +164,7 @@ const UserListScreen = () => {
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listUsers())
-            // setRows(users)
+            setRows(users)
             setPending(loading)
         } else {
             // Redirect to login page
@@ -190,11 +182,12 @@ const UserListScreen = () => {
                 <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
             <DataTable
-                title={headerTitle}
+                // title={headerTitle}
                 pagination
                 responsive
                 columns={columns}
-                data={users}
+                // data={users}
+                data={rows}
                 progressPending={pending}
 			    progressComponent={<Loader />}
                 selectableRows

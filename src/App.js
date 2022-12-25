@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
 import HomeScreen from './screens/HomeScreen'
 import Dashboard from './screens/Dashboard'
 import SignInScreen from './screens/Auth/SignInScreen'
@@ -12,6 +11,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 // Authorization Bearer Token Save
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+
 function App() {
 
   return (
