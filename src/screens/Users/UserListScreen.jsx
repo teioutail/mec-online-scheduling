@@ -83,13 +83,14 @@ const UserListScreen = () => {
                 selector: row => row.reportingteam,
                 sortable: true,
             },
-            {
-                name: 'Status',
-                selector: row => row.status,
-                sortable: true,
-            },
+            // {
+            //     name: 'Status',
+            //     selector: row => row.status,
+            //     sortable: true,
+            // },
             {
 				// cell: () => <button onClick={handleButtonClick}>Action</button>,
+                name: 'Action',
 				cell: (row, i) => {
                     // console.log(row.id);
                     return <>
@@ -98,7 +99,7 @@ const UserListScreen = () => {
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
+                                <li><a className="dropdown-item" href="#">Edit User</a></li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>
@@ -161,7 +162,7 @@ const UserListScreen = () => {
 
     //
     useEffect(() => {
-        
+
         // Check if user is admin else, redirect user
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
@@ -187,6 +188,7 @@ const UserListScreen = () => {
             </Button>
             <DataTable
                 // title={headerTitle}
+                // selectableRows
                 pagination
                 responsive
                 columns={columns}
@@ -194,7 +196,6 @@ const UserListScreen = () => {
                 // data={rows}
                 progressPending={pending}
 			    progressComponent={<Loader />}
-                selectableRows
                 highlightOnHover
                 pointerOnHover
                 selectableRowsHighlight
