@@ -18,6 +18,7 @@ function App() {
     <Router>        
       <div className="App">
         <Routes>
+          <Route path='/' element={<HomeScreen/>} />
           <Route path='/home' element={<HomeScreen/>} />
           <Route path='/signin' element={<SignInScreen/>} />
           <Route path='/signup' element={<SignUpScreen/>} />

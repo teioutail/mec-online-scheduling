@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDashboard, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 const SideMenu = () => {
 
@@ -36,7 +38,8 @@ const SideMenu = () => {
                 <li className="nav-item">
                     <Link className="nav-link" to="/dashboard">
                         <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
-                            <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                            {/* <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> */}
+                            <FontAwesomeIcon icon={faDashboard} className="text-light text-lg opacity-10" />
                         </div>
                             <span className="nav-link-text ms-1">Dashboard</span>
                     </Link>
@@ -44,8 +47,9 @@ const SideMenu = () => {
                 
                 <li className="nav-item">
                     <Link to="/user-list" className="nav-link">
-                        <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
+                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                            <FontAwesomeIcon icon={faUsers} className="text-light text-lg opacity-10" aria-hidden="true"/>
                         </div>
                         <span className="nav-link-text ms-1">User List</span>
                     </Link>

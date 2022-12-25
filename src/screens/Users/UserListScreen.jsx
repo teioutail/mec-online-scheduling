@@ -8,10 +8,11 @@ import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { Button, Modal } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import UsersAdd from '../../modals/Users/UsersAdd'
 
 const UserListScreen = () => {
     // Redux
@@ -160,13 +161,14 @@ const UserListScreen = () => {
 
     //
     useEffect(() => {
+        
         // Check if user is admin else, redirect user
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listUsers())
             setRows(users)
             setPending(loading)
-            alert(loading)
+            // alert(loading)
 
         } else {
             // Redirect to login page
@@ -197,23 +199,11 @@ const UserListScreen = () => {
                 pointerOnHover
                 selectableRowsHighlight
             />
+
+            <UsersAdd show={show} onHide={handleClose} />
+
           <Footer/>
         </FormContainer>
-
-        <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-            Close
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-            Save Changes
-        </Button>
-        </Modal.Footer>
-        </Modal>
     </>
   )
 }
