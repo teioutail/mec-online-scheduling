@@ -90,7 +90,7 @@ const UserListScreen = () => {
             {
 				// cell: () => <button onClick={handleButtonClick}>Action</button>,
 				cell: (row, i) => {
-                    console.log(row.id);
+                    // console.log(row.id);
                     return <>
                         <div className="dropdown">
                             <button className="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -166,12 +166,14 @@ const UserListScreen = () => {
             dispatch(listUsers())
             setRows(users)
             setPending(loading)
+            alert(loading)
+
         } else {
             // Redirect to login page
             navigate('/signin')
         }
         // console.warn(userInfo.user.user_type)
-    }, [dispatch, userInfo, navigate])
+    }, [dispatch, navigate, userInfo])
 
     return (
     <>
@@ -186,8 +188,8 @@ const UserListScreen = () => {
                 pagination
                 responsive
                 columns={columns}
-                // data={users}
-                data={rows}
+                data={users}
+                // data={rows}
                 progressPending={pending}
 			    progressComponent={<Loader />}
                 selectableRows
