@@ -83,11 +83,6 @@ const UserListScreen = () => {
                 selector: row => row.reportingteam,
                 sortable: true,
             },
-            // {
-            //     name: 'Status',
-            //     selector: row => row.status,
-            //     sortable: true,
-            // },
             {
 				// cell: () => <button onClick={handleButtonClick}>Action</button>,
                 name: 'Action',
@@ -186,6 +181,7 @@ const UserListScreen = () => {
             <Button variant="primary" size="sm" className="float-end" onClick={handleShow}>
                 <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
+            
             <DataTable
                 // title={headerTitle}
                 // selectableRows
