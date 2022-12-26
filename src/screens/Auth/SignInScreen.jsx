@@ -40,20 +40,17 @@ const SignInScreen = () => {
     dispatch(login(email, password))
   }
 
-  // For Error Validation
-  useEffect(() => {
-    // Show 
-    notify(error)
-  }, [error])
-
   // 
   useEffect(() => {
-    //
+    // Show Login Error
+    notify(error)
+
     if(userInfo) {
       // redirect user to home page if already logged-in
       navigate('/home')
     }
-  }, [userInfo, navigate])
+    
+  }, [userInfo, navigate, error])
 
   return (
     <>

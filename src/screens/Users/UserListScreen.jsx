@@ -12,7 +12,7 @@ import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
-import UsersAdd from '../../modals/Users/UsersAdd'
+import AddUser from '../../modals/Users/AddUser'
 
 const UserListScreen = () => {
     // Redux
@@ -199,7 +199,7 @@ const UserListScreen = () => {
                 selectableRowsHighlight
             />
 
-            <UsersAdd show={show} onHide={handleClose} />
+            <AddUser show={show} onHide={handleClose} />
 
           <Footer/>
         </FormContainer>
