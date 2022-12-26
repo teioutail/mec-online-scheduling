@@ -12,6 +12,7 @@ import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import { faUserPen } from '@fortawesome/free-solid-svg-icons'
 import AddUser from '../../modals/Users/AddUser'
 
 const UserListScreen = () => {
@@ -94,7 +95,11 @@ const UserListScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
-                                <li><Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>Edit User</Link></li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
+                                        <FontAwesomeIcon icon={faUserPen} /> Edit User
+                                    </Link>
+                                </li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>
@@ -190,8 +195,8 @@ const UserListScreen = () => {
                 pagination
                 responsive
                 columns={columns}
-                data={users}
-                // data={rows}
+                // data={users}
+                data={rows}
                 progressPending={pending}
 			    progressComponent={<Loader />}
                 highlightOnHover
@@ -200,7 +205,7 @@ const UserListScreen = () => {
             />
 
             <AddUser show={show} onHide={handleClose} />
-
+            
           <Footer/>
         </FormContainer>
     </>
