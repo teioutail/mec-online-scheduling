@@ -83,7 +83,6 @@ const UserListScreen = () => {
                 sortable: true,
             },
             {
-				// cell: () => <button onClick={handleButtonClick}>Action</button>,
                 name: 'Action',
 				cell: (row, i) => {
                     // console.log(row.id);
@@ -101,6 +100,7 @@ const UserListScreen = () => {
                         </div>
                     </>
                 },
+                // cell: (row) => <button onClick={handleButtonClick(row.id)}>Action</button>,
 				ignoreRowClick: true,
 				allowOverflow: true,
 				button: true,
