@@ -17,10 +17,6 @@ import {
 
 export const login = (email, password) => async (dispatch) => {
 
-    dispatch({
-        type: USER_CLEAR,
-    })
-
     // Process Login
     try {
 

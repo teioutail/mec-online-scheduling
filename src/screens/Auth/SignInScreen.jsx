@@ -53,7 +53,6 @@ const SignInScreen = () => {
       // redirect user to home page if already logged-in
       navigate('/home')
     }
-
   }, [userInfo, navigate])
 
   return (
