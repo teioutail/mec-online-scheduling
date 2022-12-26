@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     faPlus,
     faEllipsisV,
-    faUserPen 
+    faUserPen,
 } from '@fortawesome/free-solid-svg-icons'
 
 import AddUser from '../../modals/Users/AddUser'
