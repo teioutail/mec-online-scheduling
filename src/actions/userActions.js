@@ -12,9 +12,14 @@ import {
     USER_LIST_SUCCESS,
     USER_LIST_RESET,
     USER_LIST_FAIL,
+    USER_CLEAR,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
+
+    dispatch({
+        type: USER_CLEAR,
+    })
 
     // Process Login
     try {

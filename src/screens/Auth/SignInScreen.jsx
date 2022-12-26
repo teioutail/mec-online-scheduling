@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // 
 const SignInScreen = () => {
 
-  // Toast
+  // Toastify
   const notify = (msg) => toast.error(msg, {
     position: "top-right",
     autoClose: 3000,
@@ -36,15 +36,19 @@ const SignInScreen = () => {
   // 
   const submitHandler = (e) => {
     e.preventDefault()
-    // show 
-    notify('test')
     // 
     dispatch(login(email, password))
   }
 
+  // For Error Validation
+  useEffect(() => {
+    // Show 
+    notify(error)
+  }, [error])
+
   // 
   useEffect(() => {
-
+    //
     if(userInfo) {
       // redirect user to home page if already logged-in
       navigate('/home')
@@ -54,7 +58,7 @@ const SignInScreen = () => {
 
   return (
     <>
-    {error && <ToastContainer
+    {<ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}

@@ -9,7 +9,8 @@ import {
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
     USER_LIST_RESET,
-    USER_LIST_FAIL
+    USER_LIST_FAIL,
+    USER_CLEAR,
 } from '../constants/userConstants'
 
 // USER LOGIN REDUCER 
@@ -23,6 +24,8 @@ export const userLoginReducer = (state= {}, action) => {
             return { loading: false, error: action.payload }
         case USER_LOGOUT:
             return {}
+        case USER_CLEAR:
+            return { loading: false, error: ''}
         default: 
             return state
     }
