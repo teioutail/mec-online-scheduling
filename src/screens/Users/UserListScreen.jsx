@@ -10,9 +10,12 @@ import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
-import { faUserPen } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faPlus,
+    faEllipsisV,
+    faUserPen 
+} from '@fortawesome/free-solid-svg-icons'
+
 import AddUser from '../../modals/Users/AddUser'
 
 const UserListScreen = () => {
