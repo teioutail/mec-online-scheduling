@@ -37,7 +37,7 @@ const SignInScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     // show 
-    notify(error)
+    notify('test')
     // 
     dispatch(login(email, password))
   }
