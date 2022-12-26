@@ -92,6 +92,7 @@ const UserListScreen = () => {
 				cell: (row) => {
                     // console.log(row.id);
                     return <>
+                        {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
                             <button className="btn btn-link" id={row.id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
