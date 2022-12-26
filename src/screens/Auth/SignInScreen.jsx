@@ -37,7 +37,7 @@ const SignInScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     // show 
-    notify('Login Failed')
+    notify(error)
     // 
     dispatch(login(email, password))
   }

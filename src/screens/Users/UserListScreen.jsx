@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers } from '../../actions/userActions'
 import Header from '../../components/template/Header'
@@ -30,7 +30,6 @@ const UserListScreen = () => {
 	const [rows, setRows] = useState([]);
     // Modal
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -38,8 +37,8 @@ const UserListScreen = () => {
     const headerTitle = 'User List'
     
     //
-    const handleButtonClick = () => {
-        alert("testing lang muna")
+    const handleButtonClick = (id) => {
+        console.log(id)
     }
 
     // Columns
@@ -94,7 +93,8 @@ const UserListScreen = () => {
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Edit User</a></li>
+                                {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
+                                <li><Link className="dropdown-item" onClick={handleButtonClick(row.id)}>Edit User</Link></li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>

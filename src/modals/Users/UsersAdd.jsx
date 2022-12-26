@@ -3,7 +3,6 @@ import { Button, Modal } from 'react-bootstrap'
 
 const UsersAdd = ({ show, onHide }) => {
 
-  
   return (
     <>
         <Modal show={show} onHide={onHide}>
