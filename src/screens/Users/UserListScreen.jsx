@@ -156,17 +156,18 @@ const UserListScreen = () => {
         },
     ]
 
+    // Set Row Value
+    useEffect(() => {
+        setRows(users)
+        setPending(loading)
+    }, [users, rows])
+
     //
     useEffect(() => {
-
         // Check if user is admin else, redirect user
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listUsers())
-            setRows(users)
-            setPending(loading)
-            // alert(loading)
-
         } else {
             // Redirect to login page
             navigate('/signin')
