@@ -8,7 +8,7 @@ import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     faPlus,
