@@ -36,9 +36,10 @@ const UserListScreen = () => {
     // Header Title
     const headerTitle = 'User List'
     
-    //
-    const handleButtonClick = (id) => {
-        console.log(id)
+    // Action Event Handler
+    const handleButtonClick = (state) => {
+        // 
+        console.warn(`You Clicked Item ${state.target.id}`);
     }
 
     // Columns
@@ -84,23 +85,23 @@ const UserListScreen = () => {
             },
             {
                 name: 'Action',
-				cell: (row, i) => {
+				cell: (row) => {
                     // console.log(row.id);
                     return <>
                         <div className="dropdown">
-                            <button className="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
                                 {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
-                                <li><Link className="dropdown-item" onClick={handleButtonClick(row.id)}>Edit User</Link></li>
+                                <li><Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>Edit User</Link></li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </div>
                     </>
                 },
-                // cell: (row) => <button onClick={handleButtonClick(row.id)}>Action</button>,
+                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
 				ignoreRowClick: true,
 				allowOverflow: true,
 				button: true,
