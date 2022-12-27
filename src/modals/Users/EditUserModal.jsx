@@ -8,6 +8,9 @@ import {
 
 const EditUserModal = ({ show, onHide, userid }) => {
 
+  // setState
+
+  
   return (
     <>
         <Modal show={show} onHide={onHide}>
@@ -17,11 +20,27 @@ const EditUserModal = ({ show, onHide, userid }) => {
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
-            <Form.Label>Disabled input</Form.Label>
-            <Form.Control placeholder="Disabled input" />
+            <Form.Label>Name</Form.Label>
+            <Form.Control placeholder="Name" />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Disabled select menu</Form.Label>
+            <Form.Label>Username</Form.Label>
+            <Form.Control placeholder="Username" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Manage Team</Form.Label>
+            <Form.Control placeholder="Manage Team" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Reporting Team</Form.Label>
+            <Form.Control placeholder="Reporting Team" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>User Type</Form.Label>
+            <Form.Control placeholder="User Type" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
             <Form.Select>
               <option>Disabled select</option>
             </Form.Select>
