@@ -57,8 +57,7 @@ const UserListScreen = () => {
 
     // Edit User
     const handleEditUserView = (state) => {
-       // 
-    //    console.warn(`You Clicked Item ${state.target.id}`)
+       // console.warn(`You Clicked Item ${state.target.id}`)
        setShow(true)
        setUserId(state.target.id)
 

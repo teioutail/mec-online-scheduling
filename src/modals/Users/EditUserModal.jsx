@@ -7,7 +7,7 @@ const EditUserModal = ({ show, onHide, userid }) => {
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-        <Modal.Title>Modal heading ${userid}</Modal.Title>
+        <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
         <Modal.Footer>
