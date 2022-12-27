@@ -5,10 +5,15 @@ import {
   Form,
 } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { getUserDetails } from '../../actions/userActions'
 import axios from 'axios'
 
 const EditUserModal = ({ show, onHide, userid }) => {
+
+  // // User Info
+  // const userDetails = useSelector(state => state.userDetails)
+  // const { user } = userDetails
 
   // setState
   const [name, setName] = useState('');
@@ -19,8 +24,8 @@ const EditUserModal = ({ show, onHide, userid }) => {
 
   // 
   useEffect(() => {
-    // 
-      // alert("tetasdfaasdf");
+    //
+    // console.warn(user)
   }, [])
 
   return (
