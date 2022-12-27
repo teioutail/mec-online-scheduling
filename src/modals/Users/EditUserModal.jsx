@@ -14,7 +14,6 @@ const EditUserModal = ({ show, onHide, userid }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async () =>  {
-    
     // Save Change Here...
   }
 
