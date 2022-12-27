@@ -152,7 +152,7 @@ export const listUsers = () => async (dispatch, getState) => {
 
 // Get User Details Action
 export const getUserDetails = (id) => async (dispatch, getState) => {
-    
+
     try {
 
         dispatch({
@@ -162,14 +162,21 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         const { userLogin: { userInfo } } = getState()
 
         // Header
-        // const config = {
-        //     headers: {
-        //         'Content-Type' : 'application/json',
-        //         'Authorization': `Bearer ${userInfo.access_token}`
-        //     }
-        // }
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
 
-        console.warn(userInfo)
+        // API Request
+        const { data } = await axios.get(`/auth/users/${id}`, config)
+
+        dispatch({
+            type: USER_DETAILS_SUCCESS,
+            payload: data
+        })
+        
 
     } catch(error) {
         // 

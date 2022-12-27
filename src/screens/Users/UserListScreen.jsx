@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { listUsers } from '../../actions/userActions'
+import { listUsers, getUserDetails } from '../../actions/userActions'
 import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
 import SideMenu from '../../components/template/SideMenu'
@@ -62,6 +62,8 @@ const UserListScreen = () => {
        // console.warn(`You Clicked Item ${state.target.id}`)
        setShow(true)
        setUserId(state.target.id)
+       // Call API Here...
+       getUserDetails(2)
     }
 
     // Columns
