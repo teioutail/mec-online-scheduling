@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers, getUserDetails } from '../../actions/userActions'
 import Header from '../../components/template/Header'
@@ -63,7 +62,7 @@ const UserListScreen = () => {
        setShow(true)
        setUserId(state.target.id)
        // Call API Here...
-       getUserDetails(2)
+       dispatch(getUserDetails(state.target.id))
     }
 
     // Columns

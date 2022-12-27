@@ -172,11 +172,12 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         // API Request
         const { data } = await axios.get(`/auth/users/${id}`, config)
 
+        console.warn(data)
+        
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload: data
         })
-        
 
     } catch(error) {
         // 
