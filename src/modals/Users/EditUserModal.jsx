@@ -4,34 +4,24 @@ import {
   Modal,
   Form,
 } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
 import { getUserDetails } from '../../actions/userActions'
 import axios from 'axios'
 
 const EditUserModal = ({ show, onHide, userid }) => {
 
   // setState
+  const [name, setName] = useState('');
+
   const handleSubmit = async () =>  {
     
-    alert(userid)
-
-    // Header
-    const config = {
-      headers: {
-          'Content-Type' : 'application/json',
-          // 'Authorization': `Bearer ${userInfo.token}`
-      },
-    }
-    
-    // Call API Request
-    const { data } = await axios.get(`/auth/users/${userid}`, config)
-
-    console.warn(data)
   }
 
   // 
-  // useEffect(() => {
-  //   alert();
-  // }, [])
+  useEffect(() => {
+    // 
+
+  }, [])
 
   return (
     <>

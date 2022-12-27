@@ -152,7 +152,6 @@ export const listUsers = () => async (dispatch, getState) => {
 
 // Get User Details Action
 export const getUserDetails = (id) => async (dispatch, getState) => {
-    console.warn("testing" + id);
     
     try {
 
