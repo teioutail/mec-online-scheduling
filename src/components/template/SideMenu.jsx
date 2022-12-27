@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDashboard, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faDashboard, 
+    faUsers,
+    faLock
+} from '@fortawesome/free-solid-svg-icons'
 
 const SideMenu = () => {
 
@@ -56,13 +60,15 @@ const SideMenu = () => {
                 </li>
 
                 <li className="nav-item">
-                <a className="nav-link  " href="../pages/billing.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">Billing</span>
-                </a>
+                    <Link to="/user-list" className="nav-link">
+                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
+                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                            <FontAwesomeIcon icon={faLock} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                        </div>
+                        <span className="nav-link-text ms-1">Role</span>
+                    </Link>
                 </li>
+
                 <li className="nav-item">
                 <a className="nav-link  " href="../pages/virtual-reality.html">
                     <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">

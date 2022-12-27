@@ -14,6 +14,8 @@ import {
     faPlus,
     faEllipsisV,
     faUserPen,
+    faLocationPin,
+    faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
 import AddUser from '../../modals/Users/AddUser'
@@ -104,8 +106,16 @@ const UserListScreen = () => {
                                         <FontAwesomeIcon icon={faUserPen} /> Edit User
                                     </Link>
                                 </li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
+                                        <FontAwesomeIcon icon={faUniversalAccess} /> Access Rights
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
+                                        <FontAwesomeIcon icon={faLocationPin} /> Designation
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </>
