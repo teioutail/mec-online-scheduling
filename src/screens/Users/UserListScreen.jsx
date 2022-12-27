@@ -18,26 +18,33 @@ import {
     faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
-import AddUser from '../../modals/Users/AddUser'
+import EditUserModal from '../../modals/Users/EditUserModal'
 
 const UserListScreen = () => {
     // Redux
     const dispatch = useDispatch()
+
     // useNavigate to redirect the user
     const navigate = useNavigate() 
+
     // User List
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
     // User Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
     // Datatables
-    const [pending, setPending] = useState(true);
-	const [rows, setRows] = useState([]);
-    // Modal
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [pending, setPending] = useState(true)
+	const [rows, setRows] = useState([])
+
+    // EditUserModal
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    // Global ID
+    const [userid, setUserId] = useState('')
 
     // Header Title
     const headerTitle = 'User List'
@@ -46,6 +53,15 @@ const UserListScreen = () => {
     const handleButtonClick = (state) => {
         // 
         console.warn(`You Clicked Item ${state.target.id}`);
+    }
+
+    // Edit User
+    const handleEditUserView = (state) => {
+       // 
+    //    console.warn(`You Clicked Item ${state.target.id}`)
+       setShow(true)
+       setUserId(state.target.id)
+
     }
 
     // Columns
@@ -102,7 +118,7 @@ const UserListScreen = () => {
                             <ul className="dropdown-menu">
                                 {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
+                                    <Link className="dropdown-item" onClick={handleEditUserView} id={row.id}>
                                         <FontAwesomeIcon icon={faUserPen} /> Edit User
                                     </Link>
                                 </li>
@@ -156,30 +172,11 @@ const UserListScreen = () => {
         },
     };
 
-    // Data 
-    const data = [
-        {
-            id: 1,
-            name: 'Beetlejuice',
-            email: '1988',
-        },
-        {
-            id: 2,
-            name: 'Ghostbusters',
-            email: '1984',
-        },
-        {
-            id: 3,
-            name: 'Ghostbusters',
-            email: '1990',
-        },
-    ]
-
     // Set Row Value
     useEffect(() => {
         setRows(users)
         setPending(loading)
-    }, [users, rows])
+    }, [users, rows, loading])
 
     //
     useEffect(() => {
@@ -206,10 +203,10 @@ const UserListScreen = () => {
             <DataTable
                 // title={headerTitle}
                 // selectableRows
+                // data={users}
                 pagination
                 responsive
                 columns={columns}
-                // data={users}
                 data={rows}
                 progressPending={pending}
 			    progressComponent={<Loader />}
@@ -218,7 +215,7 @@ const UserListScreen = () => {
                 selectableRowsHighlight
             />
 
-            <AddUser show={show} onHide={handleClose} />
+            <EditUserModal show={show} onHide={handleClose} userid={userid} />
             
           <Footer/>
         </FormContainer>
