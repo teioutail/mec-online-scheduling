@@ -9,23 +9,22 @@ import { useSelector } from 'react-redux'
 import { getUserDetails } from '../../actions/userActions'
 import axios from 'axios'
 
-const EditUserModal = ({ show, onHide, userid }) => {
-
-  // // User Info
-  // const userDetails = useSelector(state => state.userDetails)
-  // const { user } = userDetails
+const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
   // setState
   const [name, setName] = useState('');
 
   const handleSubmit = async () =>  {
+
+    
     // Save Change Here...
+
   }
 
   // 
   useEffect(() => {
     //
-    // console.warn(user)
+    console.warn(userDetails)
   }, [])
 
   return (
@@ -38,7 +37,12 @@ const EditUserModal = ({ show, onHide, userid }) => {
         <Modal.Body>
           <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
-            <Form.Control placeholder="Name" />
+            <Form.Control 
+              type='text'
+              placeholder='Name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>

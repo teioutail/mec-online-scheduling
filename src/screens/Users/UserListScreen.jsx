@@ -35,6 +35,10 @@ const UserListScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    // User Info
+    const userDetails = useSelector(state => state.userDetails)
+    const { user:userDetail } = userDetails
+
     // Datatables
     const [pending, setPending] = useState(true)
 	const [rows, setRows] = useState([])
@@ -216,7 +220,12 @@ const UserListScreen = () => {
                 selectableRowsHighlight
             />
 
-            <EditUserModal show={show} onHide={handleClose} userid={userid} />
+            <EditUserModal 
+                show={show} 
+                onHide={handleClose} 
+                userid={userid} 
+                userDetails={userDetail} 
+            />
             
           <Footer/>
         </FormContainer>
