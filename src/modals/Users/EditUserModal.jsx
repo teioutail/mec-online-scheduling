@@ -1,13 +1,10 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Button, 
   Modal,
   Form,
 } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { getUserDetails } from '../../actions/userActions'
-import axios from 'axios'
 
 const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
@@ -16,7 +13,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
   const handleSubmit = async () =>  {
 
-    
+
     // Save Change Here...
 
   }
