@@ -3,14 +3,36 @@ import {
   Button, 
   Modal,
   Form,
-
 } from 'react-bootstrap'
+import { getUserDetails } from '../../actions/userActions'
+import axios from 'axios'
 
 const EditUserModal = ({ show, onHide, userid }) => {
 
   // setState
+  const handleSubmit = async () =>  {
+    
+    alert(userid)
 
-  
+    // Header
+    const config = {
+      headers: {
+          'Content-Type' : 'application/json',
+          // 'Authorization': `Bearer ${userInfo.token}`
+      },
+    }
+    
+    // Call API Request
+    const { data } = await axios.get(`/auth/users/${userid}`, config)
+
+    console.warn(data)
+  }
+
+  // 
+  // useEffect(() => {
+  //   alert();
+  // }, [])
+
   return (
     <>
         <Modal show={show} onHide={onHide}>
@@ -53,7 +75,7 @@ const EditUserModal = ({ show, onHide, userid }) => {
         <Button variant="secondary" onClick={onHide}>
             Close
         </Button>
-        <Button variant="primary" onClick={onHide}>
+        <Button variant="primary" onClick={handleSubmit} >
             Save Changes
         </Button>
         </Modal.Footer>

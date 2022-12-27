@@ -12,7 +12,10 @@ import {
     USER_LIST_SUCCESS,
     USER_LIST_RESET,
     USER_LIST_FAIL,
-    USER_CLEAR,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_RESET,
+    USER_DETAILS_FAIL,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -139,6 +142,40 @@ export const listUsers = () => async (dispatch, getState) => {
         //
         dispatch({
             type: USER_LIST_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+// Get User Details Action
+export const getUserDetails = (id) => async (dispatch, getState) => {
+    console.warn("testing" + id);
+    
+    try {
+
+        dispatch({
+            type: USER_DETAILS_REQUEST,
+        })
+        
+        const { userLogin: { userInfo } } = getState()
+
+        // Header
+        // const config = {
+        //     headers: {
+        //         'Content-Type' : 'application/json',
+        //         'Authorization': `Bearer ${userInfo.access_token}`
+        //     }
+        // }
+
+        console.warn(userInfo)
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: USER_DETAILS_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 

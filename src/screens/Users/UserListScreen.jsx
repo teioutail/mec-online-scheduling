@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers } from '../../actions/userActions'
 import Header from '../../components/template/Header'
@@ -30,6 +31,7 @@ const UserListScreen = () => {
     // User List
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
+
     // User Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -60,7 +62,6 @@ const UserListScreen = () => {
        // console.warn(`You Clicked Item ${state.target.id}`)
        setShow(true)
        setUserId(state.target.id)
-
     }
 
     // Columns
