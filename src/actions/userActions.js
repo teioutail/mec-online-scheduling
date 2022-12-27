@@ -156,10 +156,18 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     try {
 
         dispatch({
+            type: USER_DETAILS_RESET,
+        })
+        
+        dispatch({
             type: USER_DETAILS_REQUEST,
         })
         
         const { userLogin: { userInfo } } = getState()
+
+        
+        
+        // console.log(user)
 
         // Header
         const config = {
@@ -168,16 +176,19 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
-
-        // API Request
+        
+        // Call API Request
         const { data } = await axios.get(`/auth/users/${id}`, config)
 
-        console.warn(data)
-        
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload: data
         })
+
+        // Get User Details
+        const { userDetails: { user } } = getState()
+
+        // console.warn(user)
 
     } catch(error) {
         // 
