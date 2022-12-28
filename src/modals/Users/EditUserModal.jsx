@@ -5,10 +5,15 @@ import {
   Modal,
   Form,
 } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { updateUser } from '../../actions/userActions'
 
 const EditUserModal = ({ show, onHide, userid, userDetails }) => {
+
+  // Redux
+  const dispatch = useDispatch()
 
   // setState
   const [name, setName] = useState('')
@@ -37,11 +42,26 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
       if (result.isConfirmed) {
         //
-        Swal.fire(
-          'Success!',
-          'Your file has been deleted.',
-          'success'
-        )
+        // Swal.fire(
+        //   'Success!',
+        //   'Your file has been deleted.',
+        //   'success'
+        // )
+
+        // Updated User Data
+        const user = {
+          id: userid,
+          name: name,
+          username: username,
+          email: email,
+          manage: manage,
+          reporting: reporting,
+          user_type: utype,
+        }
+
+        // console.warn(data)
+        dispatch(updateUser(user))
+
       }
 
     })
@@ -58,6 +78,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
       reporting_team,
       user_type,
     } = userDetails
+
     // 
     setName(name || "")
     setUsername(username || "")

@@ -16,6 +16,10 @@ import {
     USER_DETAILS_SUCCESS,
     USER_DETAILS_RESET,
     USER_DETAILS_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_RESET,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -200,9 +204,55 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }
 }
 
+// Update User
+export const updateUser = (user) => async (dispatch, getState) => {
+    //
+    try {
+        // console.warn(user)
+        dispatch({ 
+            type: USER_UPDATE_REQUEST,
+        })
+
+        // Get Login User Info
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+
+        //
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+                // 'X-Requested-With':'XMLHttpRequest',
+                // 'Access-Control-Allow-Origin':'*',
+                // 'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
+            },
+        }
+
+
+        // Call API Request
+        const { data } = await axios.put(`/auth/users/${user.id}`, user, config)
+        console.warn(data)
+        // console.warn(data)
+        
+        dispatch({ type: USER_UPDATE_SUCCESS })
+
+        // dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: USER_UPDATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+} 
+
 // Logout Action
 export const logout = () => (dispatch) => {
-
     localStorage.removeItem('userInfo')
     // Clear Local Storage Data
     dispatch({ type: USER_LOGOUT })
