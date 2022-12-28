@@ -226,7 +226,7 @@ const UserListScreen = () => {
                 userid={userid} 
                 userDetails={userDetail}
             />
-            
+
           <Footer/>
         </FormContainer>
     </>
