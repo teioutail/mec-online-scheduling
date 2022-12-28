@@ -29,7 +29,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   const handleSubmit = async () =>  {
     // Save Change Here...
     // console.warn(userDetails)
-    
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -47,8 +47,8 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
           name: name,
           username: username,
           email: email,
-          manage: manage,
-          reporting: reporting,
+          manage_team: manage,
+          reporting_team: reporting,
           user_type: utype,
         }
 
