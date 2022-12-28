@@ -67,7 +67,6 @@ const UserListScreen = () => {
        setUserId(state.target.id)
        // Call API Here...
        dispatch(getUserDetails(state.target.id))
-        
     }
 
     // Columns

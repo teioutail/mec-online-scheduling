@@ -24,7 +24,6 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   const handleSubmit = async () =>  {
     // Save Change Here...
     // console.warn(userDetails)
-
     
     Swal.fire({
       title: 'Are you sure?',
@@ -50,7 +49,6 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   }
   // 
   useEffect(() => {
-    
     // Selected User Details
     const { 
       name, 
@@ -60,8 +58,6 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
       reporting_team,
       user_type,
     } = userDetails
-
-    console.warn(userDetails)
     // 
     setName(name || "")
     setUsername(username || "")
