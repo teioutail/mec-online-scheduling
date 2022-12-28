@@ -234,6 +234,8 @@ export const updateUser = (user) => async (dispatch, getState) => {
         
         dispatch({ type: USER_UPDATE_SUCCESS })
 
+        dispatch({ type: USER_LIST_SUCCESS })
+
         // dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
 
     } catch(error) {
