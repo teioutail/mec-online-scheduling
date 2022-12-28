@@ -6,6 +6,7 @@ import {
   Form,
 } from 'react-bootstrap'
 import Loader from '../../components/Loader'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
@@ -14,10 +15,20 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
 
+  // CommonJS
+  const Swal = require('sweetalert2')
+
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
     console.warn(userDetails)
+
+    Swal.fire({
+      title: 'Error!',
+      text: 'Do you want to continue',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
   }
 
   // 
@@ -96,7 +107,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             <option value="6">Admin</option>
           </Form.Select>
           </Form.Group>
-          
+
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
