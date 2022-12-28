@@ -218,7 +218,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             userLogin: { userInfo },
         } = getState()
 
-        //
+        // Header
         const config = {
             headers : {
                 'Content-Type': 'application/json',
@@ -227,9 +227,9 @@ export const updateUser = (user) => async (dispatch, getState) => {
             },
         }
 
-
         // Call API Request
         const { data } = await axios.put(`/auth/users/${user.id}`, user, config)
+
         // console.warn(data)
         
         dispatch({ type: USER_UPDATE_SUCCESS })

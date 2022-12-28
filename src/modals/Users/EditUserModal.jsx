@@ -41,13 +41,6 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        //
-        // Swal.fire(
-        //   'Success!',
-        //   'Your file has been deleted.',
-        //   'success'
-        // )
-
         // Updated User Data
         const user = {
           id: userid,
@@ -58,8 +51,18 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
           reporting: reporting,
           user_type: utype,
         }
+
+        // 
+        if( dispatch(updateUser(user)) ) {
+          // Show Success Request
+          Swal.fire(
+            'Success!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
         // console.warn(data)
-        dispatch(updateUser(user))
+        
       }
     })
 
