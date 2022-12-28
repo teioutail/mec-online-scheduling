@@ -10,7 +10,7 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { updateUser, listUsers } from '../../actions/userActions'
 
-const EditUserModal = ({ show, onHide, userid, userDetails }) => {
+const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
 
   // Redux
   const dispatch = useDispatch()
@@ -61,8 +61,10 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             'success'
           )
 
+          // Refresh Datatable
           dispatch(listUsers())
-          
+          // Close Modal
+          onHide()
         }
         // console.warn(data)
         
