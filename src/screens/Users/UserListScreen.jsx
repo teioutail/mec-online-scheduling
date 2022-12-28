@@ -92,11 +92,6 @@ const UserListScreen = () => {
                 sortable: true,
             },
             {
-                name: 'Profile',
-                selector: row => row.profile_picture,
-                sortable: true,
-            },
-            {
                 name: 'User Type',
                 selector: row => row.user_type,
                 sortable: true,
@@ -109,6 +104,11 @@ const UserListScreen = () => {
             {
                 name: 'Reporting Team',
                 selector: row => row.reportingteam,
+                sortable: true,
+            },
+            {
+                name: 'Status',
+                selector: row => row.approved,
                 sortable: true,
             },
             {
