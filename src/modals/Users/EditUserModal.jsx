@@ -5,12 +5,16 @@ import {
   Modal,
   Form,
 } from 'react-bootstrap'
+import Loader from '../../components/Loader'
 
 const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
   // setState
-  const [name, setName] = useState(userDetails.name);
+  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
 
+  // 
   const handleSubmit = async () =>  {
     // Save Change Here...
     console.warn(userDetails)
@@ -18,9 +22,10 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
   // 
   useEffect(() => {
-    //
-    console.warn(userDetails)
-    
+    // console.warn(userDetails)
+    setName(userDetails.name)
+    setUsername(userDetails.username)
+
   }, [userDetails])
 
   return (
@@ -28,7 +33,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
         {/* <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title> */}
-        <Modal.Title>{ userid == '' ? 'Add' : 'Edit'  }</Modal.Title>
+        <Modal.Title>{ userid == '' ? 'Add User' : 'Edit User'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
@@ -40,28 +45,58 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
+
           <Form.Group className="mb-3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control placeholder="Username" />
+            <Form.Label>Name</Form.Label>
+            <Form.Control 
+              type='text'
+              placeholder='Username'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Manage Team</Form.Label>
-            <Form.Control placeholder="Manage Team" />
+            <Form.Select aria-label="manage team">
+            <option value="">- Select -</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </Form.Select>
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Reporting Team</Form.Label>
-            <Form.Control placeholder="Reporting Team" />
+            <Form.Select aria-label="reporting team">
+            <option value="">- Select -</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </Form.Select>
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>User Type</Form.Label>
-            <Form.Control placeholder="User Type" />
+            <Form.Select aria-label="user type">
+            <option value="">- Select -</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </Form.Select>
           </Form.Group>
+
+
           <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Select>
-              <option>Disabled select</option>
-            </Form.Select>
+            <Form.Label>Name</Form.Label>
+            <Form.Control 
+              type='text'
+              placeholder='Name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Check type="checkbox" label="Can't check this" />
           </Form.Group>
