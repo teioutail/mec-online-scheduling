@@ -14,15 +14,16 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
-
+  const [manage, setManage] = useState('')
+  const [reporting, setReporting] = useState('')
   // CommonJS
   const Swal = require('sweetalert2')
-
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
-    console.warn(userDetails)
+    // console.warn(userDetails)
 
+    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -30,25 +31,35 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, Proceed!'
     }).then((result) => {
+
       if (result.isConfirmed) {
+        //
         Swal.fire(
-          'Deleted!',
+          'Success!',
           'Your file has been deleted.',
           'success'
         )
       }
+
     })
-    
+
   }
 
   // 
   useEffect(() => {
-    // console.warn(userDetails)
-    setName(userDetails.name)
-    setUsername(userDetails.username)
-    setEmail(userDetails.email)
+    // Selected User Details
+    const { name, username, email, manage_team, reporting_team } = userDetails
+
+    console.warn(userDetails)
+    // 
+    setName(name || "")
+    setUsername(username || "")
+    setEmail(email || "")
+    setManage(manage_team || "")
+    setReporting(reporting_team || "")
+
   }, [userDetails])
 
   return (
@@ -70,7 +81,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control 
               type='text'
               placeholder='Username'
@@ -91,25 +102,35 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Manage Team</Form.Label>
-            <Form.Select aria-label="manage team">
+            <Form.Control 
+              as='select' 
+              aria-label="manage team"
+              value={manage}
+              onChange={(e) => setManage(e.target.value)}
+            >
             <option value="">- Select -</option>
             <option value="1">Pre-Sales</option>
             <option value="2">Post-Sales</option>
-          </Form.Select>
+          </Form.Control>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Reporting Team</Form.Label>
-            <Form.Select aria-label="reporting team">
+            <Form.Control 
+              as='select' 
+              aria-label="reporting team"
+              value={reporting}
+              onChange={(e) => setReporting(e.target.value)}
+            >
             <option value="">- Select -</option>
             <option value="1">Pre-Sales</option>
             <option value="2">Post-Sales</option>
-          </Form.Select>
+          </Form.Control>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>User Type</Form.Label>
-            <Form.Select aria-label="user type">
+            <Form.Control as='select' aria-label="user type">
             <option value="">- Select -</option>
             <option value="1">Sales</option>
             <option value="2">Teamlead</option>
@@ -117,7 +138,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             <option value="4">Manager</option>
             <option value="5">Engineer</option>
             <option value="6">Admin</option>
-          </Form.Select>
+            </Form.Control>
           </Form.Group>
 
         </Modal.Body>
