@@ -103,7 +103,7 @@ const UserListScreen = () => {
             },
             {
                 name: 'Reporting Team',
-                selector: row => row.reportingteam,
+                selector: row => row.reporting_team,
                 sortable: true,
             },
             {

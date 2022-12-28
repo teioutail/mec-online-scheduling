@@ -16,6 +16,8 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
   const [email, setEmail] = useState('')
   const [manage, setManage] = useState('')
   const [reporting, setReporting] = useState('')
+  const [utype, setUserType] = useState('')
+
   // CommonJS
   const Swal = require('sweetalert2')
   // 
@@ -46,11 +48,18 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
     })
 
   }
-
   // 
   useEffect(() => {
+    
     // Selected User Details
-    const { name, username, email, manage_team, reporting_team } = userDetails
+    const { 
+      name, 
+      username, 
+      email, 
+      manage_team, 
+      reporting_team,
+      user_type,
+    } = userDetails
 
     console.warn(userDetails)
     // 
@@ -59,6 +68,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
     setEmail(email || "")
     setManage(manage_team || "")
     setReporting(reporting_team || "")
+    setUserType(user_type || "")
 
   }, [userDetails])
 
@@ -130,7 +140,12 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>User Type</Form.Label>
-            <Form.Control as='select' aria-label="user type">
+            <Form.Control 
+              as='select' 
+              aria-label="user type"
+              value={utype}
+              onChange={(e) => setUserType(e.target.value)}
+            >
             <option value="">- Select -</option>
             <option value="1">Sales</option>
             <option value="2">Teamlead</option>
