@@ -224,15 +224,12 @@ export const updateUser = (user) => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo.access_token}`,
                 // 'X-Requested-With':'XMLHttpRequest',
-                // 'Access-Control-Allow-Origin':'*',
-                // 'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
             },
         }
 
 
         // Call API Request
         const { data } = await axios.put(`/auth/users/${user.id}`, user, config)
-        console.warn(data)
         // console.warn(data)
         
         dispatch({ type: USER_UPDATE_SUCCESS })

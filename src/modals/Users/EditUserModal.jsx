@@ -58,12 +58,9 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
           reporting: reporting,
           user_type: utype,
         }
-
         // console.warn(data)
         dispatch(updateUser(user))
-
       }
-
     })
 
   }
