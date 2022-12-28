@@ -25,7 +25,7 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
     // console.warn(userDetails)
     setName(userDetails.name)
     setUsername(userDetails.username)
-
+    setEmail(userDetails.email)
   }, [userDetails])
 
   return (
@@ -57,12 +57,21 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control 
+              type='text'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
             <Form.Label>Manage Team</Form.Label>
             <Form.Select aria-label="manage team">
             <option value="">- Select -</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">Pre-Sales</option>
+            <option value="2">Post-Sales</option>
           </Form.Select>
           </Form.Group>
 
@@ -70,9 +79,8 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             <Form.Label>Reporting Team</Form.Label>
             <Form.Select aria-label="reporting team">
             <option value="">- Select -</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">Pre-Sales</option>
+            <option value="2">Post-Sales</option>
           </Form.Select>
           </Form.Group>
 
@@ -80,26 +88,15 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             <Form.Label>User Type</Form.Label>
             <Form.Select aria-label="user type">
             <option value="">- Select -</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">Sales</option>
+            <option value="2">Teamlead</option>
+            <option value="3">Supervisor</option>
+            <option value="4">Manager</option>
+            <option value="5">Engineer</option>
+            <option value="6">Admin</option>
           </Form.Select>
           </Form.Group>
-
-
-          <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
-            <Form.Control 
-              type='text'
-              placeholder='Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Check type="checkbox" label="Can't check this" />
-          </Form.Group>
+          
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
