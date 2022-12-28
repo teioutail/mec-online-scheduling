@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const SideMenu = () => {
-
     // 
   useEffect(() => {
     // Delay execution of argon-dashboard.js for sidemenu

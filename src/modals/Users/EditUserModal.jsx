@@ -60,8 +60,9 @@ const EditUserModal = ({ show, onHide, userid, userDetails }) => {
             'Your file has been deleted.',
             'success'
           )
-          
+
           dispatch(listUsers())
+          
         }
         // console.warn(data)
         
