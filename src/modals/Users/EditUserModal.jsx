@@ -60,18 +60,17 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
             'Your file has been deleted.',
             'success'
           )
-
           // Refresh Datatable
           dispatch(listUsers())
           // Close Modal
           onHide()
         }
-        // console.warn(data)
         
       }
-    })
 
+    })
   }
+
   // 
   useEffect(() => {
     // Selected User Details
@@ -190,7 +189,6 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
         </Modal>
     </>
   )
-
 }
 
 export default EditUserModal
