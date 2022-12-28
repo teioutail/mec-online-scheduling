@@ -9,18 +9,19 @@ import {
 const EditUserModal = ({ show, onHide, userid, userDetails }) => {
 
   // setState
-  const [name, setName] = useState('');
+  const [name, setName] = useState(userDetails.name);
 
   const handleSubmit = async () =>  {
     // Save Change Here...
-
+    console.warn(userDetails)
   }
 
   // 
   useEffect(() => {
     //
     console.warn(userDetails)
-  }, [])
+    
+  }, [userDetails])
 
   return (
     <>

@@ -152,7 +152,7 @@ export const listUsers = () => async (dispatch, getState) => {
 
 // Get User Details Action
 export const getUserDetails = (id) => async (dispatch, getState) => {
-
+    //
     try {
 
         dispatch({
@@ -165,8 +165,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         
         const { userLogin: { userInfo } } = getState()
 
-        
-        
         // console.log(user)
 
         // Header
@@ -185,8 +183,8 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             payload: data
         })
 
-        // Get User Details
-        const { userDetails: { user } } = getState()
+        // // Get User Details
+        // const { userDetails: { user } } = getState()
 
         // console.warn(user)
 

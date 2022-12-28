@@ -67,6 +67,9 @@ const UserListScreen = () => {
        setUserId(state.target.id)
        // Call API Here...
        dispatch(getUserDetails(state.target.id))
+       
+        //    console.warn(userDetail)
+        console.warn(userDetail)
     }
 
     // Columns
@@ -181,7 +184,7 @@ const UserListScreen = () => {
     useEffect(() => {
         setRows(users)
         setPending(loading)
-    }, [users, rows, loading])
+    }, [users, rows, loading, userDetail])
 
     //
     useEffect(() => {
@@ -224,7 +227,7 @@ const UserListScreen = () => {
                 show={show} 
                 onHide={handleClose} 
                 userid={userid} 
-                userDetails={userDetail} 
+                userDetails={userDetail}
             />
             
           <Footer/>
