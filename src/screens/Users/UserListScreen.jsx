@@ -21,6 +21,10 @@ import {
     faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
+import { 
+    USER_DETAILS_RESET 
+} from '../../constants/userConstants'
+
 import EditUserModal from '../../modals/Users/EditUserModal'
 
 const UserListScreen = () => {
@@ -61,6 +65,16 @@ const UserListScreen = () => {
     const handleButtonClick = (state) => {
         // 
         console.warn(`You Clicked Item ${state.target.id}`);
+    }
+
+    // Add User Modal
+    const handleAddUserView = (state) => {
+        // Show Modal
+        handleShow()
+        // 
+        dispatch({
+            type: USER_DETAILS_RESET,
+        })
     }
 
     // Edit User
@@ -204,7 +218,7 @@ const UserListScreen = () => {
         <SideMenu />
         <FormContainer>
           <Header headerTitle={headerTitle} />
-            <Button variant="primary" size="sm" className="float-end" onClick={handleShow}>
+            <Button variant="primary" size="sm" className="float-end" onClick={handleAddUserView}>
                 <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
             

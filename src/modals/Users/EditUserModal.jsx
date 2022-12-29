@@ -8,7 +8,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { updateUser, listUsers } from '../../actions/userActions'
+import { 
+  updateUser, 
+  listUsers 
+} from '../../actions/userActions'
 
 const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
 
@@ -28,8 +31,7 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
-    // console.warn(userDetails)
-
+    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
