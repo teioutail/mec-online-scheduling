@@ -95,7 +95,7 @@ const UserListScreen = () => {
             },
             {
                 name: 'User Type',
-                selector: row => row.user_type,
+                selector: row => row.rolename,
                 sortable: true,
             },
             {
@@ -110,7 +110,7 @@ const UserListScreen = () => {
             },
             {
                 name: 'Status',
-                selector: row => row.approved,
+                selector: row => row.activated,
                 sortable: true,
             },
             {
