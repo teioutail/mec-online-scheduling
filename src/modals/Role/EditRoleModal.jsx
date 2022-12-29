@@ -71,27 +71,31 @@ const EditRoleModal = ({ show , onHide, userid }) => {
     })
   }
 
-  // 
-  useEffect(() => {
-    // Selected User Details
-    const { 
-      name, 
-      username, 
-      email, 
-      manage_team, 
-      reporting_team,
-      user_type,
-    } = userDetails
+// 
+//   useEffect(() => {
+//     // Selected User Details
+//     const { 
+//       name, 
+//       username, 
+//       email, 
+//       manage_team, 
+//       reporting_team,
+//       user_type,
+//     } = userDetails
 
-    // 
-    setName(name || "")
-    setUsername(username || "")
-    setEmail(email || "")
-    setManage(manage_team || "")
-    setReporting(reporting_team || "")
-    setUserType(user_type || "")
+//     // 
+//     setName(name || "")
+//     setUsername(username || "")
+//     setEmail(email || "")
+//     setManage(manage_team || "")
+//     setReporting(reporting_team || "")
+//     setUserType(user_type || "")
 
-  }, [userDetails])
+//   }, [userDetails])
+
+    useEffect(() => {
+
+    })
 
   return (
     <>
