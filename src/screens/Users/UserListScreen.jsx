@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { listUsers, getUserDetails } from '../../actions/userActions'
 import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
 import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { listUsers, getUserDetails } from '../../actions/userActions'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
@@ -21,6 +21,9 @@ import {
 import EditUserModal from '../../modals/Users/EditUserModal'
 
 const UserListScreen = () => {
+    // Header Title
+    const headerTitle = 'User List'
+
     // Redux
     const dispatch = useDispatch()
 
@@ -50,9 +53,6 @@ const UserListScreen = () => {
 
     // Global ID
     const [userid, setUserId] = useState('')
-
-    // Header Title
-    const headerTitle = 'User List'
     
     // Action Event Handler
     const handleButtonClick = (state) => {

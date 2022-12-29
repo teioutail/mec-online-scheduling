@@ -9,7 +9,13 @@ import {
     userListReducer,
     userDetailsReducer,
     userUpdateReducer,
+    
 } from './reducers/userReducers'
+
+// Role Reducer
+import { 
+    roleListReducer
+ } from './reducers/roleReducers'
 
 // Reducers
 const reducer = combineReducers({
@@ -18,6 +24,7 @@ const reducer = combineReducers({
     userList: userListReducer,
     userDetails:userDetailsReducer,
     userUpdate: userUpdateReducer,
+    roleList: roleListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
