@@ -16,10 +16,24 @@ export const listRoles = () => async (dispatch, getState) => {
             type: ROLE_LIST_REQUEST,
         })
 
-        const { data } = await axios.get()
-         
+        const { userLogin : { userInfo }} = getState()
+        // console.warn(userInfo)
 
-        alert("testing lang test....");
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/roles`, config)
+        
+        dispatch({
+            type: ROLE_LIST_SUCCESS,
+            payload: data
+        })
+        // console.warn(data)
 
     } catch(error) {
         //

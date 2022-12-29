@@ -34,7 +34,7 @@ const UserListScreen = () => {
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
 
-    // User Info
+    // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 

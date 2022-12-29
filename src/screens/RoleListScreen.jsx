@@ -21,9 +21,16 @@ const RoleListScreen = () => {
     // useNavigate to redirect the user
     const navigate = useNavigate() 
 
-    // User Info
+    // Role List
+    const roleList = useSelector(state => state.roleList)
+    const { loading, error, roles } = roleList
+    // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    // Datatables
+    const [pending, setPending] = useState(true)
+    const [rows, setRows] = useState([])
 
     // Columns
     const columns = useMemo(
@@ -49,6 +56,12 @@ const RoleListScreen = () => {
 		],
 		[],
 	);
+
+    // Set Row Value
+    useEffect(() => {
+        setRows(roles)
+        setPending(loading)
+    }, [roles, rows, loading])
 
     //
     useEffect(() => {
@@ -77,17 +90,16 @@ const RoleListScreen = () => {
                     // title={headerTitle}
                     // selectableRows
                     // data={users}
-                    columns={columns}
-                    // data={rows}
-                    // progressPending={pending}
                     pagination
                     responsive
+                    columns={columns}
+                    data={rows}
+                    progressPending={pending}
                     progressComponent={<Loader />}
                     highlightOnHover
                     pointerOnHover
                     selectableRowsHighlight
                 />
-
                 <Footer />
             </FormContainer>
         </>
