@@ -86,13 +86,12 @@ const RoleListScreen = () => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
-                                {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.id}>
+                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
                                         <FontAwesomeIcon icon={faUniversalAccess} /> Edit Role
                                     </Link>
                                 </li>

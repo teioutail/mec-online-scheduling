@@ -49,5 +49,5 @@ export const listRoles = () => async (dispatch, getState) => {
 
 // Get Role Details Action
 export const getRoleDetails = (id) => async(dispatch, getState) => {
-    console.warn('it sucks')
+    console.warn(`it sucks ${id}`)
 }
