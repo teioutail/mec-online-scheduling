@@ -5,6 +5,7 @@ import Dashboard from './screens/Dashboard'
 import SignInScreen from './screens/Auth/SignInScreen'
 import SignUpScreen from './screens/Auth/SignUpScreen'
 import UserListScreen from './screens/Users/UserListScreen'
+import RoleListScreen from './screens/RoleListScreen'
 
 import axios from 'axios'
 // Set main base URL using axios
@@ -24,6 +25,7 @@ function App() {
           <Route path='/signup' element={<SignUpScreen/>} />
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/user-list' element={<UserListScreen/>} />
+          <Route path='/role-list' element={<RoleListScreen/>} />
         </Routes>
       </div>
     </Router>

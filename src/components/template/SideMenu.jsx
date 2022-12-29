@@ -59,7 +59,7 @@ const SideMenu = () => {
                 </li>
 
                 <li className="nav-item">
-                    <Link to="/user-list" className="nav-link">
+                    <Link to="/role-list" className="nav-link">
                         {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
                         <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
                             <FontAwesomeIcon icon={faLock} className="text-light text-lg opacity-10" aria-hidden="true"/>
