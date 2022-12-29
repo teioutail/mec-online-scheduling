@@ -9,8 +9,14 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { listRoles } from '../actions/roleActions'
+import { 
+    faPlus,
+    faEllipsisV,
+    faUserPen,
+    faLocationPin,
+    faUniversalAccess,
+} from '@fortawesome/free-solid-svg-icons'
 
 const RoleListScreen = () => {
     //
