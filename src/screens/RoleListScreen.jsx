@@ -13,6 +13,7 @@ import {
     listRoles,
     getRoleDetails 
 } from '../actions/roleActions'
+
 import { 
     faPlus,
     faEllipsisV,
@@ -20,6 +21,8 @@ import {
     faLocationPin,
     faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
+
+import EditRoleModal from '../modals/Role/EditRoleModal'
 
 const RoleListScreen = () => {
     //
@@ -151,6 +154,13 @@ const RoleListScreen = () => {
                     pointerOnHover
                     selectableRowsHighlight
                 />
+
+                <EditRoleModal 
+                    show={show} 
+                    onHide={handleClose} 
+                    roleid={roleid} 
+                />
+
                 <Footer />
             </FormContainer>
         </>

@@ -5,6 +5,8 @@ import {
     ROLE_LIST_SUCCESS,
     ROLE_LIST_FAIL,
     ROLE_LIST_RESET,
+    ROLE_DETAILS_RESET,
+    ROLE_DETAILS_REQUEST,
 } from '../constants/roleConstants'
 
 // View List of Roles
@@ -33,6 +35,7 @@ export const listRoles = () => async (dispatch, getState) => {
             type: ROLE_LIST_SUCCESS,
             payload: data
         })
+
         // console.warn(data)
 
     } catch(error) {
@@ -49,5 +52,29 @@ export const listRoles = () => async (dispatch, getState) => {
 
 // Get Role Details Action
 export const getRoleDetails = (id) => async(dispatch, getState) => {
-    console.warn(`it sucks ${id}`)
+    // 
+    // console.warn(`it sucks ${id}`)
+    try {
+        dispatch({
+            type: ROLE_DETAILS_RESET,
+        })
+
+        dispatch({
+            type: ROLE_DETAILS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        console.warn(userInfo)
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: ROLE_LIST_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
 }

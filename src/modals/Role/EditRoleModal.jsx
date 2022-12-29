@@ -10,7 +10,7 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { updateUser, listUsers } from '../../actions/userActions'
 
-const EditRoleModal = ({ show , onHide, userid, userDetails }) => {
+const EditRoleModal = ({ show , onHide, userid }) => {
 
   // Redux
   const dispatch = useDispatch()
@@ -191,4 +191,4 @@ const EditRoleModal = ({ show , onHide, userid, userDetails }) => {
   )
 }
 
-export default EditUserModal
+export default EditRoleModal
