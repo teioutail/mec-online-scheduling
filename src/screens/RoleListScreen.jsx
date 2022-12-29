@@ -9,7 +9,10 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { listRoles } from '../actions/roleActions'
+import { 
+    listRoles,
+    getRoleDetails 
+} from '../actions/roleActions'
 import { 
     faPlus,
     faEllipsisV,
@@ -30,6 +33,7 @@ const RoleListScreen = () => {
     // Role List
     const roleList = useSelector(state => state.roleList)
     const { loading, error, roles } = roleList
+
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -37,6 +41,22 @@ const RoleListScreen = () => {
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
+
+    // EditRoleModal
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    // Global ID
+    const [roleid, setRoleId] = useState('')
+
+    // Edit Role
+    const handleEditRoleView = (state) => {
+        setShow(true)
+        setRoleId(state.target.id)
+        // Call API Here...
+        dispatch(getRoleDetails(state.target.id))
+    }
 
     // Columns
     const columns = useMemo(
@@ -58,7 +78,33 @@ const RoleListScreen = () => {
                 name: 'Status',
                 selector: row => row.status,
                 sortable: true,
-            }
+            },
+            {
+                name: 'Action',
+				cell: (row) => {
+                    // console.log(row.id);
+                    return <>
+                        {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
+                        <div className="dropdown">
+                            <button className="btn btn-link" id={row.id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon icon={faEllipsisV} />
+                            </button>
+                            <ul className="dropdown-menu">
+                                {/* <li><a className="dropdown-item" href="#" onClick={handleButtonClick(row.id)}>Edit User</a></li> */}
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.id}>
+                                        <FontAwesomeIcon icon={faUniversalAccess} /> Edit Role
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </>
+                },
+                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
+				ignoreRowClick: true,
+				allowOverflow: true,
+				button: true,
+			},
 		],
 		[],
 	);
