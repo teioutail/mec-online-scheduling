@@ -10,7 +10,7 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { updateUser, listUsers } from '../../actions/userActions'
 
-const EditRoleModal = ({ show , onHide, userid }) => {
+const EditRoleModal = ({ show , onHide, roleid }) => {
 
   // Redux
   const dispatch = useDispatch()
@@ -43,7 +43,7 @@ const EditRoleModal = ({ show , onHide, userid }) => {
       if (result.isConfirmed) {
         // Updated User Data
         const user = {
-          id: userid,
+          id: roleid,
           name: name,
           username: username,
           email: email,
@@ -93,16 +93,16 @@ const EditRoleModal = ({ show , onHide, userid }) => {
 
 //   }, [userDetails])
 
-    useEffect(() => {
+useEffect(() => {
 
-    })
+})
 
   return (
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
         {/* <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title> */}
-        <Modal.Title>{ userid == '' ? 'Add User' : 'Edit User'  }</Modal.Title>
+        <Modal.Title>{ roleid == '' ? 'Add User' : 'Edit User'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
