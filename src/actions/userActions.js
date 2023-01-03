@@ -311,7 +311,7 @@ export const deleteUser = (id) => async(dispatch, getState) => {
     } catch(error) {
         // 
         dispatch({
-            type: USER_DELETE_REQUEST,
+            type: USER_DELETE_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 
