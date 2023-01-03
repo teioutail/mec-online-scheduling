@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { 
   Button, 
-  Modal,
+  Modal,  
   Form,
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,12 +53,12 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           reporting_team: reporting,
           user_type: utype,
         }
-
+        // 
         if(mode == 'Add') {
           // Show Success Request
           Swal.fire(
             'Success!',
-            'Successfully Added.',
+            'New User Successfully Added.',
             'success'
           )
           // 
@@ -70,19 +70,17 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
 
         } else {
           // 
-          if( dispatch(updateUser(user)) ) {
-            // Show Success Request
-            Swal.fire(
-              'Success!',
-              'Successfully Updated.',
-              'success'
-            )
-            // Refresh Datatable
-            dispatch(listUsers())
-            // Close Modal
-            onHide()
-          }
-
+          dispatch(updateUser(user))
+          // Show Success Request
+          Swal.fire(
+            'Success!',
+            'User Details Successfully Updated.',
+            'success'
+          )
+          // Refresh Datatable
+          dispatch(listUsers())
+          // Close Modal
+          onHide()
         }
 
       }
