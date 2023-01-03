@@ -7,7 +7,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
     listUsers, 
-    getUserDetails 
+    getUserDetails,
+    deleteUser
 } from '../../actions/userActions'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
@@ -19,6 +20,7 @@ import {
     faUserPen,
     faLocationPin,
     faUniversalAccess,
+    faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { 
@@ -90,6 +92,14 @@ const UserListScreen = () => {
        dispatch(getUserDetails(state.target.id))
     }
 
+    // Delete User
+    const handleDeleteUser = (state) => {
+        // 
+        console.warn(state.target.id)
+        //
+        dispatch(deleteUser(state.target.id))
+    }
+
     // Columns
     const columns = useMemo(
 		() => [
@@ -156,6 +166,11 @@ const UserListScreen = () => {
                                 <li>
                                     <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
                                         <FontAwesomeIcon icon={faLocationPin} /> Designation
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteUser} id={row.id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete User
                                     </Link>
                                 </li>
                             </ul>

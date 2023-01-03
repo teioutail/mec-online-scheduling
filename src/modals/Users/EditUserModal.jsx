@@ -31,7 +31,6 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
-
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -82,7 +81,6 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           // Close Modal
           onHide()
         }
-
       }
     })
   }

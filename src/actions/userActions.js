@@ -24,6 +24,9 @@ import {
     USER_CREATE_SUCCESS,
     USER_CREATE_RESET,
     USER_CREATE_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_DELETE_FAIL, 
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -267,9 +270,10 @@ export const updateUser = (user) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             },
         }
+
         // Call API Request
         const { data } = await axios.put(`/auth/users/${user.id}`, user, config)
-
+        // 
         dispatch({ type: USER_UPDATE_SUCCESS })
 
     } catch(error) {
@@ -283,6 +287,24 @@ export const updateUser = (user) => async (dispatch, getState) => {
         })
     }
 }
+
+// Delete User
+export const deleteUser = (id) => async(dispatch, getState) => {
+    try {
+
+        alert("test");
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: USER_DELETE_REQUEST,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+} 
 
 // Logout Action
 export const logout = () => (dispatch) => {
