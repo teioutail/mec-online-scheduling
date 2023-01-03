@@ -26,10 +26,13 @@ import {
 import { 
     USER_DETAILS_RESET 
 } from '../../constants/userConstants'
-
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditUserModal from '../../modals/Users/EditUserModal'
 
 const UserListScreen = () => {
+    // CommonJS
+    const Swal = require('sweetalert2')
+
     // Header Title
     const headerTitle = 'User List'
 
@@ -94,10 +97,23 @@ const UserListScreen = () => {
 
     // Delete User
     const handleDeleteUser = (state) => {
-        // 
-        console.warn(state.target.id)
+
+    // Save Change Here...
+    Swal.fire({
+        title: 'Delete this user?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+      }).then((result) => {
         //
-        dispatch(deleteUser(state.target.id))
+        if (result.isConfirmed) {
+            // Delete User
+            dispatch(deleteUser(state.target.id))
+        }
+      })
     }
 
     // Columns
