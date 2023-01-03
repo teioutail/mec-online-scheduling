@@ -114,8 +114,12 @@ const UserListScreen = () => {
             dispatch(deleteUser(state.target.id))
             // Refresh Datatable
             dispatch(listUsers())
-
-            
+            // Show Success Request
+            Swal.fire(
+                'Success!',
+                'User Successfully Deleted.',
+                'success'
+            )
         }
       })
     }
