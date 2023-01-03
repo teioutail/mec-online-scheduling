@@ -290,9 +290,23 @@ export const updateUser = (user) => async (dispatch, getState) => {
 
 // Delete User
 export const deleteUser = (id) => async(dispatch, getState) => {
+    //
     try {
 
-        alert("test");
+        dispatch({type: USER_DELETE_REQUEST})
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+
+        // Call API Request
+        await axios.delete(`/auth/users/${id}`, config)
+        
+        dispatch({ type: USER_DELETE_SUCCESS })
 
     } catch(error) {
         // 
@@ -304,7 +318,7 @@ export const deleteUser = (id) => async(dispatch, getState) => {
             : error.message,
         })
     }
-} 
+}
 
 // Logout Action
 export const logout = () => (dispatch) => {
