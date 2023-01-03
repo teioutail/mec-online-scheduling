@@ -60,7 +60,8 @@ const UserListScreen = () => {
 
     // Global ID
     const [userid, setUserId] = useState('')
-    
+    const [mode, setMode] = useState('')
+
     // Action Event Handler
     const handleButtonClick = (state) => {
         // 
@@ -71,6 +72,8 @@ const UserListScreen = () => {
     const handleAddUserView = (state) => {
         // Show Modal
         handleShow()
+        // setMode State to Add
+        setMode('Add')
         // 
         dispatch({
             type: USER_DETAILS_RESET,
@@ -82,6 +85,7 @@ const UserListScreen = () => {
        // console.warn(`You Clicked Item ${state.target.id}`)
        setShow(true)
        setUserId(state.target.id)
+       setMode('Edit')
        // Call API Here...
        dispatch(getUserDetails(state.target.id))
     }
@@ -242,6 +246,7 @@ const UserListScreen = () => {
                 onHide={handleClose} 
                 userid={userid} 
                 userDetails={userDetail}
+                mode={mode}
             />
 
           <Footer/>

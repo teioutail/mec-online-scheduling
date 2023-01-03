@@ -10,11 +10,11 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
   updateUser, 
-  listUsers 
+  listUsers,
+  createUser,
 } from '../../actions/userActions'
 
-const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
-
+const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
   // Redux
   const dispatch = useDispatch()
 
@@ -31,7 +31,7 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
-    
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -54,22 +54,38 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
           user_type: utype,
         }
 
-        // 
-        if( dispatch(updateUser(user)) ) {
+        if(mode == 'Add') {
           // Show Success Request
           Swal.fire(
             'Success!',
-            'Your file has been deleted.',
+            'Successfully Added.',
             'success'
           )
+          // 
+          dispatch(createUser(user))
           // Refresh Datatable
           dispatch(listUsers())
           // Close Modal
           onHide()
-        }
-        
-      }
 
+        } else {
+          // 
+          if( dispatch(updateUser(user)) ) {
+            // Show Success Request
+            Swal.fire(
+              'Success!',
+              'Successfully Updated.',
+              'success'
+            )
+            // Refresh Datatable
+            dispatch(listUsers())
+            // Close Modal
+            onHide()
+          }
+
+        }
+
+      }
     })
   }
 
@@ -100,7 +116,7 @@ const EditUserModal = ({ show, handleTest , onHide, userid, userDetails }) => {
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
         {/* <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title> */}
-        <Modal.Title>{ userid == '' ? 'Add User' : 'Edit User'  }</Modal.Title>
+        <Modal.Title>{ mode == 'Add' ? 'Add User' : 'Edit User'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">

@@ -20,6 +20,10 @@ import {
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
     USER_UPDATE_RESET,
+    USER_CREATE_REQUEST,
+    USER_CREATE_SUCCESS,
+    USER_CREATE_RESET,
+    USER_CREATE_FAIL,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -158,7 +162,6 @@ export const listUsers = () => async (dispatch, getState) => {
 export const getUserDetails = (id) => async (dispatch, getState) => {
     //
     try {
-
         dispatch({
             type: USER_DETAILS_RESET,
         })
@@ -204,6 +207,45 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }
 }
 
+// Add User
+export const createUser = (user) => async (dispatch) => {
+    //
+    try {
+        dispatch({
+            type: USER_CREATE_REQUEST,
+        })
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post(
+            '/auth/users',
+            user,
+            config
+        )
+
+        dispatch({
+            type: USER_CREATE_SUCCESS,
+            payload: data
+        }) 
+
+    } catch(error) {
+        //
+        dispatch({
+            type: USER_CREATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
 // Update User
 export const updateUser = (user) => async (dispatch, getState) => {
     //
@@ -223,7 +265,6 @@ export const updateUser = (user) => async (dispatch, getState) => {
             headers : {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo.access_token}`,
-                // 'X-Requested-With':'XMLHttpRequest',
             },
         }
 
@@ -248,7 +289,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             : error.message,
         })
     }
-} 
+}
 
 // Logout Action
 export const logout = () => (dispatch) => {
