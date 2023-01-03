@@ -112,6 +112,10 @@ const UserListScreen = () => {
         if (result.isConfirmed) {
             // Delete User
             dispatch(deleteUser(state.target.id))
+            // Refresh Datatable
+            dispatch(listUsers())
+
+            
         }
       })
     }
