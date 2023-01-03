@@ -232,7 +232,7 @@ export const createUser = (user) => async (dispatch) => {
         dispatch({
             type: USER_CREATE_SUCCESS,
             payload: data
-        }) 
+        })
 
     } catch(error) {
         //
