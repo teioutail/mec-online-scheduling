@@ -63,7 +63,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           activated: activate,
         }
 
-        // 
+        // dito update
         console.warn(user)
 
         // 
@@ -190,7 +190,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>User Type</Form.Label>
+            <Form.Label>Designation</Form.Label>
             <Form.Control 
               as='select' 
               aria-label="user type"
@@ -212,6 +212,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
               id="custom-switch"
               label="Activate User?"
               value={activate}
+              checked={activate}
               onChange={handleCheckboxChange}
             />
           </Form.Group>
