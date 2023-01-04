@@ -17,11 +17,9 @@ import {
 import { 
     faPlus,
     faEllipsisV,
+    faTrash,
     faUserPen,
-    faLocationPin,
-    faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
-
 import EditRoleModal from '../modals/Role/EditRoleModal'
 
 const RoleListScreen = () => {
@@ -61,6 +59,11 @@ const RoleListScreen = () => {
         dispatch(getRoleDetails(state.target.id))
     }
 
+    // Delete Role
+    const handleDeleteRole = (state) => {
+        alert('testing lang muna')
+    }
+
     // Columns
     const columns = useMemo(
 		() => [
@@ -95,7 +98,12 @@ const RoleListScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUniversalAccess} /> Edit Role
+                                        <FontAwesomeIcon icon={faUserPen} /> Edit Role
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete Role
                                     </Link>
                                 </li>
                             </ul>

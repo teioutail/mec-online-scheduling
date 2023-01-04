@@ -6,10 +6,22 @@ import {
     faUsers,
     faLock
 } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SideMenu = () => {
-    // 
+
+  // Redux
+  const dispatch = useDispatch()
+
+  // User Login Info
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
+  // 
   useEffect(() => {
+    // Get User Role
+    // console.warn(userInfo.user.name)
+
     // Delay execution of argon-dashboard.js for sidemenu
     const script = document.createElement("script");
     script.src = "assets/js/soft-ui-dashboard.js";
@@ -37,6 +49,7 @@ const SideMenu = () => {
             <hr className="horizontal dark mt-0" />
             <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul className="navbar-nav">
+
 
                 <li className="nav-item">
                     <Link className="nav-link" to="/dashboard">

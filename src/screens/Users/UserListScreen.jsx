@@ -193,6 +193,7 @@ const UserListScreen = () => {
             },
             {
                 name: 'Status',
+                // <span class="badge badge-sm bg-gradient-success">
                 selector: row => row.activated,
                 sortable: true,
             },
