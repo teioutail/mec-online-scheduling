@@ -288,6 +288,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
         })
     }
 }
+
 // RESET USER PASSWORD
 export const resetUserPassword = (id) => async(dispatch, getState) => {
     //
@@ -301,9 +302,10 @@ export const resetUserPassword = (id) => async(dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             },
         }
-        
         // Call API Request
         await axios.get(`/auth/users/reset/${id}`, config)
+
+        dispatch({ type: USER_RESET_PASSWORD_SUCCESS })
 
     } catch(error) {
         // 

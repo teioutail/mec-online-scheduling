@@ -65,7 +65,6 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
 
         // dito update
         console.warn(user)
-
         // 
         if(mode == 'Add') {
           // Show Success Request

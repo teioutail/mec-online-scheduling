@@ -19,7 +19,6 @@ import {
     faPlus,
     faEllipsisV,
     faUserPen,
-    faLocationPin,
     faUniversalAccess,
     faTrash,
     faUnlock,
@@ -217,11 +216,6 @@ const UserListScreen = () => {
                                 <li>
                                     <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
                                         <FontAwesomeIcon icon={faUniversalAccess} /> Access Rights
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
-                                        <FontAwesomeIcon icon={faLocationPin} /> Designation
                                     </Link>
                                 </li>
                                 <li>
