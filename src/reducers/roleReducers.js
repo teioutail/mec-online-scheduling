@@ -25,7 +25,7 @@ export const roleListReducer = (state = { roles: [] }, action ) => {
     }
 }
 
-// 
+// Get Selected Role Detail
 export const roleDetailsReducer = (state= { role: {} } , action) => {
     //
     switch(action.type) {

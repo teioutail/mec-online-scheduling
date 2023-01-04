@@ -16,7 +16,8 @@ import {
 
 // Role Reducer
 import { 
-    roleListReducer
+    roleListReducer,
+    roleDetailsReducer,
  } from './reducers/roleReducers'
 
 // Reducers
@@ -30,6 +31,7 @@ const reducer = combineReducers({
     userDelete: userDeleteReducer,
     userPasswordReset: userResetPasswordReducer,
     roleList: roleListReducer,
+    roleDetails: roleDetailsReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
