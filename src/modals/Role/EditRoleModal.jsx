@@ -14,25 +14,18 @@ import {
 } from '../../actions/userActions'
 
 const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
-
   // Redux
   const dispatch = useDispatch()
-
   // setState
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [manage, setManage] = useState('')
-  const [reporting, setReporting] = useState('')
-  const [utype, setUserType] = useState('')
+  const [rolename, setRoleName] = useState('')
+  const [description, setDescription] = useState('')
+  const [status, setStatus] = useState('')
 
   // CommonJS
   const Swal = require('sweetalert2')
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
-    // console.warn(userDetails)
-
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -45,29 +38,29 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
 
       if (result.isConfirmed) {
         // Updated User Data
-        const user = {
+        const role = {
           id: roleid,
-          name: name,
-          username: username,
-          email: email,
-          manage_team: manage,
-          reporting_team: reporting,
-          user_type: utype,
+          rolename: rolename,
+          description: description,
+          status: status
         }
 
-        // 
-        if( dispatch(updateUser(user)) ) {
-          // Show Success Request
-          Swal.fire(
-            'Success!',
-            'Your file has been deleted.',
-            'success'
-          )
-          // Refresh Datatable
-          dispatch(listUsers())
-          // Close Modal
-          onHide()
-        }
+        //
+        console.warn(role)
+
+        // // 
+        // if( dispatch(updateUser(user)) ) {
+        //   // Show Success Request
+        //   Swal.fire(
+        //     'Success!',
+        //     'Your file has been deleted.',
+        //     'success'
+        //   )
+        //   // Refresh Datatable
+        //   dispatch(listUsers())
+        //   // Close Modal
+        //   onHide()
+        // }
         
       }
 
@@ -75,30 +68,19 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   }
 
 // 
-//   useEffect(() => {
-//     // Selected User Details
-//     const { 
-//       name, 
-//       username, 
-//       email, 
-//       manage_team, 
-//       reporting_team,
-//       user_type,
-//     } = userDetails
+  useEffect(() => {
+    // Selected User Details
+    const {  
+      name,
+      description,
+      status
+    } = roleDetails
 
-//     // 
-//     setName(name || "")
-//     setUsername(username || "")
-//     setEmail(email || "")
-//     setManage(manage_team || "")
-//     setReporting(reporting_team || "")
-//     setUserType(user_type || "")
-
-//   }, [userDetails])
-
-useEffect(() => {
-
-})
+    // setState
+    setRoleName(name || "")
+    setDescription(description || "")
+    setStatus(status || "")
+  }, [roleDetails])
 
   return (
     <>
@@ -112,8 +94,8 @@ useEffect(() => {
             <Form.Control 
               type='text'
               placeholder='Role Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={rolename}
+              onChange={(e) => setRoleName(e.target.value)}
             />
           </Form.Group>
 
@@ -122,8 +104,8 @@ useEffect(() => {
             <Form.Control 
               type='text'
               placeholder='Description'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
@@ -132,8 +114,8 @@ useEffect(() => {
             <Form.Control 
               type='text'
               placeholder='Status'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
             />
           </Form.Group>
 
