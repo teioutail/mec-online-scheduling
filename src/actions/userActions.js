@@ -175,8 +175,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         
         const { userLogin: { userInfo } } = getState()
 
-        // console.log(user)
-
         // Header
         const config = {
             headers: {

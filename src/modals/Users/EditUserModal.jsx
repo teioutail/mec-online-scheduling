@@ -24,10 +24,19 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
   const [manage, setManage] = useState('')
   const [reporting, setReporting] = useState('')
   const [utype, setUserType] = useState('')
-  const [activate, setActivate] = useState(0)
+  const [activate, setActivate] = useState(false)
 
   // CommonJS
   const Swal = require('sweetalert2')
+
+  // Event in checkbox
+  const handleCheckboxChange = (event) => {
+    const target = event.target
+    const checked = target.checked
+    const name = target.name
+    setActivate(checked)
+  }
+  
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
@@ -53,6 +62,9 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           user_type: utype,
           activated: activate,
         }
+
+        // 
+        console.warn(user)
 
         // 
         if(mode == 'Add') {
@@ -97,6 +109,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
       manage_team, 
       reporting_team,
       user_type,
+      approved,
     } = userDetails
 
     // 
@@ -106,6 +119,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
     setManage(manage_team || "")
     setReporting(reporting_team || "")
     setUserType(user_type || "")
+    setActivate(approved === 0 ? false : true)
 
   }, [userDetails])
 
@@ -197,8 +211,8 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
               type="switch"
               id="custom-switch"
               label="Activate User?"
-              value={setActivate}
-              onChange={(e) => setActivate(e.target.value)}
+              value={activate}
+              onChange={handleCheckboxChange}
             />
           </Form.Group>
         </Modal.Body>
