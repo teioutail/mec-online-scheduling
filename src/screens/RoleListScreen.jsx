@@ -82,7 +82,7 @@ const RoleListScreen = () => {
             },
             {
                 name: 'Status',
-                selector: row => row.status,
+                selector: row => row.activated,
                 sortable: true,
             },
             {
