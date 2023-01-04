@@ -7,6 +7,8 @@ import {
     ROLE_LIST_RESET,
     ROLE_DETAILS_RESET,
     ROLE_DETAILS_REQUEST,
+    ROLE_DETAILS_SUCCESS,
+    ROLE_DETAILS_FAIL,
 } from '../constants/roleConstants'
 
 // View List of Roles
@@ -76,12 +78,15 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
         // Call API Request
         const { data } = await axios.get(`/auth/roles/${id}`, config)
 
-        // console.warn(data)
+        dispatch({
+            type: ROLE_DETAILS_SUCCESS,
+            payload: data,
+        })
 
     } catch(error) {
         // 
         dispatch({
-            type: ROLE_LIST_FAIL,
+            type: ROLE_DETAILS_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 

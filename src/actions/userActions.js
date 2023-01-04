@@ -194,11 +194,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             payload: data
         })
 
-        // // Get User Details
-        // const { userDetails: { user } } = getState()
-
-        // console.warn(user)
-
     } catch(error) {
         // 
         dispatch({

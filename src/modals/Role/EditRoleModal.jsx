@@ -13,7 +13,7 @@ import {
   listUsers,
 } from '../../actions/userActions'
 
-const EditRoleModal = ({ show , mode, onHide, roleid }) => {
+const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
 
   // Redux
   const dispatch = useDispatch()

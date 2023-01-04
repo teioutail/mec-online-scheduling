@@ -39,6 +39,10 @@ const RoleListScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    // Role Info
+    const roleDetails = useSelector(state => state.roleDetails)
+    const { role: roleDetail } = roleDetails
+
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
@@ -169,6 +173,7 @@ const RoleListScreen = () => {
                     show={show} 
                     onHide={handleClose} 
                     roleid={roleid}
+                    roleDetails={roleDetail}
                     mode={mode}
                 />
 
