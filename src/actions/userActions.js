@@ -27,6 +27,9 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
     USER_DELETE_FAIL, 
+    USER_RESET_PASSWORD_REQUEST,
+    USER_RESET_PASSWORD_SUCCESS,
+    USER_RESET_PASSWORD_FAIL,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -285,6 +288,34 @@ export const updateUser = (user) => async (dispatch, getState) => {
         })
     }
 }
+// RESET USER PASSWORD
+export const resetUserPassword = (id) => async(dispatch, getState) => {
+    //
+    try {
+        dispatch({ type: USER_RESET_PASSWORD_REQUEST })
+
+        const  { userLogin : { userInfo} } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        
+        // Call API Request
+        await axios.get(`/auth/users/reset/${id}`, config)
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: USER_RESET_PASSWORD_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+} 
 
 // Delete User
 export const deleteUser = (id) => async(dispatch, getState) => {

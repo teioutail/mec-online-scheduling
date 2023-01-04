@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
     listUsers, 
     getUserDetails,
-    deleteUser
+    deleteUser,
+    resetUserPassword,
 } from '../../actions/userActions'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
@@ -21,6 +22,7 @@ import {
     faLocationPin,
     faUniversalAccess,
     faTrash,
+    faUnlock,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { 
@@ -97,31 +99,61 @@ const UserListScreen = () => {
 
     // Delete User
     const handleDeleteUser = (state) => {
+        // Save Change Here...
+        Swal.fire({
+            title: 'Delete this user?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Proceed!'
+        }).then((result) => {
+            //
+            if (result.isConfirmed) {
+                // Delete User
+                dispatch(deleteUser(state.target.id))
+                // Refresh Datatable
+                dispatch(listUsers())
+                // Show Success Request
+                Swal.fire(
+                    'Success!',
+                    'User Successfully Deleted.',
+                    'success'
+                )
+            }
+        })
+    }
 
-    // Save Change Here...
-    Swal.fire({
-        title: 'Delete this user?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Proceed!'
-      }).then((result) => {
-        //
-        if (result.isConfirmed) {
-            // Delete User
-            dispatch(deleteUser(state.target.id))
-            // Refresh Datatable
-            dispatch(listUsers())
-            // Show Success Request
-            Swal.fire(
-                'Success!',
-                'User Successfully Deleted.',
-                'success'
-            )
-        }
-      })
+    // Reset User Pasword
+    const handleResetPassword = (state) => {
+        // Save Change Here...
+        Swal.fire({
+            title: 'Reset password to default?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Proceed!'
+        }).then((result) => {
+            //
+            if (result.isConfirmed) {
+                // // Delete User
+                // dispatch(deleteUser(state.target.id))
+                // // Refresh Datatable
+                // dispatch(listUsers())
+                // // Show Success Request
+
+                dispatch(resetUserPassword(state.target.id))
+
+                Swal.fire(
+                    'Success!',
+                    'Password successfully reset to default.',
+                    'success'
+                )
+            }
+        })
     }
 
     // Columns
@@ -190,6 +222,11 @@ const UserListScreen = () => {
                                 <li>
                                     <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
                                         <FontAwesomeIcon icon={faLocationPin} /> Designation
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleResetPassword} id={row.id}>
+                                        <FontAwesomeIcon icon={faUnlock} /> Reset Password
                                     </Link>
                                 </li>
                                 <li>
@@ -283,7 +320,7 @@ const UserListScreen = () => {
             <EditUserModal 
                 show={show} 
                 onHide={handleClose} 
-                userid={userid} 
+                userid={userid}
                 userDetails={userDetail}
                 mode={mode}
             />
