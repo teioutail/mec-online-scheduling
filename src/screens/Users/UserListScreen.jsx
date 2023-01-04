@@ -152,12 +152,12 @@ const UserListScreen = () => {
             },
             {
                 name: 'Managing Team',
-                selector: row => row.manage_team,
+                selector: row => row.manage_name,
                 sortable: true,
             },
             {
                 name: 'Reporting Team',
-                selector: row => row.reporting_team,
+                selector: row => row.report_name,
                 sortable: true,
             },
             {
