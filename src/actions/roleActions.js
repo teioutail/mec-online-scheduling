@@ -65,7 +65,19 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
 
         const { userLogin: { userInfo } } = getState()
 
-        console.warn(userInfo)
+        // Header
+        const config = {
+            headers: {
+                'Conent-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/roles/${id}`, config)
+
+
+        console.warn(data)
 
     } catch(error) {
         // 

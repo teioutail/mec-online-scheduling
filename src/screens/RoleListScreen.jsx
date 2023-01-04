@@ -50,11 +50,13 @@ const RoleListScreen = () => {
 
     // Global ID
     const [roleid, setRoleId] = useState('')
+    const [mode, setMode] = useState('')
 
     // Edit Role
     const handleEditRoleView = (state) => {
         setShow(true)
         setRoleId(state.target.id)
+        setMode('Edit')
         // Call API Here...
         dispatch(getRoleDetails(state.target.id))
     }
@@ -166,7 +168,8 @@ const RoleListScreen = () => {
                 <EditRoleModal 
                     show={show} 
                     onHide={handleClose} 
-                    roleid={roleid} 
+                    roleid={roleid}
+                    mode={mode}
                 />
 
                 <Footer />

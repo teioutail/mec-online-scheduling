@@ -4,13 +4,16 @@ import {
   Button, 
   Modal,
   Form,
-} from 'react-bootstrap'
+} from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { updateUser, listUsers } from '../../actions/userActions'
+import { 
+  updateUser, 
+  listUsers,
+} from '../../actions/userActions'
 
-const EditRoleModal = ({ show , onHide, roleid }) => {
+const EditRoleModal = ({ show , mode, onHide, roleid }) => {
 
   // Redux
   const dispatch = useDispatch()
@@ -101,84 +104,37 @@ useEffect(() => {
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-        {/* <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title> */}
-        <Modal.Title>{ roleid == '' ? 'Add User' : 'Edit User'  }</Modal.Title>
+        <Modal.Title>{ roleid == '' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Role Name</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Name'
+              placeholder='Role Name'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Description</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Username'
+              placeholder='Description'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Status</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Email'
+              placeholder='Status'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Manage Team</Form.Label>
-            <Form.Control 
-              as='select' 
-              aria-label="manage team"
-              value={manage}
-              onChange={(e) => setManage(e.target.value)}
-            >
-            <option value="">- Select -</option>
-            <option value="1">Pre-Sales</option>
-            <option value="2">Post-Sales</option>
-          </Form.Control>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Reporting Team</Form.Label>
-            <Form.Control 
-              as='select' 
-              aria-label="reporting team"
-              value={reporting}
-              onChange={(e) => setReporting(e.target.value)}
-            >
-            <option value="">- Select -</option>
-            <option value="1">Pre-Sales</option>
-            <option value="2">Post-Sales</option>
-          </Form.Control>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>User Type</Form.Label>
-            <Form.Control 
-              as='select' 
-              aria-label="user type"
-              value={utype}
-              onChange={(e) => setUserType(e.target.value)}
-            >
-            <option value="">- Select -</option>
-            <option value="1">Sales</option>
-            <option value="2">Teamlead</option>
-            <option value="3">Supervisor</option>
-            <option value="4">Manager</option>
-            <option value="5">Engineer</option>
-            <option value="6">Admin</option>
-            </Form.Control>
           </Form.Group>
 
         </Modal.Body>
