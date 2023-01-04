@@ -17,7 +17,6 @@ import {
 const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
   // Redux
   const dispatch = useDispatch()
-
   // setState
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
@@ -25,6 +24,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
   const [manage, setManage] = useState('')
   const [reporting, setReporting] = useState('')
   const [utype, setUserType] = useState('')
+  const [activate, setActivate] = useState(0)
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -51,7 +51,9 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           manage_team: manage,
           reporting_team: reporting,
           user_type: utype,
+          activated: activate,
         }
+
         // 
         if(mode == 'Add') {
           // Show Success Request
@@ -190,7 +192,15 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
             <option value="6">Admin</option>
             </Form.Control>
           </Form.Group>
-
+          <Form.Group className="mb-3">
+            <Form.Check 
+              type="switch"
+              id="custom-switch"
+              label="Activate User?"
+              value={setActivate}
+              onChange={(e) => setActivate(e.target.value)}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
