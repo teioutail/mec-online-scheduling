@@ -102,7 +102,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     // setState
     setRoleName(name || "")
     setDescription(description || "")
-    setStatus(status || "")
+    setStatus(status || "0")
   }, [roleDetails])
 
   return (
