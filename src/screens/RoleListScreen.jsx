@@ -20,6 +20,9 @@ import {
     faTrash,
     faUserPen,
 } from '@fortawesome/free-solid-svg-icons'
+import { 
+    ROLE_DETAILS_RESET 
+} from '../constants/roleConstants'
 import EditRoleModal from '../modals/Role/EditRoleModal'
 
 const RoleListScreen = () => {
@@ -55,6 +58,18 @@ const RoleListScreen = () => {
     // Global ID
     const [roleid, setRoleId] = useState('')
     const [mode, setMode] = useState('')
+
+    // Add User Modal
+    const handleRoleView = (state) => {
+        // Show Modal
+        handleShow()
+        // setMode State to Add
+        setMode('Add')
+        //
+        dispatch({
+            type: ROLE_DETAILS_RESET,
+        })
+    }
 
     // Edit Role
     const handleEditRoleView = (state) => {
@@ -150,7 +165,7 @@ const RoleListScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end">
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
                         <FontAwesomeIcon icon={faPlus} /> Add New
                     </Button>
 

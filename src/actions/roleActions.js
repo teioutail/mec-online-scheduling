@@ -103,7 +103,6 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
 export const updateRole = (role) => async (dispatch, getState) => {
     //
     try {
-
         dispatch({
             type: ROLE_UPDATE_REQUEST,
         })
@@ -124,10 +123,12 @@ export const updateRole = (role) => async (dispatch, getState) => {
         // Call API Request
         const { data } = await axios.put(`/auth/roles/${role.id}`, role, config)
 
-        dispatch({
-            type: USER_UPDATE_SUCCESS
-        })
+        // console.warn(data)
 
+        dispatch({
+            type: ROLE_UPDATE_SUCCESS,
+            payload: data,
+        })
 
     } catch(error) {
         //
