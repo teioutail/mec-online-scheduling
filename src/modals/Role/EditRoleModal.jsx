@@ -128,8 +128,8 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
               onChange={(e) => setStatus(e.target.value)}
             >
             <option value="">- Select -</option>
-            <option value="1">Enable</option>
             <option value="0">Disable</option>
+            <option value="1">Enable</option>
             </Form.Control>
           </Form.Group>
 
