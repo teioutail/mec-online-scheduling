@@ -319,7 +319,9 @@ export const deleteUser = (id) => async(dispatch, getState) => {
     //
     try {
 
-        dispatch({type: USER_DELETE_REQUEST})
+        dispatch({
+            type: USER_DELETE_REQUEST,
+        })
 
         const { userLogin: { userInfo } } = getState()
 
