@@ -79,73 +79,25 @@ const SideMenu = () => {
                         <span className="nav-link-text ms-1">Role</span>
                     </Link>
                 </li>
-                
-                <li className="nav-item dropdown pe-2 d-flex align-items-center">
-                    {/* <a href="#" className="nav-link text-body p-0 show" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="true">
-                        <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                    </a> */}
-                    <Link className="nav-link text-body p-0">
-                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="true">    
+
+                <li className="nav-item">
+                    <Link className="nav-link">
+                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
+                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
                             <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
                         </div>
                         <span className="nav-link-text ms-1">Menu Management</span>
                     </Link>
-                    <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton" data-bs-popper="static">
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="#">
-                                <div class="d-flex py-1">
-                                <div class="my-auto">
-                                    <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 " />
-                                </div>
-                                <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">New message</span> from Laur
-                                    </h6>
-                                    <p class="text-xs text-secondary mb-0 ">
-                                    <i class="fa fa-clock me-1" aria-hidden="true"></i>
-                                    13 minutes ago
-                                    </p>
-                                </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="#">
-                                <div class="d-flex py-1">
-                                <div class="my-auto">
-                                    <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 " />
-                                </div>
-                                <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">New album</span> by Travis Scott
-                                    </h6>
-                                    <p class="text-xs text-secondary mb-0 ">
-                                    <i class="fa fa-clock me-1" aria-hidden="true"></i>
-                                    1 day
-                                    </p>
-                                </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item border-radius-md" href="#">
-                                <div class="d-flex py-1">
-                                <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-
-                                </div>
-                                <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="text-sm font-weight-normal mb-1">
-                                    Payment successfully completed
-                                    </h6>
-                                    <p class="text-xs text-secondary mb-0 ">
-                                    <i class="fa fa-clock me-1" aria-hidden="true"></i>
-                                    2 days
-                                    </p>
-                                </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="dropdown">
+                        <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                        </button>
+                        <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item border-radius-md" href="#">Action</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="#">Another action</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li className="nav-item">
