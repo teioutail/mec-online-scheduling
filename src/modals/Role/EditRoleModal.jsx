@@ -121,7 +121,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Status</Form.Label>
-            <Form.Control 
+            <Form.Control
               as='select' 
               aria-label="Status"
               value={status}
