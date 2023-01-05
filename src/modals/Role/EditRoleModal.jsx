@@ -64,7 +64,6 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             'New Role Added Successfully.',
             'success'
           )
-          
           // Create Role 
           dispatch(createRole(role))
           // Refresh Datatable
