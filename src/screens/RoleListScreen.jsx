@@ -11,7 +11,8 @@ import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     listRoles,
-    getRoleDetails 
+    getRoleDetails,
+    deleteRole,
 } from '../actions/roleActions'
 
 import { 
@@ -82,7 +83,9 @@ const RoleListScreen = () => {
 
     // Delete Role
     const handleDeleteRole = (state) => {
-        alert('testing lang muna')
+        
+        dispatch(deleteRole(state.target.id))
+
     }
 
     // Columns

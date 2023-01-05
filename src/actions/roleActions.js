@@ -4,7 +4,6 @@ import {
     ROLE_LIST_REQUEST,
     ROLE_LIST_SUCCESS,
     ROLE_LIST_FAIL,
-    ROLE_LIST_RESET,
     ROLE_DETAILS_RESET,
     ROLE_DETAILS_REQUEST,
     ROLE_DETAILS_SUCCESS,
@@ -15,9 +14,10 @@ import {
     ROLE_CREATE_REQUEST,
     ROLE_CREATE_SUCCESS,
     ROLE_CREATE_FAIL,
+    ROLE_DELETE_REQUEST,
+    ROLE_DELETE_SUCCESS,
+    ROLE_DELETE_FAIL,
 } from '../constants/roleConstants'
-import { USER_CREATE_REQUEST, USER_UPDATE_SUCCESS } from '../constants/userConstants'
-
 // View List of Roles
 export const listRoles = () => async (dispatch, getState) => {
     // 
@@ -94,6 +94,41 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
         // 
         dispatch({
             type: ROLE_DETAILS_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+// Delete Role
+export const deleteRole = (id) => async(dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: ROLE_DELETE_REQUEST,
+        })
+        
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+
+        // Call API Request
+        const { data } = await axios.delete(`/auth/users/${id}`, config)
+
+        dispatch({
+            type: ROLE_DELETE_SUCCESS,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: ROLE_DELETE_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 
