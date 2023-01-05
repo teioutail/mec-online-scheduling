@@ -19,7 +19,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   // setState
   const [rolename, setRoleName] = useState('')
   const [description, setDescription] = useState('')
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState('')
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -28,9 +28,10 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   const handleSelectedChange = (event) => {
     //
     const target = event.target
-    const selected = target.selected
+    const selected = event.currentTarget.value
+    // const selected = target.selected
     const name = target.name
-    setStatus(selected)
+    // setStatus(selected)
   }
 
   // 
@@ -84,19 +85,18 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
       description,
       status
     } = roleDetails
-
+    
     // setState
     setRoleName(name || "")
     setDescription(description || "")
-    setStatus(status === 0 ? false : true)
-
+    setStatus(status || "")
   }, [roleDetails])
 
   return (
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-        <Modal.Title>{ roleid == '' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
+        <Modal.Title>{ roleid === '' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
@@ -125,8 +125,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
               as='select' 
               aria-label="Status"
               value={status}
-              selected={status}
-              onChange={handleSelectedChange}
+              onChange={(e) => setStatus(e.target.value)}
             >
             <option value="">- Select -</option>
             <option value="1">Enable</option>
