@@ -99,6 +99,11 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
     }
 }
 
+// Create New Role
+export const createRole = (role) => async (dispatch) => {
+    alert("testing lagn fuck");
+}
+
 // Update Role
 export const updateRole = (role) => async (dispatch, getState) => {
     //

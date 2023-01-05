@@ -206,7 +206,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }
 }
 
-// Add User
+// Create New User
 export const createUser = (user) => async (dispatch) => {
     //
     try {

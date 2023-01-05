@@ -11,6 +11,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
   listRoles,
   updateRole,
+  createRole,
  } from '../../actions/roleActions'
 
 const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
@@ -56,21 +57,35 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           status: status
         }
 
-        // console.warn(role)
-
-
-        // 
-        if( dispatch(updateRole(role)) ) {
+        if(mode === 'Add') {
           // Show Success Request
           Swal.fire(
             'Success!',
-            'Role Successfully Updated.',
+            'New Role Added Successfully.',
             'success'
           )
+          
+          // Create Role 
+          dispatch(createRole(role))
           // Refresh Datatable
           dispatch(listRoles())
           // Close Modal
           onHide()
+
+        } else {
+          // 
+          if( dispatch(updateRole(role)) ) {
+            // Show Success Request
+            Swal.fire(
+              'Success!',
+              'Role Updated Successfully.',
+              'success'
+            )
+            // Refresh Datatable
+            dispatch(listRoles())
+            // Close Modal
+            onHide()
+          }
         }
       }
 
@@ -96,7 +111,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-        <Modal.Title>{ roleid === '' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
+        <Modal.Title>{ mode === 'Add' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">

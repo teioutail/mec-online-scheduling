@@ -128,7 +128,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
         {/* <Modal.Title>{userid ? 'Add User' : 'Edit User'}</Modal.Title> */}
-        <Modal.Title>{ mode == 'Add' ? 'Add User' : 'Edit User'  }</Modal.Title>
+        <Modal.Title>{ mode === 'Add' ? 'Add User' : 'Edit User'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
