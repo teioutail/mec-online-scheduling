@@ -19,10 +19,20 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   // setState
   const [rolename, setRoleName] = useState('')
   const [description, setDescription] = useState('')
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(false)
 
   // CommonJS
   const Swal = require('sweetalert2')
+
+  // Event in select dropdown
+  const handleSelectedChange = (event) => {
+    //
+    const target = event.target
+    const selected = target.selected
+    const name = target.name
+    setStatus(selected)
+  }
+
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
@@ -46,7 +56,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
         }
 
         //
-        console.warn(role)
+        // console.warn(role)
 
         // // 
         // if( dispatch(updateUser(user)) ) {
@@ -66,7 +76,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     })
   }
 
-// 
+  // 
   useEffect(() => {
     // Selected User Details
     const {  
@@ -78,7 +88,8 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     // setState
     setRoleName(name || "")
     setDescription(description || "")
-    setStatus(status || "")
+    setStatus(status === 0 ? false : true)
+
   }, [roleDetails])
 
   return (
@@ -111,11 +122,16 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           <Form.Group className="mb-3">
             <Form.Label>Status</Form.Label>
             <Form.Control 
-              type='text'
-              placeholder='Status'
+              as='select' 
+              aria-label="Status"
               value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            />
+              selected={status}
+              onChange={handleSelectedChange}
+            >
+            <option value="">- Select -</option>
+            <option value="1">Enable</option>
+            <option value="0">Disable</option>
+            </Form.Control>
           </Form.Group>
 
         </Modal.Body>

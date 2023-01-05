@@ -64,7 +64,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
         }
 
         // dito update
-        console.warn(user)
+        // console.warn(user)
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -73,7 +73,7 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
             'New User Successfully Added.',
             'success'
           )
-          
+
           // 
           dispatch(createUser(user))
           // Refresh Datatable
