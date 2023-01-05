@@ -121,6 +121,8 @@ export const deleteRole = (id) => async(dispatch, getState) => {
         // Call API Request
         const { data } = await axios.delete(`/auth/users/${id}`, config)
 
+        console.warn(data)
+        
         dispatch({
             type: ROLE_DELETE_SUCCESS,
         })
