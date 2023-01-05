@@ -13,6 +13,7 @@ import {
     ROLE_UPDATE_SUCCESS,
     ROLE_UPDATE_FAIL,
 } from '../constants/roleConstants'
+import { USER_UPDATE_SUCCESS } from '../constants/userConstants'
 
 // View List of Roles
 export const listRoles = () => async (dispatch, getState) => {
@@ -103,7 +104,30 @@ export const updateRole = (role) => async (dispatch, getState) => {
     //
     try {
 
-        
+        dispatch({
+            type: ROLE_UPDATE_REQUEST,
+        })
+
+        // Get Login User Info
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+
+        // Header
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+
+        // Call API Request
+        const { data } = await axios.put(`/auth/roles/${role.id}`, role, config)
+
+        dispatch({
+            type: USER_UPDATE_SUCCESS
+        })
+
 
     } catch(error) {
         //

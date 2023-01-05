@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
-  updateUser, 
-  listUsers,
-} from '../../actions/userActions'
+  listRoles,
+  updateRole,
+ } from '../../actions/roleActions'
 
 const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   // Redux
@@ -56,22 +56,22 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           status: status
         }
 
-        //
         // console.warn(role)
 
-        // // 
-        // if( dispatch(updateUser(user)) ) {
-        //   // Show Success Request
-        //   Swal.fire(
-        //     'Success!',
-        //     'Your file has been deleted.',
-        //     'success'
-        //   )
-        //   // Refresh Datatable
-        //   dispatch(listUsers())
-        //   // Close Modal
-        //   onHide()
-        // }
+
+        // 
+        if( dispatch(updateRole(role)) ) {
+          // Show Success Request
+          Swal.fire(
+            'Success!',
+            'Role Successfully Updated.',
+            'success'
+          )
+          // Refresh Datatable
+          dispatch(listRoles())
+          // Close Modal
+          onHide()
+        }
       }
 
     })
