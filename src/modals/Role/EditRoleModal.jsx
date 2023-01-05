@@ -61,7 +61,6 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
         //   // Close Modal
         //   onHide()
         // }
-        
       }
 
     })
