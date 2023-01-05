@@ -24,9 +24,12 @@ import {
 import { 
     ROLE_DETAILS_RESET 
 } from '../constants/roleConstants'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
 
 const RoleListScreen = () => {
+    // CommonJS
+    const Swal = require('sweetalert2')
     //
     const headerTitle = 'Role List'
     // Redux
@@ -83,9 +86,30 @@ const RoleListScreen = () => {
 
     // Delete Role
     const handleDeleteRole = (state) => {
-        
-        dispatch(deleteRole(state.target.id))
-
+        // Save Change Here...
+        Swal.fire({
+            title: 'Delete this role?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Proceed!'
+        }).then((result) => {
+            //
+            if (result.isConfirmed) {
+                // Delete Role
+                dispatch(deleteRole(state.target.id))
+                // Refresh Datatable
+                dispatch(listRoles())
+                // Show Success Request
+                Swal.fire(
+                    'Success!',
+                    'Role Successfully Deleted.',
+                    'success'
+                )
+            }
+        })
     }
 
     // Columns
