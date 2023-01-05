@@ -9,6 +9,9 @@ import {
     ROLE_DETAILS_REQUEST,
     ROLE_DETAILS_SUCCESS,
     ROLE_DETAILS_FAIL,
+    ROLE_UPDATE_REQUEST,
+    ROLE_UPDATE_SUCCESS,
+    ROLE_UPDATE_FAIL,
 } from '../constants/roleConstants'
 
 // View List of Roles
@@ -94,3 +97,23 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
         })
     }
 }
+
+// Update Role
+export const updateRole = (role) => async (dispatch, getState) => {
+    //
+    try {
+
+        
+
+    } catch(error) {
+        //
+        dispatch({
+            type: ROLE_UPDATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+

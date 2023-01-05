@@ -7,6 +7,9 @@ import {
     ROLE_DETAILS_SUCCESS,
     ROLE_DETAILS_FAIL,
     ROLE_DETAILS_RESET,
+    ROLE_UPDATE_REQUEST,
+    ROLE_UPDATE_SUCCESS,
+    ROLE_UPDATE_FAIL,
  } from "../constants/roleConstants";
 
 // ROLE LIST REDUCER
@@ -38,6 +41,24 @@ export const roleDetailsReducer = (state= { role: {} } , action) => {
         case ROLE_DETAILS_RESET:
             return { role: {} }
         default: 
+            return state
+    }
+}
+
+// Role Update Reducer
+export const roleUpdateReducer = (state = { role: {} }, action) => {
+    switch(action.type) {
+        case ROLE_UPDATE_REQUEST:
+            return { loading: true }
+        case ROLE_UPDATE_SUCCESS:
+            return { loading: false, success: true }
+        case ROLE_UPDATE_FAIL:
+            return { loading: false, error: action.payload }
+        case ROLE_UPDATE_FAIL:
+            return {
+                role: {}
+            }
+        default:
             return state
     }
 }
