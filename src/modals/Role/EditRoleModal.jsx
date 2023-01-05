@@ -56,7 +56,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           description: description,
           status: status
         }
-
+        // 
         if(mode === 'Add') {
           // Show Success Request
           Swal.fire(
@@ -88,7 +88,6 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           }
         }
       }
-
     })
   }
 

@@ -12,8 +12,11 @@ import {
     ROLE_UPDATE_REQUEST,
     ROLE_UPDATE_SUCCESS,
     ROLE_UPDATE_FAIL,
+    ROLE_CREATE_REQUEST,
+    ROLE_CREATE_SUCCESS,
+    ROLE_CREATE_FAIL,
 } from '../constants/roleConstants'
-import { USER_UPDATE_SUCCESS } from '../constants/userConstants'
+import { USER_CREATE_REQUEST, USER_UPDATE_SUCCESS } from '../constants/userConstants'
 
 // View List of Roles
 export const listRoles = () => async (dispatch, getState) => {
@@ -101,7 +104,41 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
 
 // Create New Role
 export const createRole = (role) => async (dispatch) => {
-    alert("testing lagn fuck");
+   //
+   try {
+        dispatch({
+            type: ROLE_CREATE_REQUEST,
+        })
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post(
+            '/auth/roles',
+            role, 
+            config
+        )
+
+        dispatch({
+            type: ROLE_CREATE_SUCCESS,
+            payload: data,
+        })
+
+   } catch(error) {
+        //
+        dispatch({
+            type: ROLE_CREATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+   }
 }
 
 // Update Role
