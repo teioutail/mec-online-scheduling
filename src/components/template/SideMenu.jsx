@@ -81,21 +81,15 @@ const SideMenu = () => {
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link">
-                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
-                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                            <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                        </div>
-                        <span className="nav-link-text ms-1">Menu Management</span>
-                    </Link>
                     <div class="dropdown">
-                        <button class="btn bg-gradient-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown button
+                        <button className="icon icon-shape icon-sm btn bg-gradient-primary dropdown-toggle shadow text-center border-radius-md" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                            <span className="nav-link-text ms-1">Menu Management</span>
                         </button>
-                        <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item border-radius-md" href="#">Action</a></li>
-                        <li><a class="dropdown-item border-radius-md" href="#">Another action</a></li>
-                        <li><a class="dropdown-item border-radius-md" href="#">Something else here</a></li>
+                        <ul className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                        <li><a className="dropdown-item border-radius-md" href="#">Action</a></li>
+                        <li><a className="dropdown-item border-radius-md" href="#">Another action</a></li>
+                        <li><a className="dropdown-item border-radius-md" href="#">Something else here</a></li>
                         </ul>
                     </div>
                 </li>
