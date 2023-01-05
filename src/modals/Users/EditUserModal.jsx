@@ -66,13 +66,14 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
         // dito update
         console.warn(user)
         // 
-        if(mode == 'Add') {
+        if(mode === 'Add') {
           // Show Success Request
           Swal.fire(
             'Success!',
             'New User Successfully Added.',
             'success'
           )
+          
           // 
           dispatch(createUser(user))
           // Refresh Datatable
