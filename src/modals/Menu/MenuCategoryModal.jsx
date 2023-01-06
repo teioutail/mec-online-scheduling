@@ -133,17 +133,6 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Remarks</Form.Label>
-            <Form.Control 
-              as='textarea'
-              rows={3}
-              placeholder='Remarks'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
             <Form.Label>Status</Form.Label>
             <Form.Control
               as='select' 
@@ -168,7 +157,7 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>w/ Menu Treeview</Form.Label>
             <Form.Control
               as='select' 
               aria-label="Status"
@@ -178,6 +167,17 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             <option value="0">No</option>
             <option value="1">Yes</option>
             </Form.Control>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Remarks</Form.Label>
+            <Form.Control 
+              as='textarea'
+              rows={3}
+              placeholder='Remarks'
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </Form.Group>
 
         </Modal.Body>
