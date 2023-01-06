@@ -14,13 +14,16 @@ import {
   createRole,
  } from '../../actions/roleActions'
 
-const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
+const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
-  const [rolename, setRoleName] = useState('')
-  const [description, setDescription] = useState('')
+  const [categoryname, setCategoryName] = useState('')
+  const [url, setUrl] = useState('')
+  const [remarks, setRemarks] = useState('')
+  const [icon, setIcon] = useState('')
   const [status, setStatus] = useState('')
+  const [treeview, setTreeView] = useState('')
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -49,10 +52,10 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        // Updated User Data
-        const role = {
-          id: roleid,
-          rolename: rolename,
+        // Updated Category Data
+        const category = {
+          id: categoryid,
+          categoryname: categoryname,
           description: description,
           status: status
         }
@@ -61,7 +64,7 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           // Show Success Request
           Swal.fire(
             'Success!',
-            'New Role Added Successfully.',
+            'New Menu Category Added Successfully.',
             'success'
           )
           // Create Role 
@@ -117,8 +120,8 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             <Form.Control 
               type='text'
               placeholder='Category Name'
-              value={rolename}
-              onChange={(e) => setRoleName(e.target.value)}
+              value={categoryname}
+              onChange={(e) => setCategoryName(e.target.value)}
             />
           </Form.Group>
 
@@ -126,9 +129,19 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             <Form.Label>URL</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              placeholder='URL'
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Icon</Form.Label>
+            <Form.Control 
+              type='text'
+              placeholder='Icon'
+              value={icon}
+              onChange={(e) => setIcon(e.target.value)}
             />
           </Form.Group>
 
@@ -144,16 +157,6 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             <option value="0">Disable</option>
             <option value="1">Enable</option>
             </Form.Control>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Icon</Form.Label>
-            <Form.Control 
-              type='text'
-              placeholder='Icon'
-              value={rolename}
-              onChange={(e) => setRoleName(e.target.value)}
-            />
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -175,8 +178,8 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
               as='textarea'
               rows={3}
               placeholder='Remarks'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
             />
           </Form.Group>
 
