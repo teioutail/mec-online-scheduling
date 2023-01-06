@@ -15,7 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //     deleteRole,
 // } from '../actions/roleActions'
 import { 
-    listMenuCategories 
+    listMenuCategories,
+    getMenuCategoryDetails,
 } from '../actions/menuCategoryActions'
 import { 
     faPlus,
@@ -48,7 +49,7 @@ const MenuCategoryScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Role Info
+    // Menu Category Details
     const roleDetails = useSelector(state => state.roleDetails)
     const { role: roleDetail } = roleDetails
 
@@ -62,7 +63,7 @@ const MenuCategoryScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [roleid, setRoleId] = useState('')
+    const [catid, setCatId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
@@ -77,10 +78,10 @@ const MenuCategoryScreen = () => {
         })
     }
 
-    // Edit Role
-    const handleEditRoleView = (state) => {
+    // Edit Menu Category 
+    const handleEditMenuCategoryView = (state) => {
         setShow(true)
-        setRoleId(state.target.id)
+        setCatId(state.target.id)
         setMode('Edit')
         // Call API Here...
         // dispatch(getRoleDetails(state.target.id))
@@ -157,8 +158,8 @@ const MenuCategoryScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUserPen} /> Edit Role
+                                    <Link className="dropdown-item" onClick={handleEditMenuCategoryView} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faUserPen} /> Edit Category
                                     </Link>
                                 </li>
                                 <li>
@@ -226,7 +227,7 @@ const MenuCategoryScreen = () => {
                 <MenuCategoryModal 
                     show={show} 
                     onHide={handleClose} 
-                    roleid={roleid}
+                    catid={catid}
                     roleDetails={roleDetail}
                     mode={mode}
                 />
