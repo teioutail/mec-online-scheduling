@@ -6,6 +6,7 @@ import SignInScreen from './screens/Auth/SignInScreen'
 import SignUpScreen from './screens/Auth/SignUpScreen'
 import UserListScreen from './screens/Users/UserListScreen'
 import RoleListScreen from './screens/RoleListScreen'
+import MenuCategoryScreen from './screens/MenuCategoryScreen'
 
 import axios from 'axios'
 // Set main base URL using axios
@@ -26,6 +27,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/user-list' element={<UserListScreen/>} />
           <Route path='/role-list' element={<RoleListScreen/>} />
+          <Route path='/categories' element={<MenuCategoryScreen/>} />
+          <Route path='/subcategories' element={<RoleListScreen/>} />
         </Routes>
       </div>
     </Router>

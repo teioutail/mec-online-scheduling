@@ -6,6 +6,8 @@ import {
     faUsers,
     faLock,
     faBars,
+    faList,
+    faListOl,
 } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -81,16 +83,36 @@ const SideMenu = () => {
                 </li>
 
                 <li className="nav-item">
-                    <div className="dropdown">
-                        <button className="icon icon-shape icon-sm btn bg-gradient-primary dropdown-toggle shadow text-center border-radius-md" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div style={{position:"relative"}} className="dropdown">
+                        {/* <button className="icon icon-shape icon-sm btn bg-gradient-primary dropdown-toggle shadow text-center border-radius-md" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
                             <span className="nav-link-text ms-1">Menu Management</span>
-                        </button>
+                        </button> */}
                         
-                        <ul className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                            <li><a className="dropdown-item border-radius-md" href="#">Action</a></li>
-                            <li><a className="dropdown-item border-radius-md" href="#">Another action</a></li>
-                            <li><a className="dropdown-item border-radius-md" href="#">Something else here</a></li>
+                        <Link className="nav-link dropdown-toggle d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                                <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                            </div>
+                            <span className="nav-link-text ms-1">Menu Management</span>
+                        </Link>
+
+                        <ul style={{position:'absolute'}} className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <Link className="nav-link" to="/categories">
+                                    <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                                        <FontAwesomeIcon icon={faList} className="text-light text-sm opacity-10" aria-hidden="true"/>
+                                    </div>
+                                    <span className="nav-link-text ms-1">Menu Categories</span>
+                                </Link>
+                            </li>                            
+                            <li>
+                                <Link className="nav-link" to="/subcategories">
+                                    <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                                        <FontAwesomeIcon icon={faListOl} className="text-light text-sm opacity-10" aria-hidden="true"/>
+                                    </div>
+                                    <span className="nav-link-text ms-1">Sub Categories</span>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </li>
