@@ -27,7 +27,7 @@ import {
     ROLE_DETAILS_RESET 
 } from '../constants/roleConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditRoleModal from '../modals/Role/EditRoleModal'
+import MenuCategoryModal from '../modals/Menu/MenuCategoryModal'
 
 const MenuCategoryScreen = () => {
     // CommonJS
@@ -223,7 +223,7 @@ const MenuCategoryScreen = () => {
                     selectableRowsHighlight
                 />
 
-                <EditRoleModal 
+                <MenuCategoryModal 
                     show={show} 
                     onHide={handleClose} 
                     roleid={roleid}
