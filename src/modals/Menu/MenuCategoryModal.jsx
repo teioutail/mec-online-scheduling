@@ -56,8 +56,11 @@ const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails })
         const category = {
           id: categoryid,
           categoryname: categoryname,
-          description: description,
-          status: status
+          remarks: remarks,
+          url: url,
+          status: status,
+          treeview: treeview,
+          icon: icon,
         }
         // 
         if(mode === 'Add') {
@@ -68,7 +71,7 @@ const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails })
             'success'
           )
           // Create Role 
-          dispatch(createRole(role))
+        //   dispatch(createRole(role))
           // Refresh Datatable
           dispatch(listRoles())
           // Close Modal
@@ -76,18 +79,18 @@ const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails })
 
         } else {
           // 
-          if( dispatch(updateRole(role)) ) {
-            // Show Success Request
-            Swal.fire(
-              'Success!',
-              'Role Updated Successfully.',
-              'success'
-            )
-            // Refresh Datatable
-            dispatch(listRoles())
-            // Close Modal
-            onHide()
-          }
+        //   if( dispatch(updateRole(role)) ) {
+        //     // Show Success Request
+        //     Swal.fire(
+        //       'Success!',
+        //       'Role Updated Successfully.',
+        //       'success'
+        //     )
+        //     // Refresh Datatable
+        //     dispatch(listRoles())
+        //     // Close Modal
+        //     onHide()
+        //   }
         }
       }
     })
@@ -95,18 +98,42 @@ const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails })
 
   // 
   useEffect(() => {
-    // Selected User Details
-    const {  
-      name,
-      description,
-      status
-    } = roleDetails
-    
+    // Selected Menu Category Details
+    // const {  
+    //     cat_id,
+    //     category_name,
+    //     url,
+    //     access_role,
+    //     users_id,
+    //     status,
+    //     remarks,
+    //     icon,
+    //     sort,
+    //     treeview,
+    // } = categoryDetails
+
+    // Updated Menu Category Data
+    // const category = {
+    //     id: categoryid,
+    //     categoryname: categoryname,
+    //     remarks: remarks,
+    //     url: url,
+    //     status: status,
+    //     treeview: treeview,
+    //     icon: icon,
+    //     sort: sort,
+    //     treeview: treeview
+    // }
+
     // setState
-    setRoleName(name || "")
-    setDescription(description || "")
+    setCategoryName(categoryname || "")
+    setUrl(url || "")
+    setRemarks(remarks || "")
+    setIcon(icon || "")
     setStatus(status || "0")
-  }, [roleDetails])
+    setTreeView(treeview || "0")
+
+  }, [categoryDetails])
 
   return (
     <>
@@ -163,9 +190,9 @@ const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails })
             <Form.Label>w/ Menu Treeview</Form.Label>
             <Form.Control
               as='select' 
-              aria-label="Status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              aria-label="Treeview"
+              value={treeview}
+              onChange={(e) => setTreeView(e.target.value)}
             >
             <option value="0">No</option>
             <option value="1">Yes</option>
