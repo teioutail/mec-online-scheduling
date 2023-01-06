@@ -21,6 +21,11 @@ import {
     roleUpdateReducer,
  } from './reducers/roleReducers'
 
+// Menu Category Reducer
+import { 
+    menuCategoryListReducer
+} from './reducers/menuCategoryReducers'
+
 // Reducers
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -34,6 +39,7 @@ const reducer = combineReducers({
     roleList: roleListReducer,
     roleDetails: roleDetailsReducer,
     roleUpdate: roleUpdateReducer,
+    menuCategoryList: menuCategoryListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

@@ -40,9 +40,9 @@ const MenuCategoryScreen = () => {
     // useNavigate to redirect the user
     const navigate = useNavigate() 
 
-    // Role List
-    const roleList = useSelector(state => state.roleList)
-    const { loading, error, roles } = roleList
+    // Menu Category List
+    const menuCategoryList = useSelector(state => state.menuCategoryList)
+    const { loading, error, categories } = menuCategoryList
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -117,22 +117,27 @@ const MenuCategoryScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Role ID',
-                selector: row => row.role_id,
+            {   name: 'Category ID',
+                selector: row => row.cat_id,
                 sortable: true,
             },
-            {   name: 'Name',
-                selector: row => row.name,
+            {   name: 'Category Name',
+                selector: row => row.category_name,
                 sortable: true,
             },
             {
-                name: 'Description',
-                selector: row => row.description,
+                name: 'URL',
+                selector: row => row.url,
                 sortable: true,
             },
             {
                 name: 'Status',
-                selector: row => row.activated,
+                selector: row => row.status,
+                sortable: true,
+            },
+            {
+                name: 'Icon',
+                selector: row => row.icon,
                 sortable: true,
             },
             {
@@ -171,9 +176,9 @@ const MenuCategoryScreen = () => {
 
     // Set Row Value
     useEffect(() => {
-        setRows(roles)
+        setRows(categories)
         setPending(loading)
-    }, [roles, rows, loading])
+    }, [categories, rows, loading])
 
     //
     useEffect(() => {

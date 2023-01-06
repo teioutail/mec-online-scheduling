@@ -13,8 +13,31 @@ export const listMenuCategories = () => async (dispatch, getState) => {
     //
     try {
 
-        alert("testing 231");
-        
+        dispatch({
+            type: MENU_CATEGORY_LIST_REQUEST,
+        })
+
+        const { userLogin : { userInfo} } = getState()
+        // console.warn(userInfo)
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+
+        const { data } = await axios.get(`/auth/category`, config)
+
+        dispatch({
+            type: MENU_CATEGORY_LIST_SUCCESS,
+            payload: data
+        })
+        // console.warn(data)
+
+
     } catch(error) {
         //
         dispatch({
