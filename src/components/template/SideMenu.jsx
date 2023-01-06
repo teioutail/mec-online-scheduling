@@ -81,15 +81,16 @@ const SideMenu = () => {
                 </li>
 
                 <li className="nav-item">
-                    <div class="dropdown">
+                    <div className="dropdown">
                         <button className="icon icon-shape icon-sm btn bg-gradient-primary dropdown-toggle shadow text-center border-radius-md" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
                             <span className="nav-link-text ms-1">Menu Management</span>
                         </button>
+                        
                         <ul className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                        <li><a className="dropdown-item border-radius-md" href="#">Action</a></li>
-                        <li><a className="dropdown-item border-radius-md" href="#">Another action</a></li>
-                        <li><a className="dropdown-item border-radius-md" href="#">Something else here</a></li>
+                            <li><a className="dropdown-item border-radius-md" href="#">Action</a></li>
+                            <li><a className="dropdown-item border-radius-md" href="#">Another action</a></li>
+                            <li><a className="dropdown-item border-radius-md" href="#">Something else here</a></li>
                         </ul>
                     </div>
                 </li>
