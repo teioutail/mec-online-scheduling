@@ -157,6 +157,29 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             </Form.Control>
           </Form.Group>
 
+          <Form.Group className="mb-3">
+            <Form.Label>Category Name</Form.Label>
+            <Form.Control 
+              type='text'
+              placeholder='Category Name'
+              value={rolename}
+              onChange={(e) => setRoleName(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Status</Form.Label>
+            <Form.Control
+              as='select' 
+              aria-label="Status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            </Form.Control>
+          </Form.Group>
+
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
