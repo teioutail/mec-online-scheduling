@@ -62,7 +62,6 @@ export const listRoles = () => async (dispatch, getState) => {
 // Get Role Details Action
 export const getRoleDetails = (id) => async(dispatch, getState) => {
     // 
-    // console.warn(`it sucks ${id}`)
     try {
         dispatch({
             type: ROLE_DETAILS_RESET,
@@ -77,7 +76,7 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
         // Header
         const config = {
             headers: {
-                'Conent-Type' : 'application/json',
+                'Content-Type' : 'application/json',
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }

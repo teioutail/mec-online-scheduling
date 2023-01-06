@@ -8,6 +8,8 @@ import {
     MENU_CATEGORY_DETAILS_REQUEST,
     MENU_CATEGORY_DETAILS_SUCCESS,
     MENU_CATEGORY_DETAILS_FAIL,
+    MENU_CATEGORY_DETAILS_RESET,
+    MENU_CATEGORY_LIST_RESET,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -56,7 +58,27 @@ export const listMenuCategories = () => async (dispatch, getState) => {
 export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
     //
     try {
-        alert("abc123 testing lang");
+        dispatch({
+            type: MENU_CATEGORY_LIST_RESET,
+        })
+
+        const { userLogin : { userInfo }} = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/category/${id}`, config)
+
+        dispatch({
+            type: MENU_CATEGORY_DETAILS_SUCCESS,
+            payload: data,
+        })
 
     } catch(error) {
         // 
