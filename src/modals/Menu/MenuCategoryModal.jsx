@@ -147,10 +147,10 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Category Name</Form.Label>
+            <Form.Label>Icon</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Category Name'
+              placeholder='Icon'
               value={rolename}
               onChange={(e) => setRoleName(e.target.value)}
             />
