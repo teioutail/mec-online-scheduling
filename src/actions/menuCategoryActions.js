@@ -74,6 +74,7 @@ export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
 
         // Call API Request
         const { data } = await axios.get(`/auth/category/${id}`, config)
+        // console.warn(data)
 
         dispatch({
             type: MENU_CATEGORY_DETAILS_SUCCESS,

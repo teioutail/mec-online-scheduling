@@ -84,7 +84,7 @@ const MenuCategoryScreen = () => {
         setCatId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        // dispatch(getRoleDetails(state.target.id))
+        dispatch(getMenuCategoryDetails(state.target.id))
     }
 
     // Delete Role
@@ -158,13 +158,13 @@ const MenuCategoryScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditMenuCategoryView} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleEditMenuCategoryView} id={row.cat_id}>
                                         <FontAwesomeIcon icon={faUserPen} /> Edit Category
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Delete Role
+                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.cat_id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete Category
                                     </Link>
                                 </li>
                             </ul>
