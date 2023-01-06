@@ -153,7 +153,7 @@ const MenuCategoryScreen = () => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.cat_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">

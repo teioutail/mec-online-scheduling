@@ -9,7 +9,6 @@ import {
     MENU_CATEGORY_DETAILS_SUCCESS,
     MENU_CATEGORY_DETAILS_FAIL,
     MENU_CATEGORY_DETAILS_RESET,
-    MENU_CATEGORY_LIST_RESET,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -59,7 +58,11 @@ export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
     //
     try {
         dispatch({
-            type: MENU_CATEGORY_LIST_RESET,
+            type: MENU_CATEGORY_DETAILS_RESET,
+        })
+
+        dispatch({
+            type: MENU_CATEGORY_DETAILS_REQUEST,
         })
 
         const { userLogin : { userInfo }} = getState()
