@@ -141,6 +141,11 @@ const MenuCategoryScreen = () => {
                 sortable: true,
             },
             {
+                name: 'Sort',
+                selector: row => row.sort,
+                sortable: true,
+            },
+            {
                 name: 'Action',
 				cell: (row) => {
                     // console.log(row.id);
