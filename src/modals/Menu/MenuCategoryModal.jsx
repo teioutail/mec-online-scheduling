@@ -137,7 +137,7 @@ const MenuCategoryModal = ({ show , mode, onHide, roleid, roleDetails }) => {
             <Form.Control 
               as='textarea'
               rows={3}
-              placeholder='Description'
+              placeholder='Remarks'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
