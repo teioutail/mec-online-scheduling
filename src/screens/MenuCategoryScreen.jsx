@@ -9,12 +9,14 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { 
+//     listRoles,
+//     getRoleDetails,
+//     deleteRole,
+// } from '../actions/roleActions'
 import { 
-    listRoles,
-    getRoleDetails,
-    deleteRole,
-} from '../actions/roleActions'
-
+    listMenuCategories 
+} from '../actions/menuCategoryActions'
 import { 
     faPlus,
     faEllipsisV,
@@ -81,7 +83,7 @@ const MenuCategoryScreen = () => {
         setRoleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getRoleDetails(state.target.id))
+        // dispatch(getRoleDetails(state.target.id))
     }
 
     // Delete Role
@@ -99,9 +101,9 @@ const MenuCategoryScreen = () => {
             //
             if (result.isConfirmed) {
                 // Delete Role
-                dispatch(deleteRole(state.target.id))
+                // dispatch(deleteRole(state.target.id))
                 // Refresh Datatable
-                dispatch(listRoles())
+                // dispatch(listRoles())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
@@ -175,10 +177,10 @@ const MenuCategoryScreen = () => {
 
     //
     useEffect(() => {
-        // Check if user is admin else, redirect user
+        // Check if user is admin else, Redirect user
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
-            dispatch(listRoles())
+            dispatch(listMenuCategories())
         } else {
             // Redirect to login page
             navigate('/signin')
