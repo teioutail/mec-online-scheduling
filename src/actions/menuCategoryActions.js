@@ -16,6 +16,9 @@ import {
     MENU_CATEGORY_CREATE_SUCCESS,
     MENU_CATEGORY_CREATE_FAIL,
     MENU_CATEGORY_CREATE_RESET,
+    MENU_CATEGORY_DELETE_FAIL,
+    MENU_CATEGORY_DELETE_REQUEST,
+    MENU_CATEGORY_DELETE_SUCCESS,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -180,4 +183,40 @@ export const createMenuCategory = (category) => async (dispatch) => {
             : error.message,
         })
     }
+}
+
+// Delete Menu Category
+export const deleteMenuCategory = (id) => async (dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: MENU_CATEGORY_DELETE_REQUEST,
+        })
+
+        const { userLogin: { userInfo} } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.delete(`/auth/category/${id}`, config)
+
+        dispatch({
+            type: MENU_CATEGORY_DELETE_SUCCESS,
+        })
+        
+
+    } catch(error) {
+        //
+        dispatch({
+            type: MENU_CATEGORY_DELETE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    } 
 }

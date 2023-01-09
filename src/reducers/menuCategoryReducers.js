@@ -11,6 +11,9 @@ import {
     MENU_CATEGORY_UPDATE_SUCCESS,
     MENU_CATEGORY_UPDATE_FAIL,
     MENU_CATEGORY_UPDATE_RESET,
+    MENU_CATEGORY_DELETE_REQUEST,
+    MENU_CATEGORY_DELETE_SUCCESS,
+    MENU_CATEGORY_DELETE_FAIL,
  } from "../constants/menuCategoryConstants";
 
  // MENU CATEGORY REDUCER
@@ -59,6 +62,20 @@ export const menuCategoryUpdateReducer = (state = { category: {} }, action) => {
             return {
                 category: {}
             }
+        default:
+            return state
+    }
+}
+
+// Delete Category Reducer
+export const menuCategoryDeleteReducer = (state = {}, action) => {
+    switch(action.type) {
+        case MENU_CATEGORY_DELETE_REQUEST:
+            return { loading: true }
+        case MENU_CATEGORY_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case MENU_CATEGORY_DELETE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

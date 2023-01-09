@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     listMenuCategories,
     getMenuCategoryDetails,
+    deleteMenuCategory,
 } from '../actions/menuCategoryActions'
 import { 
     faPlus,
@@ -84,10 +85,10 @@ const MenuCategoryScreen = () => {
     }
 
     // Delete Role
-    const handleDeleteRole = (state) => {
+    const handleDeleteMenuCategory = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this role?',
+            title: 'Delete this Menu Category?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -97,16 +98,17 @@ const MenuCategoryScreen = () => {
         }).then((result) => {
             //
             if (result.isConfirmed) {
-                // Delete Role
-                // dispatch(deleteRole(state.target.id))
+                // Delete Menu Category
+                dispatch(deleteMenuCategory(state.target.id))
                 // Refresh Datatable
-                // dispatch(listRoles())
+                dispatch(listMenuCategories())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Role Successfully Deleted.',
+                    'Menu Category Successfully Deleted.',
                     'success'
                 )
+                
             }
         })
     }
@@ -159,7 +161,7 @@ const MenuCategoryScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.cat_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteMenuCategory} id={row.cat_id}>
                                         <FontAwesomeIcon icon={faTrash} /> Delete Category
                                     </Link>
                                 </li>
