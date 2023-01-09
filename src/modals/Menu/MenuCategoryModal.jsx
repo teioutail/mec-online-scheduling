@@ -8,15 +8,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-// import { 
-//   listmenu,
-//   updateRole,
-//   createRole,
-//  } from '../../actions/roleActions'
 import { 
   listMenuCategories,
   updateMenuCategory,
-  
+  createMenuCategory,
 } from '../../actions/menuCategoryActions'
 
 const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) => {
@@ -26,7 +21,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
   const [categoryname, setCategoryName] = useState('')
   const [url, setUrl] = useState('')
   const [remarks, setRemarks] = useState('')
-  const [icon, setIcon] = useState('')
+  const [iconMenu, setIconMenu] = useState('')
   const [status, setStatus] = useState('')
   const [treeview, setTreeView] = useState('')
 
@@ -65,8 +60,9 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
           url: url,
           status: status,
           treeview: treeview,
-          icon: icon,
+          icon: iconMenu,
         }
+        
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -75,16 +71,15 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
             'New Menu Category Added Successfully.',
             'success'
           )
-          // Create Role 
-            dispatch(createMenuCategory(category))
-
+          // Create Menu Category 
+          dispatch(createMenuCategory(category))
           // Refresh Datatable
           dispatch(listMenuCategories())
           // Close 
           onHide()
 
         } else {
-          // 
+          // Update Menu Category
           dispatch(updateMenuCategory(category))
 
           Swal.fire(
@@ -114,7 +109,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
         users_id,
         status,
         remarks,
-        icon,
+        icon:iconMenu,
         sort,
         treeview,
     } = menuCategoryDetails
@@ -138,7 +133,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
     setCategoryName(category_name || "")
     setUrl(url || "")
     setRemarks(remarks || "")
-    setIcon(icon || "")
+    setIconMenu(iconMenu || "")
     setStatus(status || "0")
     setTreeView(treeview || "0")
 
@@ -176,8 +171,8 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
             <Form.Control 
               type='text'
               placeholder='Icon'
-              value={icon}
-              onChange={(e) => setIcon(e.target.value)}
+              value={iconMenu}
+              onChange={(e) => setIconMenu(e.target.value)}
             />
           </Form.Group>
 
