@@ -12,6 +12,10 @@ import {
     MENU_CATEGORY_UPDATE_FAIL,
     MENU_CATEGORY_UPDATE_REQUEST,
     MENU_CATEGORY_UPDATE_SUCCESS,
+    MENU_CATEGORY_CREATE_REQUEST,
+    MENU_CATEGORY_CREATE_SUCCESS,
+    MENU_CATEGORY_CREATE_FAIL,
+    MENU_CATEGORY_CREATE_RESET,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -141,3 +145,39 @@ export const updateMenuCategory = (category) => async (dispatch, getState) => {
         })
     }
 } 
+
+// Create New Menu Category
+export const createMenuCategory = (category) => async (dispatch) => {
+    //
+    try {
+
+        dispatch({
+            type: MENU_CATEGORY_CREATE_REQUEST,
+        })
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post('/auth/category', category, config)
+
+        dispatch({
+            type: MENU_CATEGORY_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: MENU_CATEGORY_CREATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}

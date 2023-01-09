@@ -20,7 +20,7 @@ import {
     faUserPen,
 } from '@fortawesome/free-solid-svg-icons'
 import { 
-    MENU_CATEGORY_UPDATE_RESET,
+    MENU_CATEGORY_DETAILS_RESET,
 } from '../constants/menuCategoryConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import MenuCategoryModal from '../modals/Menu/MenuCategoryModal'
@@ -69,7 +69,7 @@ const MenuCategoryScreen = () => {
         setMode('Add')
         //
         dispatch({
-            type: MENU_CATEGORY_UPDATE_RESET,
+            type: MENU_CATEGORY_DETAILS_RESET,
         })
     }
 

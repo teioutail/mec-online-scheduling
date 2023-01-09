@@ -67,7 +67,6 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
           treeview: treeview,
           icon: icon,
         }
-
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -77,7 +76,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
             'success'
           )
           // Create Role 
-          //   dispatch(createRole(role))
+            dispatch(createMenuCategory(category))
 
           // Refresh Datatable
           dispatch(listMenuCategories())
