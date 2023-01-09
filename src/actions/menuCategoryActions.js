@@ -95,3 +95,13 @@ export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
         })
     }
 }
+
+// Update Category
+export const updateMenuCategory = (category) => async (dispatch, getState) => {
+    //
+    try {
+
+    } catch(error) {
+
+    }
+} 

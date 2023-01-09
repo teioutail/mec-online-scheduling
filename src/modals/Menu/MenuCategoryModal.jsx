@@ -14,7 +14,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 //   createRole,
 //  } from '../../actions/roleActions'
 import { 
-  listMenuCategories, 
+  listMenuCategories,
+  updateMenuCategory,
+  
 } from '../../actions/menuCategoryActions'
 
 const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) => {
@@ -29,7 +31,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
   const [treeview, setTreeView] = useState('')
 
   // CommonJS
-  const Swal = require('sweetalert2')
+  // const Swal = require('sweetalert2')
 
   // Event in select dropdown
   const handleSelectedChange = (event) => {
@@ -55,9 +57,10 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
     }).then((result) => {
 
       if (result.isConfirmed) {
+
         // Updated Category Data
         const category = {
-          id: categoryid,
+          id: catid,
           categoryname: categoryname,
           remarks: remarks,
           url: url,
@@ -65,6 +68,7 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
           treeview: treeview,
           icon: icon,
         }
+
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -74,14 +78,14 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
             'success'
           )
           // Create Role 
-        //   dispatch(createRole(role))
+          //   dispatch(createRole(role))
           // Refresh Datatable
-          dispatch(listRoles())
+          dispatch(listMenuCategories())
           // Close Modal
           onHide()
 
         } else {
-          // 
+        // 
         //   if( dispatch(updateRole(role)) ) {
         //     // Show Success Request
         //     Swal.fire(
@@ -101,19 +105,23 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
 
   // 
   useEffect(() => {
+    // console.warn(menuCategoryDetails)
+    
     // Selected Menu Category Details
-    // const {  
-    //     cat_id,
-    //     category_name,
-    //     url,
-    //     access_role,
-    //     users_id,
-    //     status,
-    //     remarks,
-    //     icon,
-    //     sort,
-    //     treeview,
-    // } = categoryDetails
+    const {  
+        cat_id,
+        category_name,
+        url,
+        access_role,
+        users_id,
+        status,
+        remarks,
+        icon,
+        sort,
+        treeview,
+    } = menuCategoryDetails
+
+    // console.warn(category_name)
 
     // Updated Menu Category Data
     // const category = {
@@ -129,14 +137,14 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
     // }
 
     // setState
-    setCategoryName(categoryname || "")
+    setCategoryName(category_name || "")
     setUrl(url || "")
     setRemarks(remarks || "")
     setIcon(icon || "")
     setStatus(status || "0")
     setTreeView(treeview || "0")
 
-  }, [categoryDetails])
+  }, [menuCategoryDetails])
 
   return (
     <>
