@@ -20,6 +20,7 @@ import {
     roleDetailsReducer,
     roleUpdateReducer,
     roleDeleteReducer,
+    roleCreateReducer,
  } from './reducers/roleReducers'
 
 // Menu Category Reducer
@@ -28,6 +29,7 @@ import {
     menuCategoryDetailsReducer,
     menuCategoryUpdateReducer,
     menuCategoryDeleteReducer,
+    menuCategoryCreateReducer,
 } from './reducers/menuCategoryReducers'
 
 // Reducers
@@ -44,10 +46,12 @@ const reducer = combineReducers({
     roleDetails: roleDetailsReducer,
     roleUpdate: roleUpdateReducer,
     roleDelete: roleDeleteReducer,
+    roleCreate: roleCreateReducer,
     menuCategoryList: menuCategoryListReducer,
     menuCategoryDetails:menuCategoryDetailsReducer,
     menuCategoryUpdate:menuCategoryUpdateReducer,
     menuCategoryDelete:menuCategoryDeleteReducer,
+    menuCategoryCreate:menuCategoryCreateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

@@ -14,6 +14,10 @@ import {
     ROLE_DELETE_REQUEST,
     ROLE_DELETE_SUCCESS,
     ROLE_DELETE_FAIL,
+    ROLE_CREATE_REQUEST,
+    ROLE_CREATE_SUCCESS,
+    ROLE_CREATE_FAIL,
+    ROLE_CREATE_RESET,
  } from "../constants/roleConstants";
 
 // ROLE LIST REDUCER
@@ -76,6 +80,23 @@ export const roleDeleteReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case ROLE_DELETE_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+// Create Role Reducer
+export const roleCreateReducer = (state = {}, action) => {
+    // 
+    switch(action.type) {
+        case ROLE_CREATE_REQUEST:
+            return { loading: true}
+        case ROLE_CREATE_SUCCESS:
+            return { loading: false, success: true, role: action.payload }
+        case ROLE_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+        case ROLE_CREATE_RESET:
+            return {}
         default:
             return state
     }

@@ -215,7 +215,7 @@ export const deleteMenuCategory = (id) => async (dispatch, getState) => {
             type: MENU_CATEGORY_DELETE_FAIL,
             payload: 
             error.response && error.response.data.message 
-            ? error.response.data.message 
+            ? error.response.data.errors 
             : error.message,
         })
     } 

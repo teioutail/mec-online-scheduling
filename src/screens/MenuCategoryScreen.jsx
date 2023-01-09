@@ -108,7 +108,7 @@ const MenuCategoryScreen = () => {
                     'Menu Category Successfully Deleted.',
                     'success'
                 )
-                
+
             }
         })
     }
@@ -131,7 +131,7 @@ const MenuCategoryScreen = () => {
             },
             {
                 name: 'Status',
-                selector: row => row.status,
+                selector: row => row.stats,
                 sortable: true,
             },
             {
