@@ -10,6 +10,7 @@ import {
     ROLE_UPDATE_REQUEST,
     ROLE_UPDATE_SUCCESS,
     ROLE_UPDATE_FAIL,
+    ROLE_UPDATE_RESET,
  } from "../constants/roleConstants";
 
 // ROLE LIST REDUCER
@@ -54,7 +55,7 @@ export const roleUpdateReducer = (state = { role: {} }, action) => {
             return { loading: false, success: true, message: action.payload }
         case ROLE_UPDATE_FAIL:
             return { loading: false, error: action.payload }
-        case ROLE_UPDATE_FAIL:
+        case ROLE_UPDATE_RESET:
             return {
                 role: {}
             }

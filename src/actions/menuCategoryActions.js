@@ -9,6 +9,9 @@ import {
     MENU_CATEGORY_DETAILS_SUCCESS,
     MENU_CATEGORY_DETAILS_FAIL,
     MENU_CATEGORY_DETAILS_RESET,
+    MENU_CATEGORY_UPDATE_FAIL,
+    MENU_CATEGORY_UPDATE_REQUEST,
+    MENU_CATEGORY_UPDATE_SUCCESS,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -100,8 +103,41 @@ export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
 export const updateMenuCategory = (category) => async (dispatch, getState) => {
     //
     try {
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_REQUEST
+        })
+
+        // Get Login User Info
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Header
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+
+        // Call API Request
+        const { data } = await axios.put(`/auth/category/${category.id}`, category, config)
+
+        // console.warn(data)
+
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_SUCCESS,
+            payload: data,
+        })
 
     } catch(error) {
-
+        //
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
     }
 } 

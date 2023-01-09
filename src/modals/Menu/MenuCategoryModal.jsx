@@ -57,7 +57,6 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
     }).then((result) => {
 
       if (result.isConfirmed) {
-
         // Updated Category Data
         const category = {
           id: catid,
@@ -79,25 +78,25 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
           )
           // Create Role 
           //   dispatch(createRole(role))
+
+          // Refresh Datatable
+          dispatch(listMenuCategories())
+          // Close 
+          onHide()
+
+        } else {
+          // 
+          dispatch(updateMenuCategory(category))
+
+          Swal.fire(
+            'Success!',
+            'Menu Category Updated Successfully.',
+            'success'
+          )
           // Refresh Datatable
           dispatch(listMenuCategories())
           // Close Modal
           onHide()
-
-        } else {
-        // 
-        //   if( dispatch(updateRole(role)) ) {
-        //     // Show Success Request
-        //     Swal.fire(
-        //       'Success!',
-        //       'Role Updated Successfully.',
-        //       'success'
-        //     )
-        //     // Refresh Datatable
-        //     dispatch(listRoles())
-        //     // Close Modal
-        //     onHide()
-        //   }
         }
       }
     })
