@@ -8,13 +8,16 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import { 
+//   listmenu,
+//   updateRole,
+//   createRole,
+//  } from '../../actions/roleActions'
 import { 
-  listRoles,
-  updateRole,
-  createRole,
- } from '../../actions/roleActions'
+  listMenuCategories, 
+} from '../../actions/menuCategoryActions'
 
-const MenuCategoryModal = ({ show , mode, onHide, categoryid, categoryDetails }) => {
+const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) => {
   // Redux
   const dispatch = useDispatch()
   // setState

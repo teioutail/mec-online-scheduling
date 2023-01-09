@@ -9,11 +9,6 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { 
-//     listRoles,
-//     getRoleDetails,
-//     deleteRole,
-// } from '../actions/roleActions'
 import { 
     listMenuCategories,
     getMenuCategoryDetails,
@@ -237,7 +232,6 @@ const MenuCategoryScreen = () => {
             </FormContainer>
         </>
     )
-
 }
 
 export default MenuCategoryScreen
