@@ -50,8 +50,8 @@ const MenuCategoryScreen = () => {
     const { userInfo } = userLogin
 
     // Menu Category Details
-    const roleDetails = useSelector(state => state.roleDetails)
-    const { role: roleDetail } = roleDetails
+    const menuCategoryDetails = useSelector(state => state.menuCategoryDetails)
+    const { category: menuCategoryDetail } = menuCategoryDetails
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -83,6 +83,7 @@ const MenuCategoryScreen = () => {
         setShow(true)
         setCatId(state.target.id)
         setMode('Edit')
+        // alert(state.target.id);
         // Call API Here...
         dispatch(getMenuCategoryDetails(state.target.id))
     }
@@ -228,7 +229,7 @@ const MenuCategoryScreen = () => {
                     show={show} 
                     onHide={handleClose} 
                     catid={catid}
-                    roleDetails={roleDetail}
+                    menuCategoryDetails={menuCategoryDetail}
                     mode={mode}
                 />
 
