@@ -49,7 +49,7 @@ export const menuCategoryDetailsReducer = (state= { category: {} } , action) => 
 // Category Update Reducer
 export const menuCategoryUpdateReducer = (state = { category: {} }, action) => {
     switch(action.type) {
-        case MENU_CATEGORY_DETAILS_REQUEST:
+        case MENU_CATEGORY_UPDATE_REQUEST:
             return { loading: true }
         case MENU_CATEGORY_UPDATE_SUCCESS:
             return { loading: false, success: true, message: action.payload }

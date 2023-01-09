@@ -20,8 +20,8 @@ import {
     faUserPen,
 } from '@fortawesome/free-solid-svg-icons'
 import { 
-    ROLE_DETAILS_RESET 
-} from '../constants/roleConstants'
+    MENU_CATEGORY_UPDATE_RESET,
+} from '../constants/menuCategoryConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import MenuCategoryModal from '../modals/Menu/MenuCategoryModal'
 
@@ -62,14 +62,14 @@ const MenuCategoryScreen = () => {
     const [mode, setMode] = useState('')
 
     // Add User Modal
-    const handleRoleView = (state) => {
+    const handleMenuCategoryView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
         //
         dispatch({
-            type: ROLE_DETAILS_RESET,
+            type: MENU_CATEGORY_UPDATE_RESET,
         })
     }
 
@@ -201,7 +201,7 @@ const MenuCategoryScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleMenuCategoryView}>
                         <FontAwesomeIcon icon={faPlus} /> Add New
                     </Button>
 
