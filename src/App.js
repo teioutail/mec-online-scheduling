@@ -7,8 +7,9 @@ import SignUpScreen from './screens/Auth/SignUpScreen'
 import UserListScreen from './screens/Users/UserListScreen'
 import RoleListScreen from './screens/RoleListScreen'
 import MenuCategoryScreen from './screens/MenuCategoryScreen'
-
+import SubMenuCategoryScreen from './screens/SubMenuCategoryScreen'
 import axios from 'axios'
+
 // Set main base URL using axios
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 // Authorization Bearer Token Save
@@ -28,7 +29,7 @@ function App() {
           <Route path='/user-list' element={<UserListScreen/>} />
           <Route path='/role-list' element={<RoleListScreen/>} />
           <Route path='/categories' element={<MenuCategoryScreen/>} />
-          <Route path='/subcategories' element={<RoleListScreen/>} />
+          <Route path='/subcategories' element={<SubMenuCategoryScreen/>} />
         </Routes>
       </div>
     </Router>

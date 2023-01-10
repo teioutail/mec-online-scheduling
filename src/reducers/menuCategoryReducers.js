@@ -20,7 +20,7 @@ import {
     MENU_CATEGORY_CREATE_RESET,
  } from "../constants/menuCategoryConstants";
 
- // MENU CATEGORY REDUCER
+// MENU CATEGORY REDUCER
 export const menuCategoryListReducer = (state = { categories: [] }, action ) => {
     switch(action.type) {
         case MENU_CATEGORY_LIST_REQUEST:
