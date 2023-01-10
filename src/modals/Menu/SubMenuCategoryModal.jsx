@@ -18,7 +18,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
   // Redux
   const dispatch = useDispatch()
   // setState
-  const [categoryname, setCategoryName] = useState('')
+  const [subcategoryname, setSubCategoryName] = useState('')
   const [url, setUrl] = useState('')
   const [remarks, setRemarks] = useState('')
   const [iconMenu, setIconMenu] = useState('')
@@ -58,14 +58,13 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
         // Updated Category Data
         const category = {
           id: subcatid,
-          categoryname: categoryname,
+          subcategoryname: subcategoryname,
           remarks: remarks,
           url: url,
           status: status,
           treeview: treeview,
           icon: iconMenu,
         }
-        
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -116,7 +115,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
     } = submenuCategoryDetails
 
     // setState
-    setCategoryName(category_name || "")
+    setSubCategoryName(subcategory_name || "")
     setUrl(url || "")
     setRemarks(remarks || "")
     setIconMenu(iconMenu || "")
@@ -157,9 +156,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             <Form.Label>Sub-Category Name</Form.Label>
             <Form.Control 
               type='text'
-              placeholder='Category Name'
-              value={categoryname}
-              onChange={(e) => setCategoryName(e.target.value)}
+              placeholder='Sub-Category Name'
+              value={subcategoryname}
+              onChange={(e) => setSubCategoryName(e.target.value)}
             />
           </Form.Group>
 
