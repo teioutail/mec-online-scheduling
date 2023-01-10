@@ -28,7 +28,10 @@ import {
     MENU_CATEGORY_DETAILS_RESET,
 } from '../constants/menuCategoryConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import MenuCategoryModal from '../modals/Menu/MenuCategoryModal'
+import SubMenuCategoryModal from '../modals/Menu/SubMenuCategoryModal'
+import { 
+    getMenuCategoryOptions,
+} from '../actions/menuCategoryActions'
 
 const SubMenuCategoryScreen = () => {
     // CommonJS
@@ -199,6 +202,7 @@ const SubMenuCategoryScreen = () => {
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listSubMenuCategories())
+            // dispatch(getMenuCategoryOptions())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -231,7 +235,7 @@ const SubMenuCategoryScreen = () => {
                     selectableRowsHighlight
                 />
 
-                <MenuCategoryModal 
+                <SubMenuCategoryModal 
                     show={show} 
                     onHide={handleClose} 
                     catid={catid}

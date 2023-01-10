@@ -62,6 +62,10 @@ export const listMenuCategories = () => async (dispatch, getState) => {
         })
     }
 }
+// Get Menu Category Name Only For Select Option
+export const getMenuCategoryOptions =() => async(dispatch) => {
+    alert("test");
+}
 
 // Get Menu Category Details
 export const getMenuCategoryDetails = (id) => async(dispatch, getState) => {
