@@ -14,7 +14,7 @@ import {
   createMenuCategory,
 } from '../../actions/menuCategoryActions'
 
-const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails, menuCategoryOptions }) => {
+const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDetails, menuCategoryOptions }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -57,7 +57,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
       if (result.isConfirmed) {
         // Updated Category Data
         const category = {
-          id: catid,
+          id: subcatid,
           categoryname: categoryname,
           remarks: remarks,
           url: url,
@@ -103,8 +103,8 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
   useEffect(() => {
     // Selected Menu Category Details
     const {  
-        cat_id,
-        category_name,
+        subcat_id,
+        subcategory_name,
         url,
         access_role,
         users_id,
@@ -112,23 +112,8 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
         remarks,
         icon:iconMenu,
         sort,
-        treeview,
-    } = menuCategoryDetails
-
-    // return console.log(menuCategoryOptions);
-
-    // Updated Menu Category Data
-    // const category = {
-    //     id: categoryid,
-    //     categoryname: categoryname,
-    //     remarks: remarks,
-    //     url: url,
-    //     status: status,
-    //     treeview: treeview,
-    //     icon: icon,
-    //     sort: sort,
-    //     treeview: treeview
-    // }
+        cat_id,
+    } = submenuCategoryDetails
 
     // setState
     setCategoryName(category_name || "")
@@ -139,12 +124,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
     setTreeView(treeview || "0")
     setMenuCatOptions(menuCategoryOptions || [])
     
-  }, [menuCategoryDetails, menuCategoryOptions])
-
-  // 
-//   useEffect(() => {
-//     setMenuCatOptions(menuCategoryOptions)
-//   },[menuCategoryOptions])
+  }, [submenuCategoryDetails, menuCategoryOptions])
 
   return (
     <>

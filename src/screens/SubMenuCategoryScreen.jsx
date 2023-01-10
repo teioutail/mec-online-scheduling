@@ -9,14 +9,14 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-    listMenuCategories,
-    getMenuCategoryDetails,
-    deleteMenuCategory,
-} from '../actions/menuCategoryActions'
+// import { 
+//     listMenuCategories,
+//     getMenuCategoryDetails,
+//     deleteMenuCategory,
+// } from '../actions/menuCategoryActions'
 import { 
     listSubMenuCategories,
-
+    getSubMenuCategoryDetails,
 } from '../actions/menuSubCategoryAction'
 
 import { 
@@ -57,9 +57,9 @@ const SubMenuCategoryScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Menu Category Details
-    const menuCategoryDetails = useSelector(state => state.menuCategoryDetails)
-    const { category: menuCategoryDetail } = menuCategoryDetails
+    // Menu Sub Category Details
+    const submenuCategoryDetails = useSelector(state => state.submenuCategoryDetails)
+    const { subcategory: submenuCategoryDetail } = submenuCategoryDetails
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -71,7 +71,7 @@ const SubMenuCategoryScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [catid, setCatId] = useState('')
+    const [subcatid, setSubCatId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
@@ -86,14 +86,14 @@ const SubMenuCategoryScreen = () => {
         })
     }
 
-    // Edit Menu Category 
-    const handleEditMenuCategoryView = (state) => {
+    // Edit Sub-Menu Category 
+    const handleEditSubMenuCategoryView = (state) => {
         setShow(true)
-        setCatId(state.target.id)
+        setSubCatId(state.target.id)
         setMode('Edit')
         // alert(state.target.id);
         // Call API Here...
-        // dispatch(getMenuCategoryDetails(state.target.id))
+        dispatch(getSubMenuCategoryDetails(state.target.id))
     }
 
     // Delete Role
@@ -120,7 +120,6 @@ const SubMenuCategoryScreen = () => {
                     'Menu Category Successfully Deleted.',
                     'success'
                 )
-
             }
         })
     }
@@ -168,18 +167,18 @@ const SubMenuCategoryScreen = () => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.cat_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.subcat_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditMenuCategoryView} id={row.cat_id}>
-                                        <FontAwesomeIcon icon={faUserPen} /> Edit Category
+                                    <Link className="dropdown-item" onClick={handleEditSubMenuCategoryView} id={row.subcat_id}>
+                                        <FontAwesomeIcon icon={faUserPen} /> Edit Sub-Category
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteMenuCategory} id={row.cat_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Delete Category
+                                    <Link className="dropdown-item" onClick={handleDeleteMenuCategory} id={row.subcat_id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete Sub-Category
                                     </Link>
                                 </li>
                             </ul>
@@ -245,8 +244,8 @@ const SubMenuCategoryScreen = () => {
                 <SubMenuCategoryModal 
                     show={show} 
                     onHide={handleClose} 
-                    catid={catid}
-                    menuCategoryDetails={menuCategoryDetail}
+                    subcatid={subcatid}
+                    submenuCategoryDetails={submenuCategoryDetail}
                     menuCategoryOptions={categories}
                     mode={mode}
                 />
