@@ -6,13 +6,15 @@ import {
     SUB_CATEGORY_LIST_SUCCESS,
     SUB_CATEGORY_LIST_FAIL,
     SUB_CATEGORY_LIST_RESET,
+    SUB_CATEGORY_DETAILS_FAIL,
+    SUB_CATEGORY_DETAILS_REQUEST,
+    SUB_CATEGORY_DETAILS_SUCCESS,
 } from '../constants/menuSubCategoryConstants'
 
 // View List of Sub-Menu Categories
 export const listSubMenuCategories = () => async (dispatch, getState) => {
     //
     try {
-        
         dispatch({
             type: SUB_CATEGORY_LIST_REQUEST,
         })
@@ -39,6 +41,45 @@ export const listSubMenuCategories = () => async (dispatch, getState) => {
         dispatch({
             type: SUB_CATEGORY_LIST_FAIL,
             payload:    
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+// Get Menu Sub Category Details
+export const getSubMenuCategoryDetails = (id) => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: SUB_CATEGORY_DETAILS_REQUEST,
+        })
+
+        const { userLogin : { userInfo } } = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/subcategory/${id}`, config)
+        console.warn(data)
+
+        dispatch({
+            type: SUB_CATEGORY_DETAILS_SUCCESS,
+            payload: data,
+        })
+        
+    } catch(error) {
+        // 
+        dispatch({
+            type: SUB_CATEGORY_DETAILS_FAIL,
+            payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message,

@@ -114,8 +114,6 @@ const MenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) 
         treeview,
     } = menuCategoryDetails
 
-    // console.warn(category_name)
-
     // Updated Menu Category Data
     // const category = {
     //     id: categoryid,

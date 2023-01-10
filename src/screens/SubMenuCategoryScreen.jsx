@@ -9,13 +9,14 @@ import DataTable from 'react-data-table-component'
 import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { 
-//     listMenuCategories,
-//     getMenuCategoryDetails,
-//     deleteMenuCategory,
-// } from '../actions/menuCategoryActions'
 import { 
-    listSubMenuCategories
+    listMenuCategories,
+    getMenuCategoryDetails,
+    deleteMenuCategory,
+} from '../actions/menuCategoryActions'
+import { 
+    listSubMenuCategories,
+
 } from '../actions/menuSubCategoryAction'
 
 import { 

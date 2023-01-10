@@ -24,6 +24,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
   const [iconMenu, setIconMenu] = useState('')
   const [status, setStatus] = useState('')
   const [treeview, setTreeView] = useState('')
+  
+  const [menuCatOptions, setMenuCatOptions] = useState([])
+  const [menucategory, setMenuCategory] = useState('')
 
   // CommonJS
   // const Swal = require('sweetalert2')
@@ -98,8 +101,6 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
 
   // 
   useEffect(() => {
-    // console.warn(menuCategoryDetails)
-    
     // Selected Menu Category Details
     const {  
         cat_id,
@@ -114,7 +115,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
         treeview,
     } = menuCategoryDetails
 
-    console.warn(menuCategoryOptions)
+    // return console.log(menuCategoryOptions);
 
     // Updated Menu Category Data
     // const category = {
@@ -136,8 +137,14 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
     setIconMenu(iconMenu || "")
     setStatus(status || "0")
     setTreeView(treeview || "0")
-
+    setMenuCatOptions(menuCategoryOptions || [])
+    
   }, [menuCategoryDetails, menuCategoryOptions])
+
+  // 
+//   useEffect(() => {
+//     setMenuCatOptions(menuCategoryOptions)
+//   },[menuCategoryOptions])
 
   return (
     <>
@@ -151,13 +158,18 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails,
             <Form.Label>Menu Category</Form.Label>
             <Form.Control
               as='select' 
-              aria-label="Status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              aria-label="Menu Category"
+              value={menucategory}
+              onChange={(e) => setMenuCategory(e.target.value)}
             >
-            {/* <option value="">- Select -</option> */}
-            <option value="0">Disable</option>
-            <option value="1">Enable</option>
+            <option value="">- Select -</option>
+            {
+                menuCatOptions.length > 0  && (
+                    menuCatOptions.map((row, key) => (
+                        <option key={key} value={ row.cat_id }>{ row.category_name }</option>
+                    ))
+                )
+            }
             </Form.Control>
           </Form.Group>
 
