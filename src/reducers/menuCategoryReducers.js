@@ -18,6 +18,10 @@ import {
     MENU_CATEGORY_CREATE_SUCCESS,
     MENU_CATEGORY_CREATE_FAIL,
     MENU_CATEGORY_CREATE_RESET,
+    MENU_CATEGORY_OPTIONS_REQUEST,
+    MENU_CATEGORY_OPTIONS_SUCCESS,
+    MENU_CATEGORY_OPTIONS_FAIL,
+    MENU_CATEGORY_OPTIONS_RESET,
  } from "../constants/menuCategoryConstants";
 
 // MENU CATEGORY REDUCER
@@ -30,6 +34,22 @@ export const menuCategoryListReducer = (state = { categories: [] }, action ) => 
         case MENU_CATEGORY_LIST_FAIL:
             return { loading: false, error: action.payload }
         case MENU_CATEGORY_LIST_RESET:
+            return { categories: [] }
+        default:
+            return state
+    }
+}
+
+// MENU CATEGORY REDUCER
+export const menuCategoryOptionsReducer = (state = { categories: [] }, action ) => {
+    switch(action.type) {
+        case MENU_CATEGORY_OPTIONS_REQUEST:
+            return { loading: true }
+        case MENU_CATEGORY_OPTIONS_SUCCESS:
+            return { loading: false, categories: action.payload }
+        case MENU_CATEGORY_OPTIONS_FAIL:
+            return { loading: false, error: action.payload }
+        case MENU_CATEGORY_OPTIONS_RESET:
             return { categories: [] }
         default:
             return state

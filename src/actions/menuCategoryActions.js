@@ -19,6 +19,7 @@ import {
     MENU_CATEGORY_DELETE_FAIL,
     MENU_CATEGORY_DELETE_REQUEST,
     MENU_CATEGORY_DELETE_SUCCESS,
+    MENU_CATEGORY_OPTIONS_SUCCESS,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -41,7 +42,6 @@ export const listMenuCategories = () => async (dispatch, getState) => {
         }
 
         // Call API Request
-
         const { data } = await axios.get(`/auth/category`, config)
 
         dispatch({
@@ -63,8 +63,42 @@ export const listMenuCategories = () => async (dispatch, getState) => {
     }
 }
 // Get Menu Category Name Only For Select Option
-export const getMenuCategoryOptions =() => async(dispatch) => {
-    alert("test");
+export const getMenuCategoryOptions =() => async(dispatch, getState) => {
+    //
+    try 
+    {
+        dispatch({
+            type: MENU_CATEGORY_OPTIONS_SUCCESS
+        })
+
+        const { userLogin : { userInfo} } = getState()
+        // console.warn(userInfo)
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        
+        // Call API Request
+        const { data } = await axios.get(`/auth/catoption`, config)
+        
+        dispatch({
+            type: MENU_CATEGORY_OPTIONS_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: MENU_CATEGORY_DETAILS_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    } 
 }
 
 // Get Menu Category Details

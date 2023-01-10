@@ -30,6 +30,7 @@ import {
     menuCategoryUpdateReducer,
     menuCategoryDeleteReducer,
     menuCategoryCreateReducer,
+    menuCategoryOptionsReducer,
 } from './reducers/menuCategoryReducers'
 
 // Sub-Menu Category Reducer
@@ -56,6 +57,7 @@ const reducer = combineReducers({
     menuCategoryUpdate:menuCategoryUpdateReducer,
     menuCategoryDelete:menuCategoryDeleteReducer,
     menuCategoryCreate:menuCategoryCreateReducer,
+    menuCategoryOption:menuCategoryOptionsReducer,
     submenuCategoryList: menuSubCategoryListReducer,
 })
 

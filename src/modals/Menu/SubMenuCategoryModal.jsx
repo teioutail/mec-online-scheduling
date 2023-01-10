@@ -14,7 +14,7 @@ import {
   createMenuCategory,
 } from '../../actions/menuCategoryActions'
 
-const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails }) => {
+const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails, menuCategoryOptions }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -114,7 +114,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails 
         treeview,
     } = menuCategoryDetails
 
-    // console.warn(category_name)
+    console.warn(menuCategoryOptions)
 
     // Updated Menu Category Data
     // const category = {
@@ -137,7 +137,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, catid, menuCategoryDetails 
     setStatus(status || "0")
     setTreeView(treeview || "0")
 
-  }, [menuCategoryDetails])
+  }, [menuCategoryDetails, menuCategoryOptions])
 
   return (
     <>

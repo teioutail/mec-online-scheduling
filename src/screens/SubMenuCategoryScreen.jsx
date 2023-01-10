@@ -48,6 +48,10 @@ const SubMenuCategoryScreen = () => {
     const submenuCategoryList = useSelector(state => state.submenuCategoryList)
     const { loading, error, subcategories } = submenuCategoryList
 
+    // Menu Category Options
+    const menuCategoryOption = useSelector(state => state.menuCategoryOption)
+    const { loading:loadingOption, categories } = menuCategoryOption
+
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -202,14 +206,16 @@ const SubMenuCategoryScreen = () => {
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listSubMenuCategories())
-            // dispatch(getMenuCategoryOptions())
+
+            // Get Menu Categories
+            dispatch(getMenuCategoryOptions())
+
         } else {
             // Redirect to login page
             navigate('/signin')
         }
         // console.warn(userInfo.user.user_type)
     }, [dispatch, navigate, userInfo])
-
 
     return (
         <>
@@ -240,6 +246,7 @@ const SubMenuCategoryScreen = () => {
                     onHide={handleClose} 
                     catid={catid}
                     menuCategoryDetails={menuCategoryDetail}
+                    menuCategoryOptions={categories}
                     mode={mode}
                 />
 
