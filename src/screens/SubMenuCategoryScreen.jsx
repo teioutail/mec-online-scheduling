@@ -41,9 +41,9 @@ const SubMenuCategoryScreen = () => {
     // useNavigate to redirect the user
     const navigate = useNavigate() 
 
-    // Menu Category List
-    const menuCategoryList = useSelector(state => state.menuCategoryList)
-    const { loading, error, categories } = menuCategoryList
+    // Sub-Menu Category List
+    const submenuCategoryList = useSelector(state => state.submenuCategoryList)
+    const { loading, error, subcategories } = submenuCategoryList
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -120,12 +120,12 @@ const SubMenuCategoryScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Category ID',
-                selector: row => row.cat_id,
+            {   name: 'Sub-Category ID',
+                selector: row => row.subcat_id,
                 sortable: true,
             },
-            {   name: 'Category Name',
-                selector: row => row.category_name,
+            {   name: 'Sub-Category Name',
+                selector: row => row.subcategory_name,
                 sortable: true,
             },
             {
@@ -135,7 +135,7 @@ const SubMenuCategoryScreen = () => {
             },
             {
                 name: 'Status',
-                selector: row => row.stats,
+                selector: row => row.status,
                 sortable: true,
             },
             {
@@ -146,6 +146,11 @@ const SubMenuCategoryScreen = () => {
             {
                 name: 'Sort',
                 selector: row => row.sort,
+                sortable: true,
+            },
+            {
+                name: 'Category',
+                selector: row => row.cat_id,
                 sortable: true,
             },
             {
@@ -184,9 +189,9 @@ const SubMenuCategoryScreen = () => {
 
     // Set Row Value
     useEffect(() => {
-        setRows(categories)
+        setRows(subcategories)
         setPending(loading)
-    }, [categories, rows, loading])
+    }, [subcategories, rows, loading])
 
     //
     useEffect(() => {
