@@ -78,10 +78,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
           dispatch(createSubMenuCategory(subcategory))
           
           // Refresh Datatable
-        //   dispatch(listMenuCategories())
+          dispatch(listSubMenuCategories())
           // Close 
           onHide()
-
         } else {
           // Update Menu Category
           dispatch(updateSubMenuCategory(subcategory))
@@ -91,8 +90,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             'Menu Category Updated Successfully.',
             'success'
           )
+          
           // Refresh Datatable
-        //   dispatch(listMenuCategories())
+          dispatch(listSubMenuCategories())
           // Close Modal
           onHide()
         }
@@ -115,8 +115,6 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
         sort,
         cat_id:categoryid,
     } = submenuCategoryDetails
-
-    // console.warn(submenuCategoryDetails)
 
     // setState
     setSubCategoryName(subcategory_name || "")

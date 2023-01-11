@@ -20,6 +20,7 @@ import {
     faEllipsisV,
     faTrash,
     faUserPen,
+    faUserLock,
 } from '@fortawesome/free-solid-svg-icons'
 import { 
     ROLE_DETAILS_RESET 
@@ -152,6 +153,11 @@ const RoleListScreen = () => {
                                 <li>
                                     <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
                                         <FontAwesomeIcon icon={faTrash} /> Delete Role
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faUserLock} /> Role Access Privilege
                                     </Link>
                                 </li>
                             </ul>
