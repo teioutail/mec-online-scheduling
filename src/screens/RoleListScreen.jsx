@@ -29,6 +29,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
 import RoleAccessModal from '../modals/Role/RoleAccessModal'
 
+import { listMenuCategories } from '../actions/menuCategoryActions'
+import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
+
 const RoleListScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
@@ -51,6 +54,14 @@ const RoleListScreen = () => {
     // Role Info
     const roleDetails = useSelector(state => state.roleDetails)
     const { role: roleDetail } = roleDetails
+
+    // Menu Category List
+    const menuCategoryList = useSelector(state => state.menuCategoryList)
+    const { loading:loadingcat, error:errorcat, categories } = menuCategoryList
+
+    // Sub-Menu Category List
+    const submenuCategoryList = useSelector(state => state.submenuCategoryList)
+    const { loading:loadingsub, error:errorsub, subcategories } = submenuCategoryList
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -98,7 +109,6 @@ const RoleListScreen = () => {
         setRoleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-
     }
 
     // Delete Role
@@ -201,6 +211,9 @@ const RoleListScreen = () => {
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listRoles())
+            dispatch(listMenuCategories())
+            dispatch(listSubMenuCategories())
+
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -245,6 +258,8 @@ const RoleListScreen = () => {
                         show={showRoleAccess} 
                         onHide={handleRoleAccessClose} 
                         roleid={roleid}
+                        categories={categories}
+                        subcategories={subcategories}
                     />
 
                 <Footer />
