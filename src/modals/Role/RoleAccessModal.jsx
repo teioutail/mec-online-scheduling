@@ -13,7 +13,7 @@ import {
   createRole,
 } from '../../actions/roleActions'
 
-const RoleAccessModal = ({ show, onHide }) => {
+const RoleAccessModal = ({ show, onHide, roleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -66,11 +66,10 @@ const RoleAccessModal = ({ show, onHide }) => {
 
   return (
     <>
-        <Modal>
-        {/* <Modal show={show} onHide={onHide}> */}
+        <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
         {/* <Modal.Title>{ mode === 'Add' ? 'Add Role' : 'Edit Role'  }</Modal.Title> */}
-        <Modal.Title>Modal</Modal.Title>
+        <Modal.Title>Role Access Privilege</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">

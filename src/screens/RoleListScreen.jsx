@@ -58,6 +58,12 @@ const RoleListScreen = () => {
 
     // EditRoleModal
     const [show, setShow] = useState(false)
+    // 
+    const [showRoleAccess, setShowRoleAccess] = useState()
+    // Role Access View Modal
+    const handleRoleAccessClose = () => setShowRoleAccess(false)
+    const handleRoleAccessShow = () => setShowRoleAccess(true)
+    //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
@@ -84,6 +90,15 @@ const RoleListScreen = () => {
         setMode('Edit')
         // Call API Here...
         dispatch(getRoleDetails(state.target.id))
+    }
+
+    // Role Access 
+    const handleRoleAccessView = (state) => {
+        handleRoleAccessShow()
+        setRoleId(state.target.id)
+        setMode('Edit')
+        // Call API Here...
+
     }
 
     // Delete Role
@@ -157,7 +172,7 @@ const RoleListScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
                                         <FontAwesomeIcon icon={faUserLock} /> Role Access Privilege
                                     </Link>
                                 </li>
@@ -204,32 +219,33 @@ const RoleListScreen = () => {
                     </Button>
 
                     <DataTable
-                    // title={headerTitle}
-                    // selectableRows
-                    // data={users}
-                    pagination
-                    responsive
-                    columns={columns}
-                    data={rows}
-                    progressPending={pending}
-                    progressComponent={<Loader />}
-                    highlightOnHover
-                    pointerOnHover
-                    selectableRowsHighlight
-                />
+                        // title={headerTitle}
+                        // selectableRows
+                        // data={users}
+                        pagination
+                        responsive
+                        columns={columns}
+                        data={rows}
+                        progressPending={pending}
+                        progressComponent={<Loader />}
+                        highlightOnHover
+                        pointerOnHover
+                        selectableRowsHighlight
+                    />
 
-                <EditRoleModal 
-                    show={show} 
-                    onHide={handleClose} 
-                    roleid={roleid}
-                    roleDetails={roleDetail}
-                    mode={mode}
-                />
+                    <EditRoleModal 
+                        show={show} 
+                        onHide={handleClose} 
+                        roleid={roleid}
+                        roleDetails={roleDetail}
+                        mode={mode}
+                    />
 
-                <RoleAccessModal 
-                    show={show} 
-                    onHide={handleClose} 
-                />
+                    <RoleAccessModal 
+                        show={showRoleAccess} 
+                        onHide={handleRoleAccessClose} 
+                        roleid={roleid}
+                    />
 
                 <Footer />
             </FormContainer>
