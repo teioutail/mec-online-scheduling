@@ -26,8 +26,8 @@ import {
     faUserPen,
 } from '@fortawesome/free-solid-svg-icons'
 import { 
-    MENU_CATEGORY_DETAILS_RESET,
-} from '../constants/menuCategoryConstants'
+    SUB_CATEGORY_DETAILS_RESET
+} from '../constants/menuSubCategoryConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import SubMenuCategoryModal from '../modals/Menu/SubMenuCategoryModal'
 import { 
@@ -82,7 +82,7 @@ const SubMenuCategoryScreen = () => {
         setMode('Add')
         //
         dispatch({
-            type: MENU_CATEGORY_DETAILS_RESET,
+            type: SUB_CATEGORY_DETAILS_RESET,
         })
     }
 

@@ -14,6 +14,7 @@ import {
     SUB_CATEGORY_CREATE_FAIL,
     SUB_CATEGORY_CREATE_REQUEST,
     SUB_CATEGORY_CREATE_SUCCESS,
+    SUB_CATEGORY_DELETE_FAIL,
 } from '../constants/menuSubCategoryConstants'
 
 // View List of Sub-Menu Categories
@@ -148,7 +149,7 @@ export const createSubMenuCategory = (subcategory) => async (dispatch) => {
         // Call API Request
         const { data } = await axios.post('/auth/subcategory', subcategory, config)
 
-        // console.warn(data)
+        console.warn(data)
 
         dispatch({
             type: SUB_CATEGORY_CREATE_SUCCESS,
@@ -165,4 +166,22 @@ export const createSubMenuCategory = (subcategory) => async (dispatch) => {
             : error.message,
         })
     }
+}
+
+// Delete Sub-Menu Category
+export const deleteSubMenuCategory = (id) => async (dispatch, getState) => {
+    //
+    try {
+        
+    } catch(error) {
+        //
+        dispatch({
+            type: SUB_CATEGORY_DELETE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.errors 
+            : error.message,
+        })
+    }
+
 }

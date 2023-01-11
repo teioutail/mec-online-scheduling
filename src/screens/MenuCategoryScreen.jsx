@@ -27,8 +27,6 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import MenuCategoryModal from '../modals/Menu/MenuCategoryModal'
 
 const MenuCategoryScreen = () => {
-    // CommonJS
-    const Swal = require('sweetalert2')
     //
     const headerTitle = 'Menu Categories'
     // Redux
