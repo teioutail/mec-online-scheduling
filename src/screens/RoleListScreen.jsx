@@ -27,6 +27,7 @@ import {
 } from '../constants/roleConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
+import RoleAccessModal from '../modals/Role/RoleAccessModal'
 
 const RoleListScreen = () => {
     // CommonJS
@@ -223,6 +224,11 @@ const RoleListScreen = () => {
                     roleid={roleid}
                     roleDetails={roleDetail}
                     mode={mode}
+                />
+
+                <RoleAccessModal 
+                    show={show} 
+                    onHide={handleClose} 
                 />
 
                 <Footer />
