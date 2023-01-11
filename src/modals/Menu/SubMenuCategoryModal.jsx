@@ -8,11 +8,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import { 
+//   listMenuCategories,
+//   updateMenuCategory,
+//   createMenuCategory,
+// } from '../../actions/menuCategoryActions'
 import { 
-  listMenuCategories,
-  updateMenuCategory,
-  createMenuCategory,
-} from '../../actions/menuCategoryActions'
+    updateSubMenuCategory,
+} from '../../actions/menuSubCategoryAction'
 
 const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDetails, menuCategoryOptions }) => {
   // Redux
@@ -24,9 +27,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
   const [iconMenu, setIconMenu] = useState('')
   const [status, setStatus] = useState('')
   const [treeview, setTreeView] = useState('')
-  
+  const [categoryid, setCategoryId] = useState('')
+  const [subcategoryid, setSubCategoryId] = useState('');
   const [menuCatOptions, setMenuCatOptions] = useState([])
-  const [menucategory, setMenuCategory] = useState('')
 
   // CommonJS
   // const Swal = require('sweetalert2')
@@ -56,8 +59,8 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
 
       if (result.isConfirmed) {
         // Updated Category Data
-        const category = {
-          id: subcatid,
+        const subcategory = {
+          id: subcategoryid,
           subcategoryname: subcategoryname,
           remarks: remarks,
           url: url,
@@ -65,6 +68,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
           treeview: treeview,
           icon: iconMenu,
         }
+
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -74,15 +78,15 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             'success'
           )
           // Create Menu Category 
-          dispatch(createMenuCategory(category))
+        //   dispatch(createMenuCategory(category))
           // Refresh Datatable
-          dispatch(listMenuCategories())
+        //   dispatch(listMenuCategories())
           // Close 
           onHide()
 
         } else {
           // Update Menu Category
-          dispatch(updateMenuCategory(category))
+          dispatch(updateSubMenuCategory(subcategory))
 
           Swal.fire(
             'Success!',
@@ -90,7 +94,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             'success'
           )
           // Refresh Datatable
-          dispatch(listMenuCategories())
+        //   dispatch(listMenuCategories())
           // Close Modal
           onHide()
         }
@@ -111,8 +115,10 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
         remarks,
         icon:iconMenu,
         sort,
-        cat_id,
+        cat_id:categoryid,
     } = submenuCategoryDetails
+
+    // console.warn(submenuCategoryDetails)
 
     // setState
     setSubCategoryName(subcategory_name || "")
@@ -122,7 +128,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
     setStatus(status || "0")
     setTreeView(treeview || "0")
     setMenuCatOptions(menuCategoryOptions || [])
-    
+    setCategoryId(categoryid || "")
+    setSubCategoryId(subcatid || "")
+
   }, [submenuCategoryDetails, menuCategoryOptions])
 
   return (
@@ -138,8 +146,8 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             <Form.Control
               as='select' 
               aria-label="Menu Category"
-              value={menucategory}
-              onChange={(e) => setMenuCategory(e.target.value)}
+              value={categoryid}
+              onChange={(e) => setCategoryId(e.target.value)}
             >
             <option value="">- Select -</option>
             {
