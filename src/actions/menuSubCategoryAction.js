@@ -11,6 +11,9 @@ import {
     SUB_CATEGORY_DETAILS_SUCCESS,
     SUB_CATEGORY_UPDATE_FAIL,
     SUB_CATEGORY_UPDATE_REQUEST,
+    SUB_CATEGORY_CREATE_FAIL,
+    SUB_CATEGORY_CREATE_REQUEST,
+    SUB_CATEGORY_CREATE_SUCCESS,
 } from '../constants/menuSubCategoryConstants'
 
 // View List of Sub-Menu Categories
@@ -119,6 +122,43 @@ export const updateSubMenuCategory = (subcategory) => async(dispatch, getState) 
         //
         dispatch({
             type: SUB_CATEGORY_UPDATE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+// Create New Sub-Menu Category
+export const createSubMenuCategory = (subcategory) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: SUB_CATEGORY_CREATE_REQUEST,
+        })
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post('/auth/subcategory', subcategory, config)
+
+        // console.warn(data)
+
+        dispatch({
+            type: SUB_CATEGORY_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: SUB_CATEGORY_CREATE_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 

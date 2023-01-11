@@ -11,6 +11,10 @@ import {
     SUB_CATEGORY_UPDATE_SUCCESS,
     SUB_CATEGORY_UPDATE_FAIL,
     SUB_CATEGORY_UPDATE_RESET,
+    SUB_CATEGORY_CREATE_REQUEST,
+    SUB_CATEGORY_CREATE_SUCCESS,
+    SUB_CATEGORY_CREATE_FAIL,
+    SUB_CATEGORY_CREATE_RESET,
 } from "../constants/menuSubCategoryConstants";
 
  // MENU CATEGORY REDUCER
@@ -59,6 +63,23 @@ export const menuSubCategoryUpdateReducer = (state = { subcategory: {} }, action
             return {
                 subcategory: {}
             }
+        default:
+            return state
+    }
+}
+
+// Create Sub-Menu Category Reducer
+export const menuSubCategoryCreateReducer = (state = {}, action) => {
+    // 
+    switch(action.type) {
+        case SUB_CATEGORY_CREATE_REQUEST:
+            return { loading: true}
+        case SUB_CATEGORY_CREATE_SUCCESS:
+            return { loading: false, success: true, subcategory: action.payload }
+        case SUB_CATEGORY_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+        case SUB_CATEGORY_CREATE_RESET:
+            return {}
         default:
             return state
     }

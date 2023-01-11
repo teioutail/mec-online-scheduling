@@ -14,7 +14,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 //   createMenuCategory,
 // } from '../../actions/menuCategoryActions'
 import { 
+    listSubMenuCategories,
     updateSubMenuCategory,
+    createSubMenuCategory,
 } from '../../actions/menuSubCategoryAction'
 
 const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDetails, menuCategoryOptions }) => {
@@ -26,14 +28,10 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
   const [remarks, setRemarks] = useState('')
   const [iconMenu, setIconMenu] = useState('')
   const [status, setStatus] = useState('')
-  const [treeview, setTreeView] = useState('')
   const [categoryid, setCategoryId] = useState('')
   const [subcategoryid, setSubCategoryId] = useState('');
   const [menuCatOptions, setMenuCatOptions] = useState([])
-
-  // CommonJS
-  // const Swal = require('sweetalert2')
-
+  
   // Event in select dropdown
   const handleSelectedChange = (event) => {
     //
@@ -65,10 +63,9 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
           remarks: remarks,
           url: url,
           status: status,
-          treeview: treeview,
           icon: iconMenu,
+          cat_id: categoryid,
         }
-
         // 
         if(mode === 'Add') {
           // Show Success Request
@@ -78,7 +75,8 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             'success'
           )
           // Create Menu Category 
-        //   dispatch(createMenuCategory(category))
+          dispatch(createSubMenuCategory(subcategory))
+          
           // Refresh Datatable
         //   dispatch(listMenuCategories())
           // Close 
@@ -126,7 +124,6 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
     setRemarks(remarks || "")
     setIconMenu(iconMenu || "")
     setStatus(status || "0")
-    setTreeView(treeview || "0")
     setMenuCatOptions(menuCategoryOptions || [])
     setCategoryId(categoryid || "")
     setSubCategoryId(subcatid || "")
@@ -201,19 +198,6 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
             {/* <option value="">- Select -</option> */}
             <option value="0">Disable</option>
             <option value="1">Enable</option>
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>w/ Menu Treeview</Form.Label>
-            <Form.Control
-              as='select' 
-              aria-label="Treeview"
-              value={treeview}
-              onChange={(e) => setTreeView(e.target.value)}
-            >
-            <option value="0">No</option>
-            <option value="1">Yes</option>
             </Form.Control>
           </Form.Group>
 
