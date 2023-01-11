@@ -15,6 +15,8 @@ import {
     SUB_CATEGORY_CREATE_REQUEST,
     SUB_CATEGORY_CREATE_SUCCESS,
     SUB_CATEGORY_DELETE_FAIL,
+    SUB_CATEGORY_DELETE_REQUEST,
+    SUB_CATEGORY_DELETE_SUCCESS,
 } from '../constants/menuSubCategoryConstants'
 
 // View List of Sub-Menu Categories
@@ -172,7 +174,25 @@ export const createSubMenuCategory = (subcategory) => async (dispatch) => {
 export const deleteSubMenuCategory = (id) => async (dispatch, getState) => {
     //
     try {
-        
+        dispatch({
+            type: SUB_CATEGORY_DELETE_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.delete(`/auth/subcategory/${id}`, config)
+
+        dispatch({
+            type: SUB_CATEGORY_DELETE_SUCCESS,
+        })
+
     } catch(error) {
         //
         dispatch({

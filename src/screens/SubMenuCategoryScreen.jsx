@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     listSubMenuCategories,
     getSubMenuCategoryDetails,
+    deleteSubMenuCategory,
 } from '../actions/menuSubCategoryAction'
 
 import { 
@@ -97,7 +98,7 @@ const SubMenuCategoryScreen = () => {
     }
 
     // Delete Role
-    const handleDeleteMenuCategory = (state) => {
+    const handleDeleteMenuSubCategory = (state) => {
         // Save Change Here...
         Swal.fire({
             title: 'Delete this Menu Category?',
@@ -110,10 +111,10 @@ const SubMenuCategoryScreen = () => {
         }).then((result) => {
             //
             if (result.isConfirmed) {
-                // Delete Menu Category
-                // dispatch(deleteMenuCategory(state.target.id))
+                // Delete Sub-Menu Category
+                dispatch(deleteSubMenuCategory(state.target.id))
                 // Refresh Datatable
-                // dispatch(listMenuCategories())
+                dispatch(listSubMenuCategories())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
@@ -177,7 +178,7 @@ const SubMenuCategoryScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteMenuCategory} id={row.subcat_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteMenuSubCategory} id={row.subcat_id}>
                                         <FontAwesomeIcon icon={faTrash} /> Delete Sub-Category
                                     </Link>
                                 </li>
