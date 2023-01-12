@@ -62,12 +62,17 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
   
   // 
   useEffect(() => {
-    //
-    setMenuCategories(categories || [])
-    setMenuSubCategories(subcategories || [])
+    // validate categories
+    if(categories && (categories != undefined)) {
+      setMenuCategories(categories)
+      console.warn(menucategories)
+    }
 
-    // console.warn(menucategories)
-  }, [])
+      
+
+    // setMenuSubCategories(subcategories || [])
+
+  }, [categories, menucategories])
 
   return (
     <>
@@ -82,26 +87,24 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                     {/* <Col sm={12} md={6} lg={4} xl={3} > */}
                     <Col md={6}>
                         <h6>Menu Categories</h6>
-                        <Form.Group>
-                            <Form.Check 
-                            type="switch"
-                            id="custom-switch"
-                            label="Activate User?"
-                            // value={activate}
-                            // checked={activate}
-                            // onChange={handleCheckboxChange}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Check
-                            type="switch"
-                            id="custom-switch"
-                            label="Activate User?"
-                            // value={activate}
-                            // checked={activate}
-                            // onChange={handleCheckboxChange}
-                            />
-                        </Form.Group>
+                        {
+                            menucategories.length > 0  && (
+                              // map
+                              menucategories.map((row, key) => (
+                                    // <option key={key} value={ row.cat_id }>{ row.category_name }</option>
+                                    <Form.Group>
+                                    <Form.Check 
+                                    type="switch"
+                                    id="custom-switch"
+                                    label={row.category_name}
+                                    value={row.cat_id}
+                                    // checked={activate}
+                                    // onChange={handleCheckboxChange}
+                                    />
+                                </Form.Group>
+                                ))
+                            )
+                        }
                     </Col>
                     <Col md={6}>
                         <h6>Sub-Menu Categories</h6>
@@ -111,12 +114,12 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
             </Container>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-            Close
-        </Button>
-        <Button variant="primary" onClick={handleSubmit} >
-            Save Changes
-        </Button>
+          <Button variant="secondary" onClick={onHide}>
+              Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit} >
+              Save Changes
+          </Button>
         </Modal.Footer>
         </Modal>
     </>
