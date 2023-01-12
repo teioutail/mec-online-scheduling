@@ -40,6 +40,7 @@ import {
     menuSubCategoryUpdateReducer,
     menuSubCategoryCreateReducer,
     menuSubCategoryDeleteReducer,
+    menuSubCategoryUpdateRoleAccessReducer,
 } from './reducers/menuSubCategoryReducers'
 
 // Reducers
@@ -68,6 +69,7 @@ const reducer = combineReducers({
     submenuCategoryUpdate: menuSubCategoryUpdateReducer,
     submenuCategoryCreate: menuSubCategoryCreateReducer,
     submenuCategoryDelete: menuSubCategoryDeleteReducer,
+    submenuCategoryRoleAccessUpdate: menuSubCategoryUpdateRoleAccessReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

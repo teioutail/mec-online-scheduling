@@ -17,6 +17,9 @@ import {
     SUB_CATEGORY_DELETE_FAIL,
     SUB_CATEGORY_DELETE_REQUEST,
     SUB_CATEGORY_DELETE_SUCCESS,
+    SUB_CATEGORY_UPDATE_ACCESS_REQUEST,
+    SUB_CATEGORY_UPDATE_ACCESS_SUCCESS,
+    SUB_CATEGORY_UPDATE_ACCESS_FAIL,
 } from '../constants/menuSubCategoryConstants'
 
 // View List of Sub-Menu Categories
@@ -204,4 +207,44 @@ export const deleteSubMenuCategory = (id) => async (dispatch, getState) => {
         })
     }
 
+}
+
+// Update Sub-Menu 
+export const updateSubMenuRoleAccess = (details) => async (dispatch, getState) =>  {
+    //
+    try {
+        // console.warn(details)
+        
+        dispatch({
+            type: SUB_CATEGORY_UPDATE_ACCESS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post(`/auth/subcategory-per-role/${details.value}`, details, config);
+        //
+        // console.warn(details)
+        console.warn(data);
+
+        dispatch({
+            type: SUB_CATEGORY_UPDATE_ACCESS_SUCCESS,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: SUB_CATEGORY_UPDATE_ACCESS_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.errors 
+            : error.message,
+        })
+    } 
 }

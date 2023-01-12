@@ -18,6 +18,9 @@ import {
     SUB_CATEGORY_DELETE_REQUEST,
     SUB_CATEGORY_DELETE_SUCCESS,
     SUB_CATEGORY_DELETE_FAIL,
+    SUB_CATEGORY_UPDATE_ACCESS_REQUEST,
+    SUB_CATEGORY_UPDATE_ACCESS_SUCCESS,
+    SUB_CATEGORY_UPDATE_ACCESS_FAIL,
 } from "../constants/menuSubCategoryConstants";
 
  // MENU CATEGORY REDUCER
@@ -102,3 +105,19 @@ export const menuSubCategoryDeleteReducer = (state = {}, action) => {
             return state
     }
 }
+
+// Sub-Menu Category Role Access Reducer
+export const menuSubCategoryUpdateRoleAccessReducer = (state = {}, action) => {
+    //
+    switch(action.type) {
+        case SUB_CATEGORY_UPDATE_ACCESS_REQUEST:
+            return { loading: true }
+        case SUB_CATEGORY_UPDATE_ACCESS_SUCCESS:
+            return { loading: false, success: true }
+        case SUB_CATEGORY_UPDATE_ACCESS_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
