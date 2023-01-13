@@ -9,6 +9,12 @@ import RoleListScreen from './screens/RoleListScreen'
 import MenuCategoryScreen from './screens/MenuCategoryScreen'
 import SubMenuCategoryScreen from './screens/SubMenuCategoryScreen'
 import axios from 'axios'
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+// This exports the whole icon packs for Brand and Solid.
+library.add(fas)
 
 // Set main base URL using axios
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'

@@ -97,7 +97,6 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
       cat_id: state.target.value, // category id
       status: checked,
     };
-    // console.warn(details)
     // Dispatch
     dispatch(updateMenuRoleAccess(details))
     dispatch(listMenuCategories())
@@ -131,7 +130,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                         <h6>Menu Categories</h6>
                         {
                             menucategories.length > 0  && (
-                              // map
+                              // Map
                               menucategories.map((row, key) => (
                                     <Form.Group key={key}>
                                     <Form.Check 
@@ -140,6 +139,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                                       label={row.category_name}
                                       value={row.cat_id}
                                       // checked={activate}
+                                      defaultChecked={(row.access_role.includes(roleid))}
                                       onChange={handleMenuCategoryUpdate}
                                     />
                                     </Form.Group>

@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     faDashboard, 
     faUsers,
     faLock,
-    faBars,
+    faBars,  
     faList,
     faListOl,
 } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { 
+    useDispatch, 
+    useSelector, 
+} from 'react-redux'
 
 const SideMenu = () => {
 
@@ -20,11 +23,14 @@ const SideMenu = () => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
+  // useState
+  const [mainmenu, setMainMenu] = useState([]);
+  const [submenu, setSubMenu] = useState([]);
+
   // 
   useEffect(() => {
     // Get User Role
-    // console.warn(userInfo.user.name)
-
+    // console.warn(userInfo.user.user_type)
     // Delay execution of argon-dashboard.js for sidemenu
     const script = document.createElement("script");
     script.src = "assets/js/soft-ui-dashboard.js";
@@ -36,7 +42,11 @@ const SideMenu = () => {
       'bg-gray-100'
     );
 
-  }, []);
+    // console.warn(userInfo.mainmenu)
+    setMainMenu(userInfo.mainmenu)
+    setSubMenu(userInfo.submenu)
+
+  },[userInfo, dispatch]);
 
   return (
     <>
@@ -52,114 +62,22 @@ const SideMenu = () => {
             <hr className="horizontal dark mt-0" />
             <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul className="navbar-nav">
-                <li className="nav-item">
-                    <Link className="nav-link" to="/dashboard">
-                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
-                            {/* <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> */}
-                            <FontAwesomeIcon icon={faDashboard} className="text-light text-lg opacity-10" />
-                        </div>
-                            <span className="nav-link-text ms-1">Dashboard</span>
-                    </Link>
-                </li>
-                
-                <li className="nav-item">
-                    <Link to="/user-list" className="nav-link">
-                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
-                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                            <FontAwesomeIcon icon={faUsers} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                        </div>
-                        <span className="nav-link-text ms-1">User List</span>
-                    </Link>
-                </li>
-
-                <li className="nav-item">
-                    <Link to="/role-list" className="nav-link">
-                        {/* <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> */}
-                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                            <FontAwesomeIcon icon={faLock} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                        </div>
-                        <span className="nav-link-text ms-1">Role</span>
-                    </Link>
-                </li>
-
-                <li className="nav-item">
-                    <div style={{position:"relative"}} className="dropdown">
-                        {/* <button className="icon icon-shape icon-sm btn bg-gradient-primary dropdown-toggle shadow text-center border-radius-md" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                            <span className="nav-link-text ms-1">Menu Management</span>
-                        </button> */}
-                        
-                        <Link className="nav-link dropdown-toggle d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                                <FontAwesomeIcon icon={faBars} className="text-light text-lg opacity-10" aria-hidden="true"/>
-                            </div>
-                            <span className="nav-link-text ms-1">Menu Management</span>
-                        </Link>
-
-                        <ul style={{position:'absolute'}} className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                            <li>
-                                <Link className="nav-link" to="/categories">
-                                    <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                                        <FontAwesomeIcon icon={faList} className="text-light text-sm opacity-10" aria-hidden="true"/>
-                                    </div>
-                                    <span className="nav-link-text ms-1">Menu Categories</span>
-                                </Link>
-                            </li>                            
-                            <li>
-                                <Link className="nav-link" to="/subcategories">
-                                    <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
-                                        <FontAwesomeIcon icon={faListOl} className="text-light text-sm opacity-10" aria-hidden="true"/>
-                                    </div>
-                                    <span className="nav-link-text ms-1">Sub Categories</span>
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li className="nav-item">
-                <a className="nav-link  " href="../pages/virtual-reality.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">Virtual Reality</span>
-                </a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link  " href="../pages/rtl.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">RTL</span>
-                </a>
-                </li>
-                <li className="nav-item mt-3">
-                <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link  " href="../pages/profile.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">Profile</span>
-                </a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link  " href="../pages/sign-in.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">Sign In</span>
-                </a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link  " href="../pages/sign-up.html">
-                    <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    </div>
-                    <span className="nav-link-text ms-1">Sign Up</span>
-                </a>
-                </li>
+            {
+                mainmenu.length > 0  && (
+                    // Map
+                    mainmenu.map((row, key) => (
+                        <li className="nav-item" key={key}>
+                            <Link className="nav-link" to={row.url}>
+                                <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
+                                    {/* <FontAwesomeIcon icon={row.icon} className="text-light text-lg opacity-10" /> */}
+                                    <FontAwesomeIcon icon={['fas', row.icon.toString()]} className="text-light text-lg opacity-10" />
+                                </div>
+                                    <span className="nav-link-text ms-1">{row.category_name.toString()}</span>
+                            </Link>
+                        </li>
+                    ))
+                )
+            }
             </ul>
             </div>
             

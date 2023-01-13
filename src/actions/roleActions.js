@@ -219,4 +219,3 @@ export const updateRole = (role) => async (dispatch, getState) => {
         })
     }
 }
-

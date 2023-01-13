@@ -15,7 +15,6 @@ import {
     MENU_CATEGORY_CREATE_REQUEST,
     MENU_CATEGORY_CREATE_SUCCESS,
     MENU_CATEGORY_CREATE_FAIL,
-    MENU_CATEGORY_CREATE_RESET,
     MENU_CATEGORY_DELETE_FAIL,
     MENU_CATEGORY_DELETE_REQUEST,
     MENU_CATEGORY_DELETE_SUCCESS,
@@ -280,12 +279,13 @@ export const updateMenuRoleAccess = (details) => async (dispatch, getState) => {
         }
 
         // Call API Request
-        const { data } = await axios.post(`/auth/category-per-role/${details.value}`, details, config);
+        await axios.post(`/auth/category-per-role/${details.value}`, details, config);
+
         // 
         dispatch({
             type: MENU_CATEGORY_UPDATE_ACCESS_SUCCESS,
         })
-        
+
     } catch(error) {
         //
         dispatch({

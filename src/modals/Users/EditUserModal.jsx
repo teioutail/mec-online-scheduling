@@ -80,7 +80,6 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
           dispatch(listUsers())
           // Close Modal
           onHide()
-
         } else {
           // 
           dispatch(updateUser(user))
