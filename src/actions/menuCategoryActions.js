@@ -267,7 +267,6 @@ export const updateMenuRoleAccess = (details) => async (dispatch, getState) => {
     // 
     try {
         // console.warn(details)
-
         dispatch({
             type: MENU_CATEGORY_UPDATE_ACCESS_REQUEST,
         })
@@ -279,13 +278,14 @@ export const updateMenuRoleAccess = (details) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             }
         }
+
         // Call API Request
         const { data } = await axios.post(`/auth/category-per-role/${details.value}`, details, config);
         // 
         dispatch({
             type: MENU_CATEGORY_UPDATE_ACCESS_SUCCESS,
         })
-
+        
     } catch(error) {
         //
         dispatch({

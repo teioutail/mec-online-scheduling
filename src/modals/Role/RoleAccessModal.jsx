@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
-  listMenuCategories 
+  listMenuCategories,
+  updateMenuRoleAccess,
 } from '../../actions/menuCategoryActions'
 
 import { 
@@ -70,7 +71,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
   }
 
   // 
-  const handleMenuCategoryUpdate = async (state) => {
+  const handleSubMenuCategoryUpdate = async (state) => {
     // Check Status
     const target = state.target
     const checked = target.checked
@@ -80,10 +81,26 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
       subcat_id: state.target.value, // subcategory id
       status: checked,
     };
-    // dispatch
+    // Dispatch
     dispatch(updateSubMenuRoleAccess(details))
-    dispatch(listMenuCategories())
     dispatch(listSubMenuCategories())
+  }
+
+  //
+  const handleMenuCategoryUpdate = async (state) => {
+    // Check Status
+    const target = state.target
+    const checked = target.checked
+    // Data
+    const details = {
+      role_id: state.target.id, // role id
+      cat_id: state.target.value, // category id
+      status: checked,
+    };
+    // console.warn(details)
+    // Dispatch
+    dispatch(updateMenuRoleAccess(details))
+    dispatch(listMenuCategories())
   }
   
   // 
@@ -116,14 +133,14 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                             menucategories.length > 0  && (
                               // map
                               menucategories.map((row, key) => (
-                                
                                     <Form.Group key={key}>
                                     <Form.Check 
                                       type="switch"
-                                      id={row.subcat_id}
+                                      id={roleid} // role id
                                       label={row.category_name}
                                       value={row.cat_id}
                                       // checked={activate}
+                                      onChange={handleMenuCategoryUpdate}
                                     />
                                     </Form.Group>
                                 ))
@@ -144,7 +161,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                                       value={row.subcat_id} // subcategory id
                                       // checked={(row.access_role.includes(roleid))}
                                       defaultChecked={(row.access_role.includes(roleid))}
-                                      onChange={handleMenuCategoryUpdate}
+                                      onChange={handleSubMenuCategoryUpdate}
                                     />
                                 </Form.Group>
                                 ))

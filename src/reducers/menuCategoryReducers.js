@@ -22,6 +22,9 @@ import {
     MENU_CATEGORY_OPTIONS_SUCCESS,
     MENU_CATEGORY_OPTIONS_FAIL,
     MENU_CATEGORY_OPTIONS_RESET,
+    MENU_CATEGORY_UPDATE_ACCESS_REQUEST,
+    MENU_CATEGORY_UPDATE_ACCESS_SUCCESS,
+    MENU_CATEGORY_UPDATE_ACCESS_FAIL,
  } from "../constants/menuCategoryConstants";
 
 // MENU CATEGORY REDUCER
@@ -117,6 +120,21 @@ export const menuCategoryCreateReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case MENU_CATEGORY_CREATE_RESET:
             return {}
+        default:
+            return state
+    }
+}
+
+// Menu Category Role Access Reducer
+export const menuCategoryUpdateRoleAccessReducer = (state = {}, action) => {
+    //
+    switch(action.type) {
+        case MENU_CATEGORY_UPDATE_ACCESS_REQUEST:
+            return { loading: true }
+        case MENU_CATEGORY_UPDATE_ACCESS_SUCCESS:
+            return { loading: false, success: true }
+        case MENU_CATEGORY_UPDATE_ACCESS_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }
