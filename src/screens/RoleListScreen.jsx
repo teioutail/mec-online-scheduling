@@ -209,16 +209,13 @@ const RoleListScreen = () => {
     useEffect(() => {
         // Check if user is admin else, redirect user
         if(userInfo && userInfo.user.user_type === 6) {
-            // console.warn(JSON.stringify(users));
             dispatch(listRoles())
             dispatch(listMenuCategories())
             dispatch(listSubMenuCategories())
-
         } else {
             // Redirect to login page
             navigate('/signin')
         }
-        // console.warn(userInfo.user.user_type)
     }, [dispatch, navigate, userInfo])
 
 

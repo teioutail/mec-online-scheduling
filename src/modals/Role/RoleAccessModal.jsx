@@ -11,13 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
-  listRoles,
-  updateRole,
-  createRole,
-} from '../../actions/roleActions'
+  listMenuCategories 
+} from '../../actions/menuCategoryActions'
 
 import { 
-  updateSubMenuRoleAccess
+  listSubMenuCategories,
+  updateSubMenuRoleAccess,
 } from '../../actions/menuSubCategoryAction'
 
 const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) => {
@@ -26,6 +25,8 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
   // setState
   const [menucategories, setMenuCategories] = useState([])
   const [menusubcategories, setMenuSubCategories] = useState([])
+  
+  const [activate, setActivate] = useState(false)
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -38,6 +39,14 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
     // const selected = target.selected
     const name = target.name
     // setStatus(selected)
+  }
+
+  // Event in checkbox
+  const handleCheckboxChange = (event) => {
+    const target = event.target
+    const checked = target.checked
+    const name = target.name
+    setActivate(checked)
   }
 
   // 
@@ -67,13 +76,14 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
     const checked = target.checked
     // Data
     const details = {
-      id: state.target.id, // role id
-      value: state.target.value, // subcategory id
+      role_id: state.target.id, // role id
+      subcat_id: state.target.value, // subcategory id
       status: checked,
     };
-    // console.warn(details)
-    //
+    // dispatch
     dispatch(updateSubMenuRoleAccess(details))
+    dispatch(listMenuCategories())
+    dispatch(listSubMenuCategories())
   }
   
   // 
@@ -87,7 +97,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
       setMenuSubCategories(subcategories)
     }
 
-  }, [categories, menucategories, subcategories, menusubcategories])
+  }, [categories, menucategories, subcategories, menusubcategories , dispatch])
 
   return (
     <>
@@ -106,6 +116,7 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                             menucategories.length > 0  && (
                               // map
                               menucategories.map((row, key) => (
+                                
                                     <Form.Group key={key}>
                                     <Form.Check 
                                       type="switch"
@@ -131,7 +142,8 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
                                       id={roleid} // role id
                                       label={row.subcategory_name}
                                       value={row.subcat_id} // subcategory id
-                                      // checked={activate}
+                                      // checked={(row.access_role.includes(roleid))}
+                                      defaultChecked={(row.access_role.includes(roleid))}
                                       onChange={handleMenuCategoryUpdate}
                                     />
                                 </Form.Group>

@@ -210,7 +210,7 @@ export const deleteSubMenuCategory = (id) => async (dispatch, getState) => {
 }
 
 // Update Sub-Menu 
-export const updateSubMenuRoleAccess = (details) => async (dispatch, getState) =>  {
+export const updateSubMenuRoleAccess = (details) => async (dispatch, getState) => {
     //
     try {
         // console.warn(details)
@@ -226,17 +226,12 @@ export const updateSubMenuRoleAccess = (details) => async (dispatch, getState) =
                 Authorization: `Bearer ${userInfo.access_token}`,
             }
         }
-
         // Call API Request
         const { data } = await axios.post(`/auth/subcategory-per-role/${details.value}`, details, config);
         //
-        // console.warn(details)
-        console.warn(data);
-
         dispatch({
             type: SUB_CATEGORY_UPDATE_ACCESS_SUCCESS,
         })
-
     } catch(error) {
         //
         dispatch({

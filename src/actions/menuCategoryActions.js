@@ -20,6 +20,9 @@ import {
     MENU_CATEGORY_DELETE_REQUEST,
     MENU_CATEGORY_DELETE_SUCCESS,
     MENU_CATEGORY_OPTIONS_SUCCESS,
+    MENU_CATEGORY_UPDATE_ACCESS_REQUEST,
+    MENU_CATEGORY_UPDATE_ACCESS_FAIL,
+    MENU_CATEGORY_UPDATE_ACCESS_SUCCESS,
 } from '../constants/menuCategoryConstants'
 
 // View List of Menu Categories
@@ -251,6 +254,42 @@ export const deleteMenuCategory = (id) => async (dispatch, getState) => {
         //
         dispatch({
             type: MENU_CATEGORY_DELETE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.errors 
+            : error.message,
+        })
+    } 
+}
+
+// Update Menu
+export const updateMenuRoleAccess = (details) => async (dispatch, getState) => {
+    // 
+    try {
+        // console.warn(details)
+
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_ACCESS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            }
+        }
+        // Call API Request
+        const { data } = await axios.post(`/auth/category-per-role/${details.value}`, details, config);
+        // 
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_ACCESS_SUCCESS,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: MENU_CATEGORY_UPDATE_ACCESS_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.errors 
