@@ -232,6 +232,7 @@ export const updateSubMenuRoleAccess = (details) => async (dispatch, getState) =
         dispatch({
             type: SUB_CATEGORY_UPDATE_ACCESS_SUCCESS,
         })
+        
     } catch(error) {
         //
         dispatch({
