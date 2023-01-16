@@ -67,13 +67,44 @@ const SideMenu = () => {
                     // Map
                     mainmenu.map((row, key) => (
                         <li className="nav-item" key={key}>
-                            <Link className="nav-link" to={row.url}>
-                                <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
-                                    {/* <FontAwesomeIcon icon={row.icon} className="text-light text-lg opacity-10" /> */}
-                                    <FontAwesomeIcon icon={['fas', row.icon.toString()]} className="text-light text-lg opacity-10" />
+                            { row.treeview ? (
+                                <div style={{position:"relative"}} className="dropdown">
+                                    <Link className="nav-link dropdown-toggle d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">    
+                                            <FontAwesomeIcon icon={['fas', row.icon.toString()]} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                                        </div>
+                                        <span className="nav-link-text ms-1">{row.category_name.toString()}</span>
+                                    </Link>
+                                    <ul style={{position:'absolute'}} className="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                                    {
+                                        // Sub Menu
+                                        submenu.map((row2, key2) => (
+                                            <li className="nav-item" key={key2}>
+                                                {(row2.cat_id === row.cat_id && row.treeview)  && (
+                                                    <Link className="nav-link" to={row2.url}>
+                                                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
+                                                            <FontAwesomeIcon icon={['fas', row2.icon.toString()]} className="text-light text-lg opacity-10" />
+                                                        </div>
+                                                        <span className="nav-link-text ms-1">{row2.subcategory_name.toString()}</span>
+                                                    </Link>
+                                                )}
+
+                                            </li>
+                                        ))
+                                    }
+                                    </ul>
                                 </div>
-                                    <span className="nav-link-text ms-1">{row.category_name.toString()}</span>
-                            </Link>
+                            ) : 
+                                <>
+                                    <Link className="nav-link" to={row.url}>
+                                        <div className="icon icon-shape icon-sm bg-gradient-primary shadow text-center border-radius-md">
+                                            {/* <FontAwesomeIcon icon={row.icon} className="text-light text-lg opacity-10" /> */}
+                                            <FontAwesomeIcon icon={['fas', row.icon.toString()]} className="text-light text-lg opacity-10" />
+                                        </div>
+                                            <span className="nav-link-text ms-1">{row.category_name.toString()}</span>
+                                    </Link>
+                                </>
+                            }
                         </li>
                     ))
                 )
