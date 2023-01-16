@@ -32,7 +32,22 @@ import RoleAccessModal from '../modals/Role/RoleAccessModal'
 import { listMenuCategories } from '../actions/menuCategoryActions'
 import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const RoleListScreen = () => {
+    // Toastify
+    const notify = (msg) => toast.error(msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });   
+
     // CommonJS
     const Swal = require('sweetalert2')
     //
@@ -46,6 +61,10 @@ const RoleListScreen = () => {
     // Role List
     const roleList = useSelector(state => state.roleList)
     const { loading, error, roles } = roleList
+    
+    // Role Create Error
+    const roleCreate = useSelector(state => state.roleCreate)
+    const { error:errorCreate } = roleCreate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -201,14 +220,24 @@ const RoleListScreen = () => {
 
     // Set Row Value
     useEffect(() => {
+        // Show Login Error
+        if(errorCreate) {
+            notify(console.warn(errorCreate))
+        }
+    }, [errorCreate])
+
+    // Set Row Value
+    useEffect(() => {
         setRows(roles)
         setPending(loading)
     }, [roles, rows, loading])
+
 
     //
     useEffect(() => {
         // Check if user is admin else, redirect user
         if(userInfo && userInfo.user.user_type === 6) {
+            //
             dispatch(listRoles())
             dispatch(listMenuCategories())
             dispatch(listSubMenuCategories())
@@ -216,6 +245,7 @@ const RoleListScreen = () => {
             // Redirect to login page
             navigate('/signin')
         }
+
     }, [dispatch, navigate, userInfo])
 
 
@@ -257,6 +287,19 @@ const RoleListScreen = () => {
                         roleid={roleid}
                         categories={categories}
                         subcategories={subcategories}
+                    />
+
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
                     />
 
                 <Footer />

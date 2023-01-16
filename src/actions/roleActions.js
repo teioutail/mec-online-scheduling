@@ -118,7 +118,7 @@ export const deleteRole = (id) => async(dispatch, getState) => {
         }
 
         // Call API Request
-        const { data } = await axios.delete(`/auth/roles/${id}`, config)
+        await axios.delete(`/auth/roles/${id}`, config)
 
         // console.warn(data)
 
@@ -169,10 +169,10 @@ export const createRole = (role) => async (dispatch) => {
         //
         dispatch({
             type: ROLE_CREATE_FAIL,
-            payload: 
-            error.response && error.response.data.message 
-            ? error.response.data.message 
-            : error.message,
+            payload: error.response.data.errors,
+            // error.response && error.response.data.message 
+            // ? error.response.data.message 
+            // : error.message,
         })
    }
 }
