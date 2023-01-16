@@ -223,6 +223,14 @@ const RoleListScreen = () => {
         // Show Login Error
         if(errorCreate) {
             notify(console.warn(errorCreate))
+            const obj = JSON.parse('{"name":"John", "age":30, "city":"New York"}');
+            // // custom error validation
+            // let err = jQuery.parseJSON(response.responseText);
+            // // show each errors
+            // $.each(err.errors, function(key, item){
+            //     toastr.error(item).fadeOut(4000);
+            // });
+
         }
     }, [errorCreate])
 
