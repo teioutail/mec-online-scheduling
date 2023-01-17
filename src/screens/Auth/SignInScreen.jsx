@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // 
 const SignInScreen = () => {
-
   // Toastify
   const notify = (msg) => toast.error(msg, {
     position: "top-right",
