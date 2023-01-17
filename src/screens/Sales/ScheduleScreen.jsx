@@ -19,8 +19,10 @@ import {
     faPlus,
     faEllipsisV,
     faTrash,
-    faUserPen,
     faUserLock,
+    faFilePen,
+    faEye,
+    faLayerGroup,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { 
@@ -61,12 +63,12 @@ const ScheduleScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Role List'
+    const headerTitle = 'Reference Schedule'
     // Redux
     const dispatch = useDispatch()
 
     // useNavigate to redirect the user
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
 
     // Role List
     const roleList = useSelector(state => state.roleList)
@@ -175,27 +177,42 @@ const ScheduleScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Role ID',
+            {   name: 'Schedule Reference No',
                 selector: row => row.role_id,
                 sortable: true,
             },
-            {   name: 'Name',
+            {   name: 'Project Name',
                 selector: row => row.name,
                 sortable: true,
             },
             {
-                name: 'Description',
+                name: 'Project No',
                 selector: row => row.description,
                 sortable: true,
             },
             {
-                name: 'Status',
+                name: 'Case No',
                 selector: row => row.activated,
                 sortable: true,
             },
             {
-                name: 'Action',
-				cell: (row) => {
+                name: 'SA No',
+                selector: row => row.activated,
+                sortable: true,
+            },
+            {
+                name: 'Partner',
+                selector: row => row.activated,
+                sortable: true,
+            },
+            {
+                name: 'End-User',
+                selector: row => row.activated,
+                sortable: true,
+            },
+            {
+            name: 'Action',
+				    cell: (row) => {
                     // console.log(row.id);
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
@@ -206,17 +223,27 @@ const ScheduleScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUserPen} /> Edit Role
+                                        <FontAwesomeIcon icon={faFilePen} /> Edit Schedule
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Delete Role
+                                        <FontAwesomeIcon icon={faTrash} /> Change Status
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUserLock} /> Role Access Privilege
+                                        <FontAwesomeIcon icon={faUserLock} /> Individual Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faLayerGroup} /> Group Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faEye} /> View Inventory
                                     </Link>
                                 </li>
                             </ul>
@@ -337,7 +364,6 @@ const ScheduleScreen = () => {
             </FormContainer>
         </>
     )
-
 }
 
 export default ScheduleScreen
