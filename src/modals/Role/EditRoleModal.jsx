@@ -21,6 +21,10 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
   const [description, setDescription] = useState('')
   const [status, setStatus] = useState('')
 
+  // Role Create Success Message
+  const roleCreate = useSelector(state => state.roleCreate)
+  const { success:roleCreateSuccess, message:roleCreateMessage } = roleCreate
+
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -57,16 +61,8 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
         }
         // 
         if(mode === 'Add') {
-          // Show Success Request
-          Swal.fire(
-            'Success!',
-            'New Role Added Successfully.',
-            'success'
-          )
           // Create Role 
           dispatch(createRole(role))
-          // Refresh Datatable
-          dispatch(listRoles())
           // Close Modal
           onHide()
 
@@ -89,6 +85,21 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     })
   }
 
+  // Show Success 
+  useEffect(() => {
+    //
+    if(roleCreateSuccess) {
+      // Show Success Request
+      Swal.fire(
+        'Success!',
+        roleCreateMessage,
+        'success'
+      )
+      // Refresh Datatable
+      dispatch(listRoles())
+    }
+  },[roleCreateSuccess])
+
   // 
   useEffect(() => {
     // Selected User Details
@@ -102,7 +113,7 @@ const EditRoleModal = ({ show , mode, onHide, roleid, roleDetails }) => {
     setRoleName(name || "")
     setDescription(description || "")
     setStatus(status || "0")
-  }, [roleDetails])
+  }, [roleDetails, dispatch])
 
   return (
     <>

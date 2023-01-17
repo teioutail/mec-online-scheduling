@@ -145,18 +145,16 @@ export const createRole = (role) => async (dispatch) => {
         dispatch({
             type: ROLE_CREATE_REQUEST,
         })
-
         // Header
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
-
         // Call API Request
         const { data } = await axios.post(
             '/auth/roles',
-            role, 
+            role,
             config
         )
 

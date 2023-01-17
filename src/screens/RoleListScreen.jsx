@@ -218,19 +218,18 @@ const RoleListScreen = () => {
 		[],
 	);
 
-    // Set Row Value
+    // useEffect for Error Message
     useEffect(() => {
         // Show Login Error
-        if(errorCreate) {
-            notify(console.warn(errorCreate))
-            const obj = JSON.parse('{"name":"John", "age":30, "city":"New York"}');
-            // // custom error validation
-            // let err = jQuery.parseJSON(response.responseText);
-            // // show each errors
-            // $.each(err.errors, function(key, item){
-            //     toastr.error(item).fadeOut(4000);
-            // });
-
+        if(errorCreate) 
+        {
+            // Loop Error Back-End Validation
+            for(const key in errorCreate) {
+                if (errorCreate.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${errorCreate[key]}`)
+                }
+            }
         }
     }, [errorCreate])
 

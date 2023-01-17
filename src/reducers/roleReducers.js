@@ -92,7 +92,7 @@ export const roleCreateReducer = (state = {}, action) => {
         case ROLE_CREATE_REQUEST:
             return { loading: true}
         case ROLE_CREATE_SUCCESS:
-            return { loading: false, success: true, role: action.payload }
+            return { loading: false, success: true, message: action.payload }
         case ROLE_CREATE_FAIL:
             return { loading: false, error: action.payload }
         case ROLE_CREATE_RESET:
