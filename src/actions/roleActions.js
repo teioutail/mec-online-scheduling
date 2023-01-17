@@ -182,12 +182,10 @@ export const updateRole = (role) => async (dispatch, getState) => {
         dispatch({
             type: ROLE_UPDATE_REQUEST,
         })
-
         // Get Login User Info
         const { 
             userLogin: { userInfo },
         } = getState()
-
         // Header
         const config = {
             headers : {
@@ -195,10 +193,8 @@ export const updateRole = (role) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             },
         }
-
         // Call API Request
         const { data } = await axios.put(`/auth/roles/${role.id}`, role, config)
-
         // console.warn(data)
 
         dispatch({
@@ -210,10 +206,10 @@ export const updateRole = (role) => async (dispatch, getState) => {
         //
         dispatch({
             type: ROLE_UPDATE_FAIL,
-            payload: 
-            error.response && error.response.data.message 
-            ? error.response.data.message 
-            : error.message,
+            payload: error.response.data.errors
+            // error.response && error.response.data.message 
+            // ? error.response.data.message 
+            // : error.message,
         })
     }
 }

@@ -23,7 +23,13 @@ import {
     faUserLock,
 } from '@fortawesome/free-solid-svg-icons'
 import { 
-    ROLE_DETAILS_RESET 
+    ROLE_DETAILS_RESET
+} from '../constants/roleConstants'
+import { 
+    ROLE_CREATE_RESET
+} from '../constants/roleConstants'
+import { 
+    ROLE_UPDATE_RESET
 } from '../constants/roleConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
@@ -65,6 +71,10 @@ const RoleListScreen = () => {
     // Role Create Error
     const roleCreate = useSelector(state => state.roleCreate)
     const { error:errorCreate } = roleCreate
+  
+    // Role Update Error
+    const roleUpdate = useSelector(state => state.roleUpdate)
+    const { error:errorUpdate } = roleUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -76,11 +86,11 @@ const RoleListScreen = () => {
 
     // Menu Category List
     const menuCategoryList = useSelector(state => state.menuCategoryList)
-    const { loading:loadingcat, error:errorcat, categories } = menuCategoryList
+    const { categories } = menuCategoryList
 
     // Sub-Menu Category List
     const submenuCategoryList = useSelector(state => state.submenuCategoryList)
-    const { loading:loadingsub, error:errorsub, subcategories } = submenuCategoryList
+    const { subcategories } = submenuCategoryList
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -220,9 +230,8 @@ const RoleListScreen = () => {
 
     // useEffect for Error Message
     useEffect(() => {
-        // Show Login Error
-        if(errorCreate) 
-        {
+        // Show Create Error
+        if(errorCreate) {
             // Loop Error Back-End Validation
             for(const key in errorCreate) {
                 if (errorCreate.hasOwnProperty(key)) {
@@ -230,8 +239,21 @@ const RoleListScreen = () => {
                     notify(`${errorCreate[key]}`)
                 }
             }
+            //
+            dispatch({ type: ROLE_CREATE_RESET })
         }
-    }, [errorCreate])
+        // Show Update Error
+        if(errorUpdate) {
+            // Loop Error Back-End Validation
+            for(const key in errorUpdate) {
+                if (errorUpdate.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${errorUpdate[key]}`)
+                }
+            }
+            dispatch({ type: ROLE_UPDATE_RESET })
+        }
+    }, [errorCreate, errorUpdate])
 
     // Set Row Value
     useEffect(() => {
@@ -252,9 +274,7 @@ const RoleListScreen = () => {
             // Redirect to login page
             navigate('/signin')
         }
-
     }, [dispatch, navigate, userInfo])
-
 
     return (
         <>
@@ -298,7 +318,7 @@ const RoleListScreen = () => {
 
                     <ToastContainer
                         position="top-right"
-                        autoClose={3000}
+                        autoClose={2000}
                         hideProgressBar={false}
                         newestOnTop={false}
                         closeOnClick
