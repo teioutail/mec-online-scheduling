@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import Header from '../components/template/Header'
-import Footer from '../components/template/Footer'
-import SideMenu from '../components/template/SideMenu'
-import FormContainer from '../components/template/FormContainer'
+import Header from '../../components/template/Header'
+import Footer from '../../components/template/Footer'
+import SideMenu from '../../components/template/SideMenu'
+import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
-import Loader from '../components/Loader'
+import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     listRoles,
     getRoleDetails,
     deleteRole,
-} from '../actions/roleActions'
+} from '../../actions/roleActions'
 
 import { 
     faPlus,
@@ -22,26 +22,30 @@ import {
     faUserPen,
     faUserLock,
 } from '@fortawesome/free-solid-svg-icons'
+
 import { 
     ROLE_DETAILS_RESET
-} from '../constants/roleConstants'
+} from '../../constants/roleConstants'
+
 import { 
     ROLE_CREATE_RESET
-} from '../constants/roleConstants'
+} from '../../constants/roleConstants'
+
 import { 
     ROLE_UPDATE_RESET
-} from '../constants/roleConstants'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditRoleModal from '../modals/Role/EditRoleModal'
-import RoleAccessModal from '../modals/Role/RoleAccessModal'
+} from '../../constants/roleConstants'
 
-import { listMenuCategories } from '../actions/menuCategoryActions'
-import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import EditRoleModal from '../../modals/Role/EditRoleModal'
+import RoleAccessModal from '../../modals/Role/RoleAccessModal'
+
+import { listMenuCategories } from '../../actions/menuCategoryActions'
+import { listSubMenuCategories } from '../../actions/menuSubCategoryAction'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const RoleListScreen = () => {
+const ScheduleScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -265,7 +269,7 @@ const RoleListScreen = () => {
     //
     useEffect(() => {
         // Check if user is admin else, redirect user
-        if(userInfo && userInfo.user.user_type === 6) {
+        if(userInfo && userInfo.user.user_type === 1) {
             //
             dispatch(listRoles())
             dispatch(listMenuCategories())
@@ -333,6 +337,7 @@ const RoleListScreen = () => {
             </FormContainer>
         </>
     )
+
 }
 
-export default RoleListScreen
+export default ScheduleScreen

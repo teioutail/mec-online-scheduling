@@ -8,6 +8,8 @@ import UserListScreen from './screens/Users/UserListScreen'
 import RoleListScreen from './screens/RoleListScreen'
 import MenuCategoryScreen from './screens/MenuCategoryScreen'
 import SubMenuCategoryScreen from './screens/SubMenuCategoryScreen'
+import ScheduleScreen from './screens/Sales/ScheduleScreen'
+
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -36,6 +38,7 @@ function App() {
           <Route path='/role-list' element={<RoleListScreen/>} />
           <Route path='/categories' element={<MenuCategoryScreen/>} />
           <Route path='/subcategories' element={<SubMenuCategoryScreen/>} />
+          <Route path='/saleschedule' element={<ScheduleScreen/>} />
         </Routes>
       </div>
     </Router>
