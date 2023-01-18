@@ -9,11 +9,20 @@ import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { 
+//     listRoles,
+//     getRoleDetails,
+//     deleteRole,
+// } from '../../actions/roleActions'
 import { 
-    listRoles,
-    getRoleDetails,
-    deleteRole,
-} from '../../actions/roleActions'
+  listScheduleReference,
+} from '../../actions/Sales/salesScheduleReferenceAction'
+
+import { 
+  SCHEDULE_REFERENCE_CREATE_RESET,
+  SCHEDULE_REFERENCE_DETAILS_RESET,
+  SCHEDULE_REFERENCE_LIST_RESET,
+} from '../../constants/Sales/salesScheduleReference'
 
 import { 
     faPlus,
@@ -38,14 +47,14 @@ import {
 } from '../../constants/roleConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditRoleModal from '../../modals/Role/EditRoleModal'
+import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import RoleAccessModal from '../../modals/Role/RoleAccessModal'
 
 import { listMenuCategories } from '../../actions/menuCategoryActions'
 import { listSubMenuCategories } from '../../actions/menuSubCategoryAction'
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const ScheduleScreen = () => {
     // Toastify
@@ -59,26 +68,24 @@ const ScheduleScreen = () => {
         progress: undefined,
         theme: "light",
     });   
-
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Reference Schedule'
+    const headerTitle = 'Schedule Reference'
     // Redux
     const dispatch = useDispatch()
-
     // useNavigate to redirect the user
     const navigate = useNavigate()
 
-    // Role List
-    const roleList = useSelector(state => state.roleList)
-    const { loading, error, roles } = roleList
+    // Schedule List
+    const scheduleReferenceList = useSelector(state => state.scheduleReferenceList)
+    const { loading , schedules } = scheduleReferenceList
     
-    // Role Create Error
-    const roleCreate = useSelector(state => state.roleCreate)
-    const { error:errorCreate } = roleCreate
+    // Schedule Create Error
+    const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
+    const { error:errorCreate } = scheduleReferenceCreate
   
-    // Role Update Error
+    // Schedule Update Error
     const roleUpdate = useSelector(state => state.roleUpdate)
     const { error:errorUpdate } = roleUpdate
 
@@ -86,7 +93,7 @@ const ScheduleScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Role Info
+    // Schedule Info / Details
     const roleDetails = useSelector(state => state.roleDetails)
     const { role: roleDetail } = roleDetails
 
@@ -114,34 +121,34 @@ const ScheduleScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [roleid, setRoleId] = useState('')
+    const [scheduleid, setScheduleId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
-    const handleRoleView = (state) => {
+    const handleScheduleReferenceView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
-        //
+        // 
         dispatch({
-            type: ROLE_DETAILS_RESET,
+            type: SCHEDULE_REFERENCE_DETAILS_RESET,
         })
     }
 
     // Edit Role
     const handleEditRoleView = (state) => {
         setShow(true)
-        setRoleId(state.target.id)
+        setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getRoleDetails(state.target.id))
+        // dispatch(getRoleDetails(state.target.id))
     }
 
     // Role Access 
     const handleRoleAccessView = (state) => {
         handleRoleAccessShow()
-        setRoleId(state.target.id)
+        setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
     }
@@ -161,9 +168,9 @@ const ScheduleScreen = () => {
             //
             if (result.isConfirmed) {
                 // Delete Role
-                dispatch(deleteRole(state.target.id))
+                // dispatch(deleteRole(state.target.id))
                 // Refresh Datatable
-                dispatch(listRoles())
+                // dispatch(listRoles())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
@@ -178,42 +185,42 @@ const ScheduleScreen = () => {
     const columns = useMemo(
 		() => [
             {   name: 'Schedule Reference No',
-                selector: row => row.role_id,
+                selector: row => row.reference_id,
                 sortable: true,
             },
             {   name: 'Project Name',
-                selector: row => row.name,
+                selector: row => row.project_name,
                 sortable: true,
             },
             {
                 name: 'Project No',
-                selector: row => row.description,
+                selector: row => row.project_no,
                 sortable: true,
             },
             {
                 name: 'Case No',
-                selector: row => row.activated,
+                selector: row => row.case_no,
                 sortable: true,
             },
             {
                 name: 'SA No',
-                selector: row => row.activated,
+                selector: row => row.sa_no,
                 sortable: true,
             },
             {
                 name: 'Partner',
-                selector: row => row.activated,
+                selector: row => row.partner_company_name,
                 sortable: true,
             },
             {
                 name: 'End-User',
-                selector: row => row.activated,
+                selector: row => row.enduser_company_name,
                 sortable: true,
             },
             {
-            name: 'Action',
-				    cell: (row) => {
-                    // console.log(row.id);
+                name: 'Action',
+                cell: (row) => {
+                    //
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
@@ -258,7 +265,6 @@ const ScheduleScreen = () => {
 		],
 		[],
 	);
-
     // useEffect for Error Message
     useEffect(() => {
         // Show Create Error
@@ -271,8 +277,9 @@ const ScheduleScreen = () => {
                 }
             }
             //
-            dispatch({ type: ROLE_CREATE_RESET })
+            dispatch({ type: SCHEDULE_REFERENCE_CREATE_RESET })
         }
+        
         // Show Update Error
         if(errorUpdate) {
             // Loop Error Back-End Validation
@@ -288,19 +295,16 @@ const ScheduleScreen = () => {
 
     // Set Row Value
     useEffect(() => {
-        setRows(roles)
+        setRows(schedules)
         setPending(loading)
-    }, [roles, rows, loading])
-
+    }, [schedules, rows, loading])
 
     //
     useEffect(() => {
-        // Check if user is admin else, redirect user
+        // Check if user is sales else, redirect user
         if(userInfo && userInfo.user.user_type === 1) {
             //
-            dispatch(listRoles())
-            dispatch(listMenuCategories())
-            dispatch(listSubMenuCategories())
+            dispatch(listScheduleReference())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -312,7 +316,7 @@ const ScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={faPlus} /> Add New
                     </Button>
 
@@ -331,10 +335,11 @@ const ScheduleScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <EditRoleModal 
+                    <EditScheduleModal 
+                        size="lg"
                         show={show} 
                         onHide={handleClose} 
-                        roleid={roleid}
+                        scheduleid={scheduleid}
                         roleDetails={roleDetail}
                         mode={mode}
                     />
@@ -342,7 +347,7 @@ const ScheduleScreen = () => {
                     <RoleAccessModal 
                         show={showRoleAccess} 
                         onHide={handleRoleAccessClose} 
-                        roleid={roleid}
+                        scheduleid={scheduleid}
                         categories={categories}
                         subcategories={subcategories}
                     />

@@ -43,6 +43,11 @@ import {
     menuSubCategoryDeleteReducer,
     menuSubCategoryUpdateRoleAccessReducer,
 } from './reducers/menuSubCategoryReducers'
+// Schedule Reference Reducer
+import { 
+    scheduleReferenceCreateReducer,
+    scheduleReferenceListReducer,
+} from './reducers/Sales/salesScheduleReferenceReducer'
 
 // Reducers
 const reducer = combineReducers({
@@ -72,6 +77,8 @@ const reducer = combineReducers({
     submenuCategoryDelete: menuSubCategoryDeleteReducer,
     submenuCategoryRoleAccessUpdate: menuSubCategoryUpdateRoleAccessReducer,
     menuCategoryRoleAccessUpdate: menuCategoryUpdateRoleAccessReducer,
+    scheduleReferenceList: scheduleReferenceListReducer,
+    scheduleReferenceCreate: scheduleReferenceCreateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
