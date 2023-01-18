@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // } from '../../actions/roleActions'
 import { 
   listScheduleReference,
+  scheduleReferenceDetails,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
 import { 
@@ -55,7 +56,6 @@ import { listSubMenuCategories } from '../../actions/menuSubCategoryAction'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const ScheduleScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
@@ -94,8 +94,8 @@ const ScheduleScreen = () => {
     const { userInfo } = userLogin
 
     // Schedule Info / Details
-    const roleDetails = useSelector(state => state.roleDetails)
-    const { role: roleDetail } = roleDetails
+    const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
+    const { schedule:scheduleDetail } = scheduleReferenceDetails
 
     // Menu Category List
     const menuCategoryList = useSelector(state => state.menuCategoryList)
@@ -137,12 +137,12 @@ const ScheduleScreen = () => {
     }
 
     // Edit Role
-    const handleEditRoleView = (state) => {
+    const handleEditScheduleReferenceView = (state) => {
         setShow(true)
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        // dispatch(getRoleDetails(state.target.id))
+        dispatch(scheduleReferenceDetails(state.target.id))
     }
 
     // Role Access 
@@ -229,7 +229,7 @@ const ScheduleScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={faFilePen} /> Edit Schedule
                                     </Link>
                                 </li>
@@ -340,7 +340,7 @@ const ScheduleScreen = () => {
                         show={show} 
                         onHide={handleClose} 
                         scheduleid={scheduleid}
-                        roleDetails={roleDetail}
+                        scheduleDetails={scheduleDetail}
                         mode={mode}
                     />
 

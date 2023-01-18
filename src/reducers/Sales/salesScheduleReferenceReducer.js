@@ -3,6 +3,10 @@ import {
     SCHEDULE_REFERENCE_CREATE_REQUEST, 
     SCHEDULE_REFERENCE_CREATE_RESET, 
     SCHEDULE_REFERENCE_CREATE_SUCCESS, 
+    SCHEDULE_REFERENCE_DETAILS_FAIL, 
+    SCHEDULE_REFERENCE_DETAILS_REQUEST, 
+    SCHEDULE_REFERENCE_DETAILS_RESET, 
+    SCHEDULE_REFERENCE_DETAILS_SUCCESS, 
     SCHEDULE_REFERENCE_LIST_FAIL, 
     SCHEDULE_REFERENCE_LIST_REQUEST, 
     SCHEDULE_REFERENCE_LIST_RESET, 
@@ -39,6 +43,23 @@ export const scheduleReferenceCreateReducer = (state = {}, action) => {
         case SCHEDULE_REFERENCE_CREATE_RESET:
             return {}
         default:
+            return state
+    }
+}
+
+// Get Selected Schedule Reference Detail
+export const scheduleReferenceDetailsReducer = (state= { schedule: {} } , action) => {
+    //
+    switch(action.type) {
+        case SCHEDULE_REFERENCE_DETAILS_REQUEST:
+            return { ...state, loading: true }
+        case SCHEDULE_REFERENCE_DETAILS_SUCCESS:
+            return { loading: false, schedule: action.payload }
+        case SCHEDULE_REFERENCE_DETAILS_FAIL:
+            return { loading: false, error: action.payload }
+        case SCHEDULE_REFERENCE_DETAILS_RESET:
+            return { schedule: {} }
+        default: 
             return state
     }
 }

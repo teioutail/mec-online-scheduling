@@ -13,9 +13,7 @@ import {
   createScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
-
-
-const EditScheduleModal = ({ show , mode, onHide, scheduleid, roleDetails, size }) => {
+const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -53,7 +51,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, roleDetails, size 
     const name = target.name
     // setStatus(selected)
   }
-  
+
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
@@ -122,18 +120,21 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, roleDetails, size 
 
   // 
   useEffect(() => {
-    // Selected User Details
+    // Selected Schedule Details
     const {  
-      name,
-      description,
-      status
-    } = roleDetails
+      activity_type,
+      project_name,
+      projected_amount,
+    } = scheduleDetails
     
+    console.warn(scheduleDetails)
     // setState
     // setRoleName(name || "")
     // setDescription(description || "")
     // setStatus(status || "0")
-  }, [roleDetails, dispatch])
+    setActivityType(activity_type || "")
+
+  }, [scheduleDetails, dispatch])
 
   return (
     <>
@@ -160,7 +161,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, roleDetails, size 
                     </Form.Group>
                 </Col>
                 <Col sm={12} md={6} lg={6}>
-
                 </Col>
             </Row>
             <Row>
