@@ -48,6 +48,7 @@ import {
     scheduleReferenceCreateReducer,
     scheduleReferenceDetailsReducer,
     scheduleReferenceListReducer,
+    scheduleReferenceUpdateReducer,
 } from './reducers/Sales/salesScheduleReferenceReducer'
 
 // Reducers
@@ -81,6 +82,7 @@ const reducer = combineReducers({
     scheduleReferenceList: scheduleReferenceListReducer,
     scheduleReferenceCreate: scheduleReferenceCreateReducer,
     scheduleReferenceDetails: scheduleReferenceDetailsReducer,
+    scheduleReferenceUpdate: scheduleReferenceUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

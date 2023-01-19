@@ -4,13 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
-  listRoles,
-  updateRole,
-  createRole,
- } from '../../actions/roleActions'
-import { 
   listScheduleReference,
   createScheduleReference,
+  updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
@@ -30,6 +26,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
   const [businessUnit, setBusinessUnit] = useState([])
   const [participants, setParticipants] = useState([])
+
+  // Schedule Reference Details
+  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
+  const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
 
   // Schedule Reference Create Success Message
   const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
@@ -84,11 +84,11 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
         }
         // 
         if(mode === 'Add') {
-          // Create Schedule Reference 
+          // Create Schedule 
           dispatch(createScheduleReference(schedule))
         } else {
-          // Update Role
-          //   dispatch(updateRole(role))
+          // Update Schedule
+          dispatch(updateScheduleReference(schedule))
         }
       }
     })
@@ -125,15 +125,27 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       activity_type,
       project_name,
       projected_amount,
+      partner_company_name,
+      enduser_company_name,
+      partner_site_address,
+      enduser_site_address,
+      partner_contact_person,
+      enduser_contact_person,
+      partner_contact_number,
+      enduser_contact_number
     } = scheduleDetails
-    
-    console.warn(scheduleDetails)
     // setState
-    // setRoleName(name || "")
-    // setDescription(description || "")
-    // setStatus(status || "0")
     setActivityType(activity_type || "")
-
+    setProjectName(project_name || "")
+    setProjectedAmount(projected_amount || "")
+    setPartnerCompanyName(partner_company_name || "")
+    setEndUserCompanyName(enduser_company_name || "")
+    setPartnerSiteAddress(partner_site_address || "")
+    setEndUserSiteAddress(enduser_site_address || "")
+    setPartnerContactPerson(partner_contact_person || "")
+    setEndUserContactPerson(enduser_contact_person || "")
+    setPartnerContactNumber(partner_contact_number || "")
+    setEndUserContactNumber(enduser_contact_number || "")
   }, [scheduleDetails, dispatch])
 
   return (
@@ -143,7 +155,9 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                 <Modal.Title>{ mode === 'Add' ? 'Add Reference Schedule' : 'Edit Reference Schedule'  }</Modal.Title>
             </Modal.Header>
         <Modal.Body>
-            <Row>
+          { scheduleReferenceLoading ? <Loader/> : 
+          <>
+              <Row>
                 <Col sm={12} md={6} lg={6}>
                     <Form.Group className="mb-3">
                     <Form.Label>Select Activity</Form.Label>
@@ -293,6 +307,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                     </Form.Group>
                 </Col>
             </Row>
+          </>}
         </Modal.Body>
         <Modal.Footer>
         <Button size='sm' variant="secondary" onClick={onHide}>

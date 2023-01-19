@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // } from '../../actions/roleActions'
 import { 
   listScheduleReference,
-  scheduleReferenceDetails,
+  getScheduleReferenceDetails,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
 import { 
@@ -142,7 +142,7 @@ const ScheduleScreen = () => {
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(scheduleReferenceDetails(state.target.id))
+        dispatch(getScheduleReferenceDetails(state.target.id))
     }
 
     // Role Access 
@@ -151,13 +151,14 @@ const ScheduleScreen = () => {
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
+        
     }
 
-    // Delete Role
-    const handleDeleteRole = (state) => {
+    // Delete Schedule Reference
+    const handleDeleteScheduleReference = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this role?',
+            title: 'Delete this schedule?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -165,7 +166,7 @@ const ScheduleScreen = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Proceed!'
         }).then((result) => {
-            //
+            // 
             if (result.isConfirmed) {
                 // Delete Role
                 // dispatch(deleteRole(state.target.id))
@@ -174,7 +175,7 @@ const ScheduleScreen = () => {
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Role Successfully Deleted.',
+                    'Schedule Successfully Deleted.', 
                     'success'
                 )
             }
@@ -234,23 +235,28 @@ const ScheduleScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
                                         <FontAwesomeIcon icon={faTrash} /> Change Status
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={faUserLock} /> Individual Inventory
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={faLayerGroup} /> Group Inventory
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={faEye} /> View Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete Schedule
                                     </Link>
                                 </li>
                             </ul>

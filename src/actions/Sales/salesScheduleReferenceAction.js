@@ -9,7 +9,10 @@ import {
     SCHEDULE_REFERENCE_DETAILS_SUCCESS,
     SCHEDULE_REFERENCE_LIST_FAIL, 
     SCHEDULE_REFERENCE_LIST_REQUEST, 
-    SCHEDULE_REFERENCE_LIST_SUCCESS 
+    SCHEDULE_REFERENCE_LIST_SUCCESS, 
+    SCHEDULE_REFERENCE_UPDATE_FAIL, 
+    SCHEDULE_REFERENCE_UPDATE_REQUEST,
+    SCHEDULE_REFERENCE_UPDATE_SUCCESS
 } from '../../constants/Sales/salesScheduleReference'
 
 // Schedule Reference
@@ -78,9 +81,8 @@ export const createScheduleReference = (schedule) => async (dispatch) => {
     }
 } 
 
-
 // Get Schedule Reference Details Action
-export const scheduleReferenceDetails = (id) => async(dispatch, getState) => {
+export const getScheduleReferenceDetails = (id) => async(dispatch, getState) => {
     // 
     try {
         dispatch({
@@ -107,10 +109,48 @@ export const scheduleReferenceDetails = (id) => async(dispatch, getState) => {
             type: SCHEDULE_REFERENCE_DETAILS_SUCCESS,
             payload: data,
         })
+        
     } catch(error) {
         // 
         dispatch({
             type: SCHEDULE_REFERENCE_DETAILS_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// Update Schedule
+export const updateScheduleReference = (schedule) => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: SCHEDULE_REFERENCE_UPDATE_REQUEST,
+        })
+        // Get Login User Info
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+
+        // Header
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        // Call API Request
+        const { data } = await axios.put(`/auth/schedulereference/${schedule.id}`, schedule, config)
+        // console.warn(data)
+
+        dispatch({
+            type: SCHEDULE_REFERENCE_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: SCHEDULE_REFERENCE_UPDATE_FAIL,
             payload: error.response.data.errors,
         })
     }

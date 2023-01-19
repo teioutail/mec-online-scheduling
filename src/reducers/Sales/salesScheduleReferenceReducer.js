@@ -10,7 +10,11 @@ import {
     SCHEDULE_REFERENCE_LIST_FAIL, 
     SCHEDULE_REFERENCE_LIST_REQUEST, 
     SCHEDULE_REFERENCE_LIST_RESET, 
-    SCHEDULE_REFERENCE_LIST_SUCCESS 
+    SCHEDULE_REFERENCE_LIST_SUCCESS, 
+    SCHEDULE_REFERENCE_UPDATE_FAIL, 
+    SCHEDULE_REFERENCE_UPDATE_REQUEST,
+    SCHEDULE_REFERENCE_UPDATE_RESET,
+    SCHEDULE_REFERENCE_UPDATE_SUCCESS
 } from "../../constants/Sales/salesScheduleReference"
 
 // SCHEDULE REFERENCE REDUCER
@@ -60,6 +64,24 @@ export const scheduleReferenceDetailsReducer = (state= { schedule: {} } , action
         case SCHEDULE_REFERENCE_DETAILS_RESET:
             return { schedule: {} }
         default: 
+            return state
+    }
+}
+
+// Schedule Update Reducer
+export const scheduleReferenceUpdateReducer = (state = { schedule: {} }, action) => {
+    switch(action.type) {
+        case SCHEDULE_REFERENCE_UPDATE_REQUEST:
+            return { loading: true }
+        case SCHEDULE_REFERENCE_UPDATE_SUCCESS:
+            return { loading: false, success: true, message: action.payload }
+        case SCHEDULE_REFERENCE_UPDATE_FAIL:
+            return { loading: false, error: action.payload }
+        case SCHEDULE_REFERENCE_UPDATE_RESET:
+            return {
+                schedule: {}
+            }
+        default:
             return state
     }
 }
