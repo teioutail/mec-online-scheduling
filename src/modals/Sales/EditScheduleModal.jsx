@@ -8,7 +8,9 @@ import {
   createScheduleReference,
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-
+import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
+import PostSalesInput
+ from '../../components/Sales/PostSalesInput'
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
   // Redux
   const dispatch = useDispatch()
@@ -57,6 +59,11 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     // setStatus(selected)
   }
 
+  // 
+  const sampleFunc = (value) => {
+      console.log(value)
+  }
+  
   // 
   const handleSubmit = async () =>  {
     // Save Change Here...
@@ -318,6 +325,13 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                     </Form.Group>
                 </Col>
             </Row>
+
+            <EditEmailBusinessUnit 
+              sampleFunc={sampleFunc}
+            />
+
+            { activityType === 'Post-Sales' && <PostSalesInput /> }
+            
           </>}
         </Modal.Body>
         <Modal.Footer>
