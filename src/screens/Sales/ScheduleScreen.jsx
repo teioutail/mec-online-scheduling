@@ -202,12 +202,12 @@ const ScheduleScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Edit Schedule
+                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Schedule
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Change Status
+                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
                                     </Link>
                                 </li>
                                 <li>

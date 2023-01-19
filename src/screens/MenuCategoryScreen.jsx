@@ -197,7 +197,6 @@ const MenuCategoryScreen = () => {
         // console.warn(userInfo.user.user_type)
     }, [dispatch, navigate, userInfo])
 
-
     return (
         <>
             <SideMenu />

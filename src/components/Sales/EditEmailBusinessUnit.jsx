@@ -15,7 +15,7 @@ const EditEmailBusinessUnit = ({ sampleFunc }) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Select Activity</Form.Label>
+                <Form.Label>Select Business Unit</Form.Label>
                 <Form.Control
                 size='sm'
                 as='select' 
@@ -31,7 +31,7 @@ const EditEmailBusinessUnit = ({ sampleFunc }) => {
                 </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Select Activity</Form.Label>
+                <Form.Label>Select Email Participants</Form.Label>
                 <Form.Control
                 size='sm'
                 as='select' 
