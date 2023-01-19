@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   listScheduleReference,
   getScheduleReferenceDetails,
+  deleteScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
 import { 
@@ -169,10 +170,10 @@ const ScheduleScreen = () => {
         }).then((result) => {
             // 
             if (result.isConfirmed) {
-                // Delete Role
-                // dispatch(deleteRole(state.target.id))
+                // Delete Schedule
+                dispatch(deleteScheduleReference(state.target.id))
                 // Refresh Datatable
-                // dispatch(listRoles())
+                dispatch(listScheduleReference())
                 // Show Success Request
                 Swal.fire(
                     'Success!',

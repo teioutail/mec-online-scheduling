@@ -3,6 +3,9 @@ import {
     SCHEDULE_REFERENCE_CREATE_FAIL,
     SCHEDULE_REFERENCE_CREATE_REQUEST,
     SCHEDULE_REFERENCE_CREATE_SUCCESS,
+    SCHEDULE_REFERENCE_DELETE_FAIL,
+    SCHEDULE_REFERENCE_DELETE_REQUEST,
+    SCHEDULE_REFERENCE_DELETE_SUCCESS,
     SCHEDULE_REFERENCE_DETAILS_FAIL,
     SCHEDULE_REFERENCE_DETAILS_REQUEST,
     SCHEDULE_REFERENCE_DETAILS_RESET,
@@ -145,6 +148,37 @@ export const updateScheduleReference = (schedule) => async (dispatch, getState) 
         dispatch({
             type: SCHEDULE_REFERENCE_UPDATE_SUCCESS,
             payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: SCHEDULE_REFERENCE_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// Delete Schedule
+export const deleteScheduleReference = (id) => async(dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: SCHEDULE_REFERENCE_DELETE_REQUEST,
+        })
+        
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        // Call API Request
+        await axios.delete(`/auth/schedulereference/${id}`, config)
+
+        dispatch({
+            type: SCHEDULE_REFERENCE_DELETE_SUCCESS,
         })
 
     } catch(error) {

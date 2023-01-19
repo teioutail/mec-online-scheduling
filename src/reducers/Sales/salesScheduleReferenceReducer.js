@@ -3,6 +3,9 @@ import {
     SCHEDULE_REFERENCE_CREATE_REQUEST, 
     SCHEDULE_REFERENCE_CREATE_RESET, 
     SCHEDULE_REFERENCE_CREATE_SUCCESS, 
+    SCHEDULE_REFERENCE_DELETE_FAIL, 
+    SCHEDULE_REFERENCE_DELETE_REQUEST, 
+    SCHEDULE_REFERENCE_DELETE_SUCCESS, 
     SCHEDULE_REFERENCE_DETAILS_FAIL, 
     SCHEDULE_REFERENCE_DETAILS_REQUEST, 
     SCHEDULE_REFERENCE_DETAILS_RESET, 
@@ -81,6 +84,20 @@ export const scheduleReferenceUpdateReducer = (state = { schedule: {} }, action)
             return {
                 schedule: {}
             }
+        default:
+            return state
+    }
+}
+
+// Schedule Delete Reducer
+export const scheduleReferenceDeleteReducer = (state = {}, action) => {
+    switch(action.type) {
+        case SCHEDULE_REFERENCE_DELETE_REQUEST:
+            return { loading: true }
+        case SCHEDULE_REFERENCE_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case SCHEDULE_REFERENCE_DELETE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

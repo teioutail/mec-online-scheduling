@@ -103,6 +103,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
         scheduleReferenceCreateMessage,
         'success'
       )
+      // Refresh Datatable
+      dispatch(listScheduleReference())
+      // Close Modal
+      onHide()
     }
     // Show Success Update
     if(scheduleReferenceUpdateSuccess) {
@@ -111,11 +115,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
         scheduleReferenceUpdateMessage,
         'success'
       )
+      // Refresh Datatable
+      dispatch(listScheduleReference())
+      // Close Modal
+      onHide()
     }
-    // Refresh Datatable
-    dispatch(listScheduleReference())
-    // Close Modal
-    onHide()
+
   },[scheduleReferenceCreateMessage, scheduleReferenceUpdateSuccess])
 
   // 
