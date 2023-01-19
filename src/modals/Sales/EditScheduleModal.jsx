@@ -40,7 +40,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   // Schedule Reference Update Success Message
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
   const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
-
   
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
@@ -331,7 +330,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
             />
 
             { activityType === 'Post-Sales' && <PostSalesInput /> }
-            
+
           </>}
         </Modal.Body>
         <Modal.Footer>

@@ -1,6 +1,5 @@
-import React from 'react'
 import { Row, Col, Form, } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const EditEmailBusinessUnit = ({ sampleFunc }) => {
     // setState
