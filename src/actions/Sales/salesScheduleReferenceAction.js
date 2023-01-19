@@ -160,7 +160,7 @@ export const updateScheduleReference = (schedule) => async (dispatch, getState) 
 }
 
 // Delete Schedule
-export const deleteScheduleReference = (id) => async(dispatch, getState) => {
+export const deleteScheduleReference = (id) => async (dispatch, getState) => {
     //
     try {
         dispatch({
@@ -184,7 +184,7 @@ export const deleteScheduleReference = (id) => async(dispatch, getState) => {
     } catch(error) {
         //
         dispatch({
-            type: SCHEDULE_REFERENCE_UPDATE_FAIL,
+            type: SCHEDULE_REFERENCE_DELETE_FAIL,
             payload: error.response.data.errors,
         })
     }

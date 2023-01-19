@@ -39,6 +39,11 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
   const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
 
+  
+  // User Login Info
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -79,6 +84,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
           enduser_contact_person: endUserContactPerson,
           partner_contact_number: partnerContactNumber,
           enduser_contact_number: endUserContactNumber,
+          user_id: userInfo.user.id,
           business_unit: businessUnit,
           participants: participants,
         }
@@ -174,8 +180,8 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                       onChange={(e) => setActivityType(e.target.value)}
                     >
                     <option value="">- Select -</option>
-                    <option value="0">Post-Sales Activity</option>
-                    <option value="1">Pre-Sales Activity</option>
+                    <option value="Post-Sales">Post-Sales Activity</option>
+                    <option value="Pre-Sales">Pre-Sales Activity</option>
                     </Form.Control>
                     </Form.Group>
                 </Col>

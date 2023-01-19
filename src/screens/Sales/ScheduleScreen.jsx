@@ -9,11 +9,6 @@ import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { 
-//     listRoles,
-//     getRoleDetails,
-//     deleteRole,
-// } from '../../actions/roleActions'
 import { 
   listScheduleReference,
   getScheduleReferenceDetails,
@@ -23,38 +18,12 @@ import {
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
-  SCHEDULE_REFERENCE_LIST_RESET,
   SCHEDULE_REFERENCE_UPDATE_RESET,
 } from '../../constants/Sales/salesScheduleReference'
-
-import { 
-    faPlus,
-    faEllipsisV,
-    faTrash,
-    faUserLock,
-    faFilePen,
-    faEye,
-    faLayerGroup,
-} from '@fortawesome/free-solid-svg-icons'
-
-import { 
-    ROLE_DETAILS_RESET
-} from '../../constants/roleConstants'
-
-import { 
-    ROLE_CREATE_RESET
-} from '../../constants/roleConstants'
-
-import { 
-    ROLE_UPDATE_RESET
-} from '../../constants/roleConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import RoleAccessModal from '../../modals/Role/RoleAccessModal'
-
-import { listMenuCategories } from '../../actions/menuCategoryActions'
-import { listSubMenuCategories } from '../../actions/menuSubCategoryAction'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -228,37 +197,37 @@ const ScheduleScreen = () => {
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
                             <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={faFilePen} /> Edit Schedule
+                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Edit Schedule
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Change Status
+                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Change Status
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={faUserLock} /> Individual Inventory
+                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={faLayerGroup} /> Group Inventory
+                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
                                     </Link>
                                 </li>
                                 <li>
                                     <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={faEye} /> View Inventory
+                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Delete Schedule
+                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
                                     </Link>
                                 </li>
                             </ul>
@@ -326,7 +295,7 @@ const ScheduleScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
-                        <FontAwesomeIcon icon={faPlus} /> Add New
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
                     <DataTable

@@ -22,15 +22,13 @@ import {
     faUserPen,
     faUserLock,
 } from '@fortawesome/free-solid-svg-icons'
+
 import { 
-    ROLE_DETAILS_RESET
-} from '../constants/roleConstants'
-import { 
-    ROLE_CREATE_RESET
-} from '../constants/roleConstants'
-import { 
-    ROLE_UPDATE_RESET
-} from '../constants/roleConstants'
+    ROLE_DETAILS_RESET,
+    ROLE_CREATE_RESET,
+    ROLE_UPDATE_RESET,
+ } from '../constants/roleConstants'
+
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
 import RoleAccessModal from '../modals/Role/RoleAccessModal'
