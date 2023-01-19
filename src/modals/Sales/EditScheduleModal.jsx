@@ -24,7 +24,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactPerson, setEndUserContactPerson] = useState('')
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
-  const [businessUnit, setBusinessUnit] = useState([])
+  const [businessUnit, setBusinessUnit] = useState([]) 
   const [participants, setParticipants] = useState([])
 
   // Schedule Reference Details
@@ -35,9 +35,9 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
   const { success:scheduleReferenceCreateSuccess, message:scheduleReferenceCreateMessage } = scheduleReferenceCreate
 
-  // Role Update Success Message
-  const roleUpdate = useSelector(state => state.roleUpdate)
-  const { success:roleUpdateSuccess, message:roleUpdateMessage } = roleUpdate
+  // Schedule Reference Update Success Message
+  const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
+  const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -105,10 +105,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       )
     }
     // Show Success Update
-    if(roleUpdateSuccess) {
+    if(scheduleReferenceUpdateSuccess) {
       Swal.fire(
         'Success!',
-        roleUpdateMessage,
+        scheduleReferenceUpdateMessage,
         'success'
       )
     }
@@ -116,7 +116,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     dispatch(listScheduleReference())
     // Close Modal
     onHide()
-  },[scheduleReferenceCreateMessage, roleUpdateSuccess])
+  },[scheduleReferenceCreateMessage, scheduleReferenceUpdateSuccess])
 
   // 
   useEffect(() => {

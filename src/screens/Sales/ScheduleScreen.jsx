@@ -23,6 +23,7 @@ import {
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
   SCHEDULE_REFERENCE_LIST_RESET,
+  SCHEDULE_REFERENCE_UPDATE_RESET,
 } from '../../constants/Sales/salesScheduleReference'
 
 import { 
@@ -86,8 +87,8 @@ const ScheduleScreen = () => {
     const { error:errorCreate } = scheduleReferenceCreate
   
     // Schedule Update Error
-    const roleUpdate = useSelector(state => state.roleUpdate)
-    const { error:errorUpdate } = roleUpdate
+    const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
+    const { error:errorUpdate } = scheduleReferenceUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -295,7 +296,8 @@ const ScheduleScreen = () => {
                     notify(`${errorUpdate[key]}`)
                 }
             }
-            dispatch({ type: ROLE_UPDATE_RESET })
+            //
+            dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 
