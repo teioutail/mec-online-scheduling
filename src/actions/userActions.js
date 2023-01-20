@@ -181,16 +181,15 @@ export const getUsersEmailList = () => async (dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.access_token}`
             },
         }
-        
+
         // API Request
         const { data } = await axios.get(`/auth/useremail`, config)
-        console.warn(data)
 
         dispatch({
             type: USER_EMAIL_LIST_SUCCESS,
             payload: data
         })
-        // console.warn(userInfo.access_token)
+        
     } catch(error) {
         // 
         dispatch({
