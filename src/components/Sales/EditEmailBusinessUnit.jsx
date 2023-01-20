@@ -1,38 +1,38 @@
 import { Row, Col, Form, } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-const EditEmailBusinessUnit = ({ sampleFunc }) => {
+const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }) => {
     // React Select
     const animatedComponents = makeAnimated();
     // Email and Business
     const [businessUnit, setBusinessUnit] = useState([]) 
-    const [participants, setParticipants] = useState([])
+    // Participants Email List
+    const userEmail = useSelector(state => state.userEmail)
+    const { emails:participants } = userEmail
+    //
+    const [options, setOptions] = useState([])
+    // 
+    const [selectedParticipant, setSelectedParticipant] = useState([])
+    //
+    const handleSelectedParticipants = (options) => {
+        setSelectedParticipant(options)
+        // console.warn(selectedParticipant)
+        handleEmailParticipants(selectedParticipant)
+    }
 
     // // 
     // const businessUnit = (e) => {
     //     sampleFunc(e)
     // }
 
-    // Static Value
-    // const options = [
-    //     { value: 'Aruba Wired', label: 'Aruba Wired' },
-    //     { value: 'Aruba Wireless', label: 'Aruba Wireless' },
-    //     { value: 'Ruckus Wired', label: 'Ruckus Wired' },
-    //     { value: 'Ruckus Wireless', label: 'Ruckus Wireless' },
-    //     { value: 'Commscope', label: 'Commscope' },
-    //     { value: 'Panduit', label: 'Panduit' },
-    //     { value: 'Ubiquiti', label: 'Ubiquiti' },
-    //     { value: 'Mitel', label: 'Mitel' },
-    //     { value: 'NEC', label: 'NEC' },
-    // ]
-    const options = participants
-
     // 
     useEffect(() => {
-
-    })
+        // 
+        setOptions(participants || [])
+    },[participants])
 
   return (
     <>
@@ -48,7 +48,7 @@ const EditEmailBusinessUnit = ({ sampleFunc }) => {
                     // defaultValue={[colourOptions[4], colourOptions[5]]}
                   />
                 </Form.Group>
-                </Col>
+            </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>Select Email Participants</Form.Label>
@@ -57,14 +57,14 @@ const EditEmailBusinessUnit = ({ sampleFunc }) => {
                     isMulti
                     components={animatedComponents}
                     options={options}
+                    onChange={handleSelectedParticipants}
                     // defaultValue={[colourOptions[4], colourOptions[5]]}
-                  />
+                />
                 </Form.Group>
             </Col>
         </Row>
     </>
   )
-
 }
 
 export default EditEmailBusinessUnit

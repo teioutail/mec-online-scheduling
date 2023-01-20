@@ -70,10 +70,6 @@ const ScheduleScreen = () => {
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
 
-    // User Email List
-    const userEmail = useSelector(state => state.userEmail)
-    const { emails } = userEmail
-
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
@@ -319,7 +315,6 @@ const ScheduleScreen = () => {
                         onHide={handleClose} 
                         scheduleid={scheduleid}
                         scheduleDetails={scheduleDetail}
-                        emails={emails}
                         mode={mode}
                     />
 

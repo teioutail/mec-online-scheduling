@@ -26,6 +26,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactPerson, setEndUserContactPerson] = useState('')
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
+  const [emailParticipants, setEmailParticipants] = useState([])
 
   // Post-sales Input
   const [projectNo, setProjectNo] = useState('')
@@ -62,12 +63,17 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     // setStatus(selected)
   }
 
+  // Get Email Participants
+  const handleEmailParticipants = (emails) => {
+    return emails
+  }
+
   // 
   const sampleFunc = (value) => {
       console.log(value)
   }
 
-  // 
+  //  
   const handlePostSalesInput = (event) => {
     // 
     console.warn(event)
@@ -75,6 +81,25 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   
   // 
   const handleSubmit = async () =>  {
+    // Data 
+    const schedule = {
+      id: scheduleid,
+      activity_type: activityType,
+      project_name: projectName,
+      projected_amount: projectedAmount,
+      partner_company_name: partnerCompanyName,
+      enduser_company_name: endUserCompanyName,
+      partner_site_address: partnerSiteAddress,
+      enduser_site_address: endUserSiteAddress,
+      partner_contact_person: partnerContactPerson,
+      enduser_contact_person: endUserContactPerson,
+      partner_contact_number: partnerContactNumber,
+      enduser_contact_number: endUserContactNumber,
+      user_id: userInfo.user.id,
+      // business_unit: businessUnit,
+      // participants: participants,
+    }
+    
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -86,24 +111,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       confirmButtonText: 'Yes, Proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Data 
-        const schedule = {
-          id: scheduleid,
-          activity_type: activityType,
-          project_name: projectName,
-          projected_amount: projectedAmount,
-          partner_company_name: partnerCompanyName,
-          enduser_company_name: endUserCompanyName,
-          partner_site_address: partnerSiteAddress,
-          enduser_site_address: endUserSiteAddress,
-          partner_contact_person: partnerContactPerson,
-          enduser_contact_person: endUserContactPerson,
-          partner_contact_number: partnerContactNumber,
-          enduser_contact_number: endUserContactNumber,
-          user_id: userInfo.user.id,
-          // business_unit: businessUnit,
-          // participants: participants,
-        }
         // 
         if(mode === 'Add') {
           // Create Schedule 
@@ -338,6 +345,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
 
             <EditEmailBusinessUnit 
               sampleFunc={sampleFunc}
+              handleEmailParticipants={handleEmailParticipants}
             />
 
             { 
