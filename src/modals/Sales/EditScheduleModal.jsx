@@ -26,9 +26,16 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactPerson, setEndUserContactPerson] = useState('')
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
+  // Email and Business
   const [businessUnit, setBusinessUnit] = useState([]) 
   const [participants, setParticipants] = useState([])
+  // Post-sales Input
+  const [projectNo, setProjectNo] = useState('')
+  const [caseNo, setCaseNo] = useState('')
+  const [saNo, setSaNo] = useState('')
+  const [netsuiteLink, setNetsuiteLink] = useState('')
 
+  
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -61,6 +68,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   // 
   const sampleFunc = (value) => {
       console.log(value)
+  }
+
+  // 
+  const handlePostSalesInput = (event) => {
+    // 
+    console.warn(event)
   }
   
   // 
@@ -329,7 +342,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
               sampleFunc={sampleFunc}
             />
 
-            { activityType === 'Post-Sales' && <PostSalesInput /> }
+            { 
+              activityType === 'Post-Sales' && 
+              <PostSalesInput 
+                handlePostSalesInput={handlePostSalesInput}
+              /> 
+            }
 
           </>}
         </Modal.Body>
