@@ -30,6 +30,9 @@ import {
     USER_RESET_PASSWORD_REQUEST,
     USER_RESET_PASSWORD_SUCCESS,
     USER_RESET_PASSWORD_FAIL,
+    USER_EMAIL_LIST_FAIL,
+    USER_EMAIL_LIST_REQUEST,
+    USER_EMAIL_LIST_SUCCESS,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -128,7 +131,6 @@ export const register = (name, email, password) => async (dispatch) => {
 export const listUsers = () => async (dispatch, getState) => {
     //
     try {
-
         dispatch({
             type: USER_LIST_REQUEST,
         })
@@ -156,6 +158,43 @@ export const listUsers = () => async (dispatch, getState) => {
         //
         dispatch({
             type: USER_LIST_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+// View Users Email
+export const getUsersEmailList = () => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: USER_EMAIL_LIST_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            },
+        }
+        
+        // API Request
+        const { data } = await axios.get(`/auth/useremail`, config)
+        console.warn(data)
+
+        dispatch({
+            type: USER_EMAIL_LIST_SUCCESS,
+            payload: data
+        })
+        // console.warn(userInfo.access_token)
+    } catch(error) {
+        // 
+        dispatch({
+            type: USER_EMAIL_LIST_FAIL,
             payload: 
             error.response && error.response.data.message 
             ? error.response.data.message 

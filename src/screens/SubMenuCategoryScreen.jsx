@@ -69,7 +69,7 @@ const SubMenuCategoryScreen = () => {
     const [subcatid, setSubCatId] = useState('')
     const [mode, setMode] = useState('')
 
-    // Add User Modal
+    // Menu Category
     const handleMenuCategoryView = (state) => {
         // Show Modal
         handleShow()

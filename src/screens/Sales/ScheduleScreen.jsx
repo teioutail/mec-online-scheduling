@@ -14,7 +14,9 @@ import {
   getScheduleReferenceDetails,
   deleteScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-
+import { 
+    getUsersEmailList 
+} from '../../actions/userActions'
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
@@ -68,13 +70,9 @@ const ScheduleScreen = () => {
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
 
-    // Menu Category List
-    const menuCategoryList = useSelector(state => state.menuCategoryList)
-    const { categories } = menuCategoryList
-
-    // Sub-Menu Category List
-    const submenuCategoryList = useSelector(state => state.submenuCategoryList)
-    const { subcategories } = submenuCategoryList
+    // User Email List
+    const userEmail = useSelector(state => state.userEmail)
+    const { emails } = userEmail
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -283,6 +281,8 @@ const ScheduleScreen = () => {
         if(userInfo && userInfo.user.user_type === 1) {
             //
             dispatch(listScheduleReference())
+            // Get User Email List
+            dispatch(getUsersEmailList())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -319,6 +319,7 @@ const ScheduleScreen = () => {
                         onHide={handleClose} 
                         scheduleid={scheduleid}
                         scheduleDetails={scheduleDetail}
+                        emails={emails}
                         mode={mode}
                     />
 
@@ -326,8 +327,8 @@ const ScheduleScreen = () => {
                         show={showRoleAccess} 
                         onHide={handleRoleAccessClose} 
                         scheduleid={scheduleid}
-                        categories={categories}
-                        subcategories={subcategories}
+                        // categories={categories}
+                        // subcategories={subcategories}
                     />
 
                     <ToastContainer

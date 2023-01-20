@@ -8,11 +8,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-// import { 
-//   listMenuCategories,
-//   updateMenuCategory,
-//   createMenuCategory,
-// } from '../../actions/menuCategoryActions'
 import { 
     listSubMenuCategories,
     updateSubMenuCategory,
@@ -66,6 +61,7 @@ const SubMenuCategoryModal = ({ show , mode, onHide, subcatid, submenuCategoryDe
           icon: iconMenu,
           cat_id: categoryid,
         }
+
         // 
         if(mode === 'Add') {
           // Show Success Request

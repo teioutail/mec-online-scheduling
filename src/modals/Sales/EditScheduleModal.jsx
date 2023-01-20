@@ -11,7 +11,7 @@ import {
 import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
-const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
+const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -26,16 +26,13 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactPerson, setEndUserContactPerson] = useState('')
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
-  // Email and Business
-  const [businessUnit, setBusinessUnit] = useState([]) 
-  const [participants, setParticipants] = useState([])
+
   // Post-sales Input
   const [projectNo, setProjectNo] = useState('')
   const [caseNo, setCaseNo] = useState('')
   const [saNo, setSaNo] = useState('')
   const [netsuiteLink, setNetsuiteLink] = useState('')
 
-  
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -104,8 +101,8 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
           partner_contact_number: partnerContactNumber,
           enduser_contact_number: endUserContactNumber,
           user_id: userInfo.user.id,
-          business_unit: businessUnit,
-          participants: participants,
+          // business_unit: businessUnit,
+          // participants: participants,
         }
         // 
         if(mode === 'Add') {
@@ -164,6 +161,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number,
       enduser_contact_number
     } = scheduleDetails
+
     // setState
     setActivityType(activity_type || "")
     setProjectName(project_name || "")

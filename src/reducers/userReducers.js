@@ -28,6 +28,10 @@ import {
     USER_RESET_PASSWORD_REQUEST,
     USER_RESET_PASSWORD_SUCCESS,
     USER_RESET_PASSWORD_FAIL,
+    USER_EMAIL_LIST_REQUEST,
+    USER_EMAIL_LIST_SUCCESS,
+    USER_EMAIL_LIST_FAIL,
+    USER_EMAIL_LIST_RESET,
 } from '../constants/userConstants'
  
 // USER LOGIN REDUCER 
@@ -147,6 +151,22 @@ export const userResetPasswordReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case USER_RESET_PASSWORD_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+// USER EMAIL LIST REDUCER
+export const userEmailListReducer = (state = { emails: [] }, action ) => {
+    switch(action.type) {
+        case USER_EMAIL_LIST_REQUEST:
+            return { loading: true }
+        case USER_EMAIL_LIST_SUCCESS:
+            return { loading: false, emails: action.payload }
+        case USER_EMAIL_LIST_FAIL:
+            return { loading: false, error: action.payload }
+        case USER_EMAIL_LIST_RESET:
+            return { emails: [] }
         default:
             return state
     }
