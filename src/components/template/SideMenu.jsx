@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-    faDashboard, 
-    faUsers,
-    faLock,
-    faBars,  
-    faList,
-    faListOl,
-} from '@fortawesome/free-solid-svg-icons'
+
 import { 
     useDispatch, 
     useSelector, 
