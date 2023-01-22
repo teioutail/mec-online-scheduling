@@ -92,10 +92,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number: partnerContactNumber,
       enduser_contact_number: endUserContactNumber,
       user_id: userInfo.user.id,
-      project_no: postSalesInputRef.current.projectNo,
-      case_no: postSalesInputRef.current.caseNo,
-      saNoRef: postSalesInputRef.current.saNo,
-      netsuitLinkRef: postSalesInputRef.current.netsuitLink,
+      project_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.projectNo),
+      case_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo),
+      sa_no:  (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo),
+      netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
       // business_unit: businessUnit,
     }
     
@@ -183,12 +183,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     setEndUserContactPerson(enduser_contact_person || "")
     setPartnerContactNumber(partner_contact_number || "")
     setEndUserContactNumber(enduser_contact_number || "")
-    // useState
-    // setProjectNo(postSalesInputRef.current.projectNo || "")
-    // setCaseNo(postSalesInputRef.current.caseNo || "")
-    // setSaNo(postSalesInputRef.current.saNo || "")
-    // setNetsuiteLink(postSalesInputRef.current.netsuitLink || "")
-
+    
   }, [scheduleDetails, dispatch])
 
   return (
