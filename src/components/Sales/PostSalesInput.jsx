@@ -1,7 +1,7 @@
 import { Row, Col, Form, } from 'react-bootstrap'
 import React, { useState, useImperativeHandle, useRef } from 'react'
 
-const PostSalesInput = ({ handlePostSalesInput }, ref) => {
+const PostSalesInput = ({}, ref) => {
   // useRef
   const projectNoRef = useRef()
   const caseNoRef = useRef()
@@ -10,7 +10,10 @@ const PostSalesInput = ({ handlePostSalesInput }, ref) => {
 
   // useState
   const [projectNo, setProjectNo] = useState('')
-
+  const [caseNo, setCaseNo] = useState('')
+  const [saNo, setSaNo] = useState('')
+  const [netsuiteLink, setNetsuiteLink] = useState('')
+  
   // Pass reference value
   useImperativeHandle(ref, () => {
     // Get the field values
@@ -47,8 +50,8 @@ const PostSalesInput = ({ handlePostSalesInput }, ref) => {
                     type='text'
                     id='case_number'
                     placeholder='Case Number'
-                    // value={caseNo}
-                    // onChange={(e) => setCaseNo(e.target.value)}
+                    value={caseNo}
+                    onChange={(e) => setCaseNo(e.target.value)}
                     ref={caseNoRef}
                 />
                 </Form.Group>
@@ -63,8 +66,8 @@ const PostSalesInput = ({ handlePostSalesInput }, ref) => {
                     type='text'
                     id='sa_number'
                     placeholder='SA Number'
-                    // value={saNo}
-                    // onChange={(e) => setSaNo(e.target.value)}
+                    value={saNo}
+                    onChange={(e) => setSaNo(e.target.value)}
                     ref={saNoRef}
                 />
                 </Form.Group>
@@ -77,8 +80,8 @@ const PostSalesInput = ({ handlePostSalesInput }, ref) => {
                     type='text'
                     id='netsuite_link'
                     placeholder='Netsuite Link'
-                    // value={netsuiteLink}
-                    // onChange={(e) => setNetsuiteLink(e.target.value)}
+                    value={netsuiteLink}
+                    onChange={(e) => setNetsuiteLink(e.target.value)}
                     ref={netsuitLinkRef}
                 />
                 </Form.Group>

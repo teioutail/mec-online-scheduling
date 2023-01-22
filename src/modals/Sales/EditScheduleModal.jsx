@@ -30,6 +30,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
   const [emailParticipants, setEmailParticipants] = useState([])
 
+  // useState
+  const [projectNo, setProjectNo] = useState('')
+  const [caseNo, setCaseNo] = useState('')
+  const [saNo, setSaNo] = useState('')
+  const [netsuiteLink, setNetsuiteLink] = useState('')
+
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -132,6 +138,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       // Close Modal
       onHide()
     }
+
     // Show Success Update
     if(scheduleReferenceUpdateSuccess) {
       Swal.fire(
@@ -176,6 +183,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     setEndUserContactPerson(enduser_contact_person || "")
     setPartnerContactNumber(partner_contact_number || "")
     setEndUserContactNumber(enduser_contact_number || "")
+    // useState
+    // setProjectNo(postSalesInputRef.current.projectNo || "")
+    // setCaseNo(postSalesInputRef.current.caseNo || "")
+    // setSaNo(postSalesInputRef.current.saNo || "")
+    // setNetsuiteLink(postSalesInputRef.current.netsuitLink || "")
+
   }, [scheduleDetails, dispatch])
 
   return (
