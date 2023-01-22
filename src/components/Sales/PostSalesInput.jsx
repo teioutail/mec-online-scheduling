@@ -1,7 +1,7 @@
 import { Row, Col, Form, } from 'react-bootstrap'
-import React, { useState, useImperativeHandle, useRef } from 'react'
+import React, { useState, useImperativeHandle, useRef, useEffect } from 'react'
 
-const PostSalesInput = ({}, ref) => {
+const PostSalesInput = ({ scheduleDetails }, ref) => {
   // useRef
   const projectNoRef = useRef()
   const caseNoRef = useRef()
@@ -24,6 +24,23 @@ const PostSalesInput = ({}, ref) => {
         netsuitLink: netsuitLinkRef.current.value,
     }
   })
+  // 
+  useEffect(() => {
+    // Selected Schedule Details
+    const {  
+        project_no,
+        sa_no,
+        case_no,
+        netsuite_link,
+    } = scheduleDetails
+    // setState
+    setProjectNo(project_no || "")
+    setCaseNo(sa_no || "")
+    setSaNo(case_no || "")
+    setNetsuiteLink(netsuite_link || "")
+  }, [scheduleDetails])
+
+
 
   return (
     <>

@@ -30,12 +30,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
   const [emailParticipants, setEmailParticipants] = useState([])
 
-  // useState
-  const [projectNo, setProjectNo] = useState('')
-  const [caseNo, setCaseNo] = useState('')
-  const [saNo, setSaNo] = useState('')
-  const [netsuiteLink, setNetsuiteLink] = useState('')
-
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -98,8 +92,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
       // business_unit: businessUnit,
     }
-    
-    console.warn(schedule)
 
     // Save Change Here...
     Swal.fire({
@@ -183,7 +175,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     setEndUserContactPerson(enduser_contact_person || "")
     setPartnerContactNumber(partner_contact_number || "")
     setEndUserContactNumber(enduser_contact_number || "")
-    
+
   }, [scheduleDetails, dispatch])
 
   return (
@@ -350,11 +342,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
               sampleFunc={sampleFunc}
               handleEmailParticipants={handleEmailParticipants}
             />
-
-            { 
-              activityType === 'Post-Sales' && 
+            { activityType === 'Post-Sales' && 
               <PostSalesInput 
                 ref={postSalesInputRef}
+                scheduleDetails={scheduleDetails}
               /> 
             }
 
