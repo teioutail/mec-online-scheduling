@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
@@ -12,6 +12,8 @@ import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
+  // PostSalesInput Component Reference
+  const postSalesInputRef = useRef()
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -27,12 +29,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
   const [emailParticipants, setEmailParticipants] = useState([])
-
-  // Post-sales Input
-  const [projectNo, setProjectNo] = useState('')
-  const [caseNo, setCaseNo] = useState('')
-  const [saNo, setSaNo] = useState('')
-  const [netsuiteLink, setNetsuiteLink] = useState('')
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
@@ -73,12 +69,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       console.log(value)
   }
 
-  //  
-  const handlePostSalesInput = (event) => {
-    // 
-    console.warn(event)
-  }
-  
   // 
   const handleSubmit = async () =>  {
     // Data 
@@ -96,10 +86,15 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number: partnerContactNumber,
       enduser_contact_number: endUserContactNumber,
       user_id: userInfo.user.id,
+      project_no: postSalesInputRef.current.projectNo,
+      case_no: postSalesInputRef.current.caseNo,
+      saNoRef: postSalesInputRef.current.saNo,
+      netsuitLinkRef: postSalesInputRef.current.netsuitLink,
       // business_unit: businessUnit,
-      // participants: participants,
     }
     
+    console.warn(schedule)
+
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -351,7 +346,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
             { 
               activityType === 'Post-Sales' && 
               <PostSalesInput 
-                handlePostSalesInput={handlePostSalesInput}
+                ref={postSalesInputRef}
               /> 
             }
 
