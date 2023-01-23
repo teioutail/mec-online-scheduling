@@ -26,7 +26,6 @@ import {
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
-import RoleAccessModal from '../../modals/Role/RoleAccessModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -237,6 +236,7 @@ const ScheduleScreen = () => {
 		],
 		[],
 	);
+
     // useEffect for Error Message
     useEffect(() => {
         // Show Create Error
@@ -321,14 +321,6 @@ const ScheduleScreen = () => {
                         mode={mode}
                     />
 
-                    <RoleAccessModal 
-                        show={showRoleAccess} 
-                        onHide={handleRoleAccessClose} 
-                        scheduleid={scheduleid}
-                        // categories={categories}
-                        // subcategories={subcategories}
-                    />
-
                     <ToastContainer
                         position="top-right"
                         autoClose={2000}
@@ -341,7 +333,6 @@ const ScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
-
                 <Footer />
             </FormContainer>
         </>
