@@ -24,6 +24,7 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
         netsuitLink: netsuitLinkRef.current.value,
     }
   })
+
   // 
   useEffect(() => {
     // Selected Schedule Details
@@ -45,33 +46,33 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
     <>
         <Row>
         <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Project No</Form.Label>
-                <Form.Control 
-                    size='sm'
-                    type='text'
-                    id='project_number'
-                    placeholder='Project Number'
-                    value={projectNo}
-                    ref={projectNoRef}
-                    onChange={(e) => setProjectNo(e.target.value)}
-                />
-                </Form.Group>
-            </Col>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Case No</Form.Label>
-                <Form.Control 
-                    size='sm'
-                    type='text'
-                    id='case_number'
-                    placeholder='Case Number'
-                    value={caseNo}
-                    onChange={(e) => setCaseNo(e.target.value)}
-                    ref={caseNoRef}
-                />
-                </Form.Group>
-            </Col>
+            <Form.Group className="mb-3">
+            <Form.Label>Project No</Form.Label>
+            <Form.Control 
+                size='sm'
+                type='text'
+                id='project_number'
+                placeholder='Project Number'
+                value={projectNo}
+                ref={projectNoRef}
+                onChange={(e) => setProjectNo(e.target.value)}
+            />
+            </Form.Group>
+        </Col>
+        <Col sm={12} md={6} lg={6}>
+            <Form.Group className="mb-3">
+            <Form.Label>Case No</Form.Label>
+            <Form.Control 
+                size='sm'
+                type='text'
+                id='case_number'
+                placeholder='Case Number'
+                value={caseNo}
+                onChange={(e) => setCaseNo(e.target.value)}
+                ref={caseNoRef}
+            />
+            </Form.Group>
+        </Col>
         </Row>
         <Row>
             <Col sm={12} md={6} lg={6}>
