@@ -14,9 +14,10 @@ import {
   getScheduleReferenceDetails,
   deleteScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-import { 
-    getUsersEmailList 
-} from '../../actions/userActions'
+
+import {  getUsersEmailList } from '../../actions/userActions'
+import { listBusinessUnit } from '../../actions/businessUnitActions'
+
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
@@ -279,6 +280,8 @@ const ScheduleScreen = () => {
             dispatch(listScheduleReference())
             // Get User Email List
             dispatch(getUsersEmailList())
+            // Get Business Unit
+            dispatch(listBusinessUnit())
         } else {
             // Redirect to login page
             navigate('/signin')

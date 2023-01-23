@@ -44,6 +44,7 @@ import {
     menuSubCategoryDeleteReducer,
     menuSubCategoryUpdateRoleAccessReducer,
 } from './reducers/menuSubCategoryReducers'
+
 // Schedule Reference Reducer
 import { 
     scheduleReferenceCreateReducer,
@@ -52,6 +53,11 @@ import {
     scheduleReferenceListReducer,
     scheduleReferenceUpdateReducer,
 } from './reducers/Sales/salesScheduleReferenceReducer'
+
+// Business Unit Reducer
+import { 
+    businessUnitListReducer,
+} from './reducers/businessUnitReducers'
 
 // Reducers
 const reducer = combineReducers({
@@ -87,6 +93,7 @@ const reducer = combineReducers({
     scheduleReferenceDetails: scheduleReferenceDetailsReducer,
     scheduleReferenceUpdate: scheduleReferenceUpdateReducer,
     scheduleReferenceDelete:scheduleReferenceDeleteReducer,
+    businessUnitList: businessUnitListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
