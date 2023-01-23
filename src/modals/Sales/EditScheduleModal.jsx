@@ -14,6 +14,8 @@ import PostSalesInput
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
   // PostSalesInput Component Reference
   const postSalesInputRef = useRef()
+  // EditEmailBusinessUnit Component Reference
+  const EditEmailBusinessUnitRef = useRef()
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -90,8 +92,11 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       case_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo),
       sa_no:  (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo),
       netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
-      // business_unit: businessUnit,
+      // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : 'testing lang'),
+      email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
     }
+    // 
+    // console.warn(schedule)
 
     // Save Change Here...
     Swal.fire({
@@ -339,6 +344,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
             </Row>
 
             <EditEmailBusinessUnit 
+              ref={EditEmailBusinessUnitRef}
               sampleFunc={sampleFunc}
               handleEmailParticipants={handleEmailParticipants}
             />

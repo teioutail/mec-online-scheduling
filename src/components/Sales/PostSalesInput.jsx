@@ -14,7 +14,7 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
   const [saNo, setSaNo] = useState('')
   const [netsuiteLink, setNetsuiteLink] = useState('')
   
-  // Pass reference value
+  // Pass the reference value
   useImperativeHandle(ref, () => {
     // Get the field values
     return {
