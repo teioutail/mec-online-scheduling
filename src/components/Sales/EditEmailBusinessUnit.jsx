@@ -15,27 +15,42 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
 
     // Email and Business
     const [businessUnit, setBusinessUnit] = useState([]) 
+
     // Participants Email List
     const userEmail = useSelector(state => state.userEmail)
     const { emails:participants } = userEmail
+
+    // Business Unit List
+    const businessUnitList = useSelector(state => state.businessUnitList)
+    const { business } = businessUnitList
+
     // Email Participants
-    const [options, setOptions] = useState([])
+    const [participantListOptions, setParticipantListOptions] = useState([])
+    const [businessListOptions, setBusinessListOptions] = useState([])
     // 
     const [selectedParticipant, setSelectedParticipant] = useState([])
     const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
 
-    // Object to get selected email participants
+    // Object to get selected Email Participants
     const handleSelectedParticipants = (options) => {
         setSelectedParticipant(options)
     }
+
+    // Object to get selected Business Unit
+    const handleSelectedBusinessUnit = (options) => {
+        setSelectedBusinessUnit(options)
+    }
+
+    // Object to get 
 
     // Pass the reference value
     useImperativeHandle(ref, () => {
         // Get field values
         return {
             emailParticipants: selectedParticipant,
+            businessUnit: selectedBusinessUnit,
         }
-    },[selectedParticipant])
+    },[selectedParticipant, selectedBusinessUnit])
 
     // Get Participants and Business Unit
     useEffect(() => {
@@ -47,10 +62,14 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
 
         // console.warn(email_participants)
         // setState
-        setOptions(participants || [])
+        setParticipantListOptions(participants || [])
+        setBusinessListOptions(business || [])
+        console.warn(businessListOptions)
+        // Selected Participants 
         setSelectedParticipant(email_participants || [])
+        setSelectedBusinessUnit(business_unit || [])
 
-    },[participants])
+    },[participants, business])
 
   return (
     <>
@@ -62,8 +81,10 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
                     closeMenuOnSelect={false}
                     isMulti
                     components={animatedComponents}
-                    options={options}
-
+                    options={businessListOptions}
+                    onChange={handleSelectedBusinessUnit}
+                    value={selectedBusinessUnit}
+                    ref={businessUnitRef}
                     // defaultValue={[colourOptions[4], colourOptions[5]]}
                   />
                 </Form.Group>
@@ -75,7 +96,7 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
                     closeMenuOnSelect={false}
                     isMulti
                     components={animatedComponents}
-                    options={options}
+                    options={participantListOptions}
                     onChange={handleSelectedParticipants}
                     value={selectedParticipant}
                     ref={emailParticipantRef}

@@ -23,7 +23,7 @@ export const listBusinessUnit = () => async (dispatch, getState) => {
             }
         }
         // Call API Request
-        const { data } = await axios.get(`/auth/business-unit`, config)
+        const { data } = await axios.get(`/auth/business-unit-option`, config)
         
         dispatch({
             type: BUSINESS_UNIT_LIST_SUCCESS,
