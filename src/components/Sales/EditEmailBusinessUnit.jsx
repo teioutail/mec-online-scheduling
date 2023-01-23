@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { reactSelectCustomStyles } from '../../assets/js/custom_style';
 
 const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }) => {
     // React Select
@@ -45,6 +46,7 @@ const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }) => {
                     isMulti
                     components={animatedComponents}
                     options={options}
+
                     // defaultValue={[colourOptions[4], colourOptions[5]]}
                   />
                 </Form.Group>
@@ -58,6 +60,7 @@ const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }) => {
                     components={animatedComponents}
                     options={options}
                     onChange={handleSelectedParticipants}
+                    // styles={reactSelectCustomStyles}
                     // defaultValue={[colourOptions[4], colourOptions[5]]}
                 />
                 </Form.Group>
