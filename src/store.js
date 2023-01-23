@@ -56,7 +56,7 @@ import {
 
 // Business Unit Reducer
 import { 
-    businessUnitListReducer,
+    businessUnitListOptionReducer,
 } from './reducers/businessUnitReducers'
 
 // Reducers
@@ -93,7 +93,7 @@ const reducer = combineReducers({
     scheduleReferenceDetails: scheduleReferenceDetailsReducer,
     scheduleReferenceUpdate: scheduleReferenceUpdateReducer,
     scheduleReferenceDelete:scheduleReferenceDeleteReducer,
-    businessUnitList: businessUnitListReducer,
+    businessUnitListOption: businessUnitListOptionReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

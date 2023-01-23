@@ -21,8 +21,8 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
     const { emails:participants } = userEmail
 
     // Business Unit List
-    const businessUnitList = useSelector(state => state.businessUnitList)
-    const { business } = businessUnitList
+    const businessUnitListOption = useSelector(state => state.businessUnitListOption)
+    const { business } = businessUnitListOption
 
     // Email Participants
     const [participantListOptions, setParticipantListOptions] = useState([])
@@ -64,7 +64,7 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
         // setState
         setParticipantListOptions(participants || [])
         setBusinessListOptions(business || [])
-        console.warn(businessListOptions)
+        // console.warn(businessListOptions)
         // Selected Participants 
         setSelectedParticipant(email_participants || [])
         setSelectedBusinessUnit(business_unit || [])

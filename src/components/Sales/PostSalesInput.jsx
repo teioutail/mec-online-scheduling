@@ -74,7 +74,7 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
             </Col>
         </Row>
         <Row>
-        <Col sm={12} md={6} lg={6}>
+            <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>SA No</Form.Label>
                 <Form.Control 

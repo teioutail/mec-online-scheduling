@@ -82,7 +82,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       sa_no:  (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo),
       netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
       email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
-      // business_unit: 
+      business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
     }
 
     // 
@@ -157,6 +157,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number,
       enduser_contact_number
     } = scheduleDetails
+
     // setState
     setActivityType(activity_type || "")
     setProjectName(project_name || "")
