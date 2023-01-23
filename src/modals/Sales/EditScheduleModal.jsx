@@ -60,7 +60,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     const name = target.name
     // setStatus(selected)
   }
-
   // 
   const handleSubmit = async () =>  {
     // Data 
@@ -82,12 +81,12 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       case_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo),
       sa_no:  (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo),
       netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
-      // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : 'testing lang'),
       email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
+      // business_unit: 
     }
 
     // 
-    console.warn(schedule)
+    // console.warn(schedule)
 
     // Save Change Here...
     Swal.fire({
@@ -158,7 +157,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number,
       enduser_contact_number
     } = scheduleDetails
-
     // setState
     setActivityType(activity_type || "")
     setProjectName(project_name || "")

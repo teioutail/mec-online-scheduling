@@ -24,7 +24,6 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
         netsuitLink: netsuitLinkRef.current.value,
     }
   })
-  
   // 
   useEffect(() => {
     // Selected Schedule Details
@@ -34,6 +33,7 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
         case_no,
         netsuite_link,
     } = scheduleDetails
+
     // setState
     setProjectNo(project_no || "")
     setCaseNo(sa_no || "")

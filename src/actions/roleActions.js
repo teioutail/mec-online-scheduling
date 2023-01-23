@@ -18,6 +18,7 @@ import {
     ROLE_DELETE_SUCCESS,
     ROLE_DELETE_FAIL,
 } from '../constants/roleConstants'
+
 // View List of Roles
 export const listRoles = () => async (dispatch, getState) => {
     // 
