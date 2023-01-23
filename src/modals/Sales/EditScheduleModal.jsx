@@ -61,16 +61,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     // setStatus(selected)
   }
 
-  // Get Email Participants
-  const handleEmailParticipants = (emails) => {
-    return emails
-  }
-
-  // 
-  const sampleFunc = (value) => {
-      console.log(value)
-  }
-
   // 
   const handleSubmit = async () =>  {
     // Data 
@@ -95,6 +85,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : 'testing lang'),
       email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
     }
+
     // 
     // console.warn(schedule)
 
@@ -345,8 +336,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
 
             <EditEmailBusinessUnit 
               ref={EditEmailBusinessUnitRef}
-              sampleFunc={sampleFunc}
-              handleEmailParticipants={handleEmailParticipants}
             />
             { activityType === 'Post-Sales' && 
               <PostSalesInput 

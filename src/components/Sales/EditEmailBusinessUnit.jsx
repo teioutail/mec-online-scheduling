@@ -6,7 +6,7 @@ import makeAnimated from 'react-select/animated';
 import { reactSelectCustomStyles } from '../../assets/js/custom_style';
 import { useImperativeHandle } from 'react';
 
-const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }, ref) => {
+const EditEmailBusinessUnit = ({ }, ref) => {
     // React Select
     const animatedComponents = makeAnimated();
     // useRef
@@ -26,8 +26,6 @@ const EditEmailBusinessUnit = ({ sampleFunc, handleEmailParticipants }, ref) => 
     // Object to get selected email participants
     const handleSelectedParticipants = (options) => {
         setSelectedParticipant(options)
-        console.warn(selectedParticipant)
-        // handleEmailParticipants(selectedParticipant)
     }
 
     // Pass the reference value
