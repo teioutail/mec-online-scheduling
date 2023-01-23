@@ -87,7 +87,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     }
 
     // 
-    // console.warn(schedule)
+    console.warn(schedule)
 
     // Save Change Here...
     Swal.fire({
@@ -336,6 +336,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
 
             <EditEmailBusinessUnit 
               ref={EditEmailBusinessUnitRef}
+              scheduleDetails={scheduleDetails}
             />
             { activityType === 'Post-Sales' && 
               <PostSalesInput 

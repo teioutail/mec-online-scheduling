@@ -41,8 +41,6 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
     setNetsuiteLink(netsuite_link || "")
   }, [scheduleDetails])
 
-
-
   return (
     <>
         <Row>

@@ -6,7 +6,7 @@ import makeAnimated from 'react-select/animated';
 import { reactSelectCustomStyles } from '../../assets/js/custom_style';
 import { useImperativeHandle } from 'react';
 
-const EditEmailBusinessUnit = ({ }, ref) => {
+const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
     // React Select
     const animatedComponents = makeAnimated();
     // useRef
@@ -18,11 +18,12 @@ const EditEmailBusinessUnit = ({ }, ref) => {
     // Participants Email List
     const userEmail = useSelector(state => state.userEmail)
     const { emails:participants } = userEmail
-    //
+    // Email Participants
     const [options, setOptions] = useState([])
     // 
     const [selectedParticipant, setSelectedParticipant] = useState([])
-    
+    const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
+
     // Object to get selected email participants
     const handleSelectedParticipants = (options) => {
         setSelectedParticipant(options)
@@ -38,8 +39,17 @@ const EditEmailBusinessUnit = ({ }, ref) => {
 
     // Get Participants and Business Unit
     useEffect(() => {
-        // 
+        // Selected Schedule Details
+        const {
+            email_participants,
+            business_unit,
+        } = scheduleDetails
+
+        // console.warn(email_participants)
+        // setState
         setOptions(participants || [])
+        setSelectedParticipant(email_participants || [])
+
     },[participants])
 
   return (
