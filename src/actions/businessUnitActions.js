@@ -1,8 +1,10 @@
 import axios from 'axios'
-
 import { 
-    BUSINESS_UNIT_LIST_FAIL, 
-    BUSINESS_UNIT_LIST_REQUEST, 
+    BUSINESS_UNIT_LIST_FAIL,
+    BUSINESS_UNIT_LIST_OPTION_FAIL, 
+    BUSINESS_UNIT_LIST_OPTION_REQUEST, 
+    BUSINESS_UNIT_LIST_OPTION_SUCCESS,
+    BUSINESS_UNIT_LIST_REQUEST,
     BUSINESS_UNIT_LIST_SUCCESS,
 } from "../constants/businessUnit"
 
@@ -23,7 +25,7 @@ export const listBusinessUnit = () => async (dispatch, getState) => {
             }
         }
         // Call API Request
-        const { data } = await axios.get(`/auth/business-unit-option`, config)
+        const { data } = await axios.get(`/auth/business-unit`, config)
         
         dispatch({
             type: BUSINESS_UNIT_LIST_SUCCESS,
@@ -36,6 +38,39 @@ export const listBusinessUnit = () => async (dispatch, getState) => {
         //
         dispatch({
             type: BUSINESS_UNIT_LIST_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// View List of Business Unit
+export const listBusinessUnitOption = () => async (dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: BUSINESS_UNIT_LIST_OPTION_REQUEST,
+        })
+
+        const { userLogin : { userInfo }} = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        // Call API Request
+        const { data } = await axios.get(`/auth/business-unit-option`, config)
+        
+        dispatch({
+            type: BUSINESS_UNIT_LIST_OPTION_SUCCESS,
+            payload: data
+        })
+        
+    } catch(error) {
+        //
+        dispatch({
+            type: BUSINESS_UNIT_LIST_OPTION_FAIL,
             payload: error.response.data.errors,
         })
     }

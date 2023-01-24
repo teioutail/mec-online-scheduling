@@ -1,35 +1,49 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import Header from '../../components/template/Header'
-import Footer from '../../components/template/Footer'
-import SideMenu from '../../components/template/SideMenu'
-import FormContainer from '../../components/template/FormContainer'
+import Header from '../components/template/Header'
+import Footer from '../components/template/Footer'
+import SideMenu from '../components/template/SideMenu'
+import FormContainer from '../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
-import Loader from '../../components/Loader'
+import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
-  listScheduleReference,
-  getScheduleReferenceDetails,
-  deleteScheduleReference,
-} from '../../actions/Sales/salesScheduleReferenceAction'
-
-import {  getUsersEmailList } from '../../actions/userActions'
-import { listBusinessUnitOption } from '../../actions/businessUnitActions'
+    // listRoles,
+    getRoleDetails,
+    deleteRole,
+} from '../actions/roleActions'
 
 import { 
-  SCHEDULE_REFERENCE_CREATE_RESET,
-  SCHEDULE_REFERENCE_DETAILS_RESET,
-  SCHEDULE_REFERENCE_UPDATE_RESET,
-} from '../../constants/Sales/salesScheduleReference'
+    listBusinessUnit,
+} from '../actions/businessUnitActions'
+
+import { 
+    faPlus,
+    faEllipsisV,
+    faTrash,
+    faUserPen,
+    faUserLock,
+} from '@fortawesome/free-solid-svg-icons'
+
+import { 
+    ROLE_DETAILS_RESET,
+    ROLE_CREATE_RESET,
+    ROLE_UPDATE_RESET,
+ } from '../constants/roleConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
+import EditRoleModal from '../modals/Role/EditRoleModal'
+import RoleAccessModal from '../modals/Role/RoleAccessModal'
+
+import { listMenuCategories } from '../actions/menuCategoryActions'
+import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ScheduleScreen = () => {
+const BusinessUnitScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -41,34 +55,44 @@ const ScheduleScreen = () => {
         progress: undefined,
         theme: "light",
     });   
+
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Schedule Reference'
+    const headerTitle = 'Business Unit'
     // Redux
     const dispatch = useDispatch()
-    // useNavigate to redirect the user
-    const navigate = useNavigate()
 
-    // Schedule List
-    const scheduleReferenceList = useSelector(state => state.scheduleReferenceList)
-    const { loading , schedules } = scheduleReferenceList
+    // useNavigate to redirect the user
+    const navigate = useNavigate() 
+
+    // Business Unit List
+    const businessUnitList = useSelector(state => state.businessUnitList)
+    const { loading, business } = businessUnitList
     
-    // Schedule Create Error
-    const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
-    const { error:errorCreate } = scheduleReferenceCreate
+    // Role Create Error
+    const roleCreate = useSelector(state => state.roleCreate)
+    const { error:errorCreate } = roleCreate
   
-    // Schedule Update Error
-    const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-    const { error:errorUpdate } = scheduleReferenceUpdate
+    // Role Update Error
+    const roleUpdate = useSelector(state => state.roleUpdate)
+    const { error:errorUpdate } = roleUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Schedule Info / Details
-    const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-    const { schedule:scheduleDetail } = scheduleReferenceDetails
+    // Role Info
+    const roleDetails = useSelector(state => state.roleDetails)
+    const { role: roleDetail } = roleDetails
+
+    // Menu Category List
+    const menuCategoryList = useSelector(state => state.menuCategoryList)
+    const { categories } = menuCategoryList
+
+    // Sub-Menu Category List
+    const submenuCategoryList = useSelector(state => state.submenuCategoryList)
+    const { subcategories } = submenuCategoryList
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -86,44 +110,43 @@ const ScheduleScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [scheduleid, setScheduleId] = useState('')
+    const [roleid, setRoleId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
-    const handleScheduleReferenceView = (state) => {
+    const handleRoleView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
-        // 
+        //
         dispatch({
-            type: SCHEDULE_REFERENCE_DETAILS_RESET,
+            type: ROLE_DETAILS_RESET,
         })
     }
 
     // Edit Role
-    const handleEditScheduleReferenceView = (state) => {
+    const handleEditRoleView = (state) => {
         setShow(true)
-        setScheduleId(state.target.id)
+        setRoleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getScheduleReferenceDetails(state.target.id))
+        dispatch(getRoleDetails(state.target.id))
     }
 
     // Role Access 
     const handleRoleAccessView = (state) => {
         handleRoleAccessShow()
-        setScheduleId(state.target.id)
+        setRoleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        
     }
 
-    // Delete Schedule Reference
-    const handleDeleteScheduleReference = (state) => {
+    // Delete Role
+    const handleDeleteRole = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this schedule?',
+            title: 'Delete this role?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -131,16 +154,16 @@ const ScheduleScreen = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Proceed!'
         }).then((result) => {
-            // 
+            //
             if (result.isConfirmed) {
-                // Delete Schedule
-                dispatch(deleteScheduleReference(state.target.id))
+                // Delete Role
+                dispatch(deleteRole(state.target.id))
                 // Refresh Datatable
-                dispatch(listScheduleReference())
+                dispatch(listBusinessUnit())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Schedule Successfully Deleted.', 
+                    'Role Successfully Deleted.',
                     'success'
                 )
             }
@@ -150,78 +173,38 @@ const ScheduleScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Schedule Reference No',
-                selector: row => row.reference_id,
+            {   name: 'BU ID',
+                selector: row => row.bu_id,
                 sortable: true,
             },
-            {   name: 'Project Name',
-                selector: row => row.project_name,
-                sortable: true,
-            },
-            {
-                name: 'Project No',
-                selector: row => row.project_no,
-                sortable: true,
-            },
-            {
-                name: 'Case No',
-                selector: row => row.case_no,
-                sortable: true,
-            },
-            {
-                name: 'SA No',
-                selector: row => row.sa_no,
-                sortable: true,
-            },
-            {
-                name: 'Partner',
-                selector: row => row.partner_company_name,
-                sortable: true,
-            },
-            {
-                name: 'End-User',
-                selector: row => row.enduser_company_name,
+            {   name: 'Business Unit',
+                selector: row => row.business_unit,
                 sortable: true,
             },
             {
                 name: 'Action',
-                cell: (row) => {
-                    //
+				cell: (row) => {
+                    // console.log(row.id);
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
                             <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
+                                <FontAwesomeIcon icon={faEllipsisV} />
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Schedule
+                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faUserPen} /> Edit Role
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
+                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faTrash} /> Delete Role
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
+                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
+                                        <FontAwesomeIcon icon={faUserLock} /> Role Access Privilege
                                     </Link>
                                 </li>
                             </ul>
@@ -249,9 +232,8 @@ const ScheduleScreen = () => {
                 }
             }
             //
-            dispatch({ type: SCHEDULE_REFERENCE_CREATE_RESET })
+            dispatch({ type: ROLE_CREATE_RESET })
         }
-        
         // Show Update Error
         if(errorUpdate) {
             // Loop Error Back-End Validation
@@ -261,27 +243,26 @@ const ScheduleScreen = () => {
                     notify(`${errorUpdate[key]}`)
                 }
             }
-            //
-            dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
+            dispatch({ type: ROLE_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 
     // Set Row Value
     useEffect(() => {
-        setRows(schedules)
+        setRows(business)
         setPending(loading)
-    }, [schedules, rows, loading])
+    }, [business, rows, loading])
+
 
     //
     useEffect(() => {
-        // Check if user is sales else, redirect user
-        if(userInfo && userInfo.user.user_type === 1) {
-            //
-            dispatch(listScheduleReference())
-            // Get User Email List
-            dispatch(getUsersEmailList())
-            // Get Business Unit
-            dispatch(listBusinessUnitOption())
+        // Check if user is admin else, redirect user
+        if(userInfo && userInfo.user.user_type === 6) {
+            // Business Unit List
+            dispatch(listBusinessUnit())
+
+            dispatch(listMenuCategories())
+            dispatch(listSubMenuCategories())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -293,8 +274,8 @@ const ScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
-                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
+                        <FontAwesomeIcon icon={faPlus} /> Add New
                     </Button>
 
                     <DataTable
@@ -312,13 +293,20 @@ const ScheduleScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <EditScheduleModal 
-                        size="lg"
+                    <EditRoleModal 
                         show={show} 
                         onHide={handleClose} 
-                        scheduleid={scheduleid}
-                        scheduleDetails={scheduleDetail}
+                        roleid={roleid}
+                        roleDetails={roleDetail}
                         mode={mode}
+                    />
+
+                    <RoleAccessModal 
+                        show={showRoleAccess} 
+                        onHide={handleRoleAccessClose} 
+                        roleid={roleid}
+                        categories={categories}
+                        subcategories={subcategories}
                     />
 
                     <ToastContainer
@@ -333,10 +321,11 @@ const ScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>
     )
 }
 
-export default ScheduleScreen
+export default BusinessUnitScreen

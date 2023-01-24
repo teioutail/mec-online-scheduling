@@ -62,8 +62,8 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   }
   // 
   const handleSubmit = async () =>  {
-    // Data 
-    const schedule = {
+    // Data
+    let schedule = {
       id: scheduleid,
       activity_type: activityType,
       project_name: projectName,
@@ -77,14 +77,25 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       partner_contact_number: partnerContactNumber,
       enduser_contact_number: endUserContactNumber,
       user_id: userInfo.user.id,
-      project_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.projectNo),
-      case_no: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo),
-      sa_no:  (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo),
-      netsuite_link: (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink),
       email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
       business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
     }
-    console.warn(schedule)
+    // 
+    if(activityType === "Post-Sales") {
+      // Post-Sales 
+      schedule.project_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.projectNo);
+      schedule.case_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo);
+      schedule.sa_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo);
+      schedule.netsuite_link = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink);
+    } else {
+      // Clear Fields if Pre-Sales
+      schedule.project_no = '';
+      schedule.case_no = '';
+      schedule.sa_no = '';
+      schedule.netsuite_link = '';
+    }
+ 
+    // console.warn(schedule)
     
     // Save Change Here...
     Swal.fire({
