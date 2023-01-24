@@ -189,7 +189,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                 <Modal.Title>{ mode === 'Add' ? 'Add Reference Schedule' : 'Edit Reference Schedule'  }</Modal.Title>
             </Modal.Header>
         <Modal.Body>
-          { scheduleReferenceLoading ? <Loader/> : 
+          { scheduleReferenceLoading ? <Loader /> : 
           <>
               <Row>
                 <Col sm={12} md={6} lg={6}>

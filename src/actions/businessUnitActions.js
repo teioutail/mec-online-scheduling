@@ -68,10 +68,9 @@ export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
-
         // Call API Request
-        const { data } = await axios.get(`/auth/roles/${id}`, config)
-
+        const { data } = await axios.get(`/auth/business-unit/${id}`, config)
+        
         dispatch({
             type: BUSINESS_UNIT_DETAILS_SUCCESS,
             payload: data,

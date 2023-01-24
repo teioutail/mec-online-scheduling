@@ -18,6 +18,10 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
   const dispatch = useDispatch()
   // setState
   const [businessUnit, setBusinessUnit] = useState('')
+  // Business Unit Details
+  const businessUnitDetail = useSelector(state => state.businessUnitDetails)
+  const { loading:businessUnitLoading } = businessUnitDetail
+  
   // Role Create Success Message
   const roleCreate = useSelector(state => state.roleCreate)
   const { success:roleCreateSuccess, message:roleCreateMessage } = roleCreate
@@ -105,18 +109,22 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
     <>
         <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-        <Modal.Title>{ mode === 'Add' ? 'Add Role' : 'Edit Role'  }</Modal.Title>
+        <Modal.Title>{ mode === 'Add' ? 'Add Business Unit' : 'Edit Business Unit'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Group className="mb-3">
-            <Form.Label>Business Unit</Form.Label>
-            <Form.Control 
-              type='text'
-              placeholder='Business Unit'
-              value={businessUnit}
-              onChange={(e) => setBusinessUnit(e.target.value)}
-            />
-          </Form.Group>
+            { businessUnitLoading ? <Loader /> : 
+            <>
+                <Form.Group className="mb-3">
+                    <Form.Label>Business Unit</Form.Label>
+                    <Form.Control 
+                    type='text'
+                    placeholder='Business Unit'
+                    value={businessUnit}
+                    onChange={(e) => setBusinessUnit(e.target.value)}
+                    />
+                </Form.Group>
+            </>
+            }
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
