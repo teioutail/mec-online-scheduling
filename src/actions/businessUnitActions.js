@@ -13,6 +13,9 @@ import {
     BUSINESS_UNIT_LIST_OPTION_SUCCESS,
     BUSINESS_UNIT_LIST_REQUEST,
     BUSINESS_UNIT_LIST_SUCCESS,
+    BUSINESS_UNIT_UPDATE_FAIL,
+    BUSINESS_UNIT_UPDATE_REQUEST,
+    BUSINESS_UNIT_UPDATE_SUCCESS,
 } from "../constants/businessUnitConstants"
 
 // View List of Business Unit
@@ -110,7 +113,7 @@ export const createBusinessUnit = (business) => async (dispatch) => {
         )
 
         console.warn(data)
-        
+
         dispatch({
             type: BUSINESS_UNIT_CREATE_SUCCESS,
             payload: data,
@@ -123,6 +126,42 @@ export const createBusinessUnit = (business) => async (dispatch) => {
             payload: error.response.data.errors,
         })
    }
+}
+
+// UPDATE BUSINESS UNIT
+export const updateBusinessUnit = (business) => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: BUSINESS_UNIT_UPDATE_REQUEST,
+        })
+        // Get Login User Info
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+        // Header
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        // Call API Request
+        const { data } = await axios.put(`/auth/business-unit/${business.id}`, business, config)
+        // console.warn(data)
+
+        dispatch({
+            type: BUSINESS_UNIT_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: BUSINESS_UNIT_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
 }
 
 // View List of Business Unit

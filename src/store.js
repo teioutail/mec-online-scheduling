@@ -60,6 +60,7 @@ import {
     businessUnitDetailsReducer,
     businessUnitListOptionReducer, 
     businessUnitListReducer,
+    businessUnitUpdateReducer,
 } from './reducers/businessUnitReducers'
 
 // Reducers
@@ -100,6 +101,7 @@ const reducer = combineReducers({
     businessUnitDetails: businessUnitDetailsReducer,
     businessUnitListOption: businessUnitListOptionReducer,
     businessUnitCreate: businessUnitCreateReducer,
+    businessUnitUpdate: businessUnitUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

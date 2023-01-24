@@ -13,7 +13,11 @@ import {
   createRole,
  } from '../../actions/roleActions'
 
-import { createBusinessUnit } from '../../actions/businessUnitActions'
+import { 
+  createBusinessUnit,
+  listBusinessUnit,
+  updateBusinessUnit,
+} from '../../actions/businessUnitActions'
 
 const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails }) => {
   // Redux
@@ -69,7 +73,7 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
           dispatch(createBusinessUnit(business))
         } else {
           // Update Business Unit 
-          dispatch(updateRole(business))
+          dispatch(updateBusinessUnit(business))
         }
       }
     })
@@ -94,7 +98,7 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
       )
     }
     // Refresh Datatable
-    dispatch(listRoles())
+    dispatch(listBusinessUnit())
     // Close Modal
     onHide()
   },[roleCreateSuccess, roleUpdateSuccess])
