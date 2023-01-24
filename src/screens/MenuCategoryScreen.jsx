@@ -203,7 +203,7 @@ const MenuCategoryScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleMenuCategoryView}>
-                        <FontAwesomeIcon icon={faPlus} /> Add New
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 
                     <DataTable

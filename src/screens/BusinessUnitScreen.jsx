@@ -44,6 +44,7 @@ import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BUSINESS_UNIT_DETAILS_RESET } from '../constants/businessUnitConstants'
 
 const BusinessUnitScreen = () => {
     // Toastify
@@ -123,18 +124,9 @@ const BusinessUnitScreen = () => {
         setMode('Add')
         //
         dispatch({
-            type: ROLE_DETAILS_RESET,
+            type: BUSINESS_UNIT_DETAILS_RESET,
         })
     }
-
-    // Edit Role
-    // const handleEditRoleView = (state) => {
-    //     setShow(true)
-    //     setRoleId(state.target.id)
-    //     setMode('Edit')
-    //     // Call API Here...
-    //     dispatch(getRoleDetails(state.target.id))
-    // }
 
     // Edit Business Unit
     const handleEditBusinessUnitView = (state) => {
@@ -145,14 +137,7 @@ const BusinessUnitScreen = () => {
         dispatch(getBusinessUnitDetails(state.target.id))
     }
 
-    // Business Unit Modal
-    const handleRoleAccessView = (state) => {
-        handleRoleAccessShow()
-        setBusinessUnitId(state.target.id)
-        setMode('Edit')
-    }
-
-    // Delete Role
+    // Delete Business Unit Modal
     const handleDeleteRole = (state) => {
         // Save Change Here...
         Swal.fire({
@@ -280,7 +265,7 @@ const BusinessUnitScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
-                        <FontAwesomeIcon icon={faPlus} /> Add New
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 
                     <DataTable
@@ -305,22 +290,6 @@ const BusinessUnitScreen = () => {
                         businessUnitDetails={businessUnitDetail}
                         mode={mode}
                     />
-
-                    {/* <EditRoleModal 
-                        show={show} 
-                        onHide={handleClose} 
-                        roleid={roleid}
-                        roleDetails={roleDetail}
-                        mode={mode}
-                    /> */}
-
-                    {/* <RoleAccessModal 
-                        show={showRoleAccess} 
-                        onHide={handleRoleAccessClose} 
-                        roleid={roleid}
-                        categories={categories}
-                        subcategories={subcategories}
-                    /> */}
 
                     <ToastContainer
                         position="top-right"

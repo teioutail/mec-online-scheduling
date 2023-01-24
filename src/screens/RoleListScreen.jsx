@@ -280,7 +280,7 @@ const RoleListScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
-                        <FontAwesomeIcon icon={faPlus} /> Add New
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 
                     <DataTable
