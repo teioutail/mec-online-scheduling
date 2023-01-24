@@ -1,4 +1,8 @@
 import { 
+    BUSINESS_UNIT_CREATE_FAIL,
+    BUSINESS_UNIT_CREATE_REQUEST,
+    BUSINESS_UNIT_CREATE_RESET,
+    BUSINESS_UNIT_CREATE_SUCCESS,
     BUSINESS_UNIT_DETAILS_FAIL,
     BUSINESS_UNIT_DETAILS_REQUEST,
     BUSINESS_UNIT_DETAILS_RESET,
@@ -58,6 +62,23 @@ export const businessUnitListOptionReducer = (state = { business: [] }, action )
             return { loading: false, error: action.payload }
         case BUSINESS_UNIT_LIST_OPTION_RESET:
             return { business: [] }
+        default:
+            return state
+    }
+}
+
+// CREATE BUSINESS UNIT REDUCER
+export const businessUnitCreateReducer = (state = {}, action) => {
+    // 
+    switch(action.type) {
+        case BUSINESS_UNIT_CREATE_REQUEST:
+            return { loading: true}
+        case BUSINESS_UNIT_CREATE_SUCCESS:
+            return { loading: false, success: true, message: action.payload }
+        case BUSINESS_UNIT_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+        case BUSINESS_UNIT_CREATE_FAIL:
+            return {}
         default:
             return state
     }

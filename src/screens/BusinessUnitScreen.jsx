@@ -117,7 +117,7 @@ const BusinessUnitScreen = () => {
     const [mode, setMode] = useState('')
 
     // Add User Modal
-    const handleRoleView = (state) => {
+    const handlebusinessUnitView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
@@ -264,7 +264,7 @@ const BusinessUnitScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handlebusinessUnitView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

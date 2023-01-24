@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { 
+    BUSINESS_UNIT_CREATE_FAIL,
+    BUSINESS_UNIT_CREATE_REQUEST,
+    BUSINESS_UNIT_CREATE_SUCCESS,
     BUSINESS_UNIT_DETAILS_FAIL,
     BUSINESS_UNIT_DETAILS_REQUEST,
     BUSINESS_UNIT_DETAILS_RESET,
@@ -70,7 +73,7 @@ export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
         }
         // Call API Request
         const { data } = await axios.get(`/auth/business-unit/${id}`, config)
-        
+
         dispatch({
             type: BUSINESS_UNIT_DETAILS_SUCCESS,
             payload: data,
@@ -83,6 +86,43 @@ export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
             payload: error.response.data.errors,
         })
     }
+}
+
+// CREATE NEW BUSINESS UNIT
+export const createBusinessUnit = (business) => async (dispatch) => {
+   //
+   try {
+        dispatch({
+            type: BUSINESS_UNIT_CREATE_REQUEST,
+        })
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post(
+            `/auth/business-unit`,
+            business,
+            config
+        )
+
+        console.warn(data)
+        
+        dispatch({
+            type: BUSINESS_UNIT_CREATE_SUCCESS,
+            payload: data,
+        })
+
+   } catch(error) {
+        //
+        dispatch({
+            type: BUSINESS_UNIT_CREATE_FAIL,
+            payload: error.response.data.errors,
+        })
+   }
 }
 
 // View List of Business Unit

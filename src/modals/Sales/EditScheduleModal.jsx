@@ -185,9 +185,9 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   return (
     <>
         <Modal  size={size} show={show} onHide={onHide}>
-            <Modal.Header closeButton>
-                <Modal.Title>{ mode === 'Add' ? 'Add Reference Schedule' : 'Edit Reference Schedule'  }</Modal.Title>
-            </Modal.Header>
+        <Modal.Header closeButton>
+            <Modal.Title>{ mode === 'Add' ? 'Add Reference Schedule' : 'Edit Reference Schedule'  }</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
           { scheduleReferenceLoading ? <Loader /> : 
           <>

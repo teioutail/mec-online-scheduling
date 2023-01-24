@@ -13,6 +13,8 @@ import {
   createRole,
  } from '../../actions/roleActions'
 
+import { createBusinessUnit } from '../../actions/businessUnitActions'
+
 const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails }) => {
   // Redux
   const dispatch = useDispatch()
@@ -64,7 +66,7 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
         // 
         if(mode === 'Add') {
           // Create Business Unit 
-          dispatch(createRole(business))
+          dispatch(createBusinessUnit(business))
         } else {
           // Update Business Unit 
           dispatch(updateRole(business))
