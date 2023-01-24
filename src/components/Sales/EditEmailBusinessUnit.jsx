@@ -41,8 +41,6 @@ const EditEmailBusinessUnit = ({ scheduleDetails }, ref) => {
         setSelectedBusinessUnit(options)
     }
 
-    // Object to get 
-
     // Pass the reference value
     useImperativeHandle(ref, () => {
         // Get field values

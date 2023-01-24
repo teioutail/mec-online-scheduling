@@ -84,7 +84,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
       business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
     }
-    // console.warn(schedule)
+    console.warn(schedule)
     
     // Save Change Here...
     Swal.fire({
@@ -341,7 +341,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                 scheduleDetails={scheduleDetails}
               /> 
             }
-
           </>}
         </Modal.Body>
         <Modal.Footer>

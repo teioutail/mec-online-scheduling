@@ -40,7 +40,7 @@ const PostSalesInput = ({ scheduleDetails }, ref) => {
     setCaseNo(sa_no || "")
     setSaNo(case_no || "")
     setNetsuiteLink(netsuite_link || "")
-  }, [scheduleDetails])
+  },[scheduleDetails])
 
   return (
     <>
