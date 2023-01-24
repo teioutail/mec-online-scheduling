@@ -56,7 +56,9 @@ import {
 
 // Business Unit Reducer
 import { 
-    businessUnitListOptionReducer, businessUnitListReducer,
+    businessUnitDetailsReducer,
+    businessUnitListOptionReducer, 
+    businessUnitListReducer,
 } from './reducers/businessUnitReducers'
 
 // Reducers
@@ -94,6 +96,7 @@ const reducer = combineReducers({
     scheduleReferenceUpdate: scheduleReferenceUpdateReducer,
     scheduleReferenceDelete:scheduleReferenceDeleteReducer,
     businessUnitList: businessUnitListReducer,
+    businessUnitDetails: businessUnitDetailsReducer,
     businessUnitListOption: businessUnitListOptionReducer,
 })
 

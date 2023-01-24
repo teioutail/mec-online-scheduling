@@ -1,12 +1,16 @@
 import axios from 'axios'
 import { 
+    BUSINESS_UNIT_DETAILS_FAIL,
+    BUSINESS_UNIT_DETAILS_REQUEST,
+    BUSINESS_UNIT_DETAILS_RESET,
+    BUSINESS_UNIT_DETAILS_SUCCESS,
     BUSINESS_UNIT_LIST_FAIL,
     BUSINESS_UNIT_LIST_OPTION_FAIL, 
     BUSINESS_UNIT_LIST_OPTION_REQUEST, 
     BUSINESS_UNIT_LIST_OPTION_SUCCESS,
     BUSINESS_UNIT_LIST_REQUEST,
     BUSINESS_UNIT_LIST_SUCCESS,
-} from "../constants/businessUnit"
+} from "../constants/businessUnitConstants"
 
 // View List of Business Unit
 export const listBusinessUnit = () => async (dispatch, getState) => {
@@ -43,6 +47,45 @@ export const listBusinessUnit = () => async (dispatch, getState) => {
     }
 }
 
+// Get Role Details Action
+export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: BUSINESS_UNIT_DETAILS_RESET,
+        })
+
+        dispatch({
+            type: BUSINESS_UNIT_DETAILS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/roles/${id}`, config)
+
+        dispatch({
+            type: BUSINESS_UNIT_DETAILS_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: BUSINESS_UNIT_DETAILS_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
 // View List of Business Unit
 export const listBusinessUnitOption = () => async (dispatch, getState) => {
     // 
@@ -66,7 +109,7 @@ export const listBusinessUnitOption = () => async (dispatch, getState) => {
             type: BUSINESS_UNIT_LIST_OPTION_SUCCESS,
             payload: data
         })
-        
+
     } catch(error) {
         //
         dispatch({

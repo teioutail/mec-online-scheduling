@@ -17,6 +17,7 @@ import {
 
 import { 
     listBusinessUnit,
+    getBusinessUnitDetails,
 } from '../actions/businessUnitActions'
 
 import { 
@@ -36,6 +37,7 @@ import {
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditRoleModal from '../modals/Role/EditRoleModal'
 import RoleAccessModal from '../modals/Role/RoleAccessModal'
+import EditBusinessUnitModal from '../modals/Admin/EditBusinessUnitModal'
 
 import { listMenuCategories } from '../actions/menuCategoryActions'
 import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
@@ -82,9 +84,9 @@ const BusinessUnitScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Role Info
-    const roleDetails = useSelector(state => state.roleDetails)
-    const { role: roleDetail } = roleDetails
+    // Business Unit Info
+    const businessUnitDetails = useSelector(state => state.businessUnitDetails)
+    const { business: businessUnitDetail } = businessUnitDetails
 
     // Menu Category List
     const menuCategoryList = useSelector(state => state.menuCategoryList)
@@ -110,7 +112,7 @@ const BusinessUnitScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [roleid, setRoleId] = useState('')
+    const [businessUnitId, setBusinessUnitId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
@@ -126,20 +128,28 @@ const BusinessUnitScreen = () => {
     }
 
     // Edit Role
-    const handleEditRoleView = (state) => {
+    // const handleEditRoleView = (state) => {
+    //     setShow(true)
+    //     setRoleId(state.target.id)
+    //     setMode('Edit')
+    //     // Call API Here...
+    //     dispatch(getRoleDetails(state.target.id))
+    // }
+
+    // Edit Business Unit
+    const handleEditBusinessUnitView = (state) => {
         setShow(true)
-        setRoleId(state.target.id)
+        setBusinessUnitId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getRoleDetails(state.target.id))
+        dispatch(getBusinessUnitDetails(state.target.id))
     }
 
-    // Role Access 
+    // Business Unit Modal
     const handleRoleAccessView = (state) => {
         handleRoleAccessShow()
-        setRoleId(state.target.id)
+        setBusinessUnitId(state.target.id)
         setMode('Edit')
-        // Call API Here...
     }
 
     // Delete Role
@@ -188,23 +198,18 @@ const BusinessUnitScreen = () => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                            <button className="btn btn-link" id={row.bu_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditRoleView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUserPen} /> Edit Role
+                                    <Link className="dropdown-item" onClick={handleEditBusinessUnitView} id={row.bu_id}>
+                                        <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Business Unit
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faTrash} /> Delete Role
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.role_id}>
-                                        <FontAwesomeIcon icon={faUserLock} /> Role Access Privilege
+                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.bu_id}>
+                                        <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Business Unit
                                     </Link>
                                 </li>
                             </ul>
@@ -292,22 +297,30 @@ const BusinessUnitScreen = () => {
                         pointerOnHover
                         selectableRowsHighlight
                     />
+                    
+                    <EditBusinessUnitModal 
+                        show={show} 
+                        onHide={handleClose} 
+                        buid={businessUnitId}
+                        businessUnitDetails={businessUnitDetail}
+                        mode={mode}
+                    />
 
-                    <EditRoleModal 
+                    {/* <EditRoleModal 
                         show={show} 
                         onHide={handleClose} 
                         roleid={roleid}
                         roleDetails={roleDetail}
                         mode={mode}
-                    />
+                    /> */}
 
-                    <RoleAccessModal 
+                    {/* <RoleAccessModal 
                         show={showRoleAccess} 
                         onHide={handleRoleAccessClose} 
                         roleid={roleid}
                         categories={categories}
                         subcategories={subcategories}
-                    />
+                    /> */}
 
                     <ToastContainer
                         position="top-right"
@@ -321,7 +334,6 @@ const BusinessUnitScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
-
                 <Footer />
             </FormContainer>
         </>
