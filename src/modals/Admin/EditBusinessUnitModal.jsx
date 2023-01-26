@@ -7,11 +7,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { 
-  listRoles,
-  updateRole,
-  createRole,
- } from '../../actions/roleActions'
 
 import { 
   createBusinessUnit,
@@ -28,13 +23,13 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
   const businessUnitDetail = useSelector(state => state.businessUnitDetails)
   const { loading:businessUnitLoading } = businessUnitDetail
   
-  // Role Create Success Message
-  const roleCreate = useSelector(state => state.roleCreate)
-  const { success:roleCreateSuccess, message:roleCreateMessage } = roleCreate
+  // Busines Unit Create Success Message
+  const businessUnitCreate = useSelector(state => state.businessUnitCreate)
+  const { success:businessUnitCreateSuccess, message:businessUnitCreateMessage } = businessUnitCreate
 
-  // Role Update Success Message
-  const roleUpdate = useSelector(state => state.roleUpdate)
-  const { success:roleUpdateSuccess, message:roleUpdateMessage } = roleUpdate
+  // Business Unit Update Success Message
+  const businessUnitUpdate = useSelector(state => state.businessUnitUpdate)
+  const { success:businessUnitUpdateSuccess, message:businessUnitUpdateMessage } = businessUnitUpdate
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -82,18 +77,18 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(roleCreateSuccess) {
+    if(businessUnitCreateSuccess) {
       Swal.fire(
         'Success!',
-        roleCreateMessage,
+        businessUnitCreateMessage,
         'success'
       )
     }
     // Show Success Update
-    if(roleUpdateSuccess) {
+    if(businessUnitUpdateSuccess) {
       Swal.fire(
         'Success!',
-        roleUpdateMessage,
+        businessUnitUpdateMessage,
         'success'
       )
     }
@@ -101,7 +96,7 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
     dispatch(listBusinessUnit())
     // Close Modal
     onHide()
-  },[roleCreateSuccess, roleUpdateSuccess])
+  },[businessUnitCreateSuccess, businessUnitUpdateSuccess])
 
   // 
   useEffect(() => {
@@ -119,17 +114,17 @@ const EditBusinessUnitModal = ({ show , mode, onHide, buid, businessUnitDetails 
         </Modal.Header>
         <Modal.Body>
             { businessUnitLoading ? <Loader /> : 
-            <>
+              <>
                 <Form.Group className="mb-3">
                     <Form.Label>Business Unit</Form.Label>
                     <Form.Control 
-                    type='text'
-                    placeholder='Business Unit'
-                    value={businessUnit}
-                    onChange={(e) => setBusinessUnit(e.target.value)}
+                      type='text'
+                      placeholder='Business Unit'
+                      value={businessUnit}
+                      onChange={(e) => setBusinessUnit(e.target.value)}
                     />
                 </Form.Group>
-            </>
+              </>
             }
         </Modal.Body>
         <Modal.Footer>

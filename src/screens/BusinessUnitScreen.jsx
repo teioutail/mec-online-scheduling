@@ -10,41 +10,21 @@ import Loader from '../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
-    // listRoles,
-    getRoleDetails,
-    deleteRole,
-} from '../actions/roleActions'
-
-import { 
     listBusinessUnit,
     getBusinessUnitDetails,
+    deleteBusinessUnit,
 } from '../actions/businessUnitActions'
 
-import { 
-    faPlus,
-    faEllipsisV,
-    faTrash,
-    faUserPen,
-    faUserLock,
-} from '@fortawesome/free-solid-svg-icons'
-
-import { 
-    ROLE_DETAILS_RESET,
-    ROLE_CREATE_RESET,
-    ROLE_UPDATE_RESET,
- } from '../constants/roleConstants'
-
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditRoleModal from '../modals/Role/EditRoleModal'
-import RoleAccessModal from '../modals/Role/RoleAccessModal'
 import EditBusinessUnitModal from '../modals/Admin/EditBusinessUnitModal'
-
-import { listMenuCategories } from '../actions/menuCategoryActions'
-import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BUSINESS_UNIT_DETAILS_RESET } from '../constants/businessUnitConstants'
+import { 
+    BUSINESS_UNIT_CREATE_RESET,
+    BUSINESS_UNIT_UPDATE_RESET,
+    BUSINESS_UNIT_DETAILS_RESET,
+} from '../constants/businessUnitConstants'
 
 const BusinessUnitScreen = () => {
     // Toastify
@@ -73,13 +53,13 @@ const BusinessUnitScreen = () => {
     const businessUnitList = useSelector(state => state.businessUnitList)
     const { loading, business } = businessUnitList
     
-    // Role Create Error
-    const roleCreate = useSelector(state => state.roleCreate)
-    const { error:errorCreate } = roleCreate
+    // Business Unit Create Error
+    const businessUnitCreate = useSelector(state => state.businessUnitCreate)
+    const { error:errorCreate } = businessUnitCreate
   
-    // Role Update Error
-    const roleUpdate = useSelector(state => state.roleUpdate)
-    const { error:errorUpdate } = roleUpdate
+    // Business Unit Update Error
+    const businessUnitUpdate = useSelector(state => state.businessUnitUpdate)
+    const { error:errorUpdate } = businessUnitUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -89,25 +69,11 @@ const BusinessUnitScreen = () => {
     const businessUnitDetails = useSelector(state => state.businessUnitDetails)
     const { business: businessUnitDetail } = businessUnitDetails
 
-    // Menu Category List
-    const menuCategoryList = useSelector(state => state.menuCategoryList)
-    const { categories } = menuCategoryList
-
-    // Sub-Menu Category List
-    const submenuCategoryList = useSelector(state => state.submenuCategoryList)
-    const { subcategories } = submenuCategoryList
-
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
-
-    // EditRoleModal
+    // Edit Business Unit Modal
     const [show, setShow] = useState(false)
-    // 
-    const [showRoleAccess, setShowRoleAccess] = useState()
-    // Role Access View Modal
-    const handleRoleAccessClose = () => setShowRoleAccess(false)
-    const handleRoleAccessShow = () => setShowRoleAccess(true)
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -116,8 +82,8 @@ const BusinessUnitScreen = () => {
     const [businessUnitId, setBusinessUnitId] = useState('')
     const [mode, setMode] = useState('')
 
-    // Add User Modal
-    const handlebusinessUnitView = (state) => {
+    // Add Business Unit Modal
+    const handleBusinessUnitView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
@@ -138,10 +104,10 @@ const BusinessUnitScreen = () => {
     }
 
     // Delete Business Unit Modal
-    const handleDeleteRole = (state) => {
+    const handleDeleteBusinessUnit = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this role?',
+            title: 'Delete this Business Unit?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -151,14 +117,14 @@ const BusinessUnitScreen = () => {
         }).then((result) => {
             //
             if (result.isConfirmed) {
-                // Delete Role
-                dispatch(deleteRole(state.target.id))
+                // Delete Business Unit
+                dispatch(deleteBusinessUnit(state.target.id))
                 // Refresh Datatable
                 dispatch(listBusinessUnit())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Role Successfully Deleted.',
+                    'Business Unit Successfully Deleted.',
                     'success'
                 )
             }
@@ -193,7 +159,7 @@ const BusinessUnitScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteRole} id={row.bu_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteBusinessUnit} id={row.bu_id}>
                                         <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Business Unit
                                     </Link>
                                 </li>
@@ -222,8 +188,9 @@ const BusinessUnitScreen = () => {
                 }
             }
             //
-            dispatch({ type: ROLE_CREATE_RESET })
+            dispatch({ type: BUSINESS_UNIT_CREATE_RESET })
         }
+        
         // Show Update Error
         if(errorUpdate) {
             // Loop Error Back-End Validation
@@ -233,7 +200,7 @@ const BusinessUnitScreen = () => {
                     notify(`${errorUpdate[key]}`)
                 }
             }
-            dispatch({ type: ROLE_UPDATE_RESET })
+            dispatch({ type: BUSINESS_UNIT_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 
@@ -243,7 +210,6 @@ const BusinessUnitScreen = () => {
         setPending(loading)
     }, [business, rows, loading])
 
-
     //
     useEffect(() => {
         // Check if user is admin else, redirect user
@@ -251,8 +217,6 @@ const BusinessUnitScreen = () => {
             // Business Unit List
             dispatch(listBusinessUnit())
 
-            dispatch(listMenuCategories())
-            dispatch(listSubMenuCategories())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -264,7 +228,7 @@ const BusinessUnitScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handlebusinessUnitView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleBusinessUnitView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

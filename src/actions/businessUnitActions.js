@@ -3,6 +3,9 @@ import {
     BUSINESS_UNIT_CREATE_FAIL,
     BUSINESS_UNIT_CREATE_REQUEST,
     BUSINESS_UNIT_CREATE_SUCCESS,
+    BUSINESS_UNIT_DELETE_FAIL,
+    BUSINESS_UNIT_DELETE_REQUEST,
+    BUSINESS_UNIT_DELETE_SUCCESS,
     BUSINESS_UNIT_DETAILS_FAIL,
     BUSINESS_UNIT_DETAILS_REQUEST,
     BUSINESS_UNIT_DETAILS_RESET,
@@ -193,6 +196,43 @@ export const listBusinessUnitOption = () => async (dispatch, getState) => {
         dispatch({
             type: BUSINESS_UNIT_LIST_OPTION_FAIL,
             payload: error.response.data.errors,
+        })
+    }
+}
+
+
+// DELETE BUSINESS UNIT
+export const deleteBusinessUnit = (id) => async(dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: BUSINESS_UNIT_DELETE_REQUEST,
+        })
+        
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+
+        // Call API Request
+        await axios.delete(`/auth/business-unit/${id}`, config)
+
+        // console.warn(data)
+        dispatch({
+            type: BUSINESS_UNIT_DELETE_SUCCESS,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: BUSINESS_UNIT_DELETE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
         })
     }
 }

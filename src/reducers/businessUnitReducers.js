@@ -3,6 +3,9 @@ import {
     BUSINESS_UNIT_CREATE_REQUEST,
     BUSINESS_UNIT_CREATE_RESET,
     BUSINESS_UNIT_CREATE_SUCCESS,
+    BUSINESS_UNIT_DELETE_FAIL,
+    BUSINESS_UNIT_DELETE_REQUEST,
+    BUSINESS_UNIT_DELETE_SUCCESS,
     BUSINESS_UNIT_DETAILS_FAIL,
     BUSINESS_UNIT_DETAILS_REQUEST,
     BUSINESS_UNIT_DETAILS_RESET,
@@ -100,6 +103,20 @@ export const businessUnitUpdateReducer = (state = { business: {} }, action) => {
             return {
                 business: {}
             }
+        default:
+            return state
+    }
+}
+
+// DELETE BUSINESS UNIT REDUCER
+export const businessUnitDeleteReducer = (state = {}, action) => {
+    switch(action.type) {
+        case BUSINESS_UNIT_DELETE_REQUEST:
+            return { loading: true }
+        case BUSINESS_UNIT_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case BUSINESS_UNIT_DELETE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }
