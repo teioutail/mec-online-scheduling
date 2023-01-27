@@ -3,6 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap'
 import EmployeeListOption from './EmployeeListOption'
 
 const NewScheduleRequest = () => {
+  // 
   return (
     <>
         <Row>
@@ -60,15 +61,17 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Related To</Form.Label>
                 <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
+                    size='sm'
+                    as='select' 
+                    aria-label="Status"
                     // value={scheduleType}
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
+                <option value="New-Schedule">Maintenance</option>
+                <option value="Training-Schedule">Documentation</option>
+                <option value="Training-Schedule">Meeting</option>
+                <option value="Training-Schedule">On-Call</option>
                 </Form.Control>
                 </Form.Group>
             </Col>
@@ -120,8 +123,8 @@ const NewScheduleRequest = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
                 </Form.Control>
                 </Form.Group>
             </Col>
@@ -150,7 +153,6 @@ const NewScheduleRequest = () => {
         <EmployeeListOption 
 
         />
-
     </>
   )
 }
