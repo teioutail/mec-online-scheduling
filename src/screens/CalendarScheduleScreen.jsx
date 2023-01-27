@@ -26,7 +26,7 @@ import {
 } from '../constants/Sales/salesScheduleReference'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditScheduleModal from '../modals/Sales/EditScheduleModal'
+import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -313,7 +313,7 @@ const CalendarScheduleScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <EditScheduleModal 
+                    <EditCalendarScheduleModal 
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
