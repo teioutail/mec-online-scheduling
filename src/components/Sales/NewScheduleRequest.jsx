@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
+import EmployeeListOption from './EmployeeListOption'
 
 const NewScheduleRequest = () => {
   return (
@@ -48,8 +49,8 @@ const NewScheduleRequest = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
+                <option value="On-Site">On-Site</option>
+                <option value="In-House">In-House</option>
                 </Form.Control>
                 </Form.Group>
             </Col>
@@ -82,8 +83,11 @@ const NewScheduleRequest = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
+                <option value="Partner">Partner</option>
+                <option value="End-user">End-user</option>
+                <option value="MEC Office">MEC Office</option>
+                <option value="Others">Others</option>
+                {/* if others text field will show */}
                 </Form.Control>
                 </Form.Group>
             </Col>
@@ -142,6 +146,11 @@ const NewScheduleRequest = () => {
                 </Form.Group>
             </Col>
         </Row>
+
+        <EmployeeListOption 
+
+        />
+
     </>
   )
 }
