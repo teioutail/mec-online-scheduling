@@ -81,13 +81,13 @@ const TrainingSchedule = () => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Activity Related To</Form.Label>
+                <Form.Label></Form.Label>
                 <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
+                  size='sm'
+                  as='select' 
+                  aria-label="Status"
+                  // value={scheduleType}
+                  // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
                 <option value="New-Schedule">New Schedule Request</option>

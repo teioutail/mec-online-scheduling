@@ -8,7 +8,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
 
-import { Button } from 'react-bootstrap'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
+
+
+import { Button, Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   listScheduleReference,
@@ -41,7 +47,9 @@ const CalendarScheduleScreen = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-    });   
+    });
+    //
+    const localizer = momentLocalizer(moment)
     // CommonJS
     const Swal = require('sweetalert2')
     //
@@ -298,7 +306,7 @@ const CalendarScheduleScreen = () => {
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
-                    <DataTable
+                    {/* <DataTable
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
@@ -311,6 +319,13 @@ const CalendarScheduleScreen = () => {
                         highlightOnHover
                         pointerOnHover
                         selectableRowsHighlight
+                    /> */}
+
+                    <Calendar
+                        localizer={localizer}
+                        startAccessor="start"
+                        endAccessor="end"
+                        style={{ height: 500 , marginTop: '50px'}}
                     />
 
                     <EditCalendarScheduleModal 
