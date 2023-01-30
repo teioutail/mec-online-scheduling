@@ -64,6 +64,9 @@ import {
     businessUnitListReducer,
     businessUnitUpdateReducer,
 } from './reducers/businessUnitReducers'
+import { 
+    activityRelatedToListReducer,
+} from './reducers/Admin/activityRelatedToReducers'
 
 // Reducers
 const reducer = combineReducers({
@@ -106,6 +109,7 @@ const reducer = combineReducers({
     businessUnitCreate: businessUnitCreateReducer,
     businessUnitUpdate: businessUnitUpdateReducer,
     businessUnitDelete: businessUnitDeleteReducer,
+    activityRelatedToList: activityRelatedToListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

@@ -37,6 +37,7 @@ const NewScheduleRequest = () => {
                     <Form.Label>Reference Id</Form.Label>
                     <Form.Control
                     as='select' 
+                    size='sm'
                     aria-label="Reference Id"
                     // value={categoryid}
                     onChange={(e) => setReferenceId(e.target.value)}
