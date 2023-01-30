@@ -17,11 +17,13 @@ import {
 
 import { 
     listActivityRelatedTo,
+    deleteActivityRelatedTo,
+    getActivityRelatedToDetails,
 } from '../../actions/Admin/activityRelatedToActions'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditBusinessUnitModal from '../../modals/Admin/EditBusinessUnitModal'
-
+// import EditBusinessUnitModal from '../../modals/Admin/EditBusinessUnitModal'
+import EditActivityRelatedToModal from '../../modals/Admin/EditActivityRelatedToModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -69,9 +71,9 @@ const ActivityRelatedToScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Business Unit Info
-    const businessUnitDetails = useSelector(state => state.businessUnitDetails)
-    const { business: businessUnitDetail } = businessUnitDetails
+    // Activity Related Info
+    const activityRelatedToDetails = useSelector(state => state.activityRelatedToDetails)
+    const { activity: activityRelatedToDetail } = activityRelatedToDetails
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -83,7 +85,8 @@ const ActivityRelatedToScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [businessUnitId, setBusinessUnitId] = useState('')
+    // const [businessUnitId, setBusinessUnitId] = useState('')
+    const [activityRelatedId, setActivityRelatedId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add Business Unit Modal
@@ -101,17 +104,18 @@ const ActivityRelatedToScreen = () => {
     // Edit Business Unit
     const handleEditBusinessUnitView = (state) => {
         setShow(true)
-        setBusinessUnitId(state.target.id)
+        setActivityRelatedId(state.target.id)
+        // setBusinessUnitId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getBusinessUnitDetails(state.target.id))
+        dispatch(getActivityRelatedToDetails(state.target.id))
     }
 
-    // Delete Business Unit Modal
-    const handleDeleteBusinessUnit = (state) => {
+    // Delete Activity Related To Modal
+    const handleDeleteActivityRelatedTo = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this Business Unit?',
+            title: 'Delete this Activity Relate To?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -121,14 +125,14 @@ const ActivityRelatedToScreen = () => {
         }).then((result) => {
             //
             if (result.isConfirmed) {
-                // Delete Business Unit
-                dispatch(deleteBusinessUnit(state.target.id))
+                // Delete Activity Related To
+                dispatch(deleteActivityRelatedTo(state.target.id))
                 // Refresh Datatable
-                dispatch(listBusinessUnit())
+                dispatch(listActivityRelatedTo())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Business Unit Successfully Deleted.',
+                    'Activity Related To Successfully Deleted.',
                     'success'
                 )
             }
@@ -163,7 +167,7 @@ const ActivityRelatedToScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteBusinessUnit} id={row.artt_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteActivityRelatedTo} id={row.artt_id}>
                                         <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Activity Related
                                     </Link>
                                 </li>
@@ -250,11 +254,11 @@ const ActivityRelatedToScreen = () => {
                         selectableRowsHighlight
                     />
                     
-                    <EditBusinessUnitModal 
+                    <EditActivityRelatedToModal 
                         show={show} 
                         onHide={handleClose} 
-                        buid={businessUnitId}
-                        businessUnitDetails={businessUnitDetail}
+                        attrid={activityRelatedId}
+                        activityRelatedToDetails={activityRelatedToDetail}
                         mode={mode}
                     />
 

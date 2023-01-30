@@ -56,7 +56,7 @@ export const listBusinessUnit = () => async (dispatch, getState) => {
     }
 }
 
-// Get Role Details Action
+// Get Business Unit Details Action
 export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
     // 
     try {
@@ -199,7 +199,6 @@ export const listBusinessUnitOption = () => async (dispatch, getState) => {
         })
     }
 }
-
 
 // DELETE BUSINESS UNIT
 export const deleteBusinessUnit = (id) => async(dispatch, getState) => {
