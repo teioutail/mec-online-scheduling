@@ -22,7 +22,7 @@ import {
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
   SCHEDULE_REFERENCE_UPDATE_RESET,
-} from '../../constants/Sales/salesScheduleReference'
+} from '../../constants/Sales/salesScheduleReferenceConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditScheduleModal from '../../modals/Sales/EditScheduleModal'

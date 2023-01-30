@@ -228,7 +228,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
                 scheduleDetails={scheduleDetails}
               /> 
             }
-
             { scheduleType === 'Training-Schedule' && 
               <TrainingSchedule 
                 ref={postSalesInputRef}

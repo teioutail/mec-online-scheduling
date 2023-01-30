@@ -20,6 +20,7 @@ import {
   listScheduleReference,
   getScheduleReferenceDetails,
   deleteScheduleReference,
+  listScheduleReferenceId,
 } from '../actions/Sales/salesScheduleReferenceAction'
 
 import {  getUsersEmailList } from '../actions/userActions'
@@ -29,7 +30,7 @@ import {
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
   SCHEDULE_REFERENCE_UPDATE_RESET,
-} from '../constants/Sales/salesScheduleReference'
+} from '../constants/Sales/salesScheduleReferenceConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
@@ -58,10 +59,6 @@ const CalendarScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-
-    // Schedule List
-    const scheduleReferenceList = useSelector(state => state.scheduleReferenceList)
-    const { loading , schedules } = scheduleReferenceList
     
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
@@ -149,7 +146,7 @@ const CalendarScheduleScreen = () => {
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Schedule Successfully Deleted.', 
+                    'Schedule Successfully Deleted.',
                     'success'
                 )
             }
@@ -276,17 +273,18 @@ const CalendarScheduleScreen = () => {
     }, [errorCreate, errorUpdate])
 
     // Set Row Value
-    useEffect(() => {
-        setRows(schedules)
-        setPending(loading)
-    }, [schedules, rows, loading])
+    // useEffect(() => {
+    //     setRows(schedules)
+    //     setPending(loading)
+    // }, [schedules, rows, loading])
 
     //
     useEffect(() => {
         // Check if user is sales else, redirect user
         if(userInfo && userInfo.user.user_type === 1) {
-            //
-            dispatch(listScheduleReference())
+            // Get List User Reference Id
+            dispatch(listScheduleReferenceId())
+
             // Get User Email List
             dispatch(getUsersEmailList())
             // Get Business Unit

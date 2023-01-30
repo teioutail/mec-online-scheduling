@@ -50,6 +50,7 @@ import {
     scheduleReferenceCreateReducer,
     scheduleReferenceDeleteReducer,
     scheduleReferenceDetailsReducer,
+    scheduleReferenceListIdReducer,
     scheduleReferenceListReducer,
     scheduleReferenceUpdateReducer,
 } from './reducers/Sales/salesScheduleReferenceReducer'
@@ -98,6 +99,7 @@ const reducer = combineReducers({
     scheduleReferenceDetails: scheduleReferenceDetailsReducer,
     scheduleReferenceUpdate: scheduleReferenceUpdateReducer,
     scheduleReferenceDelete:scheduleReferenceDeleteReducer,
+    scheduleReferenceIdList: scheduleReferenceListIdReducer,
     businessUnitList: businessUnitListReducer,
     businessUnitDetails: businessUnitDetailsReducer,
     businessUnitListOption: businessUnitListOptionReducer,

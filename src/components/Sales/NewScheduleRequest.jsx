@@ -1,8 +1,17 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 
 const NewScheduleRequest = () => {
+  // useState
+  const [referenceId, setReferenceId] = useState([])
+
+  // Schedule Reference Id List
+  const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
+  const { loading , referenceid } = scheduleReferenceIdList
+  
   // 
   return (
     <>
@@ -25,20 +34,25 @@ const NewScheduleRequest = () => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Reference ID</Form.Label>
-                <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
-                >
-                <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
-                </Form.Control>
+                    <Form.Label>Reference Id</Form.Label>
+                    <Form.Control
+                    as='select' 
+                    aria-label="Reference Id"
+                    // value={categoryid}
+                    onChange={(e) => setReferenceId(e.target.value)}
+                    >
+                    <option value="">- Select -</option>
+                    {
+                        referenceid.length > 0  && (
+                            referenceid.map((row, key) => (
+                                <option key={key} value={ row.ar_id }>{ row.reference_id }</option>
+                            ))
+                        )
+                    }
+                    </Form.Control>
                 </Form.Group>
             </Col>
+            
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Type</Form.Label>

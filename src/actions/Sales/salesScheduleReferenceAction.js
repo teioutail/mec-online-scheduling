@@ -11,12 +11,15 @@ import {
     SCHEDULE_REFERENCE_DETAILS_RESET,
     SCHEDULE_REFERENCE_DETAILS_SUCCESS,
     SCHEDULE_REFERENCE_LIST_FAIL, 
+    SCHEDULE_REFERENCE_LIST_ID_FAIL, 
+    SCHEDULE_REFERENCE_LIST_ID_REQUEST, 
+    SCHEDULE_REFERENCE_LIST_ID_SUCCESS, 
     SCHEDULE_REFERENCE_LIST_REQUEST, 
     SCHEDULE_REFERENCE_LIST_SUCCESS, 
     SCHEDULE_REFERENCE_UPDATE_FAIL, 
     SCHEDULE_REFERENCE_UPDATE_REQUEST,
     SCHEDULE_REFERENCE_UPDATE_SUCCESS
-} from '../../constants/Sales/salesScheduleReference'
+} from '../../constants/Sales/salesScheduleReferenceConstants'
 
 // Schedule Reference
 
@@ -186,6 +189,41 @@ export const deleteScheduleReference = (id) => async (dispatch, getState) => {
         dispatch({
             type: SCHEDULE_REFERENCE_DELETE_FAIL,
             payload: error.response.data.errors,
+        })
+    }
+}
+
+// View List of Schedule Reference Id for Calendar Schedule
+export const listScheduleReferenceId = () => async (dispatch, getState) => {
+    //
+    try {
+
+        dispatch({
+            type: SCHEDULE_REFERENCE_LIST_ID_REQUEST,
+        })
+
+        const { userLogin : { userInfo }} = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        
+        // Call API Request
+        const { data } = await axios.get(`/auth/reference-id-list`, config)
+
+        dispatch({
+            type: SCHEDULE_REFERENCE_LIST_ID_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        //
+        dispatch({
+            type: SCHEDULE_REFERENCE_LIST_ID_FAIL,
+            payload: error.response.data.errors
         })
     }
 }

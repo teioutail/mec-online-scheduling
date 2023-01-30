@@ -11,6 +11,10 @@ import {
     SCHEDULE_REFERENCE_DETAILS_RESET, 
     SCHEDULE_REFERENCE_DETAILS_SUCCESS, 
     SCHEDULE_REFERENCE_LIST_FAIL, 
+    SCHEDULE_REFERENCE_LIST_ID_FAIL, 
+    SCHEDULE_REFERENCE_LIST_ID_REQUEST, 
+    SCHEDULE_REFERENCE_LIST_ID_RESET, 
+    SCHEDULE_REFERENCE_LIST_ID_SUCCESS, 
     SCHEDULE_REFERENCE_LIST_REQUEST, 
     SCHEDULE_REFERENCE_LIST_RESET, 
     SCHEDULE_REFERENCE_LIST_SUCCESS, 
@@ -18,7 +22,7 @@ import {
     SCHEDULE_REFERENCE_UPDATE_REQUEST,
     SCHEDULE_REFERENCE_UPDATE_RESET,
     SCHEDULE_REFERENCE_UPDATE_SUCCESS
-} from "../../constants/Sales/salesScheduleReference"
+} from "../../constants/Sales/salesScheduleReferenceConstants"
 
 // SCHEDULE REFERENCE REDUCER
 export const scheduleReferenceListReducer = (state = { schedules: [] }, action ) => {
@@ -98,6 +102,23 @@ export const scheduleReferenceDeleteReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case SCHEDULE_REFERENCE_DELETE_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+// SCHEDULE REFERENCE LIST ID REDUCER
+export const scheduleReferenceListIdReducer = (state = { referenceid: [] }, action ) => {
+    //
+    switch(action.type) {
+        case SCHEDULE_REFERENCE_LIST_ID_REQUEST:
+            return { loading: true }
+        case SCHEDULE_REFERENCE_LIST_ID_SUCCESS:
+            return { loading: false, referenceid: action.payload }
+        case SCHEDULE_REFERENCE_LIST_ID_FAIL:
+            return { loading: false, error: action.payload }
+        case SCHEDULE_REFERENCE_LIST_ID_RESET:
+            return { referenceid: [] }
         default:
             return state
     }
