@@ -11,6 +11,9 @@ import {
     ACTIVITY_RELATED_DETAILS_RESET,
     ACTIVITY_RELATED_DETAILS_SUCCESS,
     ACTIVITY_RELATED_LIST_FAIL, 
+    ACTIVITY_RELATED_LIST_OPTION_FAIL, 
+    ACTIVITY_RELATED_LIST_OPTION_REQUEST, 
+    ACTIVITY_RELATED_LIST_OPTION_SUCCESS, 
     ACTIVITY_RELATED_LIST_REQUEST, 
     ACTIVITY_RELATED_LIST_SUCCESS,
     ACTIVITY_RELATED_UPDATE_FAIL,
@@ -106,7 +109,6 @@ export const deleteActivityRelatedTo = (id) => async(dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             },
         }
-
         // Call API Request
         await axios.delete(`/auth/activity-related/${id}`, config)
 
@@ -194,6 +196,39 @@ export const updateActivityRelatedTo = (activity) => async (dispatch, getState) 
         //
         dispatch({
             type: ACTIVITY_RELATED_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// View List of Activity Related To
+export const listActivityRelatedToOption = () => async (dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: ACTIVITY_RELATED_LIST_OPTION_REQUEST,
+        })
+
+        const { userLogin : { userInfo }} = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        // Call API Request
+        const { data } = await axios.get(`/auth/activity-related-option`, config)
+        
+        dispatch({
+            type: ACTIVITY_RELATED_LIST_OPTION_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: ACTIVITY_RELATED_LIST_OPTION_FAIL,
             payload: error.response.data.errors,
         })
     }

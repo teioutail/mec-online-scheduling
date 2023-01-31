@@ -3,11 +3,18 @@ import {
     ACTIVITY_RELATED_CREATE_REQUEST,
     ACTIVITY_RELATED_CREATE_RESET,
     ACTIVITY_RELATED_CREATE_SUCCESS,
+    ACTIVITY_RELATED_DELETE_FAIL,
+    ACTIVITY_RELATED_DELETE_REQUEST,
+    ACTIVITY_RELATED_DELETE_SUCCESS,
     ACTIVITY_RELATED_DETAILS_FAIL,
     ACTIVITY_RELATED_DETAILS_REQUEST,
     ACTIVITY_RELATED_DETAILS_RESET,
     ACTIVITY_RELATED_DETAILS_SUCCESS,
     ACTIVITY_RELATED_LIST_FAIL, 
+    ACTIVITY_RELATED_LIST_OPTION_FAIL, 
+    ACTIVITY_RELATED_LIST_OPTION_REQUEST, 
+    ACTIVITY_RELATED_LIST_OPTION_RESET, 
+    ACTIVITY_RELATED_LIST_OPTION_SUCCESS, 
     ACTIVITY_RELATED_LIST_REQUEST,
     ACTIVITY_RELATED_LIST_RESET, 
     ACTIVITY_RELATED_LIST_SUCCESS,
@@ -80,6 +87,37 @@ export const activityRelatedToUpdateReducer = (state = { activity: {} }, action)
             return {
                 activity: {}
             }
+        default:
+            return state
+    }
+}
+
+// DELETE ACTIVITY RELATED REDUCER
+export const activityRelatedToDeleteReducer = (state = {}, action) => {
+    switch(action.type) {
+        case ACTIVITY_RELATED_DELETE_REQUEST:
+            return { loading: true }
+        case ACTIVITY_RELATED_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case ACTIVITY_RELATED_DELETE_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+// ACTIVITY RELATED TO OPTION REDUCER
+export const activityRelatedToListOptionReducer = (state = { activity: [] }, action ) => {
+    //
+    switch(action.type) {
+        case ACTIVITY_RELATED_LIST_OPTION_REQUEST:
+            return { loading: true }
+        case ACTIVITY_RELATED_LIST_OPTION_SUCCESS:
+            return { loading: false, activity: action.payload }
+        case ACTIVITY_RELATED_LIST_OPTION_FAIL:
+            return { loading: false, error: action.payload }
+        case ACTIVITY_RELATED_LIST_OPTION_RESET:
+            return { activity: [] }
         default:
             return state
     }

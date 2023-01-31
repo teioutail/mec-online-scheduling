@@ -7,13 +7,10 @@ import Loader from '../components/Loader'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
-
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-
-
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
@@ -22,20 +19,18 @@ import {
   deleteScheduleReference,
   listScheduleReferenceId,
 } from '../actions/Sales/salesScheduleReferenceAction'
-
 import {  getUsersEmailList } from '../actions/userActions'
 import { listBusinessUnitOption } from '../actions/businessUnitActions'
-
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
   SCHEDULE_REFERENCE_UPDATE_RESET,
 } from '../constants/Sales/salesScheduleReferenceConstants'
-
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
 
 const CalendarScheduleScreen = () => {
     // Toastify
@@ -284,7 +279,8 @@ const CalendarScheduleScreen = () => {
         if(userInfo && userInfo.user.user_type === 1) {
             // Get List User Reference Id
             dispatch(listScheduleReferenceId())
-
+            // Get List Activity Related To Option
+            dispatch(listActivityRelatedToOption())
             // Get User Email List
             dispatch(getUsersEmailList())
             // Get Business Unit

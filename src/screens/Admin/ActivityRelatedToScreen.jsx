@@ -9,7 +9,6 @@ import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { 
     listActivityRelatedTo,
     deleteActivityRelatedTo,
@@ -21,14 +20,9 @@ import EditActivityRelatedToModal from '../../modals/Admin/EditActivityRelatedTo
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
-    BUSINESS_UNIT_CREATE_RESET,
-    BUSINESS_UNIT_UPDATE_RESET,
-    BUSINESS_UNIT_DETAILS_RESET,
-} from '../../constants/businessUnitConstants'
-
-import { 
     ACTIVITY_RELATED_CREATE_RESET, 
-    ACTIVITY_RELATED_DETAILS_RESET 
+    ACTIVITY_RELATED_DETAILS_RESET,
+    ACTIVITY_RELATED_UPDATE_RESET,
 } from '../../constants/Admin/activityRelatedToConstants'
 
 const ActivityRelatedToScreen = () => {
@@ -62,9 +56,9 @@ const ActivityRelatedToScreen = () => {
     const activityRelatedToCreate = useSelector(state => state.activityRelatedToCreate)
     const { error:errorCreate } = activityRelatedToCreate
   
-    // Business Unit Update Error
-    const businessUnitUpdate = useSelector(state => state.businessUnitUpdate)
-    const { error:errorUpdate } = businessUnitUpdate
+    // Activity Related To Update Error
+    const activityRelatedToUpdate = useSelector(state => state.activityRelatedToUpdate)
+    const { error:errorUpdate } = activityRelatedToUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -77,14 +71,13 @@ const ActivityRelatedToScreen = () => {
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
-    // Edit Business Unit Modal
+    // Edit Activity Related To Modal
     const [show, setShow] = useState(false)
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     // Global ID
-    // const [businessUnitId, setBusinessUnitId] = useState('')
     const [activityRelatedId, setActivityRelatedId] = useState('')
     const [mode, setMode] = useState('')
 
@@ -104,7 +97,6 @@ const ActivityRelatedToScreen = () => {
     const handleEditActivityRelatedToView = (state) => {
         setShow(true)
         setActivityRelatedId(state.target.id)
-        // setBusinessUnitId(state.target.id)
         setMode('Edit')
         // Call API Here...
         dispatch(getActivityRelatedToDetails(state.target.id))
@@ -207,7 +199,7 @@ const ActivityRelatedToScreen = () => {
                     notify(`${errorUpdate[key]}`)
                 }
             }
-            dispatch({ type: BUSINESS_UNIT_UPDATE_RESET })
+            dispatch({ type: ACTIVITY_RELATED_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 

@@ -12,6 +12,10 @@ const NewScheduleRequest = () => {
   const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
   const { loading , referenceid } = scheduleReferenceIdList
   
+  // activityRelatedToListOption 
+  const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
+  const { activity:activityOption } = activityRelatedToListOption
+
   // 
   return (
     <>
@@ -53,7 +57,6 @@ const NewScheduleRequest = () => {
                     </Form.Control>
                 </Form.Group>
             </Col>
-            
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Type</Form.Label>
@@ -83,10 +86,13 @@ const NewScheduleRequest = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                <option value="New-Schedule">Maintenance</option>
-                <option value="Training-Schedule">Documentation</option>
-                <option value="Training-Schedule">Meeting</option>
-                <option value="Training-Schedule">On-Call</option>
+                {
+                    activityOption.length > 0  && (
+                        activityOption.map((row, key) => (
+                            <option key={key} value={ row.artt_id }>{ row.activity }</option>
+                        ))
+                    )
+                }
                 </Form.Control>
                 </Form.Group>
             </Col>
