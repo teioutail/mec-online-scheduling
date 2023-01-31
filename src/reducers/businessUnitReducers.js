@@ -20,6 +20,7 @@ import {
     BUSINESS_UNIT_LIST_SUCCESS,
     BUSINESS_UNIT_UPDATE_FAIL,
     BUSINESS_UNIT_UPDATE_REQUEST,
+    BUSINESS_UNIT_UPDATE_RESET,
     BUSINESS_UNIT_UPDATE_SUCCESS
 } from "../constants/businessUnitConstants"
 
@@ -83,7 +84,7 @@ export const businessUnitCreateReducer = (state = {}, action) => {
             return { loading: false, success: true, message: action.payload }
         case BUSINESS_UNIT_CREATE_FAIL:
             return { loading: false, error: action.payload }
-        case BUSINESS_UNIT_CREATE_FAIL:
+        case BUSINESS_UNIT_CREATE_RESET:
             return {}
         default:
             return state
@@ -99,7 +100,7 @@ export const businessUnitUpdateReducer = (state = { business: {} }, action) => {
             return { loading: false, success: true, message: action.payload }
         case BUSINESS_UNIT_UPDATE_FAIL:
             return { loading: false, error: action.payload }
-        case BUSINESS_UNIT_UPDATE_FAIL:
+        case BUSINESS_UNIT_UPDATE_RESET:
             return {
                 business: {}
             }

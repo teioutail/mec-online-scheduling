@@ -14,6 +14,12 @@ import {
   updateBusinessUnit,
 } from '../../actions/businessUnitActions'
 
+import { 
+    createActivityRelatedTo,
+    listActivityRelatedTo,
+    updateActivityRelatedTo,
+} from '../../actions/Admin/activityRelatedToActions'
+
 const EditActivityRelatedToModal = ({ show , mode, onHide, attrid, activityRelatedToDetails }) => {
   // Redux
   const dispatch = useDispatch()
@@ -26,13 +32,13 @@ const EditActivityRelatedToModal = ({ show , mode, onHide, attrid, activityRelat
   const activityRelatedToDetail = useSelector(state => state.activityRelatedToDetails)
   const { loading:activityRelatedToDetailsLoading } = activityRelatedToDetail
   
-  // Busines Unit Create Success Message
-  const businessUnitCreate = useSelector(state => state.businessUnitCreate)
-  const { success:businessUnitCreateSuccess, message:businessUnitCreateMessage } = businessUnitCreate
+  // Activity Related To Create Success Message
+  const activityRelatedToCreate = useSelector(state => state.activityRelatedToCreate)
+  const { success:activityRelatedToCreateSuccess, message:activityRelatedToCreateMessage } = activityRelatedToCreate
 
-  // Business Unit Update Success Message
-  const businessUnitUpdate = useSelector(state => state.businessUnitUpdate)
-  const { success:businessUnitUpdateSuccess, message:businessUnitUpdateMessage } = businessUnitUpdate
+  // Activity Related To Update Success Message
+  const activityRelatedToUpdate = useSelector(state => state.activityRelatedToUpdate)
+  const { success:activityRelatedToUpdateSuccess, message:activityRelatedToUpdateMessage } = activityRelatedToUpdate
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -70,10 +76,10 @@ const EditActivityRelatedToModal = ({ show , mode, onHide, attrid, activityRelat
         // 
         if(mode === 'Add') {
           // Create Activity Related To 
-          dispatch(createBusinessUnit(data))
+          dispatch(createActivityRelatedTo(data))
         } else {
           // Update Activity Related To 
-          dispatch(updateBusinessUnit(data))
+          dispatch(updateActivityRelatedTo(data))
         }
       }
     })
@@ -82,31 +88,31 @@ const EditActivityRelatedToModal = ({ show , mode, onHide, attrid, activityRelat
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(businessUnitCreateSuccess) {
+    if(activityRelatedToCreateSuccess) {
       Swal.fire(
         'Success!',
-        businessUnitCreateMessage,
+        activityRelatedToCreateMessage,
         'success'
       )
     }
     // Show Success Update
-    if(businessUnitUpdateSuccess) {
+    if(activityRelatedToUpdateSuccess) {
       Swal.fire(
         'Success!',
-        businessUnitUpdateMessage,
+        activityRelatedToUpdateMessage,
         'success'
       )
     }
     // Refresh Datatable
-    dispatch(listBusinessUnit())
+    dispatch(listActivityRelatedTo())
     // Close Modal
     onHide()
-  },[businessUnitCreateSuccess, businessUnitUpdateSuccess])
+  },[activityRelatedToCreateSuccess, activityRelatedToUpdateSuccess])
 
   // 
   useEffect(() => {
     // Selected Activity Related To Details
-    const { activity, related_team } = activityRelatedToDetails  
+    const { activity, related_team } = activityRelatedToDetails 
     // setState
     setActivityName(activity || "")
     setRelatedTeam(related_team || "")

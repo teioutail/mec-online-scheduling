@@ -9,11 +9,6 @@ import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-    listBusinessUnit,
-    getBusinessUnitDetails,
-    deleteBusinessUnit,
-} from '../../actions/businessUnitActions'
 
 import { 
     listActivityRelatedTo,
@@ -22,7 +17,6 @@ import {
 } from '../../actions/Admin/activityRelatedToActions'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-// import EditBusinessUnitModal from '../../modals/Admin/EditBusinessUnitModal'
 import EditActivityRelatedToModal from '../../modals/Admin/EditActivityRelatedToModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,6 +25,11 @@ import {
     BUSINESS_UNIT_UPDATE_RESET,
     BUSINESS_UNIT_DETAILS_RESET,
 } from '../../constants/businessUnitConstants'
+
+import { 
+    ACTIVITY_RELATED_CREATE_RESET, 
+    ACTIVITY_RELATED_DETAILS_RESET 
+} from '../../constants/Admin/activityRelatedToConstants'
 
 const ActivityRelatedToScreen = () => {
     // Toastify
@@ -59,9 +58,9 @@ const ActivityRelatedToScreen = () => {
     const activityRelatedToList = useSelector(state => state.activityRelatedToList)
     const { loading, activity } = activityRelatedToList
     
-    // Business Unit Create Error
-    const businessUnitCreate = useSelector(state => state.businessUnitCreate)
-    const { error:errorCreate } = businessUnitCreate
+    // Activity Related To Create Error
+    const activityRelatedToCreate = useSelector(state => state.activityRelatedToCreate)
+    const { error:errorCreate } = activityRelatedToCreate
   
     // Business Unit Update Error
     const businessUnitUpdate = useSelector(state => state.businessUnitUpdate)
@@ -89,20 +88,20 @@ const ActivityRelatedToScreen = () => {
     const [activityRelatedId, setActivityRelatedId] = useState('')
     const [mode, setMode] = useState('')
 
-    // Add Business Unit Modal
-    const handleBusinessUnitView = (state) => {
+    // Add Activity Related To Modal
+    const handleActivityRelatedToView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
         //
         dispatch({
-            type: BUSINESS_UNIT_DETAILS_RESET,
+            type: ACTIVITY_RELATED_DETAILS_RESET,
         })
     }
 
-    // Edit Business Unit
-    const handleEditBusinessUnitView = (state) => {
+    // Edit Activity Related To
+    const handleEditActivityRelatedToView = (state) => {
         setShow(true)
         setActivityRelatedId(state.target.id)
         // setBusinessUnitId(state.target.id)
@@ -115,7 +114,7 @@ const ActivityRelatedToScreen = () => {
     const handleDeleteActivityRelatedTo = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this Activity Relate To?',
+            title: 'Delete this Activity Relate To Record?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -162,7 +161,7 @@ const ActivityRelatedToScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditBusinessUnitView} id={row.artt_id}>
+                                    <Link className="dropdown-item" onClick={handleEditActivityRelatedToView} id={row.artt_id}>
                                         <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Activity Related
                                     </Link>
                                 </li>
@@ -196,7 +195,7 @@ const ActivityRelatedToScreen = () => {
                 }
             }
             //
-            dispatch({ type: BUSINESS_UNIT_CREATE_RESET })
+            dispatch({ type: ACTIVITY_RELATED_CREATE_RESET })
         }
         
         // Show Update Error
@@ -235,7 +234,7 @@ const ActivityRelatedToScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleBusinessUnitView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleActivityRelatedToView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 
