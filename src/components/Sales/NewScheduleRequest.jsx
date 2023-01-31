@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
@@ -7,16 +7,15 @@ import EmployeeListOption from './EmployeeListOption'
 const NewScheduleRequest = () => {
   // useState
   const [referenceId, setReferenceId] = useState([])
+  const [] = useState('')
 
   // Schedule Reference Id List
   const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
-  const { loading , referenceid } = scheduleReferenceIdList
-  
-  // activityRelatedToListOption 
+  const { referenceid } = scheduleReferenceIdList
+  //  
   const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
   const { activity:activityOption } = activityRelatedToListOption
-
-  // 
+  //
   return (
     <>
         <Row>
@@ -50,7 +49,7 @@ const NewScheduleRequest = () => {
                     {
                         referenceid.length > 0  && (
                             referenceid.map((row, key) => (
-                                <option key={key} value={ row.ar_id }>{ row.reference_id }</option>
+                                <option key={key} value={ row.ar_id }>{ row.reference_id } - {row.project_name}</option>
                             ))
                         )
                     }
