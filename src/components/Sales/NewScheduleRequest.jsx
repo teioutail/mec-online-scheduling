@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {forwardRef, useImperativeHandle, useRef} from "react";
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import moment from "moment/moment";
 
 const NewScheduleRequest = () => {
   // useState
@@ -12,6 +13,14 @@ const NewScheduleRequest = () => {
   const [relatedTeam, setRelatedTeam] = useState('')
   // React-Datepicker
   const [startDate, setStartDate] = useState(new Date());
+  // Custom Textfield 
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    <input 
+        // className="" 
+        onClick={onClick} ref={ref}
+        value={value}
+    />));
+
   // Schedule Reference Id List
   const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
   const { referenceid:refid } = scheduleReferenceIdList
@@ -163,8 +172,7 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Schedule</Form.Label>
                 <DatePicker
-                    className=""
-                    size="sm"
+                    customInput={<ExampleCustomInput />}
                     selected={startDate} 
                     onChange={(date) => setStartDate(date)} 
                 />
