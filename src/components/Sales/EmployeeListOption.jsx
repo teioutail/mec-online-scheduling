@@ -88,8 +88,9 @@ const EmployeeListOption = () => {
                   </Form.Control>
                 </td>
                 <td className="align-middle">
-                  <a href="#" className=" font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                    Edit
+                  <a className="btn btn-link text-danger text-gradient px-3 mb-0">
+                    {/* <i className="far fa-trash-alt me-2"></i>Delete */}
+                    <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
                   </a>
                 </td>
               </tr>
