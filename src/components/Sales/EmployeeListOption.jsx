@@ -1,10 +1,26 @@
-import React from 'react'
+import React,{ useState, forwardRef } from 'react'
 import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const EmployeeListOption = () => {
+  // useState
+  const [fromDate, setFromDate] = useState(new Date())
+  const [toDate, setToDate] = useState(new Date())
+
+  // Custom Textfield 
+  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
+    <Form.Control 
+        size='sm'
+        type='text'
+        placeholder='Activity Schedule'
+        value={value}
+        onClick={onClick} 
+        ref={ref}
+    />
+  ));
+
   //
   return (
     <>
@@ -13,7 +29,10 @@ const EmployeeListOption = () => {
           <Table className="table align-items-center mb-0">
             <thead>
               <tr>
-                <th className="text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
+                <th colspan="2" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
+                <th className="opacity-7"></th>
+              </tr>
+              <tr>
                 <th className="text-uppercase text-xs font-weight-bolder opacity-7">FROM</th>
                 <th className="text-uppercase text-xs font-weight-bolder opacity-7">TO</th>
                 <th className="text-center text-uppercase  text-xs font-weight-bolder opacity-7">EMPLOYEE</th>
@@ -24,25 +43,24 @@ const EmployeeListOption = () => {
             <tbody>
               <tr>
                 <td>
-                  <span className="text-xs font-weight-bold">23/04/18</span>
-                </td>
-                <td>
-                  <Form.Control 
-                    size='sm'
-                    type='text'
-                    placeholder='HH:MM'
-                    // value={projectName}
-                    // onChange={(e) => setProjectName(e.target.value)}
+                  <DatePicker
+                      customInput={<DatepickerCustomInput />}
+                      selected={fromDate} 
+                      onChange={(date) => setFromDate(date)} 
+                      timeInputLabel="Time:"
+                      dateFormat="MM/dd/yyyy h:mm"
+                      showTimeInput
                   />
                 </td>
                 <td>
-                  <Form.Control 
-                    size='sm'
-                    type='text'
-                    placeholder='HH:MM'
-                    // value={projectName}
-                    // onChange={(e) => setProjectName(e.target.value)}
-                  />
+                    <DatePicker
+                      customInput={<DatepickerCustomInput />}
+                      selected={toDate} 
+                      onChange={(date) => setToDate(date)}
+                      timeInputLabel="Time:"
+                      dateFormat="MM/dd/yyyy h:mm"
+                      showTimeInput
+                    />
                 </td>
                 <td className="align-middle text-center text-sm">
                   <Form.Control
