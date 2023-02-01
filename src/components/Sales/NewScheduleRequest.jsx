@@ -3,25 +3,80 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const NewScheduleRequest = () => {
   // useState
   const [referenceId, setReferenceId] = useState([])
-  const [] = useState('')
-
+  const [relatedTeam, setRelatedTeam] = useState('')
+  // React-Datepicker
+  const [startDate, setStartDate] = useState(new Date());
   // Schedule Reference Id List
   const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
-  const { referenceid } = scheduleReferenceIdList
+  const { referenceid:refid } = scheduleReferenceIdList
   //  
   const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
   const { activity:activityOption } = activityRelatedToListOption
+
+  // Reference Id Options
+    const referenceIdOptions = refid.map((row, key) => {
+        return <option 
+            rel-team={row.activity_type}
+            key={key} 
+            value={ row.ar_id }
+            >{ row.reference_id } - {row.project_name}
+        </option>
+    })
+    /**
+     * @returns - Activity Related To Options
+     */
+    const getActivityRelatedToOptions = () => {
+        //
+        if(relatedTeam) {
+            // Filter Activity Related To
+            let filtered = activityOption.filter(row => row.related_team === relatedTeam)
+
+            return filtered.map((row, key) => {
+                return <option 
+                    key={key} 
+                    value={ row.artt_id }>
+                    { row.activity }
+                </option>
+            });
+
+        } else {
+            // Show all list
+            return activityOption.map((row, key) => {
+                return <option 
+                    key={key} 
+                    value={ row.artt_id }>
+                    { row.activity }
+                </option>
+            });
+        }
+    }
+
+    // 
+    const handleReferenceIdOption = (state) => {
+        // 
+        let index = state.target.selectedIndex
+        let optionElement = state.target.childNodes[index]
+        // Get attribute value
+        let option =  optionElement.getAttribute('rel-team')
+        // console.war(option);
+        // Set Reference Id
+        setReferenceId(state.target.value)
+        setRelatedTeam(option)
+    }
+
   //
   return (
     <>
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>SR/AR No.</Form.Label>
+                <Form.Label>SR/AR No.</Form.Label>  
                 <Form.Control 
                     size='sm'
                     type='text'
@@ -39,20 +94,14 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Reference Id</Form.Label>
                     <Form.Control
-                    as='select' 
-                    size='sm'
-                    aria-label="Reference Id"
-                    // value={categoryid}
-                    onChange={(e) => setReferenceId(e.target.value)}
+                        as='select' 
+                        size='sm'
+                        aria-label="Reference Id"
+                        // value={categoryid}
+                        onChange={handleReferenceIdOption}
                     >
                     <option value="">- Select -</option>
-                    {
-                        referenceid.length > 0  && (
-                            referenceid.map((row, key) => (
-                                <option key={key} value={ row.ar_id }>{ row.reference_id } - {row.project_name}</option>
-                            ))
-                        )
-                    }
+                    { referenceIdOptions }
                     </Form.Control>
                 </Form.Group>
             </Col>
@@ -60,9 +109,9 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Type</Form.Label>
                 <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
+                    size='sm'
+                    as='select' 
+                    aria-label="Status"
                     // value={scheduleType}
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
@@ -85,13 +134,7 @@ const NewScheduleRequest = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                 >
                 <option value="">- Select -</option>
-                {
-                    activityOption.length > 0  && (
-                        activityOption.map((row, key) => (
-                            <option key={key} value={ row.artt_id }>{ row.activity }</option>
-                        ))
-                    )
-                }
+                { getActivityRelatedToOptions() }
                 </Form.Control>
                 </Form.Group>
             </Col>
@@ -119,17 +162,12 @@ const NewScheduleRequest = () => {
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Schedule</Form.Label>
-                <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
-                >
-                <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
-                </Form.Control>
+                <DatePicker
+                    className=""
+                    size="sm"
+                    selected={startDate} 
+                    onChange={(date) => setStartDate(date)} 
+                />
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
