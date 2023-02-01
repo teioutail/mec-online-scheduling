@@ -1,13 +1,26 @@
-import React,{ useState, forwardRef } from 'react'
+import React,{ useState, useEffect, forwardRef } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { getUsersEmailList } from '../../actions/userActions'
 
 const EmployeeListOption = () => {
   // useState
   const [fromDate, setFromDate] = useState(new Date())
   const [toDate, setToDate] = useState(new Date())
+  // Get Fullname, Users Id
+  const userEmail = useSelector(state => state.userEmail)
+  const { loading, emails:fullname } = userEmail
+  // 
+  const fullNameOptions = fullname.map((row, key) => {
+    return <option
+      key={key}
+      value={row.id}
+    >{ row.label }
+    </option>
+  })
 
   // Custom Textfield 
   const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -71,8 +84,7 @@ const EmployeeListOption = () => {
                     // onChange={(e) => setScheduleType(e.target.value)}
                   >
                   <option value="">- Select -</option>
-                  <option value="New-Schedule">New Schedule Request</option>
-                  <option value="Training-Schedule">Training Schedule</option>
+                  { fullNameOptions }
                   </Form.Control>
                 </td>
                 <td className="align-middle">

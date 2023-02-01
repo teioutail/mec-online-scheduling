@@ -15,7 +15,7 @@ import {
   deleteScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 
-import {  getUsersEmailList } from '../../actions/userActions'
+import { getUsersEmailList } from '../../actions/userActions'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
 
 import { 
