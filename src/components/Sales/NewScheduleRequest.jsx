@@ -1,11 +1,10 @@
 import React, {forwardRef, useImperativeHandle, useRef} from "react";
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
+import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import moment from "moment/moment";
 
 const NewScheduleRequest = () => {
   // useState
@@ -14,21 +13,25 @@ const NewScheduleRequest = () => {
   // React-Datepicker
   const [startDate, setStartDate] = useState(new Date());
   // Custom Textfield 
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <input 
-        // className="" 
-        onClick={onClick} ref={ref}
-        value={value}
-    />));
+  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
+        <Form.Control 
+            size='sm'
+            type='text'
+            placeholder='Activity Schedule'
+            value={value}
+            onClick={onClick} 
+            ref={ref}
+        />
+    ));
 
-  // Schedule Reference Id List
-  const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
-  const { referenceid:refid } = scheduleReferenceIdList
-  //  
-  const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
-  const { activity:activityOption } = activityRelatedToListOption
+    // Schedule Reference Id List
+    const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
+    const { referenceid:refid } = scheduleReferenceIdList
+    //  Activity Related To List Option
+    const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
+    const { activity:activityOption } = activityRelatedToListOption
 
-  // Reference Id Options
+    // Reference Id Options
     const referenceIdOptions = refid.map((row, key) => {
         return <option 
             rel-team={row.activity_type}
@@ -37,6 +40,7 @@ const NewScheduleRequest = () => {
             >{ row.reference_id } - {row.project_name}
         </option>
     })
+
     /**
      * @returns - Activity Related To Options
      */
@@ -172,7 +176,7 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Schedule</Form.Label>
                 <DatePicker
-                    customInput={<ExampleCustomInput />}
+                    customInput={<DatepickerCustomInput />}
                     selected={startDate} 
                     onChange={(date) => setStartDate(date)} 
                 />
@@ -200,6 +204,7 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Purpose of Activity</Form.Label>
                 <Form.Control 
+                    size="sm"
                     as="textarea" 
                     rows={2} 
                 />
@@ -209,6 +214,7 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Remarks</Form.Label>
                     <Form.Control 
+                        size="sm"
                         as="textarea" 
                         rows={2} 
                     />
@@ -216,9 +222,8 @@ const NewScheduleRequest = () => {
             </Col>
         </Row>
 
-        <EmployeeListOption 
+        <EmployeeListOption />
 
-        />
     </>
   )
 }
