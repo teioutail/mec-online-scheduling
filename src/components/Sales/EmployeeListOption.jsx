@@ -2,37 +2,40 @@ import React,{ useState, useEffect, forwardRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { getUsersEmailList } from '../../actions/userActions'
+import EmployeeListTableRows from './EmployeeListTableRows'
 
 const EmployeeListOption = () => {
-  // useState
-  const [fromDate, setFromDate] = useState(new Date())
-  const [toDate, setToDate] = useState(new Date())
-  // Get Fullname, Users Id
-  const userEmail = useSelector(state => state.userEmail)
-  const { loading, emails:fullname } = userEmail
-  // 
-  const fullNameOptions = fullname.map((row, key) => {
-    return <option
-      key={key}
-      value={row.id}
-    >{ row.label }
-    </option>
-  })
+  // Table Row Array For Engineers/Employee
+  const [rowsData, setRowsData] = useState([])
 
-  // Custom Textfield 
-  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <Form.Control 
-        size='sm'
-        type='text'
-        placeholder='Activity Schedule'
-        value={value}
-        onClick={onClick} 
-        ref={ref}
-    />
-  ));
+  // Add New Table Rows
+  const addTableRows = () => {
+    //
+    const rowsInput = {
+      employeeName: '',
+      timeFrom: '',
+      timeTo: '',
+    }
+    setRowsData([...rowsData, rowsInput])
+  }
+
+  // Delete Table Rows
+  const deleteTableRows = (index) => {
+    const rows = [...rowsData]
+    rows.splice(index, 1)
+    setRowsData(rows)
+  }
+  
+  // Handle Adding Multiple Technician Feature
+  const handleChange = (index, event) => {
+    const { name, value } = event.target
+    const rowsInput = [...rowsData]
+    rowsInput[index][name] = value
+    setRowsData(rowsInput)
+
+    console.warn(rowsData)
+  }
 
   //
   return (
@@ -42,7 +45,14 @@ const EmployeeListOption = () => {
           <Table className="table align-items-center mb-0">
             <thead>
               <tr>
-                <th colspan="2" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
+                <td colSpan={5}>
+                  <Button variant="outline-secondary" size="sm" onClick={addTableRows} className=" font-weight-bold text-xs float-start">
+                      <FontAwesomeIcon icon={['fas', 'user-group']} /> Add Employee
+                  </Button>
+                </td>
+              </tr>
+              <tr>
+                <th colSpan="2" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
                 <th className="opacity-7"></th>
               </tr>
               <tr>
@@ -54,62 +64,17 @@ const EmployeeListOption = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <DatePicker
-                      customInput={<DatepickerCustomInput />}
-                      selected={fromDate} 
-                      onChange={(date) => setFromDate(date)} 
-                      timeInputLabel="Time:"
-                      dateFormat="MM/dd/yyyy h:mm"
-                      showTimeInput
-                  />
-                </td>
-                <td>
-                    <DatePicker
-                      customInput={<DatepickerCustomInput />}
-                      selected={toDate} 
-                      onChange={(date) => setToDate(date)}
-                      timeInputLabel="Time:"
-                      dateFormat="MM/dd/yyyy h:mm"
-                      showTimeInput
-                    />
-                </td>
-                <td className="align-middle text-center text-sm">
-                  <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
-                  >
-                  <option value="">- Select -</option>
-                  { fullNameOptions }
-                  </Form.Control>
-                </td>
-                <td className="align-middle">
-                  <a className="btn btn-link text-danger text-gradient px-3 mb-0">
-                    {/* <i className="far fa-trash-alt me-2"></i>Delete */}
-                    <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
-                  </a>
-                </td>
-              </tr>
+              <EmployeeListTableRows 
+                rowsData={rowsData} 
+                deleteTableRows={deleteTableRows}
+                handleChange={handleChange}
+              />
             </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={5}>
-                <Button variant="outline-secondary" size="sm" className=" font-weight-bold text-xs float-start">
-                    <FontAwesomeIcon icon={['fas', 'user-group']} /> Add Employee
-                </Button>
-              </td>
-            </tr>
-          </tfoot>
-        </Table>
+          </Table>
         </Col>
       </Row>
     </>
   )
-
 }
 
 export default EmployeeListOption

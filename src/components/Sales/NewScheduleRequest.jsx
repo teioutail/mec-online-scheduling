@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useRef} from "react";
+import React, {forwardRef, useImperativeHandle, useRef } from "react";
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
@@ -18,8 +18,8 @@ const NewScheduleRequest = () => {
             size='sm'
             type='text'
             placeholder='Activity Schedule'
-            value={value}
-            onClick={onClick} 
+            defaultValue={value}
+            onClick={onClick}
             ref={ref}
         />
     ));
@@ -69,7 +69,6 @@ const NewScheduleRequest = () => {
             });
         }
     }
-
     // 
     const handleReferenceIdOption = (state) => {
         // 
@@ -228,4 +227,4 @@ const NewScheduleRequest = () => {
   )
 }
 
-export default NewScheduleRequest
+export default React.forwardRef(NewScheduleRequest)
