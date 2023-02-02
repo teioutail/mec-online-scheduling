@@ -13,6 +13,7 @@ import PostSalesInput from '../../components/Sales/PostSalesInput'
 
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
+import CloseButton from 'react-bootstrap/CloseButton';
 
 const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
   // PostSalesInput Component Reference
@@ -188,7 +189,13 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
 
   return (
     <>
-        <Modal  size={size} show={show} onHide={onHide}>
+        <Modal  
+          size={size} 
+          show={show} 
+          onHide={onHide}
+          backdrop="static"
+          keyboard={false}
+          >
         <Modal.Header closeButton>
             <Modal.Title>{ mode === 'Add' ? 'Calendar Schedule' : 'Edit Calendar Schedule'  }</Modal.Title>
         </Modal.Header>
@@ -221,7 +228,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
               scheduleDetails={scheduleDetails}
             /> */
             }
-
             { scheduleType === 'New-Schedule' && 
               <NewScheduleRequest 
                 ref={postSalesInputRef}

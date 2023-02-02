@@ -3,9 +3,10 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap'
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import EditBusinessUnitOption from './EditBusinessUnitOption'
 
-const TrainingSchedule = () => {
-  // 
+const TrainingSchedule = ({ scheduleDetails }) => {
+
   // React-Datepicker
   const [trainingSchedule, setTrainingSchedule] = useState(new Date());
 
@@ -122,42 +123,9 @@ const TrainingSchedule = () => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Business Unit</Form.Label>
-                <Form.Control
-                  size='sm'
-                  as='select' 
-                  aria-label="Status"
-                  // value={scheduleType}
-                  // onChange={(e) => setScheduleType(e.target.value)}
-                >
-                <option value="">- Select -</option>
-                <option value="New-Schedule">New Schedule Request</option>
-                <option value="Training-Schedule">Training Schedule</option>
-                </Form.Control>
-                </Form.Group>
-            </Col>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Request for DTC?</Form.Label>
-                <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
-                >
-                <option value="">- Select -</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                </Form.Control>
-                </Form.Group>
-            </Col>
-        </Row>
-        <Row>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
                 <Form.Label>Purpose of Activity</Form.Label>
                 <Form.Control 
+                    size='sm'
                     as="textarea" 
                     rows={2} 
                 />
@@ -166,16 +134,27 @@ const TrainingSchedule = () => {
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                     <Form.Label>Remarks</Form.Label>
-                    <Form.Control 
+                    <Form.Control
+                        size='sm'
                         as="textarea" 
                         rows={2} 
                     />
                 </Form.Group>
             </Col>
         </Row>
-
+        <Row>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                    <Form.Label>Business Unit</Form.Label>
+                    <EditBusinessUnitOption 
+                        scheduleDetails={scheduleDetails}
+                    />
+                </Form.Group>
+            </Col>
+            <Col sm={12} md={6} lg={6}>
+            </Col>
+        </Row>
         <EmployeeListOption />
-
     </>
   )
 }
