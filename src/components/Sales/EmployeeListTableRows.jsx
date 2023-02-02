@@ -20,7 +20,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
   })
       
   // Custom Textfield 
-  const DatepickerCustomInput = forwardRef(({ value, onClick,  }, ref) => (
+  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
     <Form.Control 
         size='sm'
         type='text'
@@ -36,11 +36,12 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
     rowsData.map((data, index)=>{
         // 
         const { employeeName, timeFrom, timeTo } = data;
+
         // const {fullName, emailAddress, salary} = data;
 
         return(
             <>
-                {/* <tr key={index}>    
+                {/* <tr key={index}>
                     <td>
                         <input type="text" value={employeeName} onChange={(evnt)=>(handleChange(index, evnt))} name="employeeName" className="form-control"/>
                     </td>
@@ -48,7 +49,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                     <td><input type="text" value={timeTo}  onChange={(evnt)=>(handleChange(index, evnt))} name="timeTo" className="form-control" /> </td>
                     <td><button className="btn btn-outline-danger" onClick={()=>(deleteTableRows(index))}>x</button></td>
                 </tr> */}
-                
+                                
                 <tr key={index}>
                     <td>
                         <DatePicker
@@ -66,7 +67,6 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                             customInput={<DatepickerCustomInput />}
                             selected={toDate} 
                             // onChange={(date) => setToDate(date)}
-                            onChange={(evnt)=>(handleChange(index, evnt))}
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm"
                             showTimeInput
