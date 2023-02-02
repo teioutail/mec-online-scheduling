@@ -1,5 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useRef } from "react";
-import { useState } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useRef } from "react";
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
@@ -70,6 +69,7 @@ const NewScheduleRequest = () => {
             });
         }
     }
+
     // 
     const handleReferenceIdOption = (state) => {
         // 
@@ -221,9 +221,8 @@ const NewScheduleRequest = () => {
                 </Form.Group>
             </Col>
         </Row>
-
+        
         <EmployeeListOption />
-
     </>
   )
 }
