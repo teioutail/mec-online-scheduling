@@ -75,6 +75,15 @@ import {
     activityRelatedToListOptionReducer,
 } from './reducers/Admin/activityRelatedToReducers'
 
+// Decision Reducer
+import { 
+    decisionCreateReducer,
+    decisionDeleteReducer,
+    decisionDetailsReducer,
+    decisionListReducer, 
+    decisionUpdateReducer
+} from './reducers/Admin/decisionReducers'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -122,6 +131,11 @@ const reducer = combineReducers({
     activityRelatedToUpdate:activityRelatedToUpdateReducer,
     activityRelatedToDelete:activityRelatedToDeleteReducer,
     activityRelatedToListOption:activityRelatedToListOptionReducer,
+    decisionList:decisionListReducer,
+    decisionCreate:decisionCreateReducer,
+    decisionUpdate:decisionUpdateReducer,
+    decisionDetails:decisionDetailsReducer,
+    decisionDelete:decisionDeleteReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
