@@ -10,6 +10,9 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
   const [fromDate, setFromDate] = useState(new Date())
   const [toDate, setToDate] = useState(new Date())
 
+//   const [fromDate, setFromDate] = useState()
+//   const [toDate, setToDate] = useState()
+
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
@@ -31,6 +34,11 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
     />
   ));
 
+  //
+  useEffect(() => {
+    
+  }, [])
+
   return(
     // 
     rowsData.map((data, index)=>{
@@ -49,14 +57,12 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                     <td><input type="text" value={timeTo}  onChange={(evnt)=>(handleChange(index, evnt))} name="timeTo" className="form-control" /> </td>
                     <td><button className="btn btn-outline-danger" onClick={()=>(deleteTableRows(index))}>x</button></td>
                 </tr> */}
-                                
+                                            
                 <tr key={index}>
                     <td>
                         <DatePicker
                             customInput={<DatepickerCustomInput />}
                             selected={fromDate} 
-                            // onChange={(date) => setFromDate(date)}
-                            onChange={(evnt)=>(handleChange(index, evnt))}
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm"
                             showTimeInput
@@ -66,7 +72,6 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                         <DatePicker
                             customInput={<DatepickerCustomInput />}
                             selected={toDate} 
-                            // onChange={(date) => setToDate(date)}
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm"
                             showTimeInput
@@ -77,7 +82,8 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                         size='sm'
                         as='select' 
                         aria-label="Status"
-                        // value={scheduleType}
+                        onChange={(evnt)=>(handleChange(index, evnt))}
+                        // value={employeeName}
                         // onChange={(e) => setScheduleType(e.target.value)}
                         >
                         <option value="">- Select -</option>
@@ -97,3 +103,4 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
 }
 
 export default EmployeeListTableRows
+

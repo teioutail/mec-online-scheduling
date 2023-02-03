@@ -197,7 +197,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
           keyboard={false}
           >
         <Modal.Header closeButton>
-            <Modal.Title>{ mode === 'Add' ? 'Calendar Schedule' : 'Edit Calendar Schedule'  }</Modal.Title>
+            <Modal.Title>{ mode === 'Add' ? 'Add Calendar Schedule' : 'Edit Calendar Schedule'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Row>
