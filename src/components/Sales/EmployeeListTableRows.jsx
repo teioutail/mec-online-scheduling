@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee }) => {
   // useState
   const [fromDate, setFromDate] = useState(new Date())
   const [toDate, setToDate] = useState(new Date())
@@ -57,24 +57,29 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                     <td><input type="text" value={timeTo}  onChange={(evnt)=>(handleChange(index, evnt))} name="timeTo" className="form-control" /> </td>
                     <td><button className="btn btn-outline-danger" onClick={()=>(deleteTableRows(index))}>x</button></td>
                 </tr> */}
-                                            
+                
+         
                 <tr key={index}>
                     <td>
                         <DatePicker
-                            customInput={<DatepickerCustomInput />}
-                            selected={fromDate} 
+                            // customInput={<DatepickerCustomInput />}
+                            className='form-control form-control-sm'
+                            selected={timeFrom} 
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm"
                             showTimeInput
+                            onChange={(v) => handleChangeAddEmployee(index, "timeFrom", v)}
                         />
                     </td>
                     <td>
                         <DatePicker
+                            className='form-control form-control-sm'
                             customInput={<DatepickerCustomInput />}
-                            selected={toDate} 
+                            selected={timeTo} 
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm"
                             showTimeInput
+                            onChange={(v) => handleChangeAddEmployee(index, "timeTo", v)}
                         />
                     </td>
                     <td className="align-middle text-center text-sm">
@@ -82,7 +87,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChange }) => {
                         size='sm'
                         as='select' 
                         aria-label="Status"
-                        onChange={(evnt)=>(handleChange(index, evnt))}
+                        onChange={(v) => handleChangeAddEmployee(index, "employeeName", v)}
                         // value={employeeName}
                         // onChange={(e) => setScheduleType(e.target.value)}
                         >

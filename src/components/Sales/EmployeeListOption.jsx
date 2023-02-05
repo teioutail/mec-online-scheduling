@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import EmployeeListTableRows from './EmployeeListTableRows'
 
 const EmployeeListOption = () => {
+
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
 
@@ -28,8 +29,17 @@ const EmployeeListOption = () => {
   }
   
   // Handle Adding Multiple Technician Feature
-  const handleChange = (index, event) => {
-    const { name, value } = event.target
+  // const handleChange = (index, event) => {
+  //   const { name, value } = event.target
+  //   const rowsInput = [...rowsData]
+  //   rowsInput[index][name] = value
+  //   setRowsData(rowsInput)
+
+  //   console.warn(rowsData)
+  // }
+  
+  //
+  const handleChangeAddEmployee = (index, name, value) => {
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
@@ -67,7 +77,7 @@ const EmployeeListOption = () => {
               <EmployeeListTableRows 
                 rowsData={rowsData} 
                 deleteTableRows={deleteTableRows}
-                handleChange={handleChange}
+                handleChangeAddEmployee={handleChangeAddEmployee}
               />
             </tbody>
           </Table>

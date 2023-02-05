@@ -13,7 +13,7 @@ import BusinessUnitScreen from './screens/BusinessUnitScreen'
 import CalendarScheduleScreen from './screens/CalendarScheduleScreen'
 import ActivityRelatedToScreen from './screens/Admin/ActivityRelatedToScreen'
 import DecisionUnitScreen from './screens/Admin/DecisionUnitScreen'
-
+import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
