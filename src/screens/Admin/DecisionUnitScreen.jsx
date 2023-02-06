@@ -102,7 +102,7 @@ const DecisionUnitScreen = () => {
         dispatch(getDecisionDetails(state.target.id))
     }
 
-    // Delete Activity Related To Modal
+    // Delete Decision Modal
     const handleDeleteDecision = (state) => {
         // Save Change Here...
         Swal.fire({

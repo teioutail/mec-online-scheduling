@@ -4,14 +4,9 @@ import { Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import moment from 'moment/moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee }) => {
-  // useState
-  const [fromDate, setFromDate] = useState(new Date())
-  const [toDate, setToDate] = useState(new Date())
-
-//   const [fromDate, setFromDate] = useState()
-//   const [toDate, setToDate] = useState()
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
 
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
@@ -21,32 +16,13 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
   const fullNameOptions = fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   })
-      
-  // Custom Textfield 
-  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <Form.Control 
-        size='sm'
-        type='text'
-        placeholder='Activity Schedule'
-        defaultValue={value}
-        onClick={onClick} 
-        ref={ref}
-    />
-  ));
-
-  //
-  useEffect(() => {
-    
-  }, [])
 
   return(
     // 
     rowsData.map((data, index)=>{
         // 
-        const { employeeName, timeFrom, timeTo } = data;
-
-        // const {fullName, emailAddress, salary} = data;
-
+        const { employeeId, timeFrom, timeTo } = data;
+        
         return(
             <>
                 {/* <tr key={index}>
@@ -58,38 +34,38 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
                     <td><button className="btn btn-outline-danger" onClick={()=>(deleteTableRows(index))}>x</button></td>
                 </tr> */}
                 
-         
                 <tr key={index}>
                     <td>
                         <DatePicker
-                            // customInput={<DatepickerCustomInput />}
                             className='form-control form-control-sm'
                             selected={timeFrom} 
                             timeInputLabel="Time:"
-                            dateFormat="MM/dd/yyyy h:mm"
+                            dateFormat="MM/dd/yyyy h:mm a"
+                            showTime = {{ user12hours: true }} 
                             showTimeInput
-                            onChange={(v) => handleChangeAddEmployee(index, "timeFrom", v)}
+                            onChange={(e) => handleChangeAddEmployee(index, "timeFrom", e)}
                         />
                     </td>
                     <td>
                         <DatePicker
                             className='form-control form-control-sm'
-                            customInput={<DatepickerCustomInput />}
                             selected={timeTo} 
                             timeInputLabel="Time:"
-                            dateFormat="MM/dd/yyyy h:mm"
+                            dateFormat="MM/dd/yyyy h:mm a"
+                            showTime = {{ user12hours: true }} 
                             showTimeInput
-                            onChange={(v) => handleChangeAddEmployee(index, "timeTo", v)}
+                            onChange={(e) => handleChangeAddEmployee(index, "timeTo", e)}
                         />
                     </td>
                     <td className="align-middle text-center text-sm">
                         <Form.Control
-                        size='sm'
-                        as='select' 
-                        aria-label="Status"
-                        onChange={(v) => handleChangeAddEmployee(index, "employeeName", v)}
-                        // value={employeeName}
-                        // onChange={(e) => setScheduleType(e.target.value)}
+                            size='sm'
+                            as='select' 
+                            aria-label="Status"
+                            onChange={(e)=>(handleChange(index, e))}
+                            value={employeeId}
+                            name="employeeId"
+                            // onChange={(e) => setScheduleType(e.target.value)}
                         >
                         <option value="">- Select -</option>
                         { fullNameOptions }

@@ -14,7 +14,7 @@ const EmployeeListOption = () => {
   const addTableRows = () => {
     //
     const rowsInput = {
-      employeeName: '',
+      employeeId: '',
       timeFrom: '',
       timeTo: '',
     }
@@ -29,16 +29,16 @@ const EmployeeListOption = () => {
   }
   
   // Handle Adding Multiple Technician Feature
-  // const handleChange = (index, event) => {
-  //   const { name, value } = event.target
-  //   const rowsInput = [...rowsData]
-  //   rowsInput[index][name] = value
-  //   setRowsData(rowsInput)
+  const handleChange = (index, event) => {
+    const { name, value } = event.target
+    const rowsInput = [...rowsData]
+    rowsInput[index][name] = value
+    setRowsData(rowsInput)
 
-  //   console.warn(rowsData)
-  // }
+    console.warn(rowsData)
+  }
   
-  //
+  // Handle Adding Multiple SE/Employee
   const handleChangeAddEmployee = (index, name, value) => {
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
@@ -78,6 +78,7 @@ const EmployeeListOption = () => {
                 rowsData={rowsData} 
                 deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
+                handleChange={handleChange}
               />
             </tbody>
           </Table>
