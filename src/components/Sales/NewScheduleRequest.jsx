@@ -11,6 +11,9 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
   // useRef
   const srArNoRef = useRef()
   const activityScheduleRef = useRef()
+  const arIdRef = useRef()
+  const activityTypeRef = useRef()
+  const activityRelatedToRef = useRef()
 
   // useState
   const [activitySchedule, setActivitySchedule] = useState(new Date())
@@ -100,8 +103,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
         return {
             activitySchedule: activitySchedule,
             srArNo: srArNoRef.current.value,
+            arId: arIdRef.current.value,
+            activityType: activityTypeRef.current.value,
+            activityRelatedTo: activityRelatedToRef.current.value,
         }
-    },[activitySchedule, srArNo])
+    },[activitySchedule, srArNo, activityType, activityRelatedTo, referenceId])
 
   //
   return (
@@ -132,6 +138,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                         size='sm'
                         aria-label="Reference Id"
                         value={referenceId}
+                        ref={arIdRef}
                         onChange={handleReferenceIdOption}
                     >
                     <option value="">- Select -</option>
@@ -148,6 +155,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     aria-label="Status"
                     value={activityType}
                     onChange={(e) => setActivityType(e.target.value)}
+                    ref={activityTypeRef}
                 >
                 <option value="">- Select -</option>
                 <option value="On-Site">On-Site</option>
@@ -165,6 +173,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={activityRelatedTo}
+                    ref={activityRelatedToRef}
                     onChange={(e) => setActivityRelatedTo(e.target.value)}
                 >
                 <option value="">- Select -</option>

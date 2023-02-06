@@ -24,7 +24,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   const dispatch = useDispatch()
   // setState
   const [scheduleType, setScheduleType] = useState('')
-
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -59,9 +58,12 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // Data
     let data = {
       id: scheduleid,
-      activity_type: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activitySchedule),
+      activity_schedule: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activitySchedule),
       sr_no: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.srArNo),
-      // activity_type: activityType,
+      ar_id: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.arId),
+      activity_type: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityType),
+      activity_related_to: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityRelatedTo),
+      
       // project_name: projectName,
       // projected_amount: projectedAmount,
       // partner_company_name: partnerCompanyName,
@@ -76,8 +78,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
       // business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
     }
-    console.warn(data)
 
+    console.warn(data)
     // 
 
     // 
