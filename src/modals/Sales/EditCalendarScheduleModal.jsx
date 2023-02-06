@@ -15,27 +15,15 @@ import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
 import CloseButton from 'react-bootstrap/CloseButton';
 
-const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
-  // PostSalesInput Component Reference
-  const postSalesInputRef = useRef()
-  // EditEmailBusinessUnit Component Reference
-  const EditEmailBusinessUnitRef = useRef()
+const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
+  // New Schedule Component Reference
+  const newScheduleInputRef = useRef()
+  // Training Schedule Component Reference
+  const trainingScheduleInputRef = useRef()
   // Redux
   const dispatch = useDispatch()
   // setState
   const [scheduleType, setScheduleType] = useState('')
-
-  const [projectName, setProjectName] = useState('')
-  const [projectedAmount, setProjectedAmount] = useState('')
-  const [partnerCompanyName, setPartnerCompanyName] = useState('')
-  const [endUserCompanyName, setEndUserCompanyName] = useState('')
-  const [partnerSiteAddress, setPartnerSiteAddress] = useState('')
-  const [endUserSiteAddress, setEndUserSiteAddress] = useState('')
-  const [partnerContactPerson, setPartnerContactPerson] = useState('')
-  const [endUserContactPerson, setEndUserContactPerson] = useState('')
-  const [partnerContactNumber, setPartnerContactNumber] = useState('')
-  const [endUserContactNumber, setEndUserContactNumber] = useState('')
-  const [emailParticipants, setEmailParticipants] = useState([])
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
@@ -65,26 +53,33 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     const name = target.name
     // setStatus(selected)
   }
+
   // 
   const handleSubmit = async () =>  {
     // Data
-    // let schedule = {
-    //   id: scheduleid,
-    //   activity_type: activityType,
-    //   project_name: projectName,
-    //   projected_amount: projectedAmount,
-    //   partner_company_name: partnerCompanyName,
-    //   enduser_company_name: endUserCompanyName,
-    //   partner_site_address: partnerSiteAddress,
-    //   enduser_site_address: endUserSiteAddress,
-    //   partner_contact_person: partnerContactPerson,
-    //   enduser_contact_person: endUserContactPerson,
-    //   partner_contact_number: partnerContactNumber,
-    //   enduser_contact_number: endUserContactNumber,
-    //   user_id: userInfo.user.id,
-    //   email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
-    //   business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
-    // }
+    let data = {
+      id: scheduleid,
+      activity_type: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activitySchedule),
+      sr_no: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.srArNo),
+      // activity_type: activityType,
+      // project_name: projectName,
+      // projected_amount: projectedAmount,
+      // partner_company_name: partnerCompanyName,
+      // enduser_company_name: endUserCompanyName,
+      // partner_site_address: partnerSiteAddress,
+      // enduser_site_address: endUserSiteAddress,
+      // partner_contact_person: partnerContactPerson,
+      // enduser_contact_person: endUserContactPerson,
+      // partner_contact_number: partnerContactNumber,
+      // enduser_contact_number: endUserContactNumber,
+      // user_id: userInfo.user.id,
+      // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
+      // business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
+    }
+    console.warn(data)
+
+    // 
+
     // 
     // if(activityType === "Post-Sales") {
     //   // Post-Sales 
@@ -173,17 +168,17 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     } = scheduleDetails
 
     // setState
-    setScheduleType(activity_type || "")
-    setProjectName(project_name || "")
-    setProjectedAmount(projected_amount || "")
-    setPartnerCompanyName(partner_company_name || "")
-    setEndUserCompanyName(enduser_company_name || "")
-    setPartnerSiteAddress(partner_site_address || "")
-    setEndUserSiteAddress(enduser_site_address || "")
-    setPartnerContactPerson(partner_contact_person || "")
-    setEndUserContactPerson(enduser_contact_person || "")
-    setPartnerContactNumber(partner_contact_number || "")
-    setEndUserContactNumber(enduser_contact_number || "")
+    // setScheduleType(activity_type || "")
+    // setProjectName(project_name || "")
+    // setProjectedAmount(projected_amount || "")
+    // setPartnerCompanyName(partner_company_name || "")
+    // setEndUserCompanyName(enduser_company_name || "")
+    // setPartnerSiteAddress(partner_site_address || "")
+    // setEndUserSiteAddress(enduser_site_address || "")
+    // setPartnerContactPerson(partner_contact_person || "")
+    // setEndUserContactPerson(enduser_contact_person || "")
+    // setPartnerContactNumber(partner_contact_number || "")
+    // setEndUserContactNumber(enduser_contact_number || "")
 
   }, [scheduleDetails, dispatch])
 
@@ -220,27 +215,22 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
                 <Col sm={12} md={6} lg={6}>
                 </Col>
             </Row>
-
           { scheduleReferenceLoading ? <Loader /> : 
-          <>
-            {/* <EditEmailBusinessUnit 
-              ref={EditEmailBusinessUnitRef}
-              scheduleDetails={scheduleDetails}
-            /> */
-            }
-            { scheduleType === 'New-Schedule' && 
-              <NewScheduleRequest 
-                ref={postSalesInputRef}
-                scheduleDetails={scheduleDetails}
-              /> 
-            }
-            { scheduleType === 'Training-Schedule' && 
-              <TrainingSchedule 
-                ref={postSalesInputRef}
-                scheduleDetails={scheduleDetails}
-              /> 
-            }
-          </>}
+            <>
+              { scheduleType === 'New-Schedule' && 
+                <NewScheduleRequest
+                  ref={newScheduleInputRef}
+                  // scheduleDetails={scheduleDetails}
+                /> 
+              }
+              { scheduleType === 'Training-Schedule' && 
+                <TrainingSchedule 
+                  ref={trainingScheduleInputRef}
+                  scheduleDetails={scheduleDetails}
+                /> 
+              }
+            </>
+          }
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>

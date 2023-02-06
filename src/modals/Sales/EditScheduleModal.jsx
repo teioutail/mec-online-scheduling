@@ -60,6 +60,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     const name = target.name
     // setStatus(selected)
   }
+
   // 
   const handleSubmit = async () =>  {
     // Data
@@ -346,6 +347,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
               ref={EditEmailBusinessUnitRef}
               scheduleDetails={scheduleDetails}
             />
+            
             { activityType === 'Post-Sales' && 
               <PostSalesInput 
                 ref={postSalesInputRef}

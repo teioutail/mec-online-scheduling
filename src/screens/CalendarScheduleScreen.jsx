@@ -6,7 +6,6 @@ import FormContainer from '../components/template/FormContainer'
 import Loader from '../components/Loader'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import DataTable from 'react-data-table-component'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -44,17 +43,17 @@ const CalendarScheduleScreen = () => {
         progress: undefined,
         theme: "light",
     });
-    //
+    // Moment
     const localizer = momentLocalizer(moment)
     // CommonJS
     const Swal = require('sweetalert2')
-    //
+    // Header
     const headerTitle = 'Calendar Schedule'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-    
+
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
     const { error:errorCreate } = scheduleReferenceCreate
@@ -71,17 +70,9 @@ const CalendarScheduleScreen = () => {
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
 
-    // Datatables
-    const [pending, setPending] = useState(true)
-    const [rows, setRows] = useState([])
-
     // EditRoleModal
     const [show, setShow] = useState(false)
-    // 
-    const [showRoleAccess, setShowRoleAccess] = useState()
-    // Role Access View Modal
-    const handleRoleAccessClose = () => setShowRoleAccess(false)
-    const handleRoleAccessShow = () => setShowRoleAccess(true)
+
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -90,7 +81,7 @@ const CalendarScheduleScreen = () => {
     const [scheduleid, setScheduleId] = useState('')
     const [mode, setMode] = useState('')
 
-    // Add User Modal
+    // Add Calendar Modal
     const handleScheduleReferenceView = (state) => {
         // Show Modal
         handleShow()
@@ -113,7 +104,6 @@ const CalendarScheduleScreen = () => {
 
     // Role Access 
     const handleRoleAccessView = (state) => {
-        handleRoleAccessShow()
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
@@ -147,96 +137,6 @@ const CalendarScheduleScreen = () => {
             }
         })
     }
-
-    // Columns
-    const columns = useMemo(
-		() => [
-            {   name: 'Schedule Reference No',
-                selector: row => row.reference_id,
-                sortable: true,
-            },
-            {   name: 'Project Name',
-                selector: row => row.project_name,
-                sortable: true,
-            },
-            {
-                name: 'Project No',
-                selector: row => row.project_no,
-                sortable: true,
-            },
-            {
-                name: 'Case No',
-                selector: row => row.case_no,
-                sortable: true,
-            },
-            {
-                name: 'SA No',
-                selector: row => row.sa_no,
-                sortable: true,
-            },
-            {
-                name: 'Partner',
-                selector: row => row.partner_company_name,
-                sortable: true,
-            },
-            {
-                name: 'End-User',
-                selector: row => row.enduser_company_name,
-                sortable: true,
-            },
-            {
-                name: 'Action',
-                cell: (row) => {
-                    //
-                    return <>
-                        {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
-                        <div className="dropdown">
-                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Schedule
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </>
-                },
-                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
-				ignoreRowClick: true,
-				allowOverflow: true,
-				button: true,
-			},
-		],
-		[],
-	);
 
     // useEffect for Error Message
     useEffect(() => {
@@ -299,21 +199,6 @@ const CalendarScheduleScreen = () => {
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
-
-                    {/* <DataTable
-                        // title={headerTitle}
-                        // selectableRows
-                        // data={users}
-                        pagination
-                        responsive
-                        columns={columns}
-                        data={rows}
-                        progressPending={pending}
-                        progressComponent={<Loader />}
-                        highlightOnHover
-                        pointerOnHover
-                        selectableRowsHighlight
-                    /> */}
 
                     <Calendar
                         localizer={localizer}

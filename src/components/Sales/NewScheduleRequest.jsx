@@ -5,12 +5,24 @@ import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-const NewScheduleRequest = () => {
+const NewScheduleRequest = ({ calendarDetails }, ref) => {
   // useState
-  const [referenceId, setReferenceId] = useState([])
   const [relatedTeam, setRelatedTeam] = useState('')
-  // React-Datepicker
-  const [startDate, setStartDate] = useState(new Date());
+  // useRef
+  const srArNoRef = useRef()
+  const activityScheduleRef = useRef()
+
+  // useState
+  const [activitySchedule, setActivitySchedule] = useState(new Date())
+  const [srArNo, setSrArNo] = useState('')
+  const [referenceId, setReferenceId] = useState('')
+  const [activityType, setActivityType] = useState('')
+  const [activityRelatedTo, setActivityRelatedTo] = useState('')
+  const [destinationDetails, setDestinationDetails] = useState('')
+  const [dtc, setDtc] = useState('')
+  const [purposeOfActivity, setPurposeOfActivity] = useState('')
+  const [remarks, setRemarks] = useState('')
+
   // Custom Textfield 
   const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
         <Form.Control 
@@ -49,7 +61,7 @@ const NewScheduleRequest = () => {
         if(relatedTeam) {
             // Filter Activity Related To
             let filtered = activityOption.filter(row => row.related_team === relatedTeam)
-
+            // 
             return filtered.map((row, key) => {
                 return <option 
                     key={key} 
@@ -70,18 +82,26 @@ const NewScheduleRequest = () => {
         }
     }
 
-    // 
+    // Handle Reference Id Option Event
     const handleReferenceIdOption = (state) => {
         // 
         let index = state.target.selectedIndex
         let optionElement = state.target.childNodes[index]
         // Get attribute value
         let option =  optionElement.getAttribute('rel-team')
-        // console.war(option);
         // Set Reference Id
         setReferenceId(state.target.value)
         setRelatedTeam(option)
     }
+
+    // Pass the reference value
+    useImperativeHandle(ref, () => {
+        // Get field values
+        return {
+            activitySchedule: activitySchedule,
+            srArNo: srArNoRef.current.value,
+        }
+    },[activitySchedule, srArNo])
 
   //
   return (
@@ -94,8 +114,9 @@ const NewScheduleRequest = () => {
                     size='sm'
                     type='text'
                     placeholder='SR/AR No.'
-                    // value={projectName}
-                    // onChange={(e) => setProjectName(e.target.value)}
+                    value={srArNo}
+                    onChange={(e) => setSrArNo(e.target.value)}
+                    ref={srArNoRef}
                 />
                 </Form.Group>
             </Col>
@@ -110,7 +131,7 @@ const NewScheduleRequest = () => {
                         as='select' 
                         size='sm'
                         aria-label="Reference Id"
-                        // value={categoryid}
+                        value={referenceId}
                         onChange={handleReferenceIdOption}
                     >
                     <option value="">- Select -</option>
@@ -125,8 +146,8 @@ const NewScheduleRequest = () => {
                     size='sm'
                     as='select' 
                     aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
+                    value={activityType}
+                    onChange={(e) => setActivityType(e.target.value)}
                 >
                 <option value="">- Select -</option>
                 <option value="On-Site">On-Site</option>
@@ -143,8 +164,8 @@ const NewScheduleRequest = () => {
                     size='sm'
                     as='select' 
                     aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
+                    value={activityRelatedTo}
+                    onChange={(e) => setActivityRelatedTo(e.target.value)}
                 >
                 <option value="">- Select -</option>
                 { getActivityRelatedToOptions() }
@@ -155,11 +176,11 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Destination Details</Form.Label>
                 <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
+                    size='sm'
+                    as='select' 
+                    aria-label="Status"
+                    value={destinationDetails}
+                    onChange={(e) => setDestinationDetails(e.target.value)}
                 >
                 <option value="">- Select -</option>
                 <option value="Partner">Partner</option>
@@ -177,8 +198,9 @@ const NewScheduleRequest = () => {
                 <Form.Label>Activity Schedule</Form.Label>
                 <DatePicker
                     customInput={<DatepickerCustomInput />}
-                    selected={startDate} 
-                    onChange={(date) => setStartDate(date)} 
+                    selected={activitySchedule} 
+                    onChange={(date) => setActivitySchedule(date)} 
+                    ref={activityScheduleRef}
                 />
                 </Form.Group>
             </Col>
@@ -186,11 +208,11 @@ const NewScheduleRequest = () => {
                 <Form.Group className="mb-3">
                 <Form.Label>Request for DTC?</Form.Label>
                 <Form.Control
-                size='sm'
-                as='select' 
-                aria-label="Status"
-                    // value={scheduleType}
-                    // onChange={(e) => setScheduleType(e.target.value)}
+                    size='sm'
+                    as='select' 
+                    aria-label="Status"
+                    value={dtc}
+                    onChange={(e) => setDtc(e.target.value)}
                 >
                 <option value="">- Select -</option>
                 <option value="Yes">Yes</option>
@@ -207,6 +229,8 @@ const NewScheduleRequest = () => {
                     size="sm"
                     as="textarea" 
                     rows={2} 
+                    value={purposeOfActivity}
+                    onChange={(e) => setPurposeOfActivity(e.target.value)}
                 />
                 </Form.Group>
             </Col>
@@ -216,13 +240,17 @@ const NewScheduleRequest = () => {
                     <Form.Control 
                         size="sm"
                         as="textarea" 
-                        rows={2} 
+                        rows={2}
+                        value={remarks}
+                        onChange={(e) => setRemarks(e.target.value)}
                     />
                 </Form.Group>
             </Col>
         </Row>
         
-        <EmployeeListOption />
+        <EmployeeListOption 
+        
+        />
     </>
   )
 }
