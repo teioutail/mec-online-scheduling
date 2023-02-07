@@ -17,9 +17,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   const newScheduleInputRef = useRef()
   // Training Schedule Component Reference
   const trainingScheduleInputRef = useRef()
-  // Employee List
-  const employeeList = useRef()
-
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -67,7 +64,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       request_for_dtc: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.dtc),
       purpose_of_activity: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.purposeOfActivity),
       remarks: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.remarks),
-      se: (employeeList.current === undefined ? '' : employeeList.current.se),
+      employeeList: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.employeeList),
     }
 
     console.warn(data)

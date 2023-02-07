@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const NewScheduleRequest = ({ calendarDetails }, ref) => {
+  // Employee List
+  const employeeListRef = useRef()
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
   // useRef
@@ -29,6 +31,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
   const [dtc, setDtc] = useState('')
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
+//   const [employeeList, setEmployeeList] = useState([])
 
   // Custom Textfield 
   const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -114,6 +117,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             dtc: dtcRef.current.value,
             purposeOfActivity: purposeOfActivityRef.current.value,
             remarks: remarksRef.current.value,
+            employeeList: employeeListRef.current.employeeListTest
         }
     },
     [ // Dependencies
@@ -281,8 +285,9 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
         </Row>
         
         <EmployeeListOption 
-            
+            ref={employeeListRef}
         />
+
     </>
   )
 }
