@@ -12,12 +12,18 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { 
   listScheduleReference,
   getScheduleReferenceDetails,
   deleteScheduleReference,
   listScheduleReferenceId,
 } from '../actions/Sales/salesScheduleReferenceAction'
+
+import { 
+    listCalendarSchedule,
+} from '../actions/Sales/salesCalendarScheduleAction'
+
 import {  getUsersEmailList } from '../actions/userActions'
 import { listBusinessUnitOption } from '../actions/businessUnitActions'
 import { 
@@ -126,7 +132,7 @@ const CalendarScheduleScreen = () => {
                 // Delete Schedule
                 dispatch(deleteScheduleReference(state.target.id))
                 // Refresh Datatable
-                dispatch(listScheduleReference())
+                dispatch(listCalendarSchedule())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
@@ -174,8 +180,11 @@ const CalendarScheduleScreen = () => {
 
     //
     useEffect(() => {
-        // Check if user is sales else, redirect user
+        // Check if user is Sales else, redirect user
         if(userInfo && userInfo.user.user_type === 1) {
+            // Get List of Calendar Schedule
+            dispatch(listCalendarSchedule())
+
             // Get List User Reference Id
             dispatch(listScheduleReferenceId())
             // Get List Activity Related To Option

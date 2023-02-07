@@ -4,6 +4,7 @@ import { Form, Row, Col } from 'react-bootstrap'
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+// import CreatableSelect from 'react-select/creatable';
 
 const NewScheduleRequest = ({ calendarDetails }, ref) => {
   // Employee List

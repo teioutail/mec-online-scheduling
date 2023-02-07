@@ -84,6 +84,12 @@ import {
     decisionUpdateReducer
 } from './reducers/Admin/decisionReducers'
 
+// Calendar Schedule Reducer
+import { 
+    calendarScheduleListReducer,
+    calendarScheduleCreateReducer, 
+} from './reducers/Sales/salesCalendarScheduleReducer'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -136,6 +142,8 @@ const reducer = combineReducers({
     decisionUpdate:decisionUpdateReducer,
     decisionDetails:decisionDetailsReducer,
     decisionDelete:decisionDeleteReducer,
+    calendarScheduleList:calendarScheduleListReducer,
+    calendarScheduleCreate:calendarScheduleCreateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

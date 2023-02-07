@@ -8,6 +8,10 @@ import {
   createScheduleReference,
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
+import { 
+  listCalendarSchedule,
+  createCalendarSchedule,
+} from '../../actions/Sales/salesCalendarScheduleAction'
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
 // import CloseButton from 'react-bootstrap/CloseButton';
@@ -21,6 +25,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   const dispatch = useDispatch()
   // setState
   const [scheduleType, setScheduleType] = useState('')
+  
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -52,22 +57,30 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
 
   // 
   const handleSubmit = async () =>  {
-    // Data
-    let data = {
-      id: scheduleid,
-      activity_schedule: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activitySchedule),
-      sr_no: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.srArNo),
-      ar_id: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.arId),
-      activity_type: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityType),
-      activity_related_to: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityRelatedTo),
-      destination: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.destinationDetails),
-      request_for_dtc: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.dtc),
-      purpose_of_activity: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.purposeOfActivity),
-      remarks: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.remarks),
-      employeeList: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.employeeList),
-    }
+    // 
+    let data = {}
 
-    console.warn(data)
+    if((scheduleType === 'New-Schedule') && (newScheduleInputRef.current !== undefined)) {
+      // Data
+        data = {
+        id: scheduleid,
+        activity_schedule: newScheduleInputRef.current.activitySchedule,
+        sr_no: newScheduleInputRef.current.srArNo,
+        ar_id: newScheduleInputRef.current.arId,
+        activity_type: newScheduleInputRef.current.activityType,
+        activity_related_to: newScheduleInputRef.current.activityRelatedTo,
+        destination: newScheduleInputRef.current.destinationDetails,
+        request_for_dtc: newScheduleInputRef.current.dtc,
+        purpose_of_activity: newScheduleInputRef.current.purposeOfActivity,
+        remarks: newScheduleInputRef.current.remarks,
+        employeeList: newScheduleInputRef.current.employeeList, // No Result
+      }
+
+      // console.warn(data)
+
+    } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current === undefined)) {
+      alert("testing lang muna.");
+    }
     // 
 
     // 
@@ -100,8 +113,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       if (result.isConfirmed) {
         // 
         if(mode === 'Add') {
-          // Create Schedule 
-        //   dispatch(createScheduleReference(schedule))
+          // Create Calendar Schedule 
+          dispatch(createCalendarSchedule(data))
         } else {
           // Update Schedule
         //   dispatch(updateScheduleReference(schedule))
@@ -120,7 +133,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         'success'
       )
       // Refresh Datatable
-      dispatch(listScheduleReference())
+      dispatch(listCalendarSchedule())
       // Close Modal
       onHide()
     }
@@ -133,7 +146,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         'success'
       )
       // Refresh Datatable
-      dispatch(listScheduleReference())
+      dispatch(listCalendarSchedule())
       // Close Modal
       onHide()
     }

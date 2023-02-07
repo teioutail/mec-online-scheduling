@@ -24,7 +24,7 @@ import {
     BUSINESS_UNIT_UPDATE_SUCCESS
 } from "../constants/businessUnitConstants"
 
-// BUSINESS UNIT REDUCER
+// LIST BUSINESS UNIT REDUCER
 export const businessUnitListReducer = (state = { business: [] }, action ) => {
     switch(action.type) {
         case BUSINESS_UNIT_LIST_REQUEST:
