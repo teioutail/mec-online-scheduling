@@ -14,6 +14,10 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
   const arIdRef = useRef()
   const activityTypeRef = useRef()
   const activityRelatedToRef = useRef()
+  const destinationDetailsRef = useRef()
+  const dtcRef = useRef()
+  const purposeOfActivityRef = useRef()
+  const remarksRef = useRef()
 
   // useState
   const [activitySchedule, setActivitySchedule] = useState(new Date())
@@ -106,8 +110,23 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             arId: arIdRef.current.value,
             activityType: activityTypeRef.current.value,
             activityRelatedTo: activityRelatedToRef.current.value,
+            destinationDetails: destinationDetailsRef.current.value,
+            dtc: dtcRef.current.value,
+            purposeOfActivity: purposeOfActivityRef.current.value,
+            remarks: remarksRef.current.value,
         }
-    },[activitySchedule, srArNo, activityType, activityRelatedTo, referenceId])
+    },
+    [ // Dependencies
+        activitySchedule, 
+        srArNo, 
+        activityType, 
+        activityRelatedTo, 
+        referenceId, 
+        destinationDetails,
+        dtc,
+        purposeOfActivity,
+        remarks,
+    ])
 
   //
   return (
@@ -189,6 +208,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={destinationDetails}
+                    ref={destinationDetailsRef}
                     onChange={(e) => setDestinationDetails(e.target.value)}
                 >
                 <option value="">- Select -</option>
@@ -222,6 +242,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     aria-label="Status"
                     value={dtc}
                     onChange={(e) => setDtc(e.target.value)}
+                    ref={dtcRef}
                 >
                 <option value="">- Select -</option>
                 <option value="Yes">Yes</option>
@@ -239,6 +260,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as="textarea" 
                     rows={2} 
                     value={purposeOfActivity}
+                    ref={purposeOfActivityRef}
                     onChange={(e) => setPurposeOfActivity(e.target.value)}
                 />
                 </Form.Group>
@@ -251,6 +273,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                         as="textarea" 
                         rows={2}
                         value={remarks}
+                        ref={remarksRef}
                         onChange={(e) => setRemarks(e.target.value)}
                     />
                 </Form.Group>
@@ -258,7 +281,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
         </Row>
         
         <EmployeeListOption 
-        
+            
         />
     </>
   )

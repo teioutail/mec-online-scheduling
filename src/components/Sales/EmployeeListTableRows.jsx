@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment/moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }, ref) => {
 
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
@@ -19,7 +19,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
 
   return(
     // 
-    rowsData.map((data, index)=>{
+    rowsData.map((data, index) => {
         // 
         const { employeeId, timeFrom, timeTo } = data;
         

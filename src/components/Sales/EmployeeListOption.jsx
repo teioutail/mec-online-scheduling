@@ -1,15 +1,14 @@
-import React,{ useState, useEffect, forwardRef } from 'react'
+import React,{ useState, useEffect, useImperativeHandle, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-datepicker/dist/react-datepicker.css'
 import EmployeeListTableRows from './EmployeeListTableRows'
 
-const EmployeeListOption = () => {
-
+const EmployeeListOption = ({}, ref) => {
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
-
+  //
   // Add New Table Rows
   const addTableRows = () => {
     //
@@ -35,7 +34,7 @@ const EmployeeListOption = () => {
     rowsInput[index][name] = value
     setRowsData(rowsInput)
 
-    console.warn(rowsData)
+    // console.warn(rowsData)
   }
   
   // Handle Adding Multiple SE/Employee
@@ -44,8 +43,15 @@ const EmployeeListOption = () => {
     rowsInput[index][name] = value
     setRowsData(rowsInput)
 
-    console.warn(rowsData)
+    // console.warn(rowsData)
   }
+
+  //
+  useImperativeHandle(ref, () => {
+    return {
+      se: rowsData,
+    }
+  },[rowsData])
 
   //
   return (
@@ -88,4 +94,5 @@ const EmployeeListOption = () => {
   )
 }
 
-export default EmployeeListOption
+// export default EmployeeListOption
+export default React.forwardRef(EmployeeListOption)

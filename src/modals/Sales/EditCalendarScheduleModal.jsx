@@ -8,18 +8,18 @@ import {
   createScheduleReference,
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput from '../../components/Sales/PostSalesInput'
-
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
-import CloseButton from 'react-bootstrap/CloseButton';
+// import CloseButton from 'react-bootstrap/CloseButton';
 
 const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
   // New Schedule Component Reference
   const newScheduleInputRef = useRef()
   // Training Schedule Component Reference
   const trainingScheduleInputRef = useRef()
+  // Employee List
+  const employeeList = useRef()
+
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -63,20 +63,11 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       ar_id: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.arId),
       activity_type: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityType),
       activity_related_to: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.activityRelatedTo),
-      
-      // project_name: projectName,
-      // projected_amount: projectedAmount,
-      // partner_company_name: partnerCompanyName,
-      // enduser_company_name: endUserCompanyName,
-      // partner_site_address: partnerSiteAddress,
-      // enduser_site_address: endUserSiteAddress,
-      // partner_contact_person: partnerContactPerson,
-      // enduser_contact_person: endUserContactPerson,
-      // partner_contact_number: partnerContactNumber,
-      // enduser_contact_number: endUserContactNumber,
-      // user_id: userInfo.user.id,
-      // email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
-      // business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
+      destination: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.destinationDetails),
+      request_for_dtc: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.dtc),
+      purpose_of_activity: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.purposeOfActivity),
+      remarks: (newScheduleInputRef.current === undefined ? '' : newScheduleInputRef.current.remarks),
+      se: (employeeList.current === undefined ? '' : employeeList.current.se),
     }
 
     console.warn(data)

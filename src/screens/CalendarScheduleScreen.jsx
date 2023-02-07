@@ -53,7 +53,6 @@ const CalendarScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
     const { error:errorCreate } = scheduleReferenceCreate
