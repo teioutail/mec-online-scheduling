@@ -13,6 +13,8 @@ import BusinessUnitScreen from './screens/BusinessUnitScreen'
 import CalendarScheduleScreen from './screens/CalendarScheduleScreen'
 import ActivityRelatedToScreen from './screens/Admin/ActivityRelatedToScreen'
 import DecisionUnitScreen from './screens/Admin/DecisionUnitScreen'
+import DestinationDetailScreen from './screens/Admin/DestinationDetailScreen'
+
 import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -47,6 +49,7 @@ function App() {
           <Route path='/calendar-schedule' element={<CalendarScheduleScreen/>} />
           <Route path='/activity-related-to' element={<ActivityRelatedToScreen/>} />
           <Route path='/decision' element={<DecisionUnitScreen/>} />
+          <Route path='/destination' element={<DestinationDetailScreen/>} />
         </Routes>
       </div>
     </Router>

@@ -16,7 +16,7 @@ import {
 } from './reducers/userReducers'
 
 // Role Reducer
-import { 
+import {
     roleListReducer,
     roleDetailsReducer,
     roleUpdateReducer,
@@ -90,6 +90,12 @@ import {
     calendarScheduleCreateReducer, 
 } from './reducers/Sales/salesCalendarScheduleReducer'
 
+// Destination Detail Reducers
+import { 
+    destinationCreateReducer,
+    destinationListReducer,
+} from './reducers/Admin/destinationDetailReducers'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -144,6 +150,8 @@ const reducer = combineReducers({
     decisionDelete:decisionDeleteReducer,
     calendarScheduleList:calendarScheduleListReducer,
     calendarScheduleCreate:calendarScheduleCreateReducer,
+    destinationList:destinationListReducer,
+    destinationCreate:destinationCreateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
