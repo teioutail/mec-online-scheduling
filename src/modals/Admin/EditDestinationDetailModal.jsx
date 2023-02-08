@@ -7,15 +7,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
-import { 
-    createDecision,
-    listDecision,
-    updateDecision,
-} from '../../actions/Admin/decisionActions'
-
 import { 
     createDestination,
+    listDestination,
+    updateDestination,
 } from '../../actions/Admin/destinationDetailsActions'
 
 const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDetails }) => {
@@ -23,17 +18,17 @@ const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDeta
   const dispatch = useDispatch()
   // setState
   const [destination, setDestination] = useState('')
-  // Decision Details
-  const decisionDetail = useSelector(state => state.decisionDetails)
-  const { loading:decisionLoading } = decisionDetail
+  // Destination Details
+  const destinationDetail = useSelector(state => state.destinationDetails)
+  const { loading:destinationLoading } = destinationDetail
   
-  // Decision Create Success Message
-  const decisionCreate = useSelector(state => state.decisionCreate)
-  const { success:decisionCreateSuccess, message:decisionCreateMessage } = decisionCreate
+  // Destination Create Success Message
+  const destinationCreate = useSelector(state => state.destinationCreate)
+  const { success:destinationCreateSuccess, message:destinationCreateMessage } = destinationCreate
 
-  // Decision Update Success Message
-  const decisionUpdate = useSelector(state => state.decisionUpdate)
-  const { success:decisionUpdateSuccess, message:decisionUpdateMessage } = decisionUpdate
+  // Destination Update Success Message
+  const destinationUpdate = useSelector(state => state.destinationUpdate)
+  const { success:destinationUpdateSuccess, message:destinationUpdateMessage } = destinationUpdate
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -61,8 +56,8 @@ const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDeta
           // Create Destination
           dispatch(createDestination(data))
         } else {
-          // Update Decision
-          dispatch(updateDecision(data))
+          // Update Destination
+          dispatch(updateDestination(data))
         }
       }
     })
@@ -71,27 +66,27 @@ const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDeta
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(decisionCreateSuccess) {
+    if(destinationCreateSuccess) {
       Swal.fire(
         'Success!',
-        decisionCreateMessage,
+        destinationCreateMessage,
         'success'
       )
     }
 
     // Show Success Update
-    if(decisionUpdateSuccess) {
+    if(destinationUpdateSuccess) {
       Swal.fire(
         'Success!',
-        decisionUpdateMessage,
+        destinationUpdateMessage,
         'success'
       )
     }
     // Refresh Datatable
-    dispatch(listDecision())
+    dispatch(listDestination())
     // Close Modal
     onHide()
-  },[decisionCreateSuccess, decisionUpdateSuccess])
+  },[destinationCreateSuccess, destinationUpdateSuccess])
 
   // 
   useEffect(() => {
@@ -108,7 +103,7 @@ const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDeta
         <Modal.Title>{ mode === 'Add' ? 'Add Destination' : 'Edit Destination'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            { decisionLoading ? <Loader /> : 
+            { destinationLoading ? <Loader /> : 
               <>
                 <Form.Group className="mb-3">
                     <Form.Label>Destination</Form.Label>

@@ -93,7 +93,10 @@ import {
 // Destination Detail Reducers
 import { 
     destinationCreateReducer,
+    destinationDeleteReducer,
+    destinationDetailsReducer,
     destinationListReducer,
+    destinationUpdateReducer,
 } from './reducers/Admin/destinationDetailReducers'
 
 // Reducers
@@ -152,6 +155,9 @@ const reducer = combineReducers({
     calendarScheduleCreate:calendarScheduleCreateReducer,
     destinationList:destinationListReducer,
     destinationCreate:destinationCreateReducer,
+    destinationUpdate:destinationUpdateReducer,
+    destinationDetails:destinationDetailsReducer,
+    destinationDelete:destinationDeleteReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

@@ -149,7 +149,7 @@ export const getDecisionDetails = (id) => async(dispatch, getState) => {
         }
         
         // Call API Request
-        const { data } = await axios.get(`/auth/decision/${id}`, config)
+        const { data } = await axios.get(`/auth/decision/${id}/edit`, config)
 
         dispatch({
             type: DECISION_DETAILS_SUCCESS,

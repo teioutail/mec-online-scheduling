@@ -83,7 +83,7 @@ export const getRoleDetails = (id) => async(dispatch, getState) => {
         }
 
         // Call API Request
-        const { data } = await axios.get(`/auth/roles/${id}`, config)
+        const { data } = await axios.get(`/auth/roles/${id}/edit`, config)
 
         dispatch({
             type: ROLE_DETAILS_SUCCESS,

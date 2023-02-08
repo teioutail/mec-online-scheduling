@@ -78,7 +78,7 @@ export const getActivityRelatedToDetails = (id) => async(dispatch, getState) => 
         }
 
         // Call API Request
-        const { data } = await axios.get(`/auth/activity-related/${id}`, config)
+        const { data } = await axios.get(`/auth/activity-related/${id}/edit`, config)
 
         dispatch({
             type: ACTIVITY_RELATED_DETAILS_SUCCESS,

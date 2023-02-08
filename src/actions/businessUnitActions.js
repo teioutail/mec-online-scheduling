@@ -78,7 +78,7 @@ export const getBusinessUnitDetails = (id) => async(dispatch, getState) => {
             }
         }
         // Call API Request
-        const { data } = await axios.get(`/auth/business-unit/${id}`, config)
+        const { data } = await axios.get(`/auth/business-unit/${id}/edit`, config)
 
         dispatch({
             type: BUSINESS_UNIT_DETAILS_SUCCESS,

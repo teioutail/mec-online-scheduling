@@ -225,7 +225,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         }
         
         // Call API Request
-        const { data } = await axios.get(`/auth/users/${id}`, config)
+        const { data } = await axios.get(`/auth/users/${id}/edit`, config)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,

@@ -109,7 +109,7 @@ export const getScheduleReferenceDetails = (id) => async(dispatch, getState) => 
             }
         }
         // Call API Request
-        const { data } = await axios.get(`/auth/schedulereference/${id}`, config)
+        const { data } = await axios.get(`/auth/schedulereference/${id}/edit`, config)
 
         dispatch({
             type: SCHEDULE_REFERENCE_DETAILS_SUCCESS,

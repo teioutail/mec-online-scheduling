@@ -13,22 +13,18 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditDestinationDetailModal from '../../modals/Admin/EditDestinationDetailModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { 
-    listDecision,
-    deleteDecision,
-    getDecisionDetails,
-} from '../../actions/Admin/decisionActions'
 
 import { 
     listDestination,
+    getDestinationDetails,
+    deleteDestination,
 } from '../../actions/Admin/destinationDetailsActions'
 
 import { 
-    DECISION_CREATE_RESET,
-    DECISION_DETAILS_RESET,
-    DECISION_UPDATE_RESET,
-} from '../../constants/Admin/decisionConstants'
-
+    DESTINATION_CREATE_RESET, 
+    DESTINATION_DETAILS_RESET,
+    DESTINATION_UPDATE_RESET,
+} from '../../constants/Admin/destinationDetailsConstant'
 
 const DestinationDetailScreen = () => {
 
@@ -58,61 +54,62 @@ const DestinationDetailScreen = () => {
     const destinationList = useSelector(state => state.destinationList)
     const { loading, destination } = destinationList
     
-    // Decision Create Error
-    const decisionCreate = useSelector(state => state.decisionCreate)
-    const { error:errorCreate } = decisionCreate
+    // Destination Create Error
+    const destinationCreate = useSelector(state => state.destinationCreate)
+    const { error:errorCreate } = destinationCreate
   
-    // Decision Update Error
-    const decisionUpdate = useSelector(state => state.decisionUpdate)
-    const { error:errorUpdate } = decisionUpdate
+    // Destination Update Error
+    const destinationUpdate = useSelector(state => state.destinationUpdate)
+    const { error:errorUpdate } = destinationUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Selected  Decision Info
-    const decisionDetails = useSelector(state => state.decisionDetails)
-    const { decision: decisionDetail } = decisionDetails
+    // Selected Destination Info
+    const destinationDetails = useSelector(state => state.destinationDetails)
+    const { destination: destinationDetail } = destinationDetails
 
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
-    // Edit Activity Related To Modal
+    
+    // Edit Destination Modal
     const [show, setShow] = useState(false)
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [decisionId, setDecisionId] = useState('')
+    const [destinationId, setDestinationId] = useState('')
     const [mode, setMode] = useState('')
 
-    // Add Activity Related To Modal
-    const handleDecisionView = (state) => {
+    // Add Destination Modal
+    const handleDestinationView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
         //
         dispatch({
-            type: DECISION_DETAILS_RESET,
+            type: DESTINATION_DETAILS_RESET,
         })
     }
 
-    // Edit Decision
-    const handleEditDecisionView = (state) => {
+    // Edit Destination
+    const handleEditDestinationView = (state) => {
         setShow(true)
-        setDecisionId(state.target.id)
+        setDestinationId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getDecisionDetails(state.target.id))
+        dispatch(getDestinationDetails(state.target.id))
     }
 
-    // Delete Decision Modal
-    const handleDeleteDecision = (state) => {
+    // Delete Destination Modal
+    const handleDeleteDestination = (state) => {
         // Save Change Here...
         Swal.fire({
-            title: 'Delete this Decision Record?',
+            title: 'Delete this Destination Record?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -122,14 +119,14 @@ const DestinationDetailScreen = () => {
         }).then((result) => {
             //
             if (result.isConfirmed) {
-                // Delete Decision
-                dispatch(deleteDecision(state.target.id))
+                // Delete Destination
+                dispatch(deleteDestination(state.target.id))
                 // Refresh Datatable
-                dispatch(listDecision())
+                dispatch(listDestination())
                 // Show Success Request
                 Swal.fire(
                     'Success!',
-                    'Decision Successfully Deleted.',
+                    'Destination Successfully Deleted.',
                     'success'
                 )
             }
@@ -159,12 +156,12 @@ const DestinationDetailScreen = () => {
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditDecisionView} id={row.dd_id}>
+                                    <Link className="dropdown-item" onClick={handleEditDestinationView} id={row.dd_id}>
                                         <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Destination
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteDecision} id={row.dd_id}>
+                                    <Link className="dropdown-item" onClick={handleDeleteDestination} id={row.dd_id}>
                                         <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Destination
                                     </Link>
                                 </li>
@@ -193,7 +190,7 @@ const DestinationDetailScreen = () => {
                 }
             }
             //
-            dispatch({ type: DECISION_CREATE_RESET })
+            dispatch({ type: DESTINATION_CREATE_RESET })
         }
         
         // Show Update Error
@@ -205,7 +202,7 @@ const DestinationDetailScreen = () => {
                     notify(`${errorUpdate[key]}`)
                 }
             }
-            dispatch({ type: DECISION_UPDATE_RESET })
+            dispatch({ type: DESTINATION_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 
@@ -232,7 +229,7 @@ const DestinationDetailScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleDecisionView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleDestinationView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 
@@ -254,8 +251,8 @@ const DestinationDetailScreen = () => {
                     <EditDestinationDetailModal 
                         show={show} 
                         onHide={handleClose} 
-                        ddid={decisionId}
-                        destinationDetails={decisionDetail}
+                        ddid={destinationId}
+                        destinationDetails={destinationDetail}
                         mode={mode}
                     />
 

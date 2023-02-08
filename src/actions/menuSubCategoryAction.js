@@ -78,8 +78,7 @@ export const getSubMenuCategoryDetails = (id) => async (dispatch, getState) => {
         }
 
         // Call API Request
-        const { data } = await axios.get(`/auth/subcategory/${id}`, config)
-        console.warn(data)
+        const { data } = await axios.get(`/auth/subcategory/${id}/edit`, config)
 
         dispatch({
             type: SUB_CATEGORY_DETAILS_SUCCESS,
