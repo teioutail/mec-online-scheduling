@@ -95,6 +95,7 @@ import {
     destinationCreateReducer,
     destinationDeleteReducer,
     destinationDetailsReducer,
+    destinationListOptionReducer,
     destinationListReducer,
     destinationUpdateReducer,
 } from './reducers/Admin/destinationDetailReducers'
@@ -158,6 +159,7 @@ const reducer = combineReducers({
     destinationUpdate:destinationUpdateReducer,
     destinationDetails:destinationDetailsReducer,
     destinationDelete:destinationDeleteReducer,
+    destinationListOption:destinationListOptionReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

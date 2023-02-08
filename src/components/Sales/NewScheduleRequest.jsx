@@ -1,16 +1,21 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-// import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from 'react-select/creatable';
+import { reactSelectCustomStyles } from "../../assets/js/custom_style";
 
 const NewScheduleRequest = ({ calendarDetails }, ref) => {
   // Employee List
   const employeeListRef = useRef()
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
+  const [destinationListOptions, setDestinationListOptions] = useState([])
+  //
+  const [selectedDestination, setSelectedDestination] = useState('')
+
   // useRef
   const srArNoRef = useRef()
   const activityScheduleRef = useRef()
@@ -49,9 +54,14 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
     // Schedule Reference Id List
     const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
     const { referenceid:refid } = scheduleReferenceIdList
+
     //  Activity Related To List Option
     const activityRelatedToListOption = useSelector(state => state.activityRelatedToListOption)
     const { activity:activityOption } = activityRelatedToListOption
+
+    // Destination List
+    const destinationListOption = useSelector(state => state.destinationListOption)
+    const { destination } = destinationListOption
 
     // Reference Id Options
     const referenceIdOptions = refid.map((row, key) => {
@@ -63,6 +73,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             >{ row.reference_id } - {row.project_name}
         </option>
     })
+
+    // Object to get selected Destination
+    const handleSelectedDestination = (options) => {
+        setSelectedDestination(options)
+    }
 
     /**
      * @returns - Activity Related To Options
@@ -114,11 +129,12 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             arId: arIdRef.current.value,
             activityType: activityTypeRef.current.value,
             activityRelatedTo: activityRelatedToRef.current.value,
-            destinationDetails: destinationDetailsRef.current.value,
+            destinationDetails: selectedDestination.value,
             dtc: dtcRef.current.value,
             purposeOfActivity: purposeOfActivityRef.current.value,
             remarks: remarksRef.current.value,
             employeeList: employeeListRef.current.employeeListTest
+            
         }
     },
     [ // Dependencies
@@ -131,7 +147,16 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
         dtc,
         purposeOfActivity,
         remarks,
+        selectedDestination,
     ])
+
+  // Get Destination
+  useEffect(() => {
+    // Selected destination
+ 
+    // setState
+    setDestinationListOptions(destination || [])
+  }, [destination])
 
   //
   return (
@@ -207,22 +232,14 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Destination Details</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={destinationDetails}
-                    ref={destinationDetailsRef}
-                    onChange={(e) => setDestinationDetails(e.target.value)}
-                >
-                <option value="">- Select -</option>
-                <option value="Partner">Partner</option>
-                <option value="End-user">End-user</option>
-                <option value="MEC Office">MEC Office</option>
-                <option value="Others">Others</option>
-                {/* if others text field will show */}
-                </Form.Control>
+                    <Form.Label>Destination Details</Form.Label>
+                    <CreatableSelect 
+                        className=""
+                        isClearable
+                        options={destinationListOptions}
+                        styles={reactSelectCustomStyles}
+                        onChange={handleSelectedDestination}
+                    />
                 </Form.Group>
             </Col>
         </Row>
@@ -285,7 +302,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             </Col>
         </Row>
         
-        <EmployeeListOption 
+        <EmployeeListOption
             ref={employeeListRef}
         />
 

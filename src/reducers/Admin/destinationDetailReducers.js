@@ -11,6 +11,10 @@ import {
     DESTINATION_DETAILS_RESET,
     DESTINATION_DETAILS_SUCCESS,
     DESTINATION_LIST_FAIL, 
+    DESTINATION_LIST_OPTION_FAIL, 
+    DESTINATION_LIST_OPTION_REQUEST, 
+    DESTINATION_LIST_OPTION_RESET, 
+    DESTINATION_LIST_OPTION_SUCCESS, 
     DESTINATION_LIST_REQUEST, 
     DESTINATION_LIST_RESET, 
     DESTINATION_LIST_SUCCESS,
@@ -99,6 +103,23 @@ export const destinationDetailsReducer = (state= { destination: {} } , action) =
         case DESTINATION_DETAILS_RESET:
             return { destination: {} }
         default: 
+            return state
+    }
+}
+
+// DESTINATION OPTION REDUCER
+export const destinationListOptionReducer = (state = { destination: [] }, action ) => {
+    //
+    switch(action.type) {
+        case DESTINATION_LIST_OPTION_REQUEST:
+            return { loading: true }
+        case DESTINATION_LIST_OPTION_SUCCESS:
+            return { loading: false, destination: action.payload }
+        case DESTINATION_LIST_OPTION_FAIL:
+            return { loading: false, error: action.payload }
+        case DESTINATION_LIST_OPTION_RESET:
+            return { destination: [] }
+        default:
             return state
     }
 }

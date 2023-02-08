@@ -76,7 +76,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         employeeList: newScheduleInputRef.current.employeeList, // No Result
       }
 
-      // console.warn(data)
+      console.warn(data)
 
     } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current === undefined)) {
       alert("testing lang muna.");

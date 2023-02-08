@@ -32,7 +32,7 @@ export const listCalendarSchedule = () => async (dispatch, getState) => {
             payload: data,
         })
 
-        console.warn(data)
+        // console.warn(data)
 
     } catch (error) {
         //
@@ -64,7 +64,7 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
             payload: data,
         })
 
-        console.warn(data);
+        // console.warn(data);
 
     } catch(error) {
        //

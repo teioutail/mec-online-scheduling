@@ -11,6 +11,9 @@ import {
     DESTINATION_DETAILS_RESET,
     DESTINATION_DETAILS_SUCCESS,
     DESTINATION_LIST_FAIL,
+    DESTINATION_LIST_OPTION_FAIL,
+    DESTINATION_LIST_OPTION_REQUEST,
+    DESTINATION_LIST_OPTION_SUCCESS,
     DESTINATION_LIST_REQUEST, 
     DESTINATION_LIST_SUCCESS,
     DESTINATION_UPDATE_FAIL,
@@ -192,6 +195,39 @@ export const deleteDestination = (id) => async(dispatch, getState) => {
             error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message,
+        })
+    }
+}
+
+// View List of Destination
+export const listDestinationOption = () => async (dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: DESTINATION_LIST_OPTION_REQUEST,
+        })
+
+        const { userLogin : { userInfo }} = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        // Call API Request
+        const { data } = await axios.get(`/auth/destination-option`, config)
+
+        dispatch({
+            type: DESTINATION_LIST_OPTION_SUCCESS,
+            payload: data
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: DESTINATION_LIST_OPTION_FAIL,
+            payload: error.response.data.errors,
         })
     }
 }

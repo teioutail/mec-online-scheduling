@@ -26,6 +26,8 @@ import {
 
 import {  getUsersEmailList } from '../actions/userActions'
 import { listBusinessUnitOption } from '../actions/businessUnitActions'
+import { listDestinationOption } from '../actions/Admin/destinationDetailsActions'
+
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
@@ -38,6 +40,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
 
 const CalendarScheduleScreen = () => {
+
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -59,6 +62,7 @@ const CalendarScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
+
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
     const { error:errorCreate } = scheduleReferenceCreate
@@ -184,7 +188,8 @@ const CalendarScheduleScreen = () => {
         if(userInfo && userInfo.user.user_type === 1) {
             // Get List of Calendar Schedule
             dispatch(listCalendarSchedule())
-
+            // Get List of Destination Option
+            dispatch(listDestinationOption())
             // Get List User Reference Id
             dispatch(listScheduleReferenceId())
             // Get List Activity Related To Option
