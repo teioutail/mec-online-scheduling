@@ -4,7 +4,7 @@ import { Form, Row, Col } from 'react-bootstrap'
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import CreatableSelect from 'react-select/creatable';
+import CreateSelect from 'react-select/creatable';
 import { reactSelectCustomStyles } from "../../assets/js/custom_style";
 
 const NewScheduleRequest = ({ calendarDetails }, ref) => {
@@ -123,32 +123,25 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
     // Pass the reference value
     useImperativeHandle(ref, () => {
         // Get field values
-        return {
+        let handle = {
             activitySchedule: activitySchedule,
             srArNo: srArNoRef.current.value,
             arId: arIdRef.current.value,
             activityType: activityTypeRef.current.value,
             activityRelatedTo: activityRelatedToRef.current.value,
-            destinationDetails: selectedDestination.value,
             dtc: dtcRef.current.value,
             purposeOfActivity: purposeOfActivityRef.current.value,
             remarks: remarksRef.current.value,
             employeeList: employeeListRef.current.employeeListTest
-            
         }
-    },
-    [ // Dependencies
-        activitySchedule, 
-        srArNo, 
-        activityType, 
-        activityRelatedTo, 
-        referenceId, 
-        destinationDetails,
-        dtc,
-        purposeOfActivity,
-        remarks,
-        selectedDestination,
-    ])
+
+        // Destination Details
+        if(selectedDestination !== undefined || selectedDestination !== null) {
+            handle.destinationDetails =  selectedDestination.value
+        }
+
+        return handle
+    })
 
   // Get Destination
   useEffect(() => {
@@ -233,8 +226,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                     <Form.Label>Destination Details</Form.Label>
-                    <CreatableSelect 
-                        className=""
+                    <CreateSelect 
                         isClearable
                         options={destinationListOptions}
                         styles={reactSelectCustomStyles}

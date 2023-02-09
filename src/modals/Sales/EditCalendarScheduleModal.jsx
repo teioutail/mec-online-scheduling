@@ -57,12 +57,12 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
 
   // 
   const handleSubmit = async () =>  {
-    // 
+    // Data Object
     let data = {}
 
     if((scheduleType === 'New-Schedule') && (newScheduleInputRef.current !== undefined)) {
-      // Data
-        data = {
+      // Data for New Schedule
+      data = {
         id: scheduleid,
         activity_schedule: newScheduleInputRef.current.activitySchedule,
         sr_no: newScheduleInputRef.current.srArNo,
@@ -75,12 +75,24 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: newScheduleInputRef.current.remarks,
         employeeList: newScheduleInputRef.current.employeeList, // No Result
       }
-
+      // console.warn(data)
+    } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current !== undefined)) {
+      // Data For Training
+      data = {
+        id: scheduleid,
+        trainingType: trainingScheduleInputRef.current.trainingType,
+        trainingTopic: trainingScheduleInputRef.current.trainingTopic,
+        trainer: trainingScheduleInputRef.current.trainer,
+        venue: trainingScheduleInputRef.current.venue,
+        trainerName: trainingScheduleInputRef.current.trainerName,
+        trainingSchedule: trainingScheduleInputRef.current.trainingSchedule,
+        purpose_of_activity: trainingScheduleInputRef.current.purposeOfActivity,
+        remarks: trainingScheduleInputRef.current.remarks,
+      }
+      // 
       console.warn(data)
-
-    } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current === undefined)) {
-      alert("testing lang muna.");
     }
+
     // 
 
     // 
@@ -223,7 +235,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
               { scheduleType === 'New-Schedule' && 
                 <NewScheduleRequest
                   ref={newScheduleInputRef}
-                  // scheduleDetails={scheduleDetails}
+                  scheduleDetails={scheduleDetails}
                 /> 
               }
               { scheduleType === 'Training-Schedule' && 
