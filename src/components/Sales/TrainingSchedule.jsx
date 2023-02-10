@@ -4,6 +4,7 @@ import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import EditBusinessUnitOption from './EditBusinessUnitOption'
+import TrainerNameOption from './TrainerNameOption'
 
 const TrainingSchedule = ({ scheduleDetails }, ref) => {
   // useState
@@ -16,6 +17,14 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
   //   const [businessUnit, setBusinessUnit] = useState([])
+
+  /**
+   * - Handle Trainer Option
+   */
+  const handleTrainer = (state) => {
+    setTrainer(state.target.value)
+    console.warn(state.target.value)
+  }
 
   // useRef
   const trainingScheduleRef = useRef()
@@ -47,7 +56,7 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
         trainingTopic: trainingTopicRef.current.value,
         trainer: trainerRef.current.value,
         venue: venueRef.current.value,
-        trainerName: trainerNameRef.current.value,
+        // trainerName: trainerNameRef.current.value,
         trainingSchedule: trainingSchedule,
         purposeOfActivity: purposeOfActivityRef.current.value,
         remarks: remarksRef.current.value,
@@ -60,6 +69,38 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   // 
   return (
     <>
+            <Row>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Trainer</Form.Label>
+                <Form.Control
+                    size='sm'
+                    as='select' 
+                    aria-label="Status"
+                    value={trainer}
+                    onChange={handleTrainer}
+                    ref={trainerRef}
+                >
+                <option value="-">- Select -</option>
+                <option value="SE">SE</option>
+                <option value="Principal">Principal</option>
+                <option value="Others">Others</option>
+                <option value="Exam">Exam</option>
+                <option value="Online Training">Online Training</option>
+                <option value="Sales">Sales</option>
+                <option value="Webinar">Webinar</option>
+                </Form.Control>
+                </Form.Group>
+            </Col>
+            <Col sm={12} md={6} lg={6}>
+                {(trainer !== 'Exam' && trainer !== '') && <>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Trainer Name</Form.Label>
+                        <TrainerNameOption />
+                    </Form.Group>
+                </>}
+            </Col>
+        </Row>
         <Row>
             <Col sm={12} md={6} lg={6}>
               <Form.Group className="mb-3">
@@ -92,47 +133,6 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     ref={trainingTopicRef}
                 />
               </Form.Group>
-            </Col>
-        </Row>
-        <Row>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Trainer</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={trainer}
-                    onChange={(e) => setTrainer(e.target.value)}
-                    ref={trainerRef}
-                >
-                <option value="">- Select -</option>
-                <option value="SE">SE</option>
-                <option value="Principal">Principal</option>
-                <option value="Others">Others</option>
-                <option value="Exam">Exam</option>
-                <option value="Online Training">Online Training</option>
-                <option value="Sales">Sales</option>
-                <option value="Webinar">Webinar</option>
-                </Form.Control>
-                </Form.Group>
-            </Col>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Trainer Name</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={trainerName}
-                    onChange={(e) => setTrainerName(e.target.value)}
-                    ref={trainerNameRef}
-                >
-                <option value="">- Select -</option>
-                <option value="On-Site">On-Site</option>
-                <option value="In-House">In-House</option>
-                </Form.Control>
-                </Form.Group>
             </Col>
         </Row>
         <Row>

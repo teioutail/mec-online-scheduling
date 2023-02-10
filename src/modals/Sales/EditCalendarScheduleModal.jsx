@@ -14,6 +14,8 @@ import {
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
+import moment from 'moment'
+
 // import CloseButton from 'react-bootstrap/CloseButton';
 
 const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
@@ -76,7 +78,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: newScheduleInputRef.current.remarks,
         employeeList: newScheduleInputRef.current.employeeList, // No Result
       }
-      console.warn(data)
+      // console.warn(data)
 
     } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current !== undefined)) {
       // Data For Training
@@ -93,7 +95,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: trainingScheduleInputRef.current.remarks,
       }
       // 
-      console.warn(data)
+      // console.warn(data)
     }
 
     // 
