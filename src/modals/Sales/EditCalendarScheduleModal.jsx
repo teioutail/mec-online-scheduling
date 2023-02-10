@@ -64,6 +64,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       // Data for New Schedule
       data = {
         id: scheduleid,
+        schedule_type: scheduleType,
         activity_schedule: newScheduleInputRef.current.activitySchedule,
         sr_no: newScheduleInputRef.current.srArNo,
         ar_id: newScheduleInputRef.current.arId,
@@ -75,17 +76,19 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: newScheduleInputRef.current.remarks,
         employeeList: newScheduleInputRef.current.employeeList, // No Result
       }
-      // console.warn(data)
+      console.warn(data)
+
     } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current !== undefined)) {
       // Data For Training
       data = {
         id: scheduleid,
-        trainingType: trainingScheduleInputRef.current.trainingType,
-        trainingTopic: trainingScheduleInputRef.current.trainingTopic,
+        schedule_type: scheduleType,
+        training_type: trainingScheduleInputRef.current.trainingType,
+        training_topic: trainingScheduleInputRef.current.trainingTopic,
         trainer: trainingScheduleInputRef.current.trainer,
         venue: trainingScheduleInputRef.current.venue,
-        trainerName: trainingScheduleInputRef.current.trainerName,
-        trainingSchedule: trainingScheduleInputRef.current.trainingSchedule,
+        trainer_name: trainingScheduleInputRef.current.trainerName,
+        training_schedule: trainingScheduleInputRef.current.trainingSchedule,
         purpose_of_activity: trainingScheduleInputRef.current.purposeOfActivity,
         remarks: trainingScheduleInputRef.current.remarks,
       }
@@ -205,7 +208,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
           onHide={onHide}
           backdrop="static"
           keyboard={false}
-          >
+        >
         <Modal.Header closeButton>
             <Modal.Title>{ mode === 'Add' ? 'Add Calendar Schedule' : 'Edit Calendar Schedule'  }</Modal.Title>
         </Modal.Header>
