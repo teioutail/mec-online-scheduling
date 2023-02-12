@@ -24,7 +24,11 @@ import {
     listCalendarSchedule,
 } from '../actions/Sales/salesCalendarScheduleAction'
 
-import {  getUsersEmailList } from '../actions/userActions'
+import {  
+    getSeUsersList, 
+    getUsersEmailList,
+} from '../actions/userActions'
+
 import { listBusinessUnitOption } from '../actions/businessUnitActions'
 import { listDestinationOption } from '../actions/Admin/destinationDetailsActions'
 
@@ -194,8 +198,8 @@ const CalendarScheduleScreen = () => {
             dispatch(listScheduleReferenceId())
             // Get List Activity Related To Option
             dispatch(listActivityRelatedToOption())
-            // Get User Email List
-            dispatch(getUsersEmailList())
+            // Get SE User List
+            dispatch(getSeUsersList())
             // Get Business Unit
             dispatch(listBusinessUnitOption())
         } else {
