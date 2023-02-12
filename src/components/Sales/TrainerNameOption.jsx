@@ -8,10 +8,10 @@ const TrainerNameOption = ({ scheduleDetails }, ref) => {
   // React Select
   const animatedComponents = makeAnimated();
   // useRef
-  const businessUnitRef = useRef()
-  // Business
-  const [businessUnit, setBusinessUnit] = useState([])
-  // Business Unit List
+  const trainerNameRef = useRef()
+  // Trainer Name
+  const [trainerName, setTrainerName] = useState([])
+  // Trainer Name List
   const businessUnitListOption = useSelector(state => state.businessUnitListOption)
   const { business } = businessUnitListOption
   // Business Unit
@@ -23,41 +23,43 @@ const TrainerNameOption = ({ scheduleDetails }, ref) => {
   
   // 
   const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
+
   // Pass the reference value
   useImperativeHandle(ref, () => {
     // Get field values
-        return {
-            businessUnit: selectedBusinessUnit,
-        }
-    },[selectedBusinessUnit])
+    return {
+        businessUnit: selectedBusinessUnit,
+    }
+  })
 
-    // Get Business Unit
-    useEffect(() => {
-        // Selected Schedule Details
-        // const {
-        //     business_unit,
-        // } = scheduleDetails
-        // setState
-        setBusinessListOptions(business || [])
-        // console.warn(businessListOptions)
-        // Selected Business Unit 
-        // setSelectedBusinessUnit(business_unit || [])
-    }, [business])
+  // Get Business Unit
+  useEffect(() => {
+      // Selected Schedule Details
+      // const {
+      //     business_unit,
+      // } = scheduleDetails
+      // setState
+      setBusinessListOptions(business || [])
+      // console.warn(businessListOptions)
+      // Selected Business Unit 
+      // setSelectedBusinessUnit(business_unit || [])
+  }, [business])
     
-    return (
-        <>
-            <Select
-                closeMenuOnSelect={false}
-                isMulti
-                components={animatedComponents}
-                options={businessListOptions}
-                onChange={handleSelectedBusinessUnit}
-                value={selectedBusinessUnit}
-                ref={businessUnitRef}
-                // defaultValue={[colourOptions[4], colourOptions[5]]}
-            />
-        </>
-    )
+  return (
+      <>
+          <Select
+              closeMenuOnSelect={false}
+              isMulti
+              components={animatedComponents}
+              options={businessListOptions}
+              onChange={handleSelectedBusinessUnit}
+              value={selectedBusinessUnit}
+              ref={trainerNameRef}
+              // defaultValue={[colourOptions[4], colourOptions[5]]}
+          />
+      </>
+  )
+  
 }
 
 export default React.forwardRef(TrainerNameOption)
