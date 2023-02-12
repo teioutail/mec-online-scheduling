@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Select from 'react-select'
+import CreateTrainerNameSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
 import { useImperativeHandle } from 'react'
@@ -47,9 +47,10 @@ const TrainerNameOption = ({ scheduleDetails }, ref) => {
     
   return (
       <>
-          <Select
+          <CreateTrainerNameSelect
               closeMenuOnSelect={false}
               isMulti
+              isClearable
               components={animatedComponents}
               options={businessListOptions}
               onChange={handleSelectedBusinessUnit}
