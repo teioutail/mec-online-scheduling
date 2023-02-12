@@ -64,7 +64,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
     const { destination } = destinationListOption
 
     // Reference Id Options
-    const referenceIdOptions = refid.map((row, key) => {
+    const referenceIdOptions = (refid ? refid.map((row, key) => {
         // 
         return <option 
             rel-team={row.activity_type}
@@ -72,7 +72,7 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             value={ row.ar_id }
             >{ row.reference_id } - {row.project_name}
         </option>
-    })
+    }) : <></>)
 
     // Object to get selected Destination
     const handleSelectedDestination = (options) => {
@@ -88,23 +88,23 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
             // Filter Activity Related To
             let filtered = activityOption.filter(row => row.related_team === relatedTeam)
             // 
-            return filtered.map((row, key) => {
+            return (filtered ? filtered.map((row, key) => {
                 return <option 
                     key={key} 
                     value={ row.artt_id }>
                     { row.activity }
                 </option>
-            });
+            }) : <></>)
 
         } else {
             // Show all list
-            return activityOption.map((row, key) => {
+            return (activityOption ? activityOption.map((row, key) => {
                 return <option 
                     key={key} 
                     value={ row.artt_id }>
                     { row.activity }
                 </option>
-            });
+            }) : <></>) 
         }
     }
 

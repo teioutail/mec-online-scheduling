@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
+import React, { useState, useSelector, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
@@ -18,12 +18,18 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   const [remarks, setRemarks] = useState('')
   //   const [businessUnit, setBusinessUnit] = useState([])
 
+  // Participants Email List
+//   const userEmail = useSelector(state => state.userEmail)
+//   const { emails:participants } = userEmail
+  
   /**
    * - Handle Trainer Option
    */
   const handleTrainer = (state) => {
     setTrainer(state.target.value)
-    console.warn(state.target.value)
+    // Filter Users
+    
+    // let filtered = participants.filter(row => row.role ===)
   }
 
   // useRef

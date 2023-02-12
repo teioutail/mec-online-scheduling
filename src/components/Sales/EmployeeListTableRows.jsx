@@ -13,9 +13,9 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
   const { emails:fullname } = userEmail
 
   // User List
-  const fullNameOptions = fullname.map((row, key) => {
+  const fullNameOptions = (fullname ? fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
-  })
+  }) : <></>)
 
   return(
     // 

@@ -198,8 +198,8 @@ const CalendarScheduleScreen = () => {
             dispatch(listScheduleReferenceId())
             // Get List Activity Related To Option
             dispatch(listActivityRelatedToOption())
-            // Get SE User List
-            dispatch(getSeUsersList())
+            // Get Users Email
+            dispatch(getUsersEmailList())
             // Get Business Unit
             dispatch(listBusinessUnitOption())
         } else {
