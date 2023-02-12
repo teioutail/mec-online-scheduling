@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, forwardRef } from 'react'
+import React,{ useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { useSelector } from 'react-redux'
 import { Form } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment/moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }, ref) => {
 
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
@@ -16,6 +16,14 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
+
+    //
+    useImperativeHandle(ref, () => {
+        //
+        return {
+            testing: 'rowsData',
+        }
+    })
 
   return(
     // 
@@ -83,5 +91,5 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
 )
 }
 
-export default EmployeeListTableRows
-
+// export default EmployeeListTableRows
+export default React.forwardRef(EmployeeListTableRows)
