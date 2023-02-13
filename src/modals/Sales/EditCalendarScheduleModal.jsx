@@ -203,7 +203,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // setPartnerContactNumber(partner_contact_number || "")
     // setEndUserContactNumber(enduser_contact_number || "")
 
-  }, [scheduleDetails, dispatch])
+  })
 
   return (
     <>

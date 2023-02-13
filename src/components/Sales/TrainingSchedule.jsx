@@ -65,7 +65,6 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   // Pass the reference value
   useImperativeHandle(ref, () => {
     console.warn(trainerNameRef)
-
     // Get field values
     let handle = {
         trainingType: trainingTypeRef.current.value,

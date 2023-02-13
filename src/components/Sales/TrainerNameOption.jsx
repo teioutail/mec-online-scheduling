@@ -54,10 +54,6 @@ const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames }, ref) => {
   //     // setSelectedBusinessUnit(business_unit || [])
   // }, [business])
 
-  // Get Business Unit
-  useEffect(() => {
-
-  })
     
   return (
       <>
