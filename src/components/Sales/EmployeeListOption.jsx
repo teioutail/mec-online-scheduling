@@ -52,7 +52,8 @@ const EmployeeListOption = ({}, ref) => {
   useImperativeHandle(ref, () => {
     //
     return {
-      employeeListTest: emp.testing,
+      // employeeListTest: 'testing lang muna',
+      employeeListTest: emp.current.testing,
     }
   })
 
@@ -88,6 +89,7 @@ const EmployeeListOption = ({}, ref) => {
                 deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
+                ref={emp}
               />
             </tbody>
           </Table>
@@ -97,5 +99,4 @@ const EmployeeListOption = ({}, ref) => {
   )
 }
 
-// export default EmployeeListOption
 export default React.forwardRef(EmployeeListOption)

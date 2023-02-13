@@ -20,8 +20,13 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
     //
     useImperativeHandle(ref, () => {
         //
+        const rowsData2 = [...rowsData]
+        console.warn(rowsData2)
+        //
         return {
-            testing: 'rowsData',
+            testing: 'abc123',
+            // testing: rowsData,
+            
         }
     })
 

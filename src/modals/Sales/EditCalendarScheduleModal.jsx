@@ -23,6 +23,9 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   const newScheduleInputRef = useRef()
   // Training Schedule Component Reference
   const trainingScheduleInputRef = useRef()
+  // Employee Row List
+  const empRow = useRef()
+
   // Redux
   const dispatch = useDispatch()
   // setState
