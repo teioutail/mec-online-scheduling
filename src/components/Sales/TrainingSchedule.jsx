@@ -1,4 +1,5 @@
-import React, { useState, useSelector, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
@@ -19,8 +20,8 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   //   const [businessUnit, setBusinessUnit] = useState([])
 
   // Participants Email List
-//   const userEmail = useSelector(state => state.userEmail)
-//   const { emails:participants } = userEmail
+  const userEmail = useSelector(state => state.userEmail)
+  const { emails:participants } = userEmail
   
   /**
    * - Handle Trainer Option
@@ -29,7 +30,9 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
     setTrainer(state.target.value)
     // Filter Users
     
-    // let filtered = participants.filter(row => row.role ===)
+    let filtered = participants.filter(row => row.role === "Engineer")
+    // console.warn(filtered)
+    setTrainerName(filtered)
   }
 
   // useRef
@@ -56,18 +59,25 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
 
   // Pass the reference value
   useImperativeHandle(ref, () => {
+    console.warn(trainerNameRef)
+
     // Get field values
     let handle = {
         trainingType: trainingTypeRef.current.value,
         trainingTopic: trainingTopicRef.current.value,
         trainer: trainerRef.current.value,
         venue: venueRef.current.value,
-        // trainerName: trainerNameRef.current.value,
         trainingSchedule: trainingSchedule,
         purposeOfActivity: purposeOfActivityRef.current.value,
         remarks: remarksRef.current.value,
     }
 
+    // Add Trainer Name
+    if(trainerNameRef.current !== undefined || trainerNameRef.current !== null) {
+        handle.trainerName = trainerNameRef.current
+        // handle.trainerName = 'abcsadfjakfjasfjlkasjdfkl'
+    }
+    
     // 
     return handle
   })
@@ -75,7 +85,7 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   // 
   return (
     <>
-            <Row>
+        <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
                 <Form.Label>Trainer</Form.Label>
@@ -102,7 +112,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                 {(trainer !== 'Exam' && trainer !== '') && <>
                     <Form.Group className="mb-3">
                     <Form.Label>Trainer Name</Form.Label>
-                        <TrainerNameOption />
+                        <TrainerNameOption 
+                            trainer={trainer}
+                            trainerNames={trainerName}
+                            ref={trainerNameRef}
+                        />
                     </Form.Group>
                 </>}
             </Col>

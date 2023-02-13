@@ -81,6 +81,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: newScheduleInputRef.current.remarks,
         employeeList: newScheduleInputRef.current.employeeList, // No Result
       }
+      
       console.warn(data)
 
     } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current !== undefined)) {
@@ -98,7 +99,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: trainingScheduleInputRef.current.remarks,
       }
       // 
-      // console.warn(data)
+      console.warn(data)
     }
 
     // 

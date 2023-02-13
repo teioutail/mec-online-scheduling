@@ -64,7 +64,7 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
             payload: data,
         })
 
-        console.warn(data);
+        // console.warn(data);
 
     } catch(error) {
        //
