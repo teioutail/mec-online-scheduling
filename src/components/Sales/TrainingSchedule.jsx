@@ -29,11 +29,16 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   const handleTrainer = (state) => {
     setTrainer(state.target.value)
     // Filter Users
-    
     let filtered = participants.filter(row => row.role === "Engineer")
     // console.warn(filtered)
     setTrainerName(filtered)
   }
+
+  
+  // 
+  useEffect(() => {
+
+  }, [trainerName, trainer])
 
   // useRef
   const trainingScheduleRef = useRef()

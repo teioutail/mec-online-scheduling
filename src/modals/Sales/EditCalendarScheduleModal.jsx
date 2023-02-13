@@ -60,7 +60,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // setStatus(selected)
   }
 
-  // 
   const handleSubmit = async () =>  {
     // Data Object
     let data = {}
