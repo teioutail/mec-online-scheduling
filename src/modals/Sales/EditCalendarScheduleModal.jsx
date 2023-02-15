@@ -3,21 +3,23 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+
 import { 
   listScheduleReference,
   createScheduleReference,
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
+
 import { 
   listCalendarSchedule,
   createCalendarSchedule,
 } from '../../actions/Sales/salesCalendarScheduleAction'
+
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
 import moment from 'moment'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
-
 const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
   // New Schedule Component Reference
   const newScheduleInputRef = useRef()
@@ -28,9 +30,15 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
 
   // Redux
   const dispatch = useDispatch()
+
   // setState
   const [scheduleType, setScheduleType] = useState('')
-  
+
+  // Training Fields
+  const [trainingFields , setTrainingFields] = useState({})
+
+  const [newScheduleFields, setNewScheduleFields] = useState({})
+
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
@@ -98,7 +106,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
         remarks: trainingScheduleInputRef.current.remarks,
       }
       // 
-      console.warn(data)
+      // console.warn(data)
+      console.warn(trainingFields)
     }
 
     // 
@@ -204,7 +213,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // setEndUserContactNumber(enduser_contact_number || "")
 
   })
-
+  
   return (
     <>
         <Modal  
@@ -223,9 +232,9 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
                     <Form.Group className="mb-3">
                     <Form.Label>Select Schedule Type</Form.Label>
                     <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
+                      size='sm'
+                      as='select' 
+                      aria-label="Status"
                       value={scheduleType}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >
@@ -248,6 +257,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
               }
               { scheduleType === 'Training-Schedule' && 
                 <TrainingSchedule 
+                  setTrainingFields={setTrainingFields}
+                  trainingFields={trainingFields}
                   ref={trainingScheduleInputRef}
                   scheduleDetails={scheduleDetails}
                 /> 

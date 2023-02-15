@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 
-const TrainingSchedule = ({ scheduleDetails }, ref) => {
+const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }, ref) => {
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
@@ -19,6 +19,10 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   const [remarks, setRemarks] = useState('')
   //   const [businessUnit, setBusinessUnit] = useState([])
 
+  // Selected Trainer Names 
+  const [selectedTrainerNames, setSelectedTrainerNames] = useState([])
+
+//   console.log(selectedTrainerNames, 'asd123');
   // Participants Email List
   const userEmail = useSelector(state => state.userEmail)
   const { emails:participants } = userEmail
@@ -34,12 +38,6 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
     setTrainerName(filtered)
   }
 
-  
-  // 
-  useEffect(() => {
-
-  }, [trainerName, trainer])
-
   // useRef
   const trainingScheduleRef = useRef()
   const trainingTypeRef = useRef()
@@ -49,7 +47,27 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
   const venueRef = useRef()
   const purposeOfActivityRef = useRef()
   const remarksRef = useRef()
+
+  // Fields 
+  const [fields, setFields] = useState({
+    venue: '',
+    trainer: '',
+    training_type: '',
+    training_topic: '', 
+    training_schedule: '',
+    purpose_of_activity:'',
+    trainer_name: [],
+  })
   
+  /**
+   * - Value Setter
+   */
+  const changeValueHandler = (fieldName, value) => {
+    const newField = fields; 
+    newField[fieldName] = value;
+    setFields(newField)
+  }
+
   // Custom Textfield 
   const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
         <Form.Control 
@@ -64,7 +82,7 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
 
   // Pass the reference value
   useImperativeHandle(ref, () => {
-    console.warn(trainerNameRef)
+
     // Get field values
     let handle = {
         trainingType: trainingTypeRef.current.value,
@@ -74,14 +92,8 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
         trainingSchedule: trainingSchedule,
         purposeOfActivity: purposeOfActivityRef.current.value,
         remarks: remarksRef.current.value,
+        trainerName: selectedTrainerNames
     }
-
-    // Add Trainer Name
-    if(trainerNameRef.current !== undefined || trainerNameRef.current !== null) {
-        handle.trainerName = trainerNameRef.current
-        // handle.trainerName = 'abcsadfjakfjasfjlkasjdfkl'
-    }
-    
     // 
     return handle
   })
@@ -98,7 +110,12 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={trainer}
-                    onChange={handleTrainer}
+                    onChange={(e) => { 
+                        handleTrainer(e)
+                        setTrainer(e.target.value)
+                        changeValueHandler("trainer", e.target.value)
+                        setTrainingFields(fields)
+                    }}
                     ref={trainerRef}
                 >
                 <option value="-">- Select -</option>
@@ -117,9 +134,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     <Form.Group className="mb-3">
                     <Form.Label>Trainer Name</Form.Label>
                         <TrainerNameOption 
+                            selectedTrainerNames={selectedTrainerNames}
+                            setSelectedTrainerNames={setSelectedTrainerNames}
                             trainer={trainer}
                             trainerNames={trainerName}
-                            ref={trainerNameRef}
+                            changeValueHandler={changeValueHandler}
                         />
                     </Form.Group>
                 </>}
@@ -134,7 +153,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={trainingType}
-                    onChange={(e) => setTrainingType(e.target.value)}
+                    onChange={(e) => { 
+                        setTrainingType(e.target.value);
+                        changeValueHandler("training_type", e.target.value)
+                        setTrainingFields(fields)
+                    }}
                     ref={trainingTypeRef}
                 >
                 <option value="">- Select -</option>
@@ -153,7 +176,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     type='text'
                     placeholder='Training Topic'
                     value={trainingTopic}
-                    onChange={(e) => setTrainingTopic(e.target.value)}
+                    onChange={(e) => { 
+                        setTrainingTopic(e.target.value)
+                        changeValueHandler('training_topic', e.target.value)
+                        setTrainingFields(fields)
+                    }}
                     ref={trainingTopicRef}
                 />
               </Form.Group>
@@ -166,7 +193,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                 <DatePicker
                     customInput={<DatepickerCustomInput />}
                     selected={trainingSchedule} 
-                    onChange={(date) => setTrainingSchedule(date)} 
+                    onChange={(date) => { 
+                        setTrainingSchedule(date)
+                        changeValueHandler('training_schedule', trainingSchedule)
+                        setTrainingFields(fields)
+                    }}
                     ref={trainingScheduleRef}
                 />
                 </Form.Group>
@@ -179,7 +210,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     type='text'
                     placeholder='Venue'
                     value={venue}
-                    onChange={(e) => setVenue(e.target.value)}
+                    onChange={(e) => { 
+                        setVenue(e.target.value)
+                        changeValueHandler("venue", e.target.value)
+                        setTrainingFields(fields)
+                    }}
                     ref={venueRef}
                 />
                 </Form.Group>
@@ -194,7 +229,11 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     as="textarea" 
                     rows={2} 
                     value={purposeOfActivity}
-                    onChange={(e) => setPurposeOfActivity(e.target.value)}
+                    onChange={(e) => { 
+                        setPurposeOfActivity(e.target.value)
+                        changeValueHandler("purpose_of_activity", e.target.value);
+                        setTrainingFields(fields)
+                    }}
                     ref={purposeOfActivityRef}
                 />
                 </Form.Group>
@@ -204,10 +243,14 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                     <Form.Label>Remarks</Form.Label>
                     <Form.Control
                         size='sm'
-                        as="textarea" 
+                        as="textarea"
                         rows={2}
                         value={remarks}
-                        onChange={(e) => setRemarks(e.target.value)}
+                        onChange={(e) => { 
+                            setRemarks(e.target.value)
+                            changeValueHandler("purpose_of_activity", e.target.value)
+                            setTrainingFields(fields)
+                        }}
                         ref={remarksRef}
                     />
                 </Form.Group>
@@ -218,6 +261,7 @@ const TrainingSchedule = ({ scheduleDetails }, ref) => {
                 <Form.Group className="mb-3">
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
+
                         scheduleDetails={scheduleDetails}
                     />
                 </Form.Group>
