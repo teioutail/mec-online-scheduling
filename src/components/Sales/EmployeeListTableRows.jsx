@@ -6,8 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment/moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }, ref) => {
-
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
@@ -17,18 +16,6 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
 
-    //
-    useImperativeHandle(ref, () => {
-        //
-        const rowsData2 = [...rowsData]
-        // console.warn(rowsData2)
-        //
-        return {
-            testing: 'abc123',
-            // testing: rowsData,
-            
-        }
-    })
 
   return(
     // 
@@ -38,15 +25,6 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
         
         return(
             <>
-                {/* <tr key={index}>
-                    <td>
-                        <input type="text" value={employeeName} onChange={(evnt)=>(handleChange(index, evnt))} name="employeeName" className="form-control"/>
-                    </td>
-                    <td><input type="text" value={timeFrom}  onChange={(evnt)=>(handleChange(index, evnt))} name="timeFrom" className="form-control"/> </td>
-                    <td><input type="text" value={timeTo}  onChange={(evnt)=>(handleChange(index, evnt))} name="timeTo" className="form-control" /> </td>
-                    <td><button className="btn btn-outline-danger" onClick={()=>(deleteTableRows(index))}>x</button></td>
-                </tr> */}
-                
                 <tr key={index}>
                     <td>
                         <DatePicker
@@ -96,5 +74,4 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
 )
 }
 
-// export default EmployeeListTableRows
-export default React.forwardRef(EmployeeListTableRows)
+export default EmployeeListTableRows

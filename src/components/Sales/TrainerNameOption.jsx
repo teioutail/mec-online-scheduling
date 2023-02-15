@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTrainerNames, setSelectedTrainerNames, changeValueHandler }) => {
   // React Select
   const animatedComponents = makeAnimated();
+  
   //
   const handleSelectedTrainers = (options) => {
     // setSelectedTrainers(options)

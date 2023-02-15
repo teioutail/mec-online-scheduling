@@ -18,11 +18,13 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
   //   const [businessUnit, setBusinessUnit] = useState([])
-
+  
   // Selected Trainer Names 
   const [selectedTrainerNames, setSelectedTrainerNames] = useState([])
 
-//   console.log(selectedTrainerNames, 'asd123');
+  // Selected Employee Names
+  const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
+
   // Participants Email List
   const userEmail = useSelector(state => state.userEmail)
   const { emails:participants } = userEmail
@@ -48,6 +50,7 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
     purpose_of_activity:'',
     trainer_name: [],
     business_unit: [],
+    employee_list: []
   })
   
   /**
@@ -224,7 +227,10 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
             </Col>
         </Row>
 
-        <EmployeeListOption />
+        <EmployeeListOption 
+            changeValueHandler={changeValueHandler}
+            setSelectedEmployeeNames={setSelectedEmployeeNames}
+        />
     </>
   )
 }

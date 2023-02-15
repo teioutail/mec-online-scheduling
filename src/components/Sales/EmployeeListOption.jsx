@@ -5,11 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-datepicker/dist/react-datepicker.css'
 import EmployeeListTableRows from './EmployeeListTableRows'
 
-const EmployeeListOption = ({}, ref) => {
+const EmployeeListOption = ({ changeValueHandler, setSelectedEmployeeNames}) => {
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
-  // Training Schedule Component Reference
-  const emp = useRef()
 
   // Add New Table Rows
   const addTableRows = () => {
@@ -35,8 +33,8 @@ const EmployeeListOption = ({}, ref) => {
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
-
-    // console.warn(rowsData)
+    // setSelectedEmployeeNames(rowsData)
+    changeValueHandler('employee_list', rowsData)
   }
   
   // Handle Adding Multiple SE/Employee
@@ -44,18 +42,9 @@ const EmployeeListOption = ({}, ref) => {
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
-
-    // console.warn(rowsData)
+    // setSelectedEmployeeNames(rowsData)
+    changeValueHandler('employee_list', rowsData)
   }
-
-  //
-  useImperativeHandle(ref, () => {
-    //
-    return {
-      // employeeListTest: 'testing lang muna',
-      employeeListTest: emp.current.testing,
-    }
-  })
 
   //
   return (
@@ -89,7 +78,6 @@ const EmployeeListOption = ({}, ref) => {
                 deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
-                ref={emp}
               />
             </tbody>
           </Table>
@@ -99,4 +87,4 @@ const EmployeeListOption = ({}, ref) => {
   )
 }
 
-export default React.forwardRef(EmployeeListOption)
+export default EmployeeListOption
