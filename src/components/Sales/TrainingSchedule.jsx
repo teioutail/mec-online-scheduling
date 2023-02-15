@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 
-const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }, ref) => {
+const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
@@ -33,20 +33,10 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
   const handleTrainer = (state) => {
     setTrainer(state.target.value)
     // Filter Users
-    let filtered = participants.filter(row => row.role === "Engineer")
+    let filtered = participants.filter(row => row.role === 'Engineer')
     // console.warn(filtered)
     setTrainerName(filtered)
   }
-
-  // useRef
-  const trainingScheduleRef = useRef()
-  const trainingTypeRef = useRef()
-  const trainingTopicRef = useRef()
-  const trainerRef = useRef()
-  const trainerNameRef = useRef()
-  const venueRef = useRef()
-  const purposeOfActivityRef = useRef()
-  const remarksRef = useRef()
 
   // Fields 
   const [fields, setFields] = useState({
@@ -57,6 +47,7 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
     training_schedule: '',
     purpose_of_activity:'',
     trainer_name: [],
+    business_unit: [],
   })
   
   /**
@@ -67,36 +58,6 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
     newField[fieldName] = value;
     setFields(newField)
   }
-
-  // Custom Textfield 
-  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control 
-            size='sm'
-            type='text'
-            placeholder='Activity Schedule'
-            defaultValue={value}
-            onClick={onClick}
-            ref={ref}
-        />
-    ));
-
-  // Pass the reference value
-  useImperativeHandle(ref, () => {
-
-    // Get field values
-    let handle = {
-        trainingType: trainingTypeRef.current.value,
-        trainingTopic: trainingTopicRef.current.value,
-        trainer: trainerRef.current.value,
-        venue: venueRef.current.value,
-        trainingSchedule: trainingSchedule,
-        purposeOfActivity: purposeOfActivityRef.current.value,
-        remarks: remarksRef.current.value,
-        trainerName: selectedTrainerNames
-    }
-    // 
-    return handle
-  })
 
   // 
   return (
@@ -113,10 +74,9 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                     onChange={(e) => { 
                         handleTrainer(e)
                         setTrainer(e.target.value)
-                        changeValueHandler("trainer", e.target.value)
+                        changeValueHandler('trainer', e.target.value)
                         setTrainingFields(fields)
                     }}
-                    ref={trainerRef}
                 >
                 <option value="-">- Select -</option>
                 <option value="SE">SE</option>
@@ -155,10 +115,9 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                     value={trainingType}
                     onChange={(e) => { 
                         setTrainingType(e.target.value);
-                        changeValueHandler("training_type", e.target.value)
+                        changeValueHandler('training_type', e.target.value)
                         setTrainingFields(fields)
                     }}
-                    ref={trainingTypeRef}
                 >
                 <option value="">- Select -</option>
                 <option value="Certification">Certification</option>
@@ -181,7 +140,6 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                         changeValueHandler('training_topic', e.target.value)
                         setTrainingFields(fields)
                     }}
-                    ref={trainingTopicRef}
                 />
               </Form.Group>
             </Col>
@@ -191,14 +149,13 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                 <Form.Group className="mb-3">
                 <Form.Label>Training Schedule</Form.Label>
                 <DatePicker
-                    customInput={<DatepickerCustomInput />}
+                    className='form-control form-control-sm'
                     selected={trainingSchedule} 
                     onChange={(date) => { 
                         setTrainingSchedule(date)
                         changeValueHandler('training_schedule', trainingSchedule)
                         setTrainingFields(fields)
                     }}
-                    ref={trainingScheduleRef}
                 />
                 </Form.Group>
             </Col>
@@ -212,10 +169,9 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                     value={venue}
                     onChange={(e) => { 
                         setVenue(e.target.value)
-                        changeValueHandler("venue", e.target.value)
+                        changeValueHandler('venue', e.target.value)
                         setTrainingFields(fields)
                     }}
-                    ref={venueRef}
                 />
                 </Form.Group>
             </Col>
@@ -231,10 +187,9 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                     value={purposeOfActivity}
                     onChange={(e) => { 
                         setPurposeOfActivity(e.target.value)
-                        changeValueHandler("purpose_of_activity", e.target.value);
+                        changeValueHandler('purpose_of_activity', e.target.value);
                         setTrainingFields(fields)
                     }}
-                    ref={purposeOfActivityRef}
                 />
                 </Form.Group>
             </Col>
@@ -248,10 +203,9 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                         value={remarks}
                         onChange={(e) => { 
                             setRemarks(e.target.value)
-                            changeValueHandler("purpose_of_activity", e.target.value)
+                            changeValueHandler('remarks', e.target.value)
                             setTrainingFields(fields)
                         }}
-                        ref={remarksRef}
                     />
                 </Form.Group>
             </Col>
@@ -261,7 +215,7 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
                 <Form.Group className="mb-3">
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
-
+                        changeValueHandler={changeValueHandler}
                         scheduleDetails={scheduleDetails}
                     />
                 </Form.Group>
@@ -275,4 +229,4 @@ const TrainingSchedule = ({ scheduleDetails, trainingFields, setTrainingFields }
   )
 }
 
-export default React.forwardRef(TrainingSchedule)
+export default TrainingSchedule

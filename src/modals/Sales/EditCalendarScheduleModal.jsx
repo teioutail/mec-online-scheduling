@@ -37,6 +37,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
 
+  // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
 
   // Schedule Reference Details
@@ -91,23 +92,11 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
       
       console.warn(data)
 
-    } else if ((scheduleType === 'Training-Schedule') && (trainingScheduleInputRef.current !== undefined)) {
+    } else if ((scheduleType === 'Training-Schedule')) {
       // Data For Training
-      data = {
-        id: scheduleid,
-        schedule_type: scheduleType,
-        training_type: trainingScheduleInputRef.current.trainingType,
-        training_topic: trainingScheduleInputRef.current.trainingTopic,
-        trainer: trainingScheduleInputRef.current.trainer,
-        venue: trainingScheduleInputRef.current.venue,
-        trainer_name: trainingScheduleInputRef.current.trainerName,
-        training_schedule: trainingScheduleInputRef.current.trainingSchedule,
-        purpose_of_activity: trainingScheduleInputRef.current.purposeOfActivity,
-        remarks: trainingScheduleInputRef.current.remarks,
-      }
+      data = {...trainingFields, schedule_type: scheduleType}
       // 
-      // console.warn(data)
-      console.warn(trainingFields)
+      console.warn(data)
     }
 
     // 
@@ -258,10 +247,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
               { scheduleType === 'Training-Schedule' && 
                 <TrainingSchedule 
                   setTrainingFields={setTrainingFields}
-                  trainingFields={trainingFields}
-                  ref={trainingScheduleInputRef}
                   scheduleDetails={scheduleDetails}
-                /> 
+                />
               }
             </>
           }

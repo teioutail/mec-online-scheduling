@@ -1,34 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
-import { useImperativeHandle } from 'react'
 
-const EditBusinessUnitOption = ({ scheduleDetails }, ref) => {
+const EditBusinessUnitOption = ({ scheduleDetails, changeValueHandler }) => {
   // React Select
   const animatedComponents = makeAnimated();
-  // useRef
-  const businessUnitRef = useRef()
-  // Business
-  const [businessUnit, setBusinessUnit] = useState([])
+
   // Business Unit List
   const businessUnitListOption = useSelector(state => state.businessUnitListOption)
   const { business } = businessUnitListOption
+
   // Business Unit
   const [businessListOptions, setBusinessListOptions] = useState([])
+
   // Object to get selected Business Unit
   const handleSelectedBusinessUnit = (options) => {
     setSelectedBusinessUnit(options)
   }
-  // 
+  // Selected Business Units
   const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
-  // Pass the reference value
-  useImperativeHandle(ref, () => {
-    // Get field values
-        return {
-            businessUnit: selectedBusinessUnit,
-        }
-    },[selectedBusinessUnit])
 
     // Get Business Unit
     useEffect(() => {
@@ -50,13 +41,14 @@ const EditBusinessUnitOption = ({ scheduleDetails }, ref) => {
                 isMulti
                 components={animatedComponents}
                 options={businessListOptions}
-                onChange={handleSelectedBusinessUnit}
+                onChange={(e) => { 
+                    handleSelectedBusinessUnit(e)
+                    changeValueHandler('business_unit', selectedBusinessUnit)
+                }}
                 value={selectedBusinessUnit}
-                ref={businessUnitRef}
-                // defaultValue={[colourOptions[4], colourOptions[5]]}
             />
         </>
     )
 }
 
-export default React.forwardRef(EditBusinessUnitOption)
+export default EditBusinessUnitOption

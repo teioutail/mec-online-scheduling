@@ -50,12 +50,14 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
         dispatch({
             type: CALENDAR_SCHEDULE_CREATE_REQUEST,
         })
+        
         // Header
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
+
         // Call API Request
         const { data } = await axios.post('/auth/calendar', calendar, config)
 
