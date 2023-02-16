@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
+import React, { useState, forwardRef, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
@@ -7,26 +7,10 @@ import 'react-datepicker/dist/react-datepicker.css'
 import CreateSelect from 'react-select/creatable';
 import { reactSelectCustomStyles } from "../../assets/js/custom_style";
 
-const NewScheduleRequest = ({ calendarDetails }, ref) => {
-  // Employee List
-  const employeeListRef = useRef()
+const NewScheduleRequest = ({ calendarDetails, setNewScheduleFields }) => {
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
   const [destinationListOptions, setDestinationListOptions] = useState([])
-  //
-  const [selectedDestination, setSelectedDestination] = useState('')
-
-  // useRef
-  const srArNoRef = useRef()
-  const activityScheduleRef = useRef()
-  const arIdRef = useRef()
-  const activityTypeRef = useRef()
-  const activityRelatedToRef = useRef()
-  const destinationDetailsRef = useRef()
-  const dtcRef = useRef()
-  const purposeOfActivityRef = useRef()
-  const remarksRef = useRef()
-
   // useState
   const [activitySchedule, setActivitySchedule] = useState(new Date())
   const [srArNo, setSrArNo] = useState('')
@@ -37,10 +21,37 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
   const [dtc, setDtc] = useState('')
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
-//   const [employeeList, setEmployeeList] = useState([])
+  const [selectedDestination, setSelectedDestination] = useState('')
+  //   const [employeeList, setEmployeeList] = useState([])
 
-  // Custom Textfield 
-  const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
+  // Selected Employee Names
+  const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
+
+    // Fields
+    const [fields, setFields] = useState({
+        activity_schedule: '',
+        sr_no: '',
+        ar_id: '',
+        activity_type: '',
+        activity_related_to: '',
+        destination: '',
+        request_for_dtc: '',
+        purpose_of_activity: '',
+        remarks: '',
+        employee_list:[],
+    })
+
+    /**
+     * - Value Setter
+     */
+    const changeValueHandler = (fieldName, value) => {
+        const newField = fields
+        newField[fieldName] = value
+        setFields(newField)
+    }
+
+    // Custom Textfield 
+    const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
         <Form.Control 
             size='sm'
             type='text'
@@ -77,6 +88,8 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
     // Object to get selected Destination
     const handleSelectedDestination = (options) => {
         setSelectedDestination(options)
+        changeValueHandler('destination', options)
+        setNewScheduleFields(fields)
     }
 
     /**
@@ -117,39 +130,17 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
         let option =  optionElement.getAttribute('rel-team')
         // Set Reference Id
         setReferenceId(state.target.value)
+        changeValueHandler('ar_id', state.target.value)
         setRelatedTeam(option)
     }
 
-    // Pass the reference value
-    useImperativeHandle(ref, () => {
-        // Get field values
-        let handle = {
-            activitySchedule: activitySchedule,
-            srArNo: srArNoRef.current.value,
-            arId: arIdRef.current.value,
-            activityType: activityTypeRef.current.value,
-            activityRelatedTo: activityRelatedToRef.current.value,
-            dtc: dtcRef.current.value,
-            purposeOfActivity: purposeOfActivityRef.current.value,
-            remarks: remarksRef.current.value,
-            employeeList: employeeListRef.current.employeeListTest
-        }
-
-        // Destination Details
-        if(selectedDestination !== undefined || selectedDestination !== null) {
-            handle.destinationDetails =  selectedDestination.value
-        }
-
-        return handle
-    })
-
-  // Get Destination
-  useEffect(() => {
-    // Selected destination
- 
-    // setState
-    setDestinationListOptions(destination || [])
-  }, [destination])
+    // Get Destination
+    useEffect(() => {
+        // Selected destination
+    
+        // setState
+        setDestinationListOptions(destination || [])
+    }, [destination])
 
   //
   return (
@@ -163,8 +154,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     type='text'
                     placeholder='SR/AR No.'
                     value={srArNo}
-                    onChange={(e) => setSrArNo(e.target.value)}
-                    ref={srArNoRef}
+                    onChange={(e) => {
+                        changeValueHandler('sr_no', e.target.value)
+                        setSrArNo(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
                 />
                 </Form.Group>
             </Col>
@@ -180,8 +174,10 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                         size='sm'
                         aria-label="Reference Id"
                         value={referenceId}
-                        ref={arIdRef}
-                        onChange={handleReferenceIdOption}
+                        onChange={(e) => {
+                            handleReferenceIdOption(e)
+                            setNewScheduleFields(fields)
+                        }}
                     >
                     <option value="">- Select -</option>
                     { referenceIdOptions }
@@ -196,8 +192,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={activityType}
-                    onChange={(e) => setActivityType(e.target.value)}
-                    ref={activityTypeRef}
+                    onChange={(e) => {
+                        changeValueHandler('activity_type', e.target.value)
+                        setActivityType(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
                 >
                 <option value="">- Select -</option>
                 <option value="On-Site">On-Site</option>
@@ -215,8 +214,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={activityRelatedTo}
-                    ref={activityRelatedToRef}
-                    onChange={(e) => setActivityRelatedTo(e.target.value)}
+                    onChange={(e) => {
+                        changeValueHandler('activity_related_to', e.target.value)
+                        setActivityRelatedTo(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
                 >
                 <option value="">- Select -</option>
                 { getActivityRelatedToOptions() }
@@ -230,7 +232,9 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                         isClearable
                         options={destinationListOptions}
                         styles={reactSelectCustomStyles}
-                        onChange={handleSelectedDestination}
+                        onChange={(e) => {
+                            handleSelectedDestination(e)
+                        }}
                     />
                 </Form.Group>
             </Col>
@@ -242,8 +246,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                 <DatePicker
                     customInput={<DatepickerCustomInput />}
                     selected={activitySchedule} 
-                    onChange={(date) => setActivitySchedule(date)} 
-                    ref={activityScheduleRef}
+                    onChange={(date) => {
+                        changeValueHandler('activity_schedule', date)
+                        setActivitySchedule(date)
+                        setNewScheduleFields(fields)
+                    }} 
                 />
                 </Form.Group>
             </Col>
@@ -255,8 +262,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as='select' 
                     aria-label="Status"
                     value={dtc}
-                    onChange={(e) => setDtc(e.target.value)}
-                    ref={dtcRef}
+                    onChange={(e) => {
+                        changeValueHandler('request_for_dtc', e.target.value)
+                        setDtc(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
                 >
                 <option value="">- Select -</option>
                 <option value="Yes">Yes</option>
@@ -274,8 +284,11 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                     as="textarea" 
                     rows={2} 
                     value={purposeOfActivity}
-                    ref={purposeOfActivityRef}
-                    onChange={(e) => setPurposeOfActivity(e.target.value)}
+                    onChange={(e) => {
+                        changeValueHandler('purpose_of_activity', e.target.value)
+                        setPurposeOfActivity(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
                 />
                 </Form.Group>
             </Col>
@@ -287,19 +300,25 @@ const NewScheduleRequest = ({ calendarDetails }, ref) => {
                         as="textarea" 
                         rows={2}
                         value={remarks}
-                        ref={remarksRef}
-                        onChange={(e) => setRemarks(e.target.value)}
+                        onChange={(e) => {
+                            changeValueHandler('remarks', e.target.value)
+                            setRemarks(e.target.value)
+                            setNewScheduleFields(fields)
+                        }}
                     />
                 </Form.Group>
             </Col>
         </Row>
         
         <EmployeeListOption
-            ref={employeeListRef}
+            // ref={employeeListRef}
+            changeValueHandler={changeValueHandler}
+            selectedEmployeeNames={selectedEmployeeNames}
+            setSelectedEmployeeNames={setSelectedEmployeeNames}
         />
 
     </>
   )
 }
 
-export default React.forwardRef(NewScheduleRequest)
+export default NewScheduleRequest

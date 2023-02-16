@@ -36,7 +36,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
 
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
-
   // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
 
@@ -73,26 +72,28 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // Data Object
     let data = {}
 
-    if((scheduleType === 'New-Schedule') && (newScheduleInputRef.current !== undefined)) {
+    if(scheduleType === 'New-Schedule') {
       // Data for New Schedule
-      data = {
-        id: scheduleid,
-        schedule_type: scheduleType,
-        activity_schedule: newScheduleInputRef.current.activitySchedule,
-        sr_no: newScheduleInputRef.current.srArNo,
-        ar_id: newScheduleInputRef.current.arId,
-        activity_type: newScheduleInputRef.current.activityType,
-        activity_related_to: newScheduleInputRef.current.activityRelatedTo,
-        destination: newScheduleInputRef.current.destinationDetails,
-        request_for_dtc: newScheduleInputRef.current.dtc,
-        purpose_of_activity: newScheduleInputRef.current.purposeOfActivity,
-        remarks: newScheduleInputRef.current.remarks,
-        employeeList: newScheduleInputRef.current.employeeList, // No Result
-      }
+
+      // data = {
+      //   id: scheduleid,
+      //   schedule_type: scheduleType,
+      //   activity_schedule: newScheduleInputRef.current.activitySchedule,
+      //   sr_no: newScheduleInputRef.current.srArNo,
+      //   ar_id: newScheduleInputRef.current.arId,
+      //   activity_type: newScheduleInputRef.current.activityType,
+      //   activity_related_to: newScheduleInputRef.current.activityRelatedTo,
+      //   destination: newScheduleInputRef.current.destinationDetails,
+      //   request_for_dtc: newScheduleInputRef.current.dtc,
+      //   purpose_of_activity: newScheduleInputRef.current.purposeOfActivity,
+      //   remarks: newScheduleInputRef.current.remarks,
+      //   employeeList: newScheduleInputRef.current.employeeList, // No Result
+      // }
       
+      data = {...newScheduleFields, schedule_type: scheduleType}
       console.warn(data)
 
-    } else if ((scheduleType === 'Training-Schedule')) {
+    } else if (scheduleType === 'Training-Schedule') {
       // Data For Training
       data = {...trainingFields, schedule_type: scheduleType}
       // 
@@ -240,7 +241,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
             <>
               { scheduleType === 'New-Schedule' && 
                 <NewScheduleRequest
-                  ref={newScheduleInputRef}
+                  // ref={newScheduleInputRef}
+                  setNewScheduleFields={setNewScheduleFields}
                   scheduleDetails={scheduleDetails}
                 /> 
               }

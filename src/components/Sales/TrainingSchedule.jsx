@@ -18,7 +18,7 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
   //   const [businessUnit, setBusinessUnit] = useState([])
-  
+
   // Selected Trainer Names 
   const [selectedTrainerNames, setSelectedTrainerNames] = useState([])
 
@@ -50,15 +50,15 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
     purpose_of_activity:'',
     trainer_name: [],
     business_unit: [],
-    employee_list: []
+    employee_list: [],
   })
   
   /**
    * - Value Setter
    */
   const changeValueHandler = (fieldName, value) => {
-    const newField = fields; 
-    newField[fieldName] = value;
+    const newField = fields
+    newField[fieldName] = value
     setFields(newField)
   }
 
@@ -229,6 +229,7 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
 
         <EmployeeListOption 
             changeValueHandler={changeValueHandler}
+            selectedEmployeeNames={selectedEmployeeNames}
             setSelectedEmployeeNames={setSelectedEmployeeNames}
         />
     </>
