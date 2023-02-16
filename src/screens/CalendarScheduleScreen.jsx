@@ -297,7 +297,7 @@ const CalendarScheduleScreen = () => {
                         events={allEvents}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 500 , margin: '50px'}}   
+                        style={{ height: 500 , margin: '50px'}}
                     />
 
                     <EditCalendarScheduleModal 
