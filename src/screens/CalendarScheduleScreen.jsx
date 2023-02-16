@@ -6,44 +6,95 @@ import FormContainer from '../components/template/FormContainer'
 import Loader from '../components/Loader'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import format from 'date-fns/format'
+import parse from 'date-fns/parse'
+import startOfWeek from 'date-fns/startOfWeek'
+import getDay from 'date-fns/getDay'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import DatePicker from 'react-datepicker'
+// import moment from 'moment'
 import { 
-  listScheduleReference,
-  getScheduleReferenceDetails,
-  deleteScheduleReference,
-  listScheduleReferenceId,
-} from '../actions/Sales/salesScheduleReferenceAction'
+    listScheduleReference,
+    getScheduleReferenceDetails,
+    deleteScheduleReference,
+    listScheduleReferenceId,
+  } from '../actions/Sales/salesScheduleReferenceAction'
+  
+  import { 
+      listCalendarSchedule,
+  } from '../actions/Sales/salesCalendarScheduleAction'
+  
+  import {  
+      getSeUsersList, 
+      getUsersEmailList,
+  } from '../actions/userActions'
+  
+  import { listBusinessUnitOption } from '../actions/businessUnitActions'
+  import { listDestinationOption } from '../actions/Admin/destinationDetailsActions'
+  
+  import { 
+    SCHEDULE_REFERENCE_CREATE_RESET,
+    SCHEDULE_REFERENCE_DETAILS_RESET,
+    SCHEDULE_REFERENCE_UPDATE_RESET,
+  } from '../constants/Sales/salesScheduleReferenceConstants'
+  import Swal from 'sweetalert2/dist/sweetalert2.js'
+  import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
+  import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
 
-import { 
-    listCalendarSchedule,
-} from '../actions/Sales/salesCalendarScheduleAction'
+// Locales
+const locales = {
+    "en-US": require("date-fns/locale/en-US")
+}
 
-import {  
-    getSeUsersList, 
-    getUsersEmailList,
-} from '../actions/userActions'
+// 
+const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales
+})
 
-import { listBusinessUnitOption } from '../actions/businessUnitActions'
-import { listDestinationOption } from '../actions/Admin/destinationDetailsActions'
-
-import { 
-  SCHEDULE_REFERENCE_CREATE_RESET,
-  SCHEDULE_REFERENCE_DETAILS_RESET,
-  SCHEDULE_REFERENCE_UPDATE_RESET,
-} from '../constants/Sales/salesScheduleReferenceConstants'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
+const events = [
+    {
+        title: 'Big Meeting',
+        allDay: true,
+        start: new Date(2023,2,0),
+        end: new Date(2023,2,0),
+    },
+    {
+        title: "Vacation",
+        start: new Date(2023,2,7),
+        end: new Date(2023,2,10)
+    },
+    {
+        title: "Conference",
+        start: new Date(2023,2,20),
+        end: new Date(2023,2,23)
+    },
+]
 
 const CalendarScheduleScreen = () => {
+
+    // Calendar Event
+    const [newEvent, setNewEvent] = useState({
+        title: "", 
+        start: "", 
+        end:""
+    })
+    
+    const [allEvents, setAllEvents] = useState(events)
+     
+    const handleAddEvent = () => {
+        setAllEvents([...allEvents, newEvent])
+    }
 
     // Toastify
     const notify = (msg) => toast.error(msg, {
@@ -56,8 +107,7 @@ const CalendarScheduleScreen = () => {
         progress: undefined,
         theme: "light",
     });
-    // Moment
-    const localizer = momentLocalizer(moment)
+
     // CommonJS
     const Swal = require('sweetalert2')
     // Header
@@ -213,15 +263,41 @@ const CalendarScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
+
+                    <div>
+                        <input type="text" 
+                            placeholder="Add Title" 
+                            style={{width: "20%", marginRight: "10px"}} 
+                            value={newEvent.title} 
+                            onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
+                        />
+                        <DatePicker 
+                            placeholderText="Start Date" style={{marginRight: "10px"}}
+                            selected={newEvent.start} 
+                            onChange={(start) => setNewEvent({...newEvent, start})}
+                        />
+                        <DatePicker 
+                            placeholderText="End Date" style={{marginRight: "10px"}}
+                            selected={newEvent.end} 
+                            onChange={(end) => setNewEvent({...newEvent, end})}
+                        />
+                        <button 
+                            style={{marginTop: "10px"}}
+                            onClick={handleAddEvent}
+                        >Add Event</button>
+                    </div>
+
+
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
                     <Calendar
                         localizer={localizer}
+                        events={allEvents}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 500 , marginTop: '50px'}}
+                        style={{ height: 500 , margin: '50px'}}   
                     />
 
                     <EditCalendarScheduleModal 
