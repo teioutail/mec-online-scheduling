@@ -3,7 +3,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
 
-const EditBusinessUnitOption = ({ scheduleDetails, changeValueHandler }) => {
+const EditBusinessUnitOption = ({ calendarScheduleDetails, changeValueHandler }) => {
   // React Select
   const animatedComponents = makeAnimated();
 
@@ -26,7 +26,7 @@ const EditBusinessUnitOption = ({ scheduleDetails, changeValueHandler }) => {
         // Selected Schedule Details
         const {
             business_unit,
-        } = scheduleDetails
+        } = calendarScheduleDetails
         // setState
         setBusinessListOptions(business || [])
         // console.warn(businessListOptions)

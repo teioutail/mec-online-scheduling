@@ -53,12 +53,10 @@ const CalendarScheduleScreen = () => {
 
     // useState
     const [selectedCalendarDetails, setSelectedCalendarDetails] = useState({})
-
     // Locales
     const locales = {
         "en-US": require("date-fns/locale/en-US")
     }
-
     // 
     const localizer = dateFnsLocalizer({
         format,
@@ -67,7 +65,6 @@ const CalendarScheduleScreen = () => {
         getDay,
         locales
     })
-
     // Calendar Event
     // const [newEvent, setNewEvent] = useState({
     //     title: "", 
@@ -124,7 +121,7 @@ const CalendarScheduleScreen = () => {
 
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
+    const { loading:loadingDetails , calendar:calendarScheduleDetail } = calendarScheduleDetails
 
     // EditRoleModal
     const [show, setShow] = useState(false)
@@ -267,7 +264,6 @@ const CalendarScheduleScreen = () => {
                         >Add Event</button>
                     </div> */}
 
-
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
@@ -303,6 +299,7 @@ const CalendarScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>

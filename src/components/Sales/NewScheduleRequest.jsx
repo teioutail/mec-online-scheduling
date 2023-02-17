@@ -1,13 +1,14 @@
-import React, { useState, forwardRef, useEffect } from "react";
+import React, { useState, forwardRef, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import CreateSelect from 'react-select/creatable';
-import { reactSelectCustomStyles } from "../../assets/js/custom_style";
+import CreateSelect from 'react-select/creatable'
+import { reactSelectCustomStyles } from "../../assets/js/custom_style"
+import moment from "moment"
 
-const NewScheduleRequest = ({ calendarDetails, setNewScheduleFields }) => {
+const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) => {
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
   const [destinationListOptions, setDestinationListOptions] = useState([])
@@ -136,11 +137,48 @@ const NewScheduleRequest = ({ calendarDetails, setNewScheduleFields }) => {
 
     // Get Destination
     useEffect(() => {
-        // Selected destination
-    
+        // Selected Calendar Details
+        const {  
+            art_id,
+            sched_type,
+            purpose_of_activity,
+            remarks,
+            ar_id,
+            user_id,
+            fields,
+            business_unit,
+            trainers,
+            persons,
+            updated,
+            created_at,
+            updated_at,
+        } = calendarScheduleDetails
+        
+        // const { 
+        //     activity_related_to,
+        //     activity_schedule,
+        //     activity_type,
+        //     request_for_dtc,
+        //     sr_no,
+        //     destination,
+        // } = fields
+
+        console.warn(fields)
+
         // setState
-        setDestinationListOptions(destination || [])
-    }, [destination])
+        setRemarks(remarks || '')
+        setPurposeOfActivity(purpose_of_activity || '')
+        // setSrArNo(sr_no || '')
+        // setDtc(request_for_dtc || '')
+        // setActivityRelatedTo(activity_related_to || '')
+        // setActivityType(activity_type || '')
+
+        // setActivitySchedule(moment(activity_schedule).format('YYYY/MM/DD') || '')
+        
+        console.warn(calendarScheduleDetails)
+        setDestinationListOptions(destination)
+
+    }, [calendarScheduleDetails])
 
   //
   return (
@@ -311,7 +349,7 @@ const NewScheduleRequest = ({ calendarDetails, setNewScheduleFields }) => {
         </Row>
         
         <EmployeeListOption
-            // ref={employeeListRef}
+            calendarScheduleDetails={calendarScheduleDetails}
             changeValueHandler={changeValueHandler}
             selectedEmployeeNames={selectedEmployeeNames}
             setSelectedEmployeeNames={setSelectedEmployeeNames}

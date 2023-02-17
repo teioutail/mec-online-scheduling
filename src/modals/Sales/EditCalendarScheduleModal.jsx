@@ -35,6 +35,9 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+  
+  // Schedule Type
+  const { sched_type } = calendarScheduleDetails
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -81,6 +84,16 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
     })
   }
 
+   // Get Destination
+   useEffect(() => {
+    // Selected Calendar Details
+    const { sched_type } = calendarScheduleDetails
+    
+    // setState
+    setScheduleType(sched_type || '')
+
+}, [calendarScheduleDetails])
+
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
@@ -111,29 +124,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
 
   },[scheduleReferenceCreateMessage, scheduleReferenceUpdateSuccess])
 
-  // 
-  useEffect(() => {
-    // Selected Schedule Details
-    const {  
-      art_id,
-      sched_type,
-      purpose_of_activity,
-      remarks,
-      ar_id,
-      user_id,
-      fields,
-      business_unit,
-      trainers,
-      persons,
-      updated,
-      created_at,
-      updated_at,
-    } = calendarScheduleDetails
-
-    console.warn(calendarScheduleDetails)
-
-  },[calendarScheduleDetails])
-  
   return (
     <>
         <Modal  
@@ -155,6 +145,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
                       size='sm'
                       as='select' 
                       aria-label="Status"
+                      
                       value={scheduleType}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >

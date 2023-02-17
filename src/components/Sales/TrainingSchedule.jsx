@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 
-const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
+const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
@@ -219,7 +219,7 @@ const TrainingSchedule = ({ scheduleDetails, setTrainingFields }) => {
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
                         changeValueHandler={changeValueHandler}
-                        scheduleDetails={scheduleDetails}
+                        calendarScheduleDetails={calendarScheduleDetails}
                     />
                 </Form.Group>
             </Col>
