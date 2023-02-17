@@ -176,7 +176,7 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) =
         // setActivitySchedule(moment(activity_schedule).format('YYYY/MM/DD') || '')
         
         console.warn(calendarScheduleDetails)
-        setDestinationListOptions(destination)
+        // setDestinationListOptions(destination)
 
     }, [calendarScheduleDetails])
 
