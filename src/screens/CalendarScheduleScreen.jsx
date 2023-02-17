@@ -48,52 +48,41 @@ import {
   import 'react-toastify/dist/ReactToastify.css';
   import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
 
-// Locales
-const locales = {
-    "en-US": require("date-fns/locale/en-US")
-}
-
-// 
-const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales
-})
-
-const events = [
-    {
-        title: 'Big Meeting',
-        allDay: true,
-        start: new Date(2023,2,0),
-        end: new Date(2023,2,0),
-    },
-    {
-        title: "Vacation",
-        start: new Date(2023,2,7),
-        end: new Date(2023,2,10)
-    },
-    {
-        title: "Conference",
-        start: new Date(2023,2,20),
-        end: new Date(2023,2,23)
-    },
-]
-
 const CalendarScheduleScreen = () => {
 
-    // Calendar Event
-    const [newEvent, setNewEvent] = useState({
-        title: "", 
-        start: "", 
-        end:""
+    // Locales
+    const locales = {
+        "en-US": require("date-fns/locale/en-US")
+    }
+
+    // 
+    const localizer = dateFnsLocalizer({
+        format,
+        parse,
+        startOfWeek,
+        getDay,
+        locales
     })
+
+    // Calendar Event
+    // const [newEvent, setNewEvent] = useState({
+    //     title: "", 
+    //     start: "", 
+    //     end:""
+    // })
     
-    const [allEvents, setAllEvents] = useState(events)
+    // const [allEvents, setAllEvents] = useState(events)
      
-    const handleAddEvent = () => {
-        setAllEvents([...allEvents, newEvent])
+    // const handleAddEvent = () => {
+    //     setAllEvents([...allEvents, newEvent])
+    // }
+
+    //
+    const handleViewCalendarInfo = (event) => {
+        // Show Modal
+        handleShow()
+        // 
+        console.warn(event)
     }
 
     // Toastify
@@ -132,6 +121,12 @@ const CalendarScheduleScreen = () => {
     // Schedule Info / Details
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
+
+    // Schedule Reference Details
+    const calendarScheduleList = useSelector(state => state.calendarScheduleList)
+    const { calendar } = calendarScheduleList
+
+    // console.warn(calendar)
 
     // EditRoleModal
     const [show, setShow] = useState(false)
@@ -263,7 +258,7 @@ const CalendarScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-
+{/* 
                     <div>
                         <input type="text" 
                             placeholder="Add Title" 
@@ -285,7 +280,7 @@ const CalendarScheduleScreen = () => {
                             style={{marginTop: "10px"}}
                             onClick={handleAddEvent}
                         >Add Event</button>
-                    </div>
+                    </div> */}
 
 
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
@@ -294,10 +289,13 @@ const CalendarScheduleScreen = () => {
 
                     <Calendar
                         localizer={localizer}
-                        events={allEvents}
+                        // events={allEvents}
+                        events={calendar}
                         startAccessor="start"
                         endAccessor="end"
                         style={{ height: 500 , margin: '50px'}}
+                        popup
+                        onSelectEvent={handleViewCalendarInfo}
                     />
 
                     <EditCalendarScheduleModal 

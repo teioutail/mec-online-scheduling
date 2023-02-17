@@ -5,12 +5,6 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import { 
-  listScheduleReference,
-  createScheduleReference,
-  updateScheduleReference,
-} from '../../actions/Sales/salesScheduleReferenceAction'
-
-import { 
   listCalendarSchedule,
   createCalendarSchedule,
 } from '../../actions/Sales/salesCalendarScheduleAction'
@@ -21,36 +15,23 @@ import moment from 'moment'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
-  // New Schedule Component Reference
-  const newScheduleInputRef = useRef()
-  // Training Schedule Component Reference
-  const trainingScheduleInputRef = useRef()
-  // Employee Row List
-  const empRow = useRef()
-
   // Redux
   const dispatch = useDispatch()
-
   // setState
   const [scheduleType, setScheduleType] = useState('')
-
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
-
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
-
   // Schedule Reference Create Success Message
   const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
   const { success:scheduleReferenceCreateSuccess, message:scheduleReferenceCreateMessage } = scheduleReferenceCreate
-
   // Schedule Reference Update Success Message
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
   const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
-  
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -72,53 +53,11 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
     // Data Object
     let data = {}
 
-    if(scheduleType === 'New-Schedule') {
-      // Data for New Schedule
-
-      // data = {
-      //   id: scheduleid,
-      //   schedule_type: scheduleType,
-      //   activity_schedule: newScheduleInputRef.current.activitySchedule,
-      //   sr_no: newScheduleInputRef.current.srArNo,
-      //   ar_id: newScheduleInputRef.current.arId,
-      //   activity_type: newScheduleInputRef.current.activityType,
-      //   activity_related_to: newScheduleInputRef.current.activityRelatedTo,
-      //   destination: newScheduleInputRef.current.destinationDetails,
-      //   request_for_dtc: newScheduleInputRef.current.dtc,
-      //   purpose_of_activity: newScheduleInputRef.current.purposeOfActivity,
-      //   remarks: newScheduleInputRef.current.remarks,
-      //   employeeList: newScheduleInputRef.current.employeeList, // No Result
-      // }
-      
+    if(scheduleType === 'New-Schedule')
       data = {...newScheduleFields, schedule_type: scheduleType}
-      console.warn(data)
-
-    } else if (scheduleType === 'Training-Schedule') {
-      // Data For Training
+    else if (scheduleType === 'Training-Schedule')
       data = {...trainingFields, schedule_type: scheduleType}
-      // 
-      console.warn(data)
-    }
 
-    // 
-
-    // 
-    // if(activityType === "Post-Sales") {
-    //   // Post-Sales 
-    //   schedule.project_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.projectNo);
-    //   schedule.case_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo);
-    //   schedule.sa_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo);
-    //   schedule.netsuite_link = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink);
-    // } else {
-    //   // Clear Fields if Pre-Sales
-    //   schedule.project_no = '';
-    //   schedule.case_no = '';
-    //   schedule.sa_no = '';
-    //   schedule.netsuite_link = '';
-    // }
- 
-    // console.warn(schedule)
-    
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
