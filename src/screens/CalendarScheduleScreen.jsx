@@ -27,6 +27,7 @@ import {
   
   import { 
       listCalendarSchedule,
+      getSelectedCalendarDetails,
   } from '../actions/Sales/salesCalendarScheduleAction'
   
   import {  
@@ -49,6 +50,9 @@ import {
   import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
 
 const CalendarScheduleScreen = () => {
+
+    // useState
+    const [selectedCalendarDetails, setSelectedCalendarDetails] = useState({})
 
     // Locales
     const locales = {
@@ -76,14 +80,6 @@ const CalendarScheduleScreen = () => {
     // const handleAddEvent = () => {
     //     setAllEvents([...allEvents, newEvent])
     // }
-
-    //
-    const handleViewCalendarInfo = (event) => {
-        // Show Modal
-        handleShow()
-        // 
-        console.warn(event)
-    }
 
     // Toastify
     const notify = (msg) => toast.error(msg, {
@@ -122,11 +118,13 @@ const CalendarScheduleScreen = () => {
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
 
-    // Schedule Reference Details
+    // Calendar Schedule Lists
     const calendarScheduleList = useSelector(state => state.calendarScheduleList)
-    const { loading , calendar } = calendarScheduleList
+    const { calendar } = calendarScheduleList
 
-    // console.warn(calendar)
+    // Calendar Schedule Details
+    const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
 
     // EditRoleModal
     const [show, setShow] = useState(false)
@@ -136,7 +134,7 @@ const CalendarScheduleScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [scheduleid, setScheduleId] = useState('')
+    const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add Calendar Modal
@@ -151,21 +149,14 @@ const CalendarScheduleScreen = () => {
         })
     }
 
-    // Edit Role
-    const handleEditScheduleReferenceView = (state) => {
+    //
+    const handleViewCalendarInfo = (state) => {
+        // Show Modal
         setShow(true)
-        setScheduleId(state.target.id)
+        setArtId(state.art_id)
         setMode('Edit')
-        // Call API Here...
-        dispatch(getScheduleReferenceDetails(state.target.id))
-    }
-
-    // Role Access 
-    const handleRoleAccessView = (state) => {
-        setScheduleId(state.target.id)
-        setMode('Edit')
-        // Call API Here...
-        
+        dispatch(getSelectedCalendarDetails(state.art_id))
+        setSelectedCalendarDetails(calendarScheduleDetail)
     }
 
     // Delete Schedule Reference
@@ -225,12 +216,6 @@ const CalendarScheduleScreen = () => {
         }
     }, [errorCreate, errorUpdate])
 
-    // Set Row Value
-    // useEffect(() => {
-    //     setRows(schedules)
-    //     setPending(loading)
-    // }, [schedules, rows, loading])
-
     //
     useEffect(() => {
         // Check if user is Sales else, redirect user
@@ -289,7 +274,6 @@ const CalendarScheduleScreen = () => {
 
                     <Calendar
                         localizer={localizer}
-                        // events={allEvents}
                         events={calendar}
                         startAccessor="start"
                         endAccessor="end"
@@ -302,8 +286,8 @@ const CalendarScheduleScreen = () => {
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
-                        scheduleid={scheduleid}
-                        scheduleDetails={scheduleDetail}
+                        artid={artid}
+                        calendarScheduleDetails={calendarScheduleDetail}
                         mode={mode}
                     />
 

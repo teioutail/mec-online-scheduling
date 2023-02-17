@@ -1,4 +1,7 @@
 import { 
+    CALENDAR_DETAILS_FAIL,
+    CALENDAR_DETAILS_REQUEST,
+    CALENDAR_DETAILS_SUCCESS,
     CALENDAR_SCHEDULE_CREATE_FAIL, 
     CALENDAR_SCHEDULE_CREATE_REQUEST, 
     CALENDAR_SCHEDULE_CREATE_RESET, 
@@ -38,6 +41,23 @@ export const calendarScheduleCreateReducer = (state = {}, action) => {
         case CALENDAR_SCHEDULE_CREATE_RESET:
             return {}
         default:
+            return state
+    }
+}
+
+// Get Selected Calendar Detail
+export const calendarScheduleDetailsReducer = (state= { calendar: {} } , action) => {
+    //
+    switch(action.type) {
+        case CALENDAR_DETAILS_REQUEST:
+            return { ...state, loading: true }
+        case CALENDAR_DETAILS_SUCCESS:
+            return { loading: false, calendar: action.payload }
+        case CALENDAR_DETAILS_FAIL:
+            return { loading: false, error: action.payload }
+        case CALENDAR_DETAILS_FAIL:
+            return { calendar: {} }
+        default: 
             return state
     }
 }

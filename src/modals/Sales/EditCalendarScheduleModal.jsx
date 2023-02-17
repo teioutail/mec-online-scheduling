@@ -14,7 +14,7 @@ import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
 import moment from 'moment'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
-const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
+const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarScheduleDetails, size }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -115,33 +115,24 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
   useEffect(() => {
     // Selected Schedule Details
     const {  
-      activity_type,
-      project_name,
-      projected_amount,
-      partner_company_name,
-      enduser_company_name,
-      partner_site_address,
-      enduser_site_address,
-      partner_contact_person,
-      enduser_contact_person,
-      partner_contact_number,
-      enduser_contact_number
-    } = scheduleDetails
+      art_id,
+      sched_type,
+      purpose_of_activity,
+      remarks,
+      ar_id,
+      user_id,
+      fields,
+      business_unit,
+      trainers,
+      persons,
+      updated,
+      created_at,
+      updated_at,
+    } = calendarScheduleDetails
 
-    // setState
-    // setScheduleType(activity_type || "")
-    // setProjectName(project_name || "")
-    // setProjectedAmount(projected_amount || "")
-    // setPartnerCompanyName(partner_company_name || "")
-    // setEndUserCompanyName(enduser_company_name || "")
-    // setPartnerSiteAddress(partner_site_address || "")
-    // setEndUserSiteAddress(enduser_site_address || "")
-    // setPartnerContactPerson(partner_contact_person || "")
-    // setEndUserContactPerson(enduser_contact_person || "")
-    // setPartnerContactNumber(partner_contact_number || "")
-    // setEndUserContactNumber(enduser_contact_number || "")
+    console.warn(calendarScheduleDetails)
 
-  })
+  },[calendarScheduleDetails])
   
   return (
     <>
@@ -182,13 +173,13 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDe
                 <NewScheduleRequest
                   // ref={newScheduleInputRef}
                   setNewScheduleFields={setNewScheduleFields}
-                  scheduleDetails={scheduleDetails}
+                  calendarScheduleDetails={calendarScheduleDetails}
                 /> 
               }
               { scheduleType === 'Training-Schedule' && 
                 <TrainingSchedule 
                   setTrainingFields={setTrainingFields}
-                  scheduleDetails={scheduleDetails}
+                  calendarScheduleDetails={calendarScheduleDetails}
                 />
               }
             </>

@@ -1,5 +1,9 @@
 import axios from 'axios'
 import { 
+    CALENDAR_DETAILS_FAIL,
+    CALENDAR_DETAILS_REQUEST,
+    CALENDAR_DETAILS_RESET,
+    CALENDAR_DETAILS_SUCCESS,
     CALENDAR_SCHEDULE_CREATE_FAIL, 
     CALENDAR_SCHEDULE_CREATE_REQUEST, 
     CALENDAR_SCHEDULE_CREATE_SUCCESS,
@@ -50,7 +54,7 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
         dispatch({
             type: CALENDAR_SCHEDULE_CREATE_REQUEST,
         })
-        
+
         // Header
         const config = {
             headers: {
@@ -74,5 +78,44 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
         type: CALENDAR_SCHEDULE_CREATE_FAIL,
         payload: error.response.data.errors,
       })
+    }
+}
+
+
+// Get Selected Calendar Details Action
+export const getSelectedCalendarDetails = (id) => async(dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: CALENDAR_DETAILS_RESET,
+        })
+
+        dispatch({
+            type: CALENDAR_DETAILS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+        // Call API Request
+        const { data } = await axios.get(`/auth/calendar/${id}/edit`, config)
+
+        dispatch({
+            type: CALENDAR_DETAILS_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: CALENDAR_DETAILS_FAIL,
+            payload: error.response.data.errors,
+        })
     }
 }
