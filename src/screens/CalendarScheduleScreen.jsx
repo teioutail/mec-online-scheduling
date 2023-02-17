@@ -124,7 +124,7 @@ const CalendarScheduleScreen = () => {
 
     // Schedule Reference Details
     const calendarScheduleList = useSelector(state => state.calendarScheduleList)
-    const { calendar } = calendarScheduleList
+    const { loading , calendar } = calendarScheduleList
 
     // console.warn(calendar)
 
