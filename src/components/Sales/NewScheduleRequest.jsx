@@ -93,14 +93,6 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
         setNewScheduleFields(fields)
     }
 
-    // 
-    const handleSelectedDestinationTest = (options) => {
-        setSelectedDestination(options)
-        changeValueHandler('destination', options)
-        setNewScheduleFields(fields)
-        console.warn(fields)
-    }
-
     /**
      * @returns - Activity Related To Options
      */
@@ -182,8 +174,10 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
             setSelectedDestination(currentDestination || '')
             setReferenceId(ar_id || '')
             setActivitySchedule(moment(activity_schedule).toDate() || '')
+            setSelectedEmployeeNames(persons || '')
             // setDestinationListOptions(currentDestination || '')
         }
+
     }, [calendarScheduleDetails])
 
   //
@@ -360,8 +354,9 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
             changeValueHandler={changeValueHandler}
             selectedEmployeeNames={selectedEmployeeNames}
             setSelectedEmployeeNames={setSelectedEmployeeNames}
+            mode={mode}
         />
-
+        
     </>
   )
 }

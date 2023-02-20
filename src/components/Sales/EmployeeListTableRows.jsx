@@ -1,21 +1,21 @@
-import React,{ useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Form } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import moment from 'moment/moment'
 
 const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
 
+//   console.warn(rowsData)
+
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
-
 
   return(
     // 
