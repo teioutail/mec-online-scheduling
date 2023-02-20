@@ -65,6 +65,7 @@ const CalendarScheduleScreen = () => {
         getDay,
         locales
     })
+
     // Calendar Event
     // const [newEvent, setNewEvent] = useState({
     //     title: "", 

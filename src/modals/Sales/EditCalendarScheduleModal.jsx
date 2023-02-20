@@ -165,12 +165,14 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
                   // ref={newScheduleInputRef}
                   setNewScheduleFields={setNewScheduleFields}
                   calendarScheduleDetails={calendarScheduleDetails}
+                  mode={mode}
                 /> 
               }
               { scheduleType === 'Training-Schedule' && 
                 <TrainingSchedule 
                   setTrainingFields={setTrainingFields}
                   calendarScheduleDetails={calendarScheduleDetails}
+                  mode={mode}
                 />
               }
             </>

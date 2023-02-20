@@ -8,7 +8,7 @@ import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
 
-const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) => {
+const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mode }) => {
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
   const [destinationListOptions, setDestinationListOptions] = useState([])
@@ -93,6 +93,14 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) =
         setNewScheduleFields(fields)
     }
 
+    // 
+    const handleSelectedDestinationTest = (options) => {
+        setSelectedDestination(options)
+        changeValueHandler('destination', options)
+        setNewScheduleFields(fields)
+        console.warn(fields)
+    }
+
     /**
      * @returns - Activity Related To Options
      */
@@ -135,48 +143,48 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) =
         setRelatedTeam(option)
     }
 
-    // Get Destination
+    // Get Edit Details
     useEffect(() => {
         // Selected Calendar Details
-        const {  
-            art_id,
-            sched_type,
-            purpose_of_activity,
-            remarks,
-            ar_id,
-            user_id,
-            fields,
-            business_unit,
-            trainers,
-            persons,
-            updated,
-            created_at,
-            updated_at,
-        } = calendarScheduleDetails
-        
-        // const { 
-        //     activity_related_to,
-        //     activity_schedule,
-        //     activity_type,
-        //     request_for_dtc,
-        //     sr_no,
-        //     destination,
-        // } = fields
+        if(mode === 'Edit') {
+            const {  
+                art_id,
+                sched_type,
+                purpose_of_activity,
+                remarks,
+                ar_id,
+                user_id,
+                fields,
+                business_unit,
+                trainers,
+                persons,
+                updated,
+                created_at,
+                updated_at,
+            } = calendarScheduleDetails
+            
+            const { 
+                activity_related_to,
+                activity_schedule,
+                activity_type,
+                request_for_dtc,
+                sr_no,
+                destination:currentDestination,
+            } = fields
 
-        console.warn(fields)
+            // setState
+            setRemarks(remarks || '')
+            setPurposeOfActivity(purpose_of_activity || '')
+            setSrArNo(sr_no || '')
+            setDtc(request_for_dtc || '')
+            setActivityRelatedTo(activity_related_to || '')
+            setActivityType(activity_type || '')
+            setSelectedDestination(currentDestination || '')
+            setReferenceId(ar_id || '')
+            setActivitySchedule(moment(activity_schedule).toDate() || '')
 
-        // setState
-        setRemarks(remarks || '')
-        setPurposeOfActivity(purpose_of_activity || '')
-        // setSrArNo(sr_no || '')
-        // setDtc(request_for_dtc || '')
-        // setActivityRelatedTo(activity_related_to || '')
-        // setActivityType(activity_type || '')
-
-        // setActivitySchedule(moment(activity_schedule).format('YYYY/MM/DD') || '')
-        
-        console.warn(calendarScheduleDetails)
-        // setDestinationListOptions(destination)
+            // setDestinationListOptions(currentDestination || '')
+        }
 
     }, [calendarScheduleDetails])
 
@@ -268,11 +276,12 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields }) =
                     <Form.Label>Destination Details</Form.Label>
                     <CreateSelect 
                         isClearable
-                        options={destinationListOptions}
+                        options={destination}
                         styles={reactSelectCustomStyles}
                         onChange={(e) => {
                             handleSelectedDestination(e)
                         }}
+                        value={selectedDestination}
                     />
                 </Form.Group>
             </Col>
