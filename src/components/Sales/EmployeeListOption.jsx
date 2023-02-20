@@ -90,6 +90,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
                 deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
+                mode={mode}
               />
             </tbody>
           </Table>

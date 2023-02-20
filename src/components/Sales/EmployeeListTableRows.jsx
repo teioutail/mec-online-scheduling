@@ -4,13 +4,14 @@ import { Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import moment from 'moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange }) => {
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange, mode }) => {
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
-
-//   console.warn(rowsData)
+  
+//   setActivitySchedule(moment(activity_schedule).toDate() || '')
 
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
@@ -29,7 +30,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
                     <td>
                         <DatePicker
                             className='form-control form-control-sm'
-                            selected={timeFrom} 
+                            selected={(mode === 'Edit' ? moment(timeFrom).toDate() : timeFrom)} 
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm a"
                             showTime = {{ user12hours: true }} 
@@ -40,7 +41,7 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
                     <td>
                         <DatePicker
                             className='form-control form-control-sm'
-                            selected={timeTo} 
+                            selected={(mode === 'Edit' ? moment(timeTo).toDate() : timeTo)} 
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm a"
                             showTime = {{ user12hours: true }} 
