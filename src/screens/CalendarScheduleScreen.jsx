@@ -112,13 +112,9 @@ const CalendarScheduleScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Schedule Info / Details
-    const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-    const { schedule:scheduleDetail } = scheduleReferenceDetails
-
     // Calendar Schedule Lists
     const calendarScheduleList = useSelector(state => state.calendarScheduleList)
-    const { calendar } = calendarScheduleList
+    const { loading:loadingList , calendar } = calendarScheduleList
 
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
@@ -269,7 +265,7 @@ const CalendarScheduleScreen = () => {
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
-                    <Calendar
+                    {loadingList ? <Loader/> : <Calendar
                         localizer={localizer}
                         events={calendar}
                         startAccessor="start"
@@ -277,7 +273,8 @@ const CalendarScheduleScreen = () => {
                         style={{ height: 500 , margin: '50px'}}
                         popup
                         onSelectEvent={handleViewCalendarInfo}
-                    />
+                    />}
+
 
                     <EditCalendarScheduleModal 
                         size="lg"
@@ -300,7 +297,6 @@ const CalendarScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
-
                 <Footer />
             </FormContainer>
         </>

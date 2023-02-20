@@ -3,14 +3,10 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
 
-const EditBusinessUnitOption = ({ calendarScheduleDetails, changeValueHandler }) => {
-  // React Select
-  const animatedComponents = makeAnimated();
-
+const EditBusinessUnitOption = ({ changeValueHandler, mode, selectedBusinessUnitDetails }) => {
   // Business Unit List
   const businessUnitListOption = useSelector(state => state.businessUnitListOption)
   const { business } = businessUnitListOption
-
   // Business Unit
   const [businessListOptions, setBusinessListOptions] = useState([])
 
@@ -18,32 +14,28 @@ const EditBusinessUnitOption = ({ calendarScheduleDetails, changeValueHandler })
   const handleSelectedBusinessUnit = (options) => {
     setSelectedBusinessUnit(options)
   }
+
   // Selected Business Units
   const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
-
     // Get Business Unit
     useEffect(() => {
-        // Selected Schedule Details
-        const {
-            business_unit,
-        } = calendarScheduleDetails
+        if(mode === 'Edit') {
+            // Selected Business Unit 
+            setSelectedBusinessUnit(selectedBusinessUnitDetails || [])
+        }
         // setState
         setBusinessListOptions(business || [])
-        // console.warn(businessListOptions)
-        // Selected Business Unit 
-        setSelectedBusinessUnit(business_unit || [])
-    }, [business])
+    },[business, selectedBusinessUnitDetails])
     
     return (
         <>
             <Select
                 closeMenuOnSelect={false}
                 isMulti
-                components={animatedComponents}
                 options={businessListOptions}
                 onChange={(e) => { 
                     handleSelectedBusinessUnit(e)
-                    changeValueHandler('business_unit', selectedBusinessUnit)
+                    changeValueHandler('business_unit', selectedBusinessUnitDetails)
                 }}
                 value={selectedBusinessUnit}
             />

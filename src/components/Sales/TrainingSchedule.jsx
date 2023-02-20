@@ -1,13 +1,14 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
+import { Form, Row, Col } from 'react-bootstrap' 
 import EmployeeListOption from './EmployeeListOption'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
+import moment from 'moment'
 
-const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
+const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) => {
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
@@ -17,18 +18,14 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
   const [venue, setVenue] = useState('')
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
-  //   const [businessUnit, setBusinessUnit] = useState([])
-
+  const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
   // Selected Trainer Names 
   const [selectedTrainerNames, setSelectedTrainerNames] = useState([])
-
   // Selected Employee Names
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
-
   // Participants Email List
   const userEmail = useSelector(state => state.userEmail)
   const { emails:participants } = userEmail
-  
   /**
    * - Handle Trainer Option
    */
@@ -39,7 +36,6 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
     // console.warn(filtered)
     setTrainerName(filtered)
   }
-
   // Fields 
   const [fields, setFields] = useState({
     venue: '',
@@ -52,7 +48,6 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
     business_unit: [],
     employee_list: [],
   })
-  
   /**
    * - Value Setter
    */
@@ -62,6 +57,50 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
     setFields(newField)
   }
 
+    // Get Edit Details
+    useEffect(() => {
+        // Selected Calendar Details
+        if(mode === 'Edit') {
+            // 
+            const {  
+                art_id,
+                sched_type,
+                purpose_of_activity,
+                remarks,
+                ar_id,
+                user_id,
+                fields,
+                business_unit,
+                trainers,
+                persons,
+            } = calendarScheduleDetails
+
+            // Fields
+            const { 
+               training_type,
+               training_topic,
+               trainer,
+               venue,
+               training_schedule,
+               business_unit:trainingBU,
+            } = fields
+
+            // setState
+            setTrainer(trainer || '')
+            setRemarks(remarks || '')
+            setTrainingType(training_type || '')
+            setPurposeOfActivity(purpose_of_activity || '')
+            setTrainingTopic(training_topic || '')
+            setVenue(venue || '')
+            setSelectedBusinessUnit(trainingBU || '')
+            setTrainingSchedule(moment(training_schedule).toDate() || '')
+            setSelectedTrainerNames(trainers || '')
+            
+            // setDestinationListOptions(currentDestination || '')
+        }
+
+    }, [calendarScheduleDetails])
+    
   // 
   return (
     <>
@@ -185,7 +224,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
                 <Form.Label>Purpose of Activity</Form.Label>
                 <Form.Control 
                     size='sm'
-                    as="textarea" 
+                    as="textarea"
                     rows={2} 
                     value={purposeOfActivity}
                     onChange={(e) => { 
@@ -219,7 +258,8 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields }) => {
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
                         changeValueHandler={changeValueHandler}
-                        calendarScheduleDetails={calendarScheduleDetails}
+                        selectedBusinessUnitDetails={selectedBusinessUnit}
+                        mode={mode}
                     />
                 </Form.Group>
             </Col>

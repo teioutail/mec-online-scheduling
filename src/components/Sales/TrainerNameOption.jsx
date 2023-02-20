@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTrainerNames, setSelectedTrainerNames, changeValueHandler }) => {
   // React Select
   const animatedComponents = makeAnimated();
-  
   //
   const handleSelectedTrainers = (options) => {
     // setSelectedTrainers(options)
@@ -16,7 +15,6 @@ const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTra
  
   return (
       <>
-      {/* <h1>{selectedTrainers}</h1> */}
           <CreateTrainerNameSelect
               closeMenuOnSelect={false}
               isMulti
@@ -24,7 +22,6 @@ const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTra
               components={animatedComponents}
               options={trainerNames}
               onChange={handleSelectedTrainers}
-              // options={(trainer === 'SE' && trainerNames)}
               value={selectedTrainerNames}
               placeholder={(trainer === 'SE' ? 
               <div>Select System Engineer</div> : 

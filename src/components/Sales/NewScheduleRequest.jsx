@@ -182,10 +182,8 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
             setSelectedDestination(currentDestination || '')
             setReferenceId(ar_id || '')
             setActivitySchedule(moment(activity_schedule).toDate() || '')
-
             // setDestinationListOptions(currentDestination || '')
         }
-
     }, [calendarScheduleDetails])
 
   //
