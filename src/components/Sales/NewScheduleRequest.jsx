@@ -24,7 +24,6 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
   const [remarks, setRemarks] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
   //   const [employeeList, setEmployeeList] = useState([])
-
   // Selected Employee Names
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
 
@@ -146,7 +145,7 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
                 remarks,
                 ar_id,
                 user_id,
-                fields,
+                fields:fieldval,
                 business_unit,
                 trainers,
                 persons,
@@ -162,7 +161,7 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
                 request_for_dtc,
                 sr_no,
                 destination:currentDestination,
-            } = fields
+            } = fieldval
 
             // setState
             setRemarks(remarks || '')
@@ -178,8 +177,31 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
             // setDestinationListOptions(currentDestination || '')
         }
 
-    }, [calendarScheduleDetails])
+    }, [])
 
+    // 
+    useEffect(() => {
+        changeValueHandler('activity_schedule', activitySchedule)
+        changeValueHandler('sr_no', srArNo)
+        changeValueHandler('ar_id', referenceId)
+        changeValueHandler('activity_type', activityType)
+        changeValueHandler('activity_related_to', activityRelatedTo)
+        changeValueHandler('destination', selectedDestination)
+        changeValueHandler('request_for_dtc', dtc)
+        changeValueHandler('purpose_of_activity', purposeOfActivity)
+        changeValueHandler('remarks', remarks)
+        changeValueHandler('employee_list', selectedEmployeeNames)
+        setNewScheduleFields(fields)
+        
+    },[activitySchedule,
+        srArNo,
+        referenceId,
+        activityType,
+        activityRelatedTo,
+        selectedDestination,
+        dtc,
+        purposeOfActivity,
+        remarks])
   //
   return (
     <>
@@ -356,7 +378,6 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
             setSelectedEmployeeNames={setSelectedEmployeeNames}
             mode={mode}
         />
-        
     </>
   )
 }

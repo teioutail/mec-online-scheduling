@@ -119,7 +119,7 @@ const CalendarScheduleScreen = () => {
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
     const { loading:loadingDetails , calendar:calendarScheduleDetail } = calendarScheduleDetails
-
+    
     // EditRoleModal
     const [show, setShow] = useState(false)
 

@@ -74,11 +74,13 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
 
         // 
         if(mode === 'Add') {
+          console.warn(data)
             // Create Calendar Schedule 
             dispatch(createCalendarSchedule(data))
+            
         } else {
 
-          
+
           // Update Schedule
           console.warn(data)
         }

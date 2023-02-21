@@ -71,7 +71,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
                 remarks,
                 ar_id,
                 user_id,
-                fields,
+                fields:fieldval,
                 business_unit,
                 trainers,
                 persons,
@@ -85,7 +85,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
                venue,
                training_schedule,
                business_unit:trainingBU,
-            } = fields
+            } = fieldval
 
             // setState
             setTrainer(trainer || '')
@@ -101,7 +101,32 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
             // setDestinationListOptions(currentDestination || '')
         }
 
-    }, [calendarScheduleDetails])
+    }, [])
+
+    // 
+    useEffect(() => {
+        changeValueHandler('venue', venue)
+        changeValueHandler('trainer', trainer)
+        changeValueHandler('training_type', trainingType)
+        changeValueHandler('training_topic', trainingTopic)
+        changeValueHandler('training_schedule', trainingSchedule)
+        changeValueHandler('purpose_of_activity', purposeOfActivity)
+        changeValueHandler('trainer_name', selectedTrainerNames)
+        changeValueHandler('business_unit', selectedBusinessUnit)
+        changeValueHandler('remarks', remarks)
+        changeValueHandler('employee_list', selectedEmployeeNames)
+        setTrainingFields(fields)
+    },[venue,
+        trainer,
+        trainingType,
+        trainingTopic,
+        trainingSchedule,
+        purposeOfActivity,
+        selectedTrainerNames,
+        selectedBusinessUnit,
+        remarks,
+        selectedEmployeeNames
+    ])
     
   // 
   return (
@@ -115,6 +140,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
                     as='select' 
                     aria-label="Status"
                     value={trainer}
+                    defaultValue={trainer}
                     onChange={(e) => { 
                         handleTrainer(e)
                         setTrainer(e.target.value)
@@ -276,7 +302,6 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
             setSelectedEmployeeNames={setSelectedEmployeeNames}
             mode={mode}
         />
-
     </>
   )
 }
