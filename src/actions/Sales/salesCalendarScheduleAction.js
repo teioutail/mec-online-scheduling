@@ -10,6 +10,9 @@ import {
     CALENDAR_SCHEDULE_LIST_FAIL,
     CALENDAR_SCHEDULE_LIST_REQUEST,
     CALENDAR_SCHEDULE_LIST_SUCCESS,
+    CALENDAR_SCHEDULE_UPDATE_FAIL,
+    CALENDAR_SCHEDULE_UPDATE_REQUEST,
+    CALENDAR_SCHEDULE_UPDATE_SUCCESS,
 } from "../../constants/Sales/salesCalendarScheduleConstants"
 
 // View List of Calendar Schedule
@@ -81,6 +84,43 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
     }
 }
 
+// Update Calendar Request
+export const updateCalendarSchedule = (calendar, selected_id) => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: CALENDAR_SCHEDULE_UPDATE_REQUEST,
+        })
+        // Get Login User Info
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+
+        // Header
+        const config = {
+            headers : {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        
+        // Call API Request
+        const { data } = await axios.put(`/auth/calendar/${selected_id}`, calendar, config)
+        console.warn(data)
+        
+        dispatch({
+            type: CALENDAR_SCHEDULE_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: CALENDAR_SCHEDULE_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
 
 // Get Selected Calendar Details Action
 export const getSelectedCalendarDetails = (id) => async(dispatch, getState) => {

@@ -8,7 +8,7 @@ import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
 
-const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mode }) => {
+const NewScheduleRequest = ({ artid, calendarScheduleDetails, setNewScheduleFields, mode }) => {
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
   const [destinationListOptions, setDestinationListOptions] = useState([])
@@ -39,6 +39,7 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
         purpose_of_activity: '',
         remarks: '',
         employee_list:[],
+        id: artid,
     })
 
     /**
@@ -192,7 +193,7 @@ const NewScheduleRequest = ({ calendarScheduleDetails, setNewScheduleFields, mod
         changeValueHandler('remarks', remarks)
         changeValueHandler('employee_list', selectedEmployeeNames)
         setNewScheduleFields(fields)
-        
+
     },[activitySchedule,
         srArNo,
         referenceId,

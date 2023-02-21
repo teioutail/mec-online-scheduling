@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
+// import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
 
 const EditBusinessUnitOption = ({ changeValueHandler, mode, selectedBusinessUnitDetails }) => {

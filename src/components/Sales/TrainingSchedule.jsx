@@ -8,7 +8,7 @@ import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 import moment from 'moment'
 
-const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) => {
+const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, mode }) => {
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
@@ -48,6 +48,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
     trainer_name: [],
     business_unit: [],
     employee_list: [],
+    id: artid,
   })
   
   /**

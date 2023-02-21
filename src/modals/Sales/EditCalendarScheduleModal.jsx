@@ -7,6 +7,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
   listCalendarSchedule,
   createCalendarSchedule,
+  updateCalendarSchedule,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
@@ -74,15 +75,11 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
 
         // 
         if(mode === 'Add') {
-          console.warn(data)
-            // Create Calendar Schedule 
-            dispatch(createCalendarSchedule(data))
-            
+          // Create Calendar Schedule 
+          dispatch(createCalendarSchedule(data))
         } else {
-
-
           // Update Schedule
-          console.warn(data)
+          dispatch(updateCalendarSchedule(data, artid))
         }
       }
     })
@@ -92,7 +89,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   useEffect(() => {
     // Selected Calendar Details
     const { sched_type } = calendarScheduleDetails
-    
     // setState
     setScheduleType(sched_type || '')
   },[calendarScheduleDetails])
@@ -148,7 +144,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
                       size='sm'
                       as='select' 
                       aria-label="Status"
-                      
                       value={scheduleType}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >
@@ -165,6 +160,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
             <>
               { scheduleType === 'New-Schedule' && 
                 <NewScheduleRequest
+                  artid={artid}
                   setNewScheduleFields={setNewScheduleFields}
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}
@@ -172,6 +168,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
               }
               { scheduleType === 'Training-Schedule' && 
                 <TrainingSchedule 
+                  artid={artid}
                   setTrainingFields={setTrainingFields}
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}

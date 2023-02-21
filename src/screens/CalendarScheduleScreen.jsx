@@ -99,7 +99,6 @@ const CalendarScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
     const { error:errorCreate } = scheduleReferenceCreate
@@ -119,7 +118,7 @@ const CalendarScheduleScreen = () => {
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
     const { loading:loadingDetails , calendar:calendarScheduleDetail } = calendarScheduleDetails
-    
+
     // EditRoleModal
     const [show, setShow] = useState(false)
 
@@ -237,7 +236,7 @@ const CalendarScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-{/* 
+                {/* 
                     <div>
                         <input type="text" 
                             placeholder="Add Title" 
@@ -274,7 +273,6 @@ const CalendarScheduleScreen = () => {
                         popup
                         onSelectEvent={handleViewCalendarInfo}
                     />}
-
 
                     <EditCalendarScheduleModal 
                         size="lg"
