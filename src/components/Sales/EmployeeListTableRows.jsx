@@ -6,12 +6,12 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange, mode }) => {
+const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange, mode, addNewRowState }) => {
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
   
-//   setActivitySchedule(moment(activity_schedule).toDate() || '')
+  //   setActivitySchedule(moment(activity_schedule).toDate() || '')
 
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {

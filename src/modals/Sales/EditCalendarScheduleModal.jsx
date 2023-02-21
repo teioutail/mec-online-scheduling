@@ -55,12 +55,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   const handleSubmit = async () =>  {
     // Data Object
     let data = {}
-
-    if(scheduleType === 'New-Schedule')
-      data = {...newScheduleFields, schedule_type: scheduleType}
-    else if (scheduleType === 'Training-Schedule')
-      data = {...trainingFields, schedule_type: scheduleType}
-
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -73,26 +67,33 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
     }).then((result) => {
       if (result.isConfirmed) {
         // 
+        if(scheduleType === 'New-Schedule')
+          data = {...newScheduleFields, schedule_type: scheduleType}
+        else if (scheduleType === 'Training-Schedule')
+          data = {...trainingFields, schedule_type: scheduleType}
+
+        // 
         if(mode === 'Add') {
-          // Create Calendar Schedule 
-          dispatch(createCalendarSchedule(data))
+            // Create Calendar Schedule 
+            dispatch(createCalendarSchedule(data))
         } else {
+
+          
           // Update Schedule
-        //   dispatch(updateScheduleReference(schedule))
+          console.warn(data)
         }
       }
     })
   }
 
-   // Get Destination
-   useEffect(() => {
+  // Get Destination
+  useEffect(() => {
     // Selected Calendar Details
     const { sched_type } = calendarScheduleDetails
     
     // setState
     setScheduleType(sched_type || '')
-
-}, [calendarScheduleDetails])
+  },[calendarScheduleDetails])
 
   // Show Success 
   useEffect(() => {
@@ -162,7 +163,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
             <>
               { scheduleType === 'New-Schedule' && 
                 <NewScheduleRequest
-                  // ref={newScheduleInputRef}
                   setNewScheduleFields={setNewScheduleFields}
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}

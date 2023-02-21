@@ -36,6 +36,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
     // console.warn(filtered)
     setTrainerName(filtered)
   }
+
   // Fields 
   const [fields, setFields] = useState({
     venue: '',
@@ -48,6 +49,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
     business_unit: [],
     employee_list: [],
   })
+  
   /**
    * - Value Setter
    */
@@ -95,7 +97,7 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
             setSelectedBusinessUnit(trainingBU || '')
             setTrainingSchedule(moment(training_schedule).toDate() || '')
             setSelectedTrainerNames(trainers || '')
-            
+            setSelectedEmployeeNames(persons || '')
             // setDestinationListOptions(currentDestination || '')
         }
 
@@ -268,10 +270,13 @@ const TrainingSchedule = ({ calendarScheduleDetails, setTrainingFields, mode }) 
         </Row>
 
         <EmployeeListOption 
+            calendarScheduleDetails={calendarScheduleDetails}
             changeValueHandler={changeValueHandler}
             selectedEmployeeNames={selectedEmployeeNames}
             setSelectedEmployeeNames={setSelectedEmployeeNames}
+            mode={mode}
         />
+
     </>
   )
 }

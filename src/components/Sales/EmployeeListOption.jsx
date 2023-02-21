@@ -8,8 +8,8 @@ import EmployeeListTableRows from './EmployeeListTableRows'
 const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSelectedEmployeeNames, mode}) => {
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
-
-  console.log(rowsData)
+  // Add New Row State
+  const [addNewRowState, setAddNewRowState] = useState(0)
 
   // Add New Table Rows
   const addTableRows = () => {
@@ -19,6 +19,8 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
       timeFrom: '',
       timeTo: '',
     }
+    // 
+    setAddNewRowState(true)
     setRowsData([...rowsData, rowsInput])
   }
 
@@ -53,9 +55,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
     // 
     if(mode === 'Edit') {
      setRowsData(selectedEmployeeNames)
-     console.warn(selectedEmployeeNames)
     }
-
   }, [selectedEmployeeNames])
 
   //
@@ -91,6 +91,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
                 mode={mode}
+                addNewRowState={addNewRowState}
               />
             </tbody>
           </Table>

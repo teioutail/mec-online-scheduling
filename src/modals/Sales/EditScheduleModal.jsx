@@ -96,8 +96,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
       schedule.netsuite_link = '';
     }
  
-    // console.warn(schedule)
-    
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -180,7 +178,6 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
     setEndUserContactPerson(enduser_contact_person || "")
     setPartnerContactNumber(partner_contact_number || "")
     setEndUserContactNumber(enduser_contact_number || "")
-
   }, [scheduleDetails, dispatch])
 
   return (
