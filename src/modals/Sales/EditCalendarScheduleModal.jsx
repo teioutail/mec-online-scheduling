@@ -36,10 +36,6 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-  
-  // Schedule Type
-  const { sched_type } = calendarScheduleDetails
-
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -85,9 +81,8 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
     })
   }
 
-  // Get Destination
+  // Selected Calendar Details
   useEffect(() => {
-    // Selected Calendar Details
     const { sched_type } = calendarScheduleDetails
     // setState
     setScheduleType(sched_type || '')

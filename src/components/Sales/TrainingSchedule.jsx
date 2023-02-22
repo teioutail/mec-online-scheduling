@@ -102,7 +102,7 @@ const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, m
             // setDestinationListOptions(currentDestination || '')
         }
 
-    }, [])
+    }, [calendarScheduleDetails])
 
     // 
     useEffect(() => {
@@ -287,7 +287,8 @@ const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, m
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
                         changeValueHandler={changeValueHandler}
-                        selectedBusinessUnitDetails={selectedBusinessUnit}
+                        selectedBusinessUnit={selectedBusinessUnit}
+                        setSelectedBusinessUnit={setSelectedBusinessUnit}
                         mode={mode}
                     />
                 </Form.Group>

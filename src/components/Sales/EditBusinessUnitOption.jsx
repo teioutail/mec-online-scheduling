@@ -3,29 +3,25 @@ import Select from 'react-select'
 // import makeAnimated from 'react-select/animated'
 import { useSelector } from 'react-redux'
 
-const EditBusinessUnitOption = ({ changeValueHandler, mode, selectedBusinessUnitDetails }) => {
+const EditBusinessUnitOption = ({ changeValueHandler, mode, selectedBusinessUnit, setSelectedBusinessUnit }) => {
   // Business Unit List
   const businessUnitListOption = useSelector(state => state.businessUnitListOption)
   const { business } = businessUnitListOption
   // Business Unit
   const [businessListOptions, setBusinessListOptions] = useState([])
-
   // Object to get selected Business Unit
   const handleSelectedBusinessUnit = (options) => {
     setSelectedBusinessUnit(options)
   }
-
-  // Selected Business Units
-  const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
     // Get Business Unit
     useEffect(() => {
         if(mode === 'Edit') {
             // Selected Business Unit 
-            setSelectedBusinessUnit(selectedBusinessUnitDetails || [])
+            setSelectedBusinessUnit(selectedBusinessUnit || [])
         }
         // setState
         setBusinessListOptions(business || [])
-    },[business, selectedBusinessUnitDetails])
+    },[business, selectedBusinessUnit])
     
     return (
         <>
@@ -35,7 +31,7 @@ const EditBusinessUnitOption = ({ changeValueHandler, mode, selectedBusinessUnit
                 options={businessListOptions}
                 onChange={(e) => { 
                     handleSelectedBusinessUnit(e)
-                    changeValueHandler('business_unit', selectedBusinessUnitDetails)
+                    changeValueHandler('business_unit', selectedBusinessUnit)
                 }}
                 value={selectedBusinessUnit}
             />
