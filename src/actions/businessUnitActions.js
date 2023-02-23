@@ -115,8 +115,6 @@ export const createBusinessUnit = (business) => async (dispatch) => {
             config
         )
 
-        console.warn(data)
-
         dispatch({
             type: BUSINESS_UNIT_CREATE_SUCCESS,
             payload: data,

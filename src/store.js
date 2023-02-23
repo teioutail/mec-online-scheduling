@@ -88,7 +88,8 @@ import {
 import { 
     calendarScheduleListReducer,
     calendarScheduleCreateReducer,
-    calendarScheduleDetailsReducer, 
+    calendarScheduleDetailsReducer,
+    calendarScheduleUpdateReducer, 
 } from './reducers/Sales/salesCalendarScheduleReducer'
 
 // Destination Detail Reducers
@@ -155,6 +156,7 @@ const reducer = combineReducers({
     decisionDelete:decisionDeleteReducer,
     calendarScheduleList:calendarScheduleListReducer,
     calendarScheduleCreate:calendarScheduleCreateReducer,
+    calendarScheduleUpdate:calendarScheduleUpdateReducer,
     calendarScheduleDetails:calendarScheduleDetailsReducer,
     destinationList:destinationListReducer,
     destinationCreate:destinationCreateReducer,

@@ -11,6 +11,10 @@ import {
     CALENDAR_SCHEDULE_LIST_REQUEST,
     CALENDAR_SCHEDULE_LIST_RESET,
     CALENDAR_SCHEDULE_LIST_SUCCESS,
+    CALENDAR_SCHEDULE_UPDATE_FAIL,
+    CALENDAR_SCHEDULE_UPDATE_REQUEST,
+    CALENDAR_SCHEDULE_UPDATE_RESET,
+    CALENDAR_SCHEDULE_UPDATE_SUCCESS,
 } from "../../constants/Sales/salesCalendarScheduleConstants"
 
 // LIST  CALENDAR SCHEDULE REDUCER
@@ -59,6 +63,24 @@ export const calendarScheduleDetailsReducer = (state= { calendar: {} } , action)
         case CALENDAR_SCHEDULE_DETAILS_RESET:
             return { calendar: {} }
         default: 
+            return state
+    }
+}
+
+// UPDATE CALENDAR SCHEDULE REDUCER
+export const calendarScheduleUpdateReducer = (state = { calendar: {} }, action) => {
+    switch(action.type) {
+        case CALENDAR_SCHEDULE_UPDATE_REQUEST:
+            return { loading: true }
+        case CALENDAR_SCHEDULE_UPDATE_SUCCESS:
+            return { loading: false, success: true, message: action.payload }
+        case CALENDAR_SCHEDULE_UPDATE_FAIL:
+            return { loading: false, error: action.payload }
+        case CALENDAR_SCHEDULE_UPDATE_RESET:
+            return {
+                calendar: {}
+            }
+        default:
             return state
     }
 }

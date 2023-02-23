@@ -120,8 +120,6 @@ export const updateSubMenuCategory = (subcategory) => async(dispatch, getState) 
 
         // Call API Request
         const { data } = await axios.put(`/auth/subcategory/${subcategory.id}`, subcategory, config)
-
-        console.warn(data);
         
     } catch(error) {
         //

@@ -17,7 +17,7 @@ import getDay from 'date-fns/getDay'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import DatePicker from 'react-datepicker'
-// import moment from 'moment'
+
 import { 
     listScheduleReference,
     getScheduleReferenceDetails,
@@ -97,13 +97,13 @@ const CalendarScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-    // Schedule Create Error
+    // Calendar Create Error
     const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
     const { error:errorCreate } = calendarScheduleCreate
   
-    // Schedule Update Error
-    const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-    const { error:errorUpdate } = scheduleReferenceUpdate
+    // Calendar Update Error
+    const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
+    const { error:errorUpdate } = calendarScheduleUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)

@@ -23,15 +23,15 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
-  // Schedule Reference Details
-  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
+  // Calendar Schedule Details
+  const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
+  const { loading:calendarDetailsLoading } = calendarScheduleDetailsInfo
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
-  // Schedule Reference Update Success Message
-  const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-  const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
+  // Calendar Schedule Update Success Message
+  const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
+  const { success:calendarScheduleUpdateSuccess, message:calendarScheduleUpdateMessage } = calendarScheduleUpdate
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -71,13 +71,9 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
         if(mode === 'Add') {
           // Create Calendar Schedule 
           dispatch(createCalendarSchedule(data))
-          // Refresh Calendar
-          dispatch(listCalendarSchedule())
         } else {
           // Update Schedule
           dispatch(updateCalendarSchedule(data, artid))
-          // Refresh Calendar
-          dispatch(listCalendarSchedule())
         }
       }
     })
@@ -106,10 +102,10 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
     }
 
     // Show Success Update
-    if(scheduleReferenceUpdateSuccess) {
+    if(calendarScheduleUpdateSuccess) {
       Swal.fire(
         'Success!',
-        scheduleReferenceUpdateMessage,
+        calendarScheduleUpdateMessage,
         'success'
       )
       // Refresh Datatable
@@ -118,7 +114,10 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
       onHide()
     }
 
-  },[calendarScheduleCreateMessage, calendarScheduleCreateSuccess])
+  },[calendarScheduleCreateMessage,
+     calendarScheduleCreateSuccess,
+     calendarScheduleUpdateSuccess,
+     calendarScheduleUpdateMessage])
 
   return (
     <>
@@ -153,7 +152,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
                 <Col sm={12} md={6} lg={6}>
                 </Col>
             </Row>
-          { scheduleReferenceLoading ? <Loader /> : 
+          { calendarDetailsLoading ? <Loader /> : 
             <>
               { scheduleType === 'New-Schedule' && 
                 <NewScheduleRequest
