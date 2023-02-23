@@ -10,6 +10,7 @@ import moment from 'moment'
 
 const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, mode }) => {
   // useState
+  console.warn(calendarScheduleDetails)
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
   const [trainer, setTrainer] = useState('')
@@ -87,7 +88,6 @@ const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, m
                training_schedule,
                business_unit:trainingBU,
             } = fieldval
-
             // setState
             setTrainer(trainer || '')
             setRemarks(remarks || '')
@@ -126,7 +126,7 @@ const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, m
         selectedTrainerNames,
         selectedBusinessUnit,
         remarks,
-        selectedEmployeeNames
+        selectedEmployeeNames,
     ])
     
   // 

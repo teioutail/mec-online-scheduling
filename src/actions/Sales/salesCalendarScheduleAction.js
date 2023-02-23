@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { 
-    CALENDAR_DETAILS_FAIL,
-    CALENDAR_DETAILS_REQUEST,
-    CALENDAR_DETAILS_RESET,
-    CALENDAR_DETAILS_SUCCESS,
     CALENDAR_SCHEDULE_CREATE_FAIL, 
     CALENDAR_SCHEDULE_CREATE_REQUEST, 
     CALENDAR_SCHEDULE_CREATE_SUCCESS,
+    CALENDAR_SCHEDULE_DETAILS_FAIL,
+    CALENDAR_SCHEDULE_DETAILS_REQUEST,
+    CALENDAR_SCHEDULE_DETAILS_RESET,
+    CALENDAR_SCHEDULE_DETAILS_SUCCESS,
     CALENDAR_SCHEDULE_LIST_FAIL,
     CALENDAR_SCHEDULE_LIST_REQUEST,
     CALENDAR_SCHEDULE_LIST_SUCCESS,
@@ -68,6 +68,7 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
         // Call API Request
         const { data } = await axios.post('/auth/calendar', calendar, config)
         console.warn(data)
+        
         dispatch({
             type: CALENDAR_SCHEDULE_CREATE_SUCCESS,
             payload: data,
@@ -126,12 +127,12 @@ export const updateCalendarSchedule = (calendar, selected_id) => async (dispatch
 export const getSelectedCalendarDetails = (id) => async(dispatch, getState) => {
     // 
     try {
-        dispatch({
-            type: CALENDAR_DETAILS_RESET,
-        })
+        // dispatch({
+        //     type: CALENDAR_SCHEDULE_DETAILS_RESET,
+        // })
 
         dispatch({
-            type: CALENDAR_DETAILS_REQUEST,
+            type: CALENDAR_SCHEDULE_DETAILS_REQUEST,
         })
 
         const { userLogin: { userInfo } } = getState()
@@ -146,15 +147,17 @@ export const getSelectedCalendarDetails = (id) => async(dispatch, getState) => {
         // Call API Request
         const { data } = await axios.get(`/auth/calendar/${id}/edit`, config)
 
+        console.warn(data)
+
         dispatch({
-            type: CALENDAR_DETAILS_SUCCESS,
+            type: CALENDAR_SCHEDULE_DETAILS_SUCCESS,
             payload: data,
         })
 
     } catch(error) {
         // 
         dispatch({
-            type: CALENDAR_DETAILS_FAIL,
+            type: CALENDAR_SCHEDULE_DETAILS_FAIL,
             payload: error.response.data.errors,
         })
     }

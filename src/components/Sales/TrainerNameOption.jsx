@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import CreateTrainerNameSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated'
-import { useSelector } from 'react-redux'
 
-const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTrainerNames, setSelectedTrainerNames, changeValueHandler }) => {
+const TrainerNameOption = ({trainer, trainerNames, selectedTrainerNames, setSelectedTrainerNames, changeValueHandler }) => {
   // React Select
-  const animatedComponents = makeAnimated();
+  // const animatedComponents = makeAnimated();
   //
   const handleSelectedTrainers = (options) => {
     // setSelectedTrainers(options)
@@ -19,7 +18,7 @@ const TrainerNameOption = ({ scheduleDetails, trainer, trainerNames, selectedTra
               closeMenuOnSelect={false}
               isMulti
               isClearable
-              components={animatedComponents}
+              // components={animatedComponents}
               options={trainerNames}
               onChange={handleSelectedTrainers}
               value={selectedTrainerNames}

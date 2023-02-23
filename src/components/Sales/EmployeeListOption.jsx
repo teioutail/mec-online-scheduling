@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useImperativeHandle, useRef} from 'react'
+import React,{ useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -37,7 +37,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
-    // setSelectedEmployeeNames(rowsData)
+    setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
   }
   
@@ -46,7 +46,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
-    // setSelectedEmployeeNames(rowsData)
+    setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
   }
 

@@ -12,7 +12,6 @@ import {
 
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
-import moment from 'moment'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarScheduleDetails, size }) => {
@@ -27,9 +26,9 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
-  // Schedule Reference Create Success Message
-  const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
-  const { success:scheduleReferenceCreateSuccess, message:scheduleReferenceCreateMessage } = scheduleReferenceCreate
+  // Calendar Schedule Create Success Message
+  const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
+  const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
   // Schedule Reference Update Success Message
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
   const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
@@ -68,14 +67,17 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
           data = {...newScheduleFields, schedule_type: scheduleType}
         else if (scheduleType === 'Training-Schedule')
           data = {...trainingFields, schedule_type: scheduleType}
-
         // 
         if(mode === 'Add') {
           // Create Calendar Schedule 
           dispatch(createCalendarSchedule(data))
+          // Refresh Calendar
+          dispatch(listCalendarSchedule())
         } else {
           // Update Schedule
           dispatch(updateCalendarSchedule(data, artid))
+          // Refresh Calendar
+          dispatch(listCalendarSchedule())
         }
       }
     })
@@ -91,10 +93,10 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(scheduleReferenceCreateSuccess) {
+    if(calendarScheduleCreateSuccess) {
       Swal.fire(
         'Success!',
-        scheduleReferenceCreateMessage,
+        calendarScheduleCreateMessage,
         'success'
       )
       // Refresh Datatable
@@ -116,7 +118,7 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
       onHide()
     }
 
-  },[scheduleReferenceCreateMessage, scheduleReferenceUpdateSuccess])
+  },[calendarScheduleCreateMessage, calendarScheduleCreateSuccess])
 
   return (
     <>

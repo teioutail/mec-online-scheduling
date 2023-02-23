@@ -37,22 +37,20 @@ import {
   
   import { listBusinessUnitOption } from '../actions/businessUnitActions'
   import { listDestinationOption } from '../actions/Admin/destinationDetailsActions'
-  
-  import { 
-    SCHEDULE_REFERENCE_CREATE_RESET,
-    SCHEDULE_REFERENCE_DETAILS_RESET,
-    SCHEDULE_REFERENCE_UPDATE_RESET,
-  } from '../constants/Sales/salesScheduleReferenceConstants'
   import Swal from 'sweetalert2/dist/sweetalert2.js'
   import EditCalendarScheduleModal from '../modals/Sales/EditCalendarScheduleModal'
   import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   import { listActivityRelatedToOption } from '../actions/Admin/activityRelatedToActions'
+  import { 
+    CALENDAR_SCHEDULE_CREATE_RESET, 
+    CALENDAR_SCHEDULE_UPDATE_RESET,
+  } from '../constants/Sales/salesCalendarScheduleConstants'
 
 const CalendarScheduleScreen = () => {
-
     // useState
     const [selectedCalendarDetails, setSelectedCalendarDetails] = useState({})
+
     // Locales
     const locales = {
         "en-US": require("date-fns/locale/en-US")
@@ -100,8 +98,8 @@ const CalendarScheduleScreen = () => {
     // useNavigate to redirect the user
     const navigate = useNavigate()
     // Schedule Create Error
-    const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
-    const { error:errorCreate } = scheduleReferenceCreate
+    const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
+    const { error:errorCreate } = calendarScheduleCreate
   
     // Schedule Update Error
     const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
@@ -118,10 +116,9 @@ const CalendarScheduleScreen = () => {
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
     const { loading:loadingDetails , calendar:calendarScheduleDetail } = calendarScheduleDetails
-
+    
     // EditRoleModal
     const [show, setShow] = useState(false)
-
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -131,15 +128,11 @@ const CalendarScheduleScreen = () => {
     const [mode, setMode] = useState('')
 
     // Add Calendar Modal
-    const handleScheduleReferenceView = (state) => {
+    const handleCalendarScheduleView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
         setMode('Add')
-        // 
-        dispatch({
-            type: SCHEDULE_REFERENCE_DETAILS_RESET,
-        })
     }
 
     //
@@ -149,7 +142,7 @@ const CalendarScheduleScreen = () => {
         setArtId(state.art_id)
         setMode('Edit')
         dispatch(getSelectedCalendarDetails(state.art_id))
-        setSelectedCalendarDetails(calendarScheduleDetail)
+        // setSelectedCalendarDetails(calendarScheduleDetail)
     }
 
     // Delete Schedule Reference
@@ -192,7 +185,7 @@ const CalendarScheduleScreen = () => {
                 }
             }
             //
-            dispatch({ type: SCHEDULE_REFERENCE_CREATE_RESET })
+            dispatch({ type: CALENDAR_SCHEDULE_CREATE_RESET })
         }
         
         // Show Update Error
@@ -205,7 +198,7 @@ const CalendarScheduleScreen = () => {
                 }
             }
             //
-            dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
+            dispatch({ type: CALENDAR_SCHEDULE_UPDATE_RESET })
         }
     }, [errorCreate, errorUpdate])
 
@@ -236,31 +229,7 @@ const CalendarScheduleScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                {/* 
-                    <div>
-                        <input type="text" 
-                            placeholder="Add Title" 
-                            style={{width: "20%", marginRight: "10px"}} 
-                            value={newEvent.title} 
-                            onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
-                        />
-                        <DatePicker 
-                            placeholderText="Start Date" style={{marginRight: "10px"}}
-                            selected={newEvent.start} 
-                            onChange={(start) => setNewEvent({...newEvent, start})}
-                        />
-                        <DatePicker 
-                            placeholderText="End Date" style={{marginRight: "10px"}}
-                            selected={newEvent.end} 
-                            onChange={(end) => setNewEvent({...newEvent, end})}
-                        />
-                        <button 
-                            style={{marginTop: "10px"}}
-                            onClick={handleAddEvent}
-                        >Add Event</button>
-                    </div> */}
-
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
+                    <Button variant="primary" size="sm" className="float-end" onClick={handleCalendarScheduleView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
