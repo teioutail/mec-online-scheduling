@@ -14,7 +14,16 @@ import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
-const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarScheduleDetails, size }) => {
+const EditCalendarScheduleModal = (props) => {
+  //
+  const { 
+    show, 
+    mode, 
+    onHide, 
+    artid, 
+    calendarScheduleDetails, 
+    size,
+  } = props
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -135,12 +144,13 @@ const EditCalendarScheduleModal = ({ show , mode, onHide, artid, calendarSchedul
             <Row>
                 <Col sm={12} md={6} lg={6}>
                     <Form.Group className="mb-3">
-                    <Form.Label>Select Schedule Type</Form.Label>
+                    <Form.Label>{mode} Select Schedule Type</Form.Label>
                     <Form.Control
                       size='sm'
                       as='select' 
                       aria-label="Status"
                       value={scheduleType}
+                      disabled={(mode === 'Edit')}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >
                     <option value="">- Select -</option>

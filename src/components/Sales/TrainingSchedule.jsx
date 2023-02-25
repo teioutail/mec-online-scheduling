@@ -10,7 +10,6 @@ import moment from 'moment'
 
 const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, mode }) => {
   // useState
-  console.warn(calendarScheduleDetails)
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
   const [trainer, setTrainer] = useState('')

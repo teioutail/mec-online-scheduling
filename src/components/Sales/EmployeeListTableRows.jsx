@@ -6,13 +6,19 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
-const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmployee, handleChange, mode, addNewRowState }) => {
-  
+const EmployeeListTableRows = (props) => {
+  //
+  const { 
+    rowsData, 
+    deleteTableRows, 
+    handleChangeAddEmployee, 
+    handleChange, 
+    mode, 
+ } = props
+
   // Get Fullname, Users Id
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
-  
-  //   setActivitySchedule(moment(activity_schedule).toDate() || '')
 
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
@@ -25,52 +31,52 @@ const EmployeeListTableRows = ({ rowsData, deleteTableRows, handleChangeAddEmplo
         // 
         const { employeeId, timeFrom, timeTo } = data;
         
+        console.log(data);
         return(
-            <>
-                <tr key={index}>
-                    <td>
-                        <DatePicker
-                            className='form-control form-control-sm'
-                            selected={(mode === 'Edit' ? moment(timeFrom).toDate() : timeFrom)} 
-                            timeInputLabel="Time:"
-                            dateFormat="MM/dd/yyyy h:mm a"
-                            showTime = {{ user12hours: true }} 
-                            showTimeInput
-                            onChange={(e) => handleChangeAddEmployee(index, "timeFrom", e)}
-                        />
-                    </td>
-                    <td>
-                        <DatePicker
-                            className='form-control form-control-sm'
-                            selected={(mode === 'Edit' ? moment(timeTo).toDate() : timeTo)} 
-                            timeInputLabel="Time:"
-                            dateFormat="MM/dd/yyyy h:mm a"
-                            showTime = {{ user12hours: true }} 
-                            showTimeInput
-                            onChange={(e) => handleChangeAddEmployee(index, "timeTo", e)}
-                        />
-                    </td>
-                    <td className="align-middle text-center text-sm">
-                        <Form.Control
-                            size='sm'
-                            as='select' 
-                            aria-label="Status"
-                            onChange={(e)=>(handleChange(index, e))}
-                            value={employeeId}
-                            name="employeeId"
-                            // onChange={(e) => setScheduleType(e.target.value)}
-                        >
-                        <option value="">- Select -</option>
-                        { fullNameOptions }
-                        </Form.Control>
-                    </td>
-                    <td className="align-middle">
-                        <a onClick={deleteTableRows} className="btn btn-link text-danger text-gradient px-3 mb-0">
-                            <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
-                        </a>
-                    </td>
-                </tr>
-            </>
+            <tr key={index}>
+                <td>
+                    <DatePicker
+                        className='form-control form-control-sm'
+                        selected={(mode === 'Edit' ? (timeFrom ? moment(timeFrom).toDate() : moment().toDate()) : timeFrom)} 
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm a"
+                        showTime = {{ user12hours: true }} 
+                        showTimeInput
+                        onChange={(e) => handleChangeAddEmployee(index, "timeFrom", e)}
+                    />
+                </td>
+                <td>
+                    <DatePicker
+                        className='form-control form-control-sm'
+                        selected={(mode === 'Edit' ? (timeTo ? moment(timeTo).toDate() : moment().toDate())  : timeTo)} 
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm a"
+                        showTime = {{ user12hours: true }} 
+                        showTimeInput
+                        onChange={(e) => handleChangeAddEmployee(index, "timeTo", e)}
+                    />
+                    
+                </td>
+                <td className="align-middle text-center text-sm">
+                    <Form.Control
+                        size='sm'
+                        as='select' 
+                        aria-label="Status"
+                        onChange={(e)=>(handleChange(index, e))}
+                        value={employeeId}
+                        name="employeeId"
+                        // onChange={(e) => setScheduleType(e.target.value)}
+                    >
+                    <option value="">- Select -</option>
+                    { fullNameOptions }
+                    </Form.Control>
+                </td>
+                <td className="align-middle">
+                    <a onClick={deleteTableRows} className="btn btn-link text-danger text-gradient px-3 mb-0">
+                        <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
+                    </a>
+                </td>
+            </tr>
         )
     })
 )

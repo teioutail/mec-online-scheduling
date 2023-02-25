@@ -8,23 +8,26 @@ import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
 
-const NewScheduleRequest = ({ artid, calendarScheduleDetails, setNewScheduleFields, mode }) => {
+const NewScheduleRequest = (props) => {
+  //
+  const { 
+    artid, 
+    calendarScheduleDetails, 
+    setNewScheduleFields, 
+    mode 
+  } = props
+
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
-  const [destinationListOptions, setDestinationListOptions] = useState([])
-  // useState
   const [activitySchedule, setActivitySchedule] = useState(new Date())
   const [srArNo, setSrArNo] = useState('')
   const [referenceId, setReferenceId] = useState('')
   const [activityType, setActivityType] = useState('')
   const [activityRelatedTo, setActivityRelatedTo] = useState('')
-  const [destinationDetails, setDestinationDetails] = useState('')
   const [dtc, setDtc] = useState('')
   const [purposeOfActivity, setPurposeOfActivity] = useState('')
   const [remarks, setRemarks] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
-  //   const [employeeList, setEmployeeList] = useState([])
-  // Selected Employee Names
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
 
     // Fields
@@ -193,7 +196,6 @@ const NewScheduleRequest = ({ artid, calendarScheduleDetails, setNewScheduleFiel
         changeValueHandler('remarks', remarks)
         changeValueHandler('employee_list', selectedEmployeeNames)
         setNewScheduleFields(fields)
-
     },[activitySchedule,
         srArNo,
         referenceId,

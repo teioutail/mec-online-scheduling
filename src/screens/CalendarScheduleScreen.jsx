@@ -48,9 +48,6 @@ import {
   } from '../constants/Sales/salesCalendarScheduleConstants'
 
 const CalendarScheduleScreen = () => {
-    // useState
-    const [selectedCalendarDetails, setSelectedCalendarDetails] = useState({})
-
     // Locales
     const locales = {
         "en-US": require("date-fns/locale/en-US")
@@ -63,19 +60,6 @@ const CalendarScheduleScreen = () => {
         getDay,
         locales
     })
-
-    // Calendar Event
-    // const [newEvent, setNewEvent] = useState({
-    //     title: "", 
-    //     start: "", 
-    //     end:""
-    // })
-    
-    // const [allEvents, setAllEvents] = useState(events)
-     
-    // const handleAddEvent = () => {
-    //     setAllEvents([...allEvents, newEvent])
-    // }
 
     // Toastify
     const notify = (msg) => toast.error(msg, {

@@ -5,7 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-datepicker/dist/react-datepicker.css'
 import EmployeeListTableRows from './EmployeeListTableRows'
 
-const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSelectedEmployeeNames, mode}) => {
+const EmployeeListOption = (props) => {
+  //
+  const { 
+    changeValueHandler, 
+    selectedEmployeeNames, 
+    setSelectedEmployeeNames, 
+    mode
+  } = props
+
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
   // Add New Row State
@@ -92,6 +100,7 @@ const EmployeeListOption = ({ changeValueHandler, selectedEmployeeNames, setSele
                 handleChange={handleChange}
                 mode={mode}
                 addNewRowState={addNewRowState}
+                
               />
             </tbody>
           </Table>
