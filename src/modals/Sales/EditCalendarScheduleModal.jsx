@@ -3,15 +3,17 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
 import { 
   listCalendarSchedule,
   createCalendarSchedule,
   updateCalendarSchedule,
 } from '../../actions/Sales/salesCalendarScheduleAction'
-
 import TrainingSchedule from '../../components/Sales/TrainingSchedule'
 import NewScheduleRequest from '../../components/Sales/NewScheduleRequest'
+import { 
+  CALENDAR_SCHEDULE_CREATE_RESET,
+  CALENDAR_SCHEDULE_UPDATE_RESET,
+} from '../../constants/Sales/salesCalendarScheduleConstants'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
@@ -106,6 +108,9 @@ const EditCalendarScheduleModal = (props) => {
       )
       // Refresh Datatable
       dispatch(listCalendarSchedule())
+      dispatch({
+        type: CALENDAR_SCHEDULE_CREATE_RESET,
+      })
       // Close Modal
       onHide()
     }
@@ -119,6 +124,9 @@ const EditCalendarScheduleModal = (props) => {
       )
       // Refresh Datatable
       dispatch(listCalendarSchedule())
+      dispatch({
+        type: CALENDAR_SCHEDULE_UPDATE_RESET,
+      })
       // Close Modal
       onHide()
     }

@@ -8,7 +8,14 @@ import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 import moment from 'moment'
 
-const TrainingSchedule = ({ artid, calendarScheduleDetails, setTrainingFields, mode }) => {
+const TrainingSchedule = (props) => {
+  //
+  const { 
+    artid, 
+    calendarScheduleDetails, 
+    setTrainingFields, 
+    mode 
+  } = props
   // useState
   const [trainingType, setTrainingType] = useState('')
   const [trainingTopic, setTrainingTopic] = useState('')
