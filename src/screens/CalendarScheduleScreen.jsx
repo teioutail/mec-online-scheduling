@@ -225,6 +225,11 @@ const CalendarScheduleScreen = () => {
                         style={{ height: 500 , margin: '50px'}}
                         popup
                         onSelectEvent={handleViewCalendarInfo}
+                        eventPropGetter={(calendar) => {
+                            const backgroundColor = calendar.colorEvento ? calendar.colorEvento : '#FFFFFF';
+                            const color = calendar.color ? calendar.color : '#FFFFFF';
+                            return { style: { backgroundColor ,color} }
+                          }}
                     />}
 
                     <EditCalendarScheduleModal 

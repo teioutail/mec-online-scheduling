@@ -75,9 +75,9 @@ const EditCalendarScheduleModal = (props) => {
       if (result.isConfirmed) {
         // 
         if(scheduleType === 'New-Schedule')
-          data = {...newScheduleFields, schedule_type: scheduleType}
+          data = {...newScheduleFields, schedule_type: scheduleType, user_id: userInfo.user.id,}
         else if (scheduleType === 'Training-Schedule')
-          data = {...trainingFields, schedule_type: scheduleType}
+          data = {...trainingFields, schedule_type: scheduleType, user_id: userInfo.user.id,}
         // 
         if(mode === 'Add') {
           // Create Calendar Schedule 
