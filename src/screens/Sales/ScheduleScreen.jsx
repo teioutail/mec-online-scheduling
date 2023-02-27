@@ -271,12 +271,12 @@ const ScheduleScreen = () => {
         setRows(schedules)
         setPending(loading)
     }, [schedules, rows, loading])
-
+    
     //
     useEffect(() => {
-        // Check if user is sales else, redirect user
-        if(userInfo && userInfo.user.user_type === 1) {
-            //
+        // Check / Validate User Access
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
+        // if(userInfo && userInfo.user.user_type === 1) {
             dispatch(listScheduleReference())
             // Get User Email List
             dispatch(getUsersEmailList())
