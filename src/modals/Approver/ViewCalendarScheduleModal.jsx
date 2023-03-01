@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
@@ -14,10 +14,17 @@ import {
   CALENDAR_SCHEDULE_CREATE_RESET,
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
-import { listActivityRequestForApprover } from '../../actions/Approver/approverActivityRequestAction'
+import { listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
+import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
+import { listDestinationOption } from '../../actions/Admin/destinationDetailsActions'
+import { 
+    approverActivityRequest, 
+    listActivityRequestForApprover,
+} from '../../actions/Approver/approverActivityRequestAction'
+import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
-const EditCalendarScheduleModal = (props) => {
+const ViewCalendarScheduleModal = (props) => {
   //
   const { 
     show, 
@@ -27,6 +34,9 @@ const EditCalendarScheduleModal = (props) => {
     calendarScheduleDetails, 
     size,
   } = props
+
+// console.warn(calendarScheduleDetails)
+
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -41,12 +51,13 @@ const EditCalendarScheduleModal = (props) => {
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
-  // Calendar Schedule Update Success Message
-  const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
-  const { success:calendarScheduleUpdateSuccess, message:calendarScheduleUpdateMessage } = calendarScheduleUpdate
+  // Approver Activity Update Success Message
+  const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
+  const { success:approverActivityUpdateSuccess, message:approverActivityUpdateMessage } = approverActivityUpdate
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -91,11 +102,83 @@ const EditCalendarScheduleModal = (props) => {
     })
   }
 
+  /**
+   * - Approved Request
+   */
+  const handleApprovedRequest = () => {
+    // Data Object
+    let data = {}
+    // Save Change Here...
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if(scheduleType === 'New-Schedule')
+                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
+            else if (scheduleType === 'Training-Schedule')
+                data = {...trainingFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
+            // 
+            if(mode === 'Add') {
+                // Create Calendar Schedule 
+                dispatch(createCalendarSchedule(data))
+            } else {
+                // Update Schedule
+                dispatch(approverActivityRequest(data))
+            }
+        }
+    })
+  }
+
+  /**
+   * - Reject Request
+   */
+  const handleRejectRequest = () => {
+       // Data Object
+       let data = {}
+       // Save Change Here...
+       Swal.fire({
+           title: 'Are you sure?',
+           text: "You won't be able to revert this!",
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Yes, Proceed!'
+       }).then((result) => {
+           if (result.isConfirmed) {
+            if(scheduleType === 'New-Schedule')
+                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
+            else if (scheduleType === 'Training-Schedule')
+                data = {...trainingFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
+                // 
+                if(mode === 'Add') {
+                    // Create Calendar Schedule 
+                    // dispatch(createCalendarSchedule(data))
+                } else {
+                    // Update Schedule
+                    dispatch(approverActivityRequest(data))
+                }
+            }
+       })
+  }
+
   // Selected Calendar Details
   useEffect(() => {
     const { sched_type } = calendarScheduleDetails
     // setState
     setScheduleType(sched_type || '')
+    // Get List User Reference Id
+    dispatch(listScheduleReferenceId())
+    // Get List Activity Related To Option
+    dispatch(listActivityRelatedToOption())
+    // Get List of Destination Option
+    dispatch(listDestinationOption())
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -107,15 +190,8 @@ const EditCalendarScheduleModal = (props) => {
         calendarScheduleCreateMessage,
         'success'
       )
-      // User Role 
-      const user = {
-        'activity_type': 'Pre-Sales',
-        'status': 'For Approval',
-        'list_type': 'view-for-approval'
-      }
       // Refresh Datatable
-      dispatch(listActivityRequestForApprover(user))
-      
+      dispatch(listCalendarSchedule())
       dispatch({
         type: CALENDAR_SCHEDULE_CREATE_RESET,
       })
@@ -124,25 +200,31 @@ const EditCalendarScheduleModal = (props) => {
     }
 
     // Show Success Update
-    if(calendarScheduleUpdateSuccess) {
-      Swal.fire(
-        'Success!',
-        calendarScheduleUpdateMessage,
-        'success'
-      )
-      // Refresh Datatable
-      dispatch(listCalendarSchedule())
+    if(approverActivityUpdateSuccess) {
+        Swal.fire(
+            'Success!',
+            approverActivityUpdateMessage,
+            'success'
+        )
+        // User Role List View 
+        const user = {
+            'activity_type': userInfo.user.manage_team,
+            'status': 'For Approval',
+            'list_type': 'view-for-approval'
+        }
+
+     // Refresh Datatable
+      dispatch(listActivityRequestForApprover(user))
+
       dispatch({
-        type: CALENDAR_SCHEDULE_UPDATE_RESET,
+        type: ACTIVITY_FOR_APPROVER_UPDATE_RESET,
       })
       // Close Modal
       onHide()
     }
 
-  },[calendarScheduleCreateMessage,
-     calendarScheduleCreateSuccess,
-     calendarScheduleUpdateSuccess,
-     calendarScheduleUpdateMessage])
+  },[calendarScheduleCreateSuccess, 
+    approverActivityUpdateSuccess])
 
   return (
     <>
@@ -154,13 +236,13 @@ const EditCalendarScheduleModal = (props) => {
           keyboard={false}
         >
         <Modal.Header closeButton>
-            <Modal.Title>{ mode === 'Add' ? 'Add Calendar Schedule' : 'Edit Calendar Schedule'  }</Modal.Title>
+            <Modal.Title>{ mode === 'Add' ? 'Add Schedule' : 'Edit Schedule'  }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Row>
                 <Col sm={12} md={6} lg={6}>
                     <Form.Group className="mb-3">
-                    <Form.Label>{mode} Select Schedule Type</Form.Label>
+                    <Form.Label>{mode} Select Schedule Types</Form.Label>
                     <Form.Control
                       size='sm'
                       as='select' 
@@ -203,8 +285,11 @@ const EditCalendarScheduleModal = (props) => {
             <Button size='sm' variant="secondary" onClick={onHide}>
                 Close
             </Button>
-            <Button size='sm' variant="primary" onClick={handleSubmit} >
-                Save Changes
+            <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                Reject Request
+            </Button>
+            <Button size='sm' variant="info" onClick={handleApprovedRequest} >
+                Approve Request
             </Button>
         </Modal.Footer>
         </Modal>
@@ -212,4 +297,4 @@ const EditCalendarScheduleModal = (props) => {
   )
 }
 
-export default EditCalendarScheduleModal
+export default ViewCalendarScheduleModal

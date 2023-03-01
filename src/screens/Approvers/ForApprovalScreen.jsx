@@ -25,9 +25,16 @@ import {
 } from '../../constants/Sales/salesScheduleReferenceConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
+import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// 
+import { 
+    listActivityRequestForApprover,
+} from '../../actions/Approver/approverActivityRequestAction'
+
+import moment from 'moment'
+import { getSelectedCalendarDetails } from '../../actions/Sales/salesCalendarScheduleAction'
 
 const ForApprovalScreen = () => {
     // Toastify
@@ -49,10 +56,9 @@ const ForApprovalScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-
-    // Schedule List
-    const scheduleReferenceList = useSelector(state => state.scheduleReferenceList)
-    const { loading , schedules } = scheduleReferenceList
+    // For Approval List
+    const approverActivityList = useSelector(state => state.approverActivityList)
+    const { loading , activity } = approverActivityList
     
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
@@ -66,9 +72,9 @@ const ForApprovalScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // Schedule Info / Details
-    const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-    const { schedule:scheduleDetail } = scheduleReferenceDetails
+    // Calendar Schedule Details
+    const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
 
     // Datatables
     const [pending, setPending] = useState(true)
@@ -86,7 +92,7 @@ const ForApprovalScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [scheduleid, setScheduleId] = useState('')
+    const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
 
     // Add User Modal
@@ -101,19 +107,19 @@ const ForApprovalScreen = () => {
         })
     }
 
-    // Edit Role
-    const handleEditScheduleReferenceView = (state) => {
+    // Edit 
+    const handleEditScheduleView = (state) => {
         setShow(true)
-        setScheduleId(state.target.id)
+        setArtId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        dispatch(getScheduleReferenceDetails(state.target.id))
+        dispatch(getSelectedCalendarDetails(state.target.id))
     }
 
     // Role Access 
     const handleRoleAccessView = (state) => {
         handleRoleAccessShow()
-        setScheduleId(state.target.id)
+        setArtId(state.target.id)
         setMode('Edit')
         // Call API Here...
         
@@ -155,32 +161,32 @@ const ForApprovalScreen = () => {
                 sortable: true,
             },
             {   name: 'Date Requested',
-                selector: row => row.project_name,
+                selector: row => row.date_requested,
                 sortable: true,
             },
             {
                 name: 'Activity Related To',
-                selector: row => row.project_no,
+                selector: row => row.activity,
                 sortable: true,
             },
             {
                 name: 'Related Team',
-                selector: row => row.case_no,
+                selector: row => row.related_team,
                 sortable: true,
             },
             {
                 name: 'Activity Date',
-                selector: row => row.sa_no,
+                selector: row => moment(row.activity_date).format('L'),
                 sortable: true,
             },
             {
                 name: 'Assigned Engineer',
-                selector: row => row.partner_company_name,
+                selector: row => row.name,
                 sortable: true,
             },
             {
                 name: 'Status',
-                selector: row => row.enduser_company_name,
+                selector: row => row.status,
                 sortable: true,
             },
             {
@@ -190,38 +196,13 @@ const ForApprovalScreen = () => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.art_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Schedule
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
+                                    <Link className="dropdown-item" onClick={handleEditScheduleView} id={row.art_id}>
+                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
                                     </Link>
                                 </li>
                             </ul>
@@ -268,16 +249,23 @@ const ForApprovalScreen = () => {
 
     // Set Row Value
     useEffect(() => {
-        setRows(schedules)
+        setRows(activity)
         setPending(loading)
-    }, [schedules, rows, loading])
+    }, [activity, rows, loading])
     
     //
     useEffect(() => {
         // Check / Validate User Access
         if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
-            dispatch(listScheduleReference())
+            // User Role 
+            const user = {
+                'activity_type': userInfo.user.manage_team,
+                'status': 'For Approval',
+                'list_type': 'view-for-approval'
+            }
+            //
+            dispatch(listActivityRequestForApprover(user))
             // Get User Email List
             dispatch(getUsersEmailList())
             // Get Business Unit
@@ -312,13 +300,13 @@ const ForApprovalScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <EditScheduleModal 
+                    <ViewCalendarScheduleModal 
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
-                        scheduleid={scheduleid}
-                        scheduleDetails={scheduleDetail}
+                        artid={artid}
                         mode={mode}
+                        calendarScheduleDetails={calendarScheduleDetail}
                     />
 
                     <ToastContainer

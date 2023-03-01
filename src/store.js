@@ -102,6 +102,12 @@ import {
     destinationUpdateReducer,
 } from './reducers/Admin/destinationDetailReducers'
 
+// Schedule Approver Reducers
+import { 
+    approverActivityListReducer, 
+    approverActivityUpdateReducer,
+} from './reducers/Approver/approverActivityRequestReducers'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -164,6 +170,8 @@ const reducer = combineReducers({
     destinationDetails:destinationDetailsReducer,
     destinationDelete:destinationDeleteReducer,
     destinationListOption:destinationListOptionReducer,
+    approverActivityList: approverActivityListReducer,
+    approverActivityUpdate: approverActivityUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
