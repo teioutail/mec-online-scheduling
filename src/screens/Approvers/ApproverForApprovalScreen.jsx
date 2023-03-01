@@ -36,7 +36,7 @@ import {
 import moment from 'moment'
 import { getSelectedCalendarDetails } from '../../actions/Sales/salesCalendarScheduleAction'
 
-const ForApprovalScreen = () => {
+const ApproverForApprovalScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -327,4 +327,4 @@ const ForApprovalScreen = () => {
     )
 }
 
-export default ForApprovalScreen
+export default ApproverForApprovalScreen

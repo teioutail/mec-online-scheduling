@@ -61,47 +61,6 @@ const ViewCalendarScheduleModal = (props) => {
   // CommonJS
   const Swal = require('sweetalert2')
 
-  // Event in select dropdown
-  const handleSelectedChange = (event) => {
-    //
-    const target = event.target
-    const selected = event.currentTarget.value
-    // const selected = target.selected
-    const name = target.name
-    // setStatus(selected)
-  }
-
-  const handleSubmit = async () =>  {
-    // Data Object
-    let data = {}
-    // Save Change Here...
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Proceed!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // 
-        if(scheduleType === 'New-Schedule')
-          data = {...newScheduleFields, schedule_type: scheduleType, user_id: userInfo.user.id}
-        else if (scheduleType === 'Training-Schedule')
-          data = {...trainingFields, schedule_type: scheduleType, user_id: userInfo.user.id}
-        // 
-        if(mode === 'Add') {
-          // Create Calendar Schedule 
-          dispatch(createCalendarSchedule(data))
-        } else {
-          // Update Schedule
-          dispatch(updateCalendarSchedule(data, artid))
-        }
-      }
-    })
-  }
-
   /**
    * - Approved Request
    */
