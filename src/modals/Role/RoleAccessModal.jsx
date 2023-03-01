@@ -51,26 +51,6 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
   }
 
   // 
-  const handleSubmit = async () =>  {
-    // Save Change Here...
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Proceed!'
-    }).then((result) => {
-
-      if (result.isConfirmed) {
-
-      }
-
-    })
-  }
-
-  // 
   const handleSubMenuCategoryUpdate = async (state) => {
     // Check Status
     const target = state.target
@@ -174,9 +154,6 @@ const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) =>
         <Modal.Footer>
           <Button variant="secondary" onClick={onHide}>
               Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit} >
-              Save Changes
           </Button>
         </Modal.Footer>
         </Modal>

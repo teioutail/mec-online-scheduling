@@ -20,6 +20,7 @@ import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import ApproverRejectedScreen from './screens/Approvers/ApproverRejectedScreen'
 
 // This exports the whole icon packs for Brand and Solid.
 library.add(fas)
@@ -51,6 +52,7 @@ function App() {
           <Route path='/decision' element={<DecisionUnitScreen/>} />
           <Route path='/destination' element={<DestinationDetailScreen/>} />
           <Route path='/schedule-for-approval' element={<ApproverForApprovalScreen />} />
+          <Route path='/schedule-rejected' element={<ApproverRejectedScreen />} />
         </Routes>
       </div>
     </Router>
