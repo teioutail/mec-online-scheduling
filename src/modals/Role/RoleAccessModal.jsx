@@ -20,7 +20,16 @@ import {
   updateSubMenuRoleAccess,
 } from '../../actions/menuSubCategoryAction'
 
-const RoleAccessModal = ({ show, onHide, roleid, categories, subcategories }) => {
+const RoleAccessModal = (props) => {
+  //
+  const { 
+    show, 
+    onHide, 
+    roleid, 
+    categories, 
+    subcategories 
+  } = props
+  
   // Redux
   const dispatch = useDispatch()
   // setState

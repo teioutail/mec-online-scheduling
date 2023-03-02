@@ -14,7 +14,7 @@ import {
   CALENDAR_SCHEDULE_CREATE_RESET,
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
-import { listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
+import { getScheduleReferenceDetails, listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
 import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
 import { listDestinationOption } from '../../actions/Admin/destinationDetailsActions'
 import { 
@@ -22,6 +22,7 @@ import {
     listActivityRequestForApprover,
 } from '../../actions/Approver/approverActivityRequestAction'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
+import MotherFolder from '../../components/Sales/MotherFolder'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const ViewCalendarScheduleModal = (props) => {
@@ -129,9 +130,11 @@ const ViewCalendarScheduleModal = (props) => {
 
   // Selected Calendar Details
   useEffect(() => {
-    const { sched_type } = calendarScheduleDetails
+    const { sched_type, ar_id } = calendarScheduleDetails
     // setState
     setScheduleType(sched_type || '')
+    //
+    dispatch(getScheduleReferenceDetails(ar_id))
     // Get List User Reference Id
     dispatch(listScheduleReferenceId())
     // Get List Activity Related To Option
@@ -239,6 +242,11 @@ const ViewCalendarScheduleModal = (props) => {
               }
             </>
           }
+
+          <MotherFolder 
+            mode={mode}
+          />
+
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>
