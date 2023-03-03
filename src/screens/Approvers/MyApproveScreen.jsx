@@ -172,7 +172,7 @@ const ApproverForApprovalScreen = () => {
             const user = {
                 'activity_type': userInfo.user.manage_team,
                 'status': 'For Approval',
-                'list_type': 'view-list'
+                'list_type': 'view-for-approval'
             }
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))

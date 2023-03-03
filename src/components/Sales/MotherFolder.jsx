@@ -11,6 +11,9 @@ const MotherFolder = (props) => {
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading , schedule:scheduleReferenceDetail } = scheduleReferenceDetails
+  // Get Business Unit List Options
+  const businessUnitListOption = useSelector(state => state.businessUnitListOption)
+  const { business:businessListOptions } = businessUnitListOption
   // useState
   const [projectNo, setProjectNo] = useState('')
   const [caseNo, setCaseNo] = useState('')
@@ -28,12 +31,15 @@ const MotherFolder = (props) => {
   const [requestedBy, setRequestedBy] = useState('')
   const [dateRequested, setDateRequested] = useState('')
   const [modes, setModes] = useState('')
+  const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
+  const [activityType, setActivityType] = useState('')
   // 
   useEffect(() => {
     // Selected Schedule Details
     if(scheduleReferenceDetail) {
         // 
-        const {  
+        const {
+            activity_type,  
             project_no,
             case_no,
             sa_no,
@@ -47,6 +53,8 @@ const MotherFolder = (props) => {
             partner_contact_number,
             enduser_contact_number,
             created_at,
+            fullname, // not showing
+            business_unit,
         } = scheduleReferenceDetail
 
         // setState
@@ -62,9 +70,11 @@ const MotherFolder = (props) => {
         setEndUserContactPerson(enduser_contact_person || "")
         setPartnerContactNumber(partner_contact_number || "")
         setEndUserContactNumber(enduser_contact_number || "")
-        setModes(mode === 'Edit')
-        // setRequestedBy( || "")
+        setRequestedBy(fullname || "")
         setDateRequested(moment(created_at).format('L') || "")
+        setSelectedBusinessUnit(business_unit || "")
+        setActivityType(activity_type || "")
+        setModes(mode === 'Edit')
     }
   }, [scheduleReferenceDetail])
 
@@ -73,67 +83,77 @@ const MotherFolder = (props) => {
     <>
         { loading ? <Loader /> :  
             <>
-                <Row>
-                    <Col sm={12} md={6} lg={6}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Project No.</Form.Label>  
-                            <Form.Control 
-                                size='sm'
-                                type='text'
-                                placeholder='Project No.'
-                                value={projectNo}
-                                onChange={(e) => setProjectNo(e.target.value)}
-                                readOnly={modes}
-                            />
-                        </Form.Group>
-                    </Col>
-                    <Col sm={12} md={6} lg={6}>
-                    <Form.Group className="mb-3">
-                            <Form.Label>Case No.</Form.Label>  
-                            <Form.Control 
-                                size='sm'
-                                type='text'
-                                placeholder='Case No.'
-                                value={caseNo}
-                                onChange={(e) => setCaseNo(e.target.value)}
-                                readOnly={modes}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group className="mb-3">
-                            <Form.Label>SA No.</Form.Label>  
-                            <Form.Control 
-                                size='sm'
-                                type='text'
-                                placeholder='SA No.'
-                                value={saNo}
-                                onChange={(e) => setSaNo(e.target.value)}
-                                readOnly={modes}
-                            />
-                        </Form.Group>
-                    </Col>
-                    <Col sm={12} md={6} lg={6}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Netsuite Link</Form.Label>  
-                            <Form.Control 
-                                size='sm'
-                                type='text'
-                                placeholder='Netsuite Link'
-                                value={netSuiteLink}
-                                onChange={(e) => setNetSuiteLink(e.target.value)}
-                                readOnly={modes}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
+            { // Show Fields if Activity Type is Post-Sales
+                activityType === 'Post-Sales' && 
+                    <>
+                        <Row>
+                            <Col sm={12} md={6} lg={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Project No.</Form.Label>  
+                                    <Form.Control 
+                                        size='sm'
+                                        type='text'
+                                        placeholder='Project No.'
+                                        value={projectNo}
+                                        onChange={(e) => setProjectNo(e.target.value)}
+                                        readOnly={modes}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col sm={12} md={6} lg={6}>
+                            <Form.Group className="mb-3">
+                                    <Form.Label>Case No.</Form.Label>  
+                                    <Form.Control 
+                                        size='sm'
+                                        type='text'
+                                        placeholder='Case No.'
+                                        value={caseNo}
+                                        onChange={(e) => setCaseNo(e.target.value)}
+                                        readOnly={modes}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>SA No.</Form.Label>  
+                                    <Form.Control 
+                                        size='sm'
+                                        type='text'
+                                        placeholder='SA No.'
+                                        value={saNo}
+                                        onChange={(e) => setSaNo(e.target.value)}
+                                        readOnly={modes}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col sm={12} md={6} lg={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Netsuite Link</Form.Label>  
+                                    <Form.Control 
+                                        size='sm'
+                                        type='text'
+                                        placeholder='Netsuite Link'
+                                        value={netSuiteLink}
+                                        onChange={(e) => setNetSuiteLink(e.target.value)}
+                                        readOnly={modes}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </>
+                }
                 <Row className="mb-3">
                     <Col>
                         <Form.Label>Business Unit</Form.Label>  
                         <Select
-
+                            closeMenuOnSelect={false}
+                            isMulti
+                            isOptionDisabled={(option) => option.disabled}
+                            options={businessListOptions}
+                            onChange={(e) => setSelectedBusinessUnit(e.target.value)}
+                            value={selectedBusinessUnit}
                         />
                     </Col>
                 </Row>

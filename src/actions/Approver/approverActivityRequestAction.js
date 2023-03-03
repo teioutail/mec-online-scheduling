@@ -72,7 +72,6 @@ export const approverActivityRequest = (status) => async (dispatch, getState) =>
         }
         // Call API Request
         const { data } = await axios.put(`/auth/approver-activity-request/${status.id}`, status, config)
-        // console.warn(data)
 
         dispatch({
             type: ACTIVITY_FOR_APPROVER_UPDATE_SUCCESS,

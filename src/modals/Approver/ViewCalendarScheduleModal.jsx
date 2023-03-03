@@ -172,11 +172,10 @@ const ViewCalendarScheduleModal = (props) => {
         const user = {
             'activity_type': userInfo.user.manage_team,
             'status': 'For Approval',
-            'list_type': 'view-for-approval'
+            'list_type': 'view-list'
         }
-
-     // Refresh Datatable
-      dispatch(listActivityRequestForApprover(user))
+        // Refresh Datatable
+        dispatch(listActivityRequestForApprover(user))
 
       dispatch({
         type: ACTIVITY_FOR_APPROVER_UPDATE_RESET,

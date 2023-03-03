@@ -15,6 +15,7 @@ import ActivityRelatedToScreen from './screens/Admin/ActivityRelatedToScreen'
 import DecisionUnitScreen from './screens/Admin/DecisionUnitScreen'
 import DestinationDetailScreen from './screens/Admin/DestinationDetailScreen'
 import ApproverForApprovalScreen from './screens/Approvers/ApproverForApprovalScreen'
+import ApproverApprovedScreen from './screens/Approvers/ApproverApprovedScreen'
 import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -53,6 +54,7 @@ function App() {
           <Route path='/destination' element={<DestinationDetailScreen/>} />
           <Route path='/schedule-for-approval' element={<ApproverForApprovalScreen />} />
           <Route path='/schedule-rejected' element={<ApproverRejectedScreen />} />
+          <Route path='/schedule-approved' element={<ApproverApprovedScreen />} />
         </Routes>
       </div>
     </Router>

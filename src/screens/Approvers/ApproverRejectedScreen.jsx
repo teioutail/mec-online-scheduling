@@ -7,34 +7,22 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-  listScheduleReference,
-  getScheduleReferenceDetails,
-  deleteScheduleReference,
-} from '../../actions/Sales/salesScheduleReferenceAction'
-
-import { getUsersEmailList } from '../../actions/userActions'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
-
 import { 
-  SCHEDULE_REFERENCE_CREATE_RESET,
-  SCHEDULE_REFERENCE_DETAILS_RESET,
-  SCHEDULE_REFERENCE_UPDATE_RESET,
-} from '../../constants/Sales/salesScheduleReferenceConstants'
-
+    ACTIVITY_FOR_APPROVER_UPDATE_RESET,
+} from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// 
 import { 
     listActivityRequestForApprover,
 } from '../../actions/Approver/approverActivityRequestAction'
-
 import moment from 'moment'
-import { getSelectedCalendarDetails } from '../../actions/Sales/salesCalendarScheduleAction'
+import { 
+    getSelectedCalendarDetails,
+} from '../../actions/Sales/salesCalendarScheduleAction'
 
 const ApproverRejectedScreen = () => {
     // Toastify
@@ -51,7 +39,7 @@ const ApproverRejectedScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Schedule For Approval'
+    const headerTitle = 'Rejected Schedule'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -59,54 +47,26 @@ const ApproverRejectedScreen = () => {
     // For Approval List
     const approverActivityList = useSelector(state => state.approverActivityList)
     const { loading , activity } = approverActivityList
-    
-    // Schedule Create Error
-    const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
-    const { error:errorCreate } = scheduleReferenceCreate
-  
-    // Schedule Update Error
-    const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-    const { error:errorUpdate } = scheduleReferenceUpdate
-
+    // Approver Activity Update
+    const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
+    const { error:errorUpdate } = approverActivityUpdate
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
     const { calendar:calendarScheduleDetail } = calendarScheduleDetails
-
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
-
     // EditRoleModal
     const [show, setShow] = useState(false)
-    // 
-    const [showRoleAccess, setShowRoleAccess] = useState()
-    // Role Access View Modal
-    const handleRoleAccessClose = () => setShowRoleAccess(false)
-    const handleRoleAccessShow = () => setShowRoleAccess(true)
-    //
+    // Modal State
     const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
-
+    // const handleShow = () => setShow(true)
     // Global ID
     const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
-
-    // Add User Modal
-    const handleScheduleReferenceView = (state) => {
-        // Show Modal
-        handleShow()
-        // setMode State to Add
-        setMode('Add')
-        // 
-        dispatch({
-            type: SCHEDULE_REFERENCE_DETAILS_RESET,
-        })
-    }
-
     // Edit 
     const handleEditScheduleView = (state) => {
         setShow(true)
@@ -115,44 +75,6 @@ const ApproverRejectedScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-
-    // Role Access 
-    const handleRoleAccessView = (state) => {
-        handleRoleAccessShow()
-        setArtId(state.target.id)
-        setMode('Edit')
-        // Call API Here...
-        
-    }
-
-    // Delete Schedule Reference
-    const handleDeleteScheduleReference = (state) => {
-        // Save Change Here...
-        Swal.fire({
-            title: 'Delete this schedule?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Proceed!'
-        }).then((result) => {
-            // 
-            if (result.isConfirmed) {
-                // Delete Schedule
-                dispatch(deleteScheduleReference(state.target.id))
-                // Refresh Datatable
-                dispatch(listScheduleReference())
-                // Show Success Request
-                Swal.fire(
-                    'Success!',
-                    'Schedule Successfully Deleted.', 
-                    'success'
-                )
-            }
-        })
-    }
-
     // Columns
     const columns = useMemo(
 		() => [
@@ -220,19 +142,6 @@ const ApproverRejectedScreen = () => {
 
     // useEffect for Error Message
     useEffect(() => {
-        // Show Create Error
-        if(errorCreate) {
-            // Loop Error Back-End Validation
-            for(const key in errorCreate) {
-                if (errorCreate.hasOwnProperty(key)) {
-                    // Show Error
-                    notify(`${errorCreate[key]}`)
-                }
-            }
-            //
-            dispatch({ type: SCHEDULE_REFERENCE_CREATE_RESET })
-        }
-        
         // Show Update Error
         if(errorUpdate) {
             // Loop Error Back-End Validation
@@ -243,9 +152,9 @@ const ApproverRejectedScreen = () => {
                 }
             }
             //
-            dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
+            dispatch({ type: ACTIVITY_FOR_APPROVER_UPDATE_RESET })
         }
-    }, [errorCreate, errorUpdate])
+    }, [errorUpdate])
 
     // Set Row Value
     useEffect(() => {
@@ -256,18 +165,16 @@ const ApproverRejectedScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
-                'status': 'For Approval',
-                'list_type': 'view-for-approval'
+                'status': 'Rejected',
+                'list_type': 'view-list'
             }
-            //
+            // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
-            // Get User Email List
-            dispatch(getUsersEmailList())
             // Get Business Unit
             dispatch(listBusinessUnitOption())
         } else {
@@ -281,10 +188,6 @@ const ApproverRejectedScreen = () => {
             <SideMenu />
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
-                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
-                    </Button>
-
                     <DataTable
                         // title={headerTitle}
                         // selectableRows

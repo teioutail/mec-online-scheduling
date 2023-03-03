@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
 import { 
@@ -25,7 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 
-const ApproverForApprovalScreen = () => {
+const ApproverApprovedScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -39,8 +38,8 @@ const ApproverForApprovalScreen = () => {
     });   
     // CommonJS
     const Swal = require('sweetalert2')
-    //
-    const headerTitle = 'Schedule For Approval'
+    // Header title
+    const headerTitle = 'Approved Schedule'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -166,12 +165,12 @@ const ApproverForApprovalScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
-                'status': 'For Approval',
+                'status': 'Approved',
                 'list_type': 'view-list'
             }
             // List All Activity Request
@@ -231,4 +230,4 @@ const ApproverForApprovalScreen = () => {
     )
 }
 
-export default ApproverForApprovalScreen
+export default ApproverApprovedScreen
