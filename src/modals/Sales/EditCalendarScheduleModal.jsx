@@ -15,7 +15,8 @@ import {
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
 import { listActivityRequestForApprover } from '../../actions/Approver/approverActivityRequestAction'
-
+import MotherFolder from '../../components/Sales/MotherFolder'
+import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleReferenceAction'
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
   //
@@ -93,9 +94,11 @@ const EditCalendarScheduleModal = (props) => {
 
   // Selected Calendar Details
   useEffect(() => {
-    const { sched_type } = calendarScheduleDetails
+    const { sched_type, ar_id } = calendarScheduleDetails
     // setState
     setScheduleType(sched_type || '')
+    //
+    dispatch(getScheduleReferenceDetails(ar_id))
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -198,6 +201,9 @@ const EditCalendarScheduleModal = (props) => {
               }
             </>
           }
+
+          { mode === 'Edit' && <MotherFolder mode={mode} /> }
+          
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>

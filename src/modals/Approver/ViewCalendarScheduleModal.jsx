@@ -168,6 +168,8 @@ const ViewCalendarScheduleModal = (props) => {
             approverActivityUpdateMessage,
             'success'
         )
+        // Refresh Datatable
+        dispatch(listCalendarSchedule())
         // User Role List View 
         const user = {
             'activity_type': userInfo.user.manage_team,
@@ -242,9 +244,8 @@ const ViewCalendarScheduleModal = (props) => {
             </>
           }
 
-          <MotherFolder 
-            mode={mode}
-          />
+        { mode === 'Edit' && <MotherFolder mode={mode} /> }
+
 
         </Modal.Body>
         <Modal.Footer>
