@@ -16,12 +16,13 @@ import DecisionUnitScreen from './screens/Admin/DecisionUnitScreen'
 import DestinationDetailScreen from './screens/Admin/DestinationDetailScreen'
 import ApproverForApprovalScreen from './screens/Approvers/ApproverForApprovalScreen'
 import ApproverApprovedScreen from './screens/Approvers/ApproverApprovedScreen'
+import ApproverRejectedScreen from './screens/Approvers/ApproverRejectedScreen'
+import ApproverCanceledScreen from './screens/Approvers/ApproverCanceledScreen'
 import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import ApproverRejectedScreen from './screens/Approvers/ApproverRejectedScreen'
 
 // This exports the whole icon packs for Brand and Solid.
 library.add(fas)
@@ -55,6 +56,7 @@ function App() {
           <Route path='/schedule-for-approval' element={<ApproverForApprovalScreen />} />
           <Route path='/schedule-rejected' element={<ApproverRejectedScreen />} />
           <Route path='/schedule-approved' element={<ApproverApprovedScreen />} />
+          <Route path='/schedule-canceled' element={<ApproverCanceledScreen />} />
         </Routes>
       </div>
     </Router>

@@ -186,8 +186,8 @@ const CalendarScheduleScreen = () => {
 
     //
     useEffect(() => {
-        // Check if user is Sales else, redirect user
-        if(userInfo && userInfo.user.user_type === 1) {
+        // Validate User Login Access
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
             // Get List of Calendar Schedule
             dispatch(listCalendarSchedule())
             // Get List of Destination Option

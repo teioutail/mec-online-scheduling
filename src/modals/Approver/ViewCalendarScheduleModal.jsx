@@ -123,6 +123,7 @@ const ViewCalendarScheduleModal = (props) => {
                 } else {
                     // Update Schedule
                     dispatch(approverActivityRequest(data))
+                    
                 }
             }
        })
@@ -245,7 +246,6 @@ const ViewCalendarScheduleModal = (props) => {
           }
 
         { mode === 'Edit' && <MotherFolder mode={mode} /> }
-
 
         </Modal.Body>
         <Modal.Footer>

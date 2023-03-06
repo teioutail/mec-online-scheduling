@@ -36,7 +36,8 @@ const ApproverForApprovalScreen = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-    });   
+    });
+    
     // CommonJS
     const Swal = require('sweetalert2')
     //
