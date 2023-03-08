@@ -151,7 +151,7 @@ export const createSubMenuCategory = (subcategory) => async (dispatch) => {
         // Call API Request
         const { data } = await axios.post('/auth/subcategory', subcategory, config)
 
-        console.warn(data)
+        // console.warn(data)
 
         dispatch({
             type: SUB_CATEGORY_CREATE_SUCCESS,

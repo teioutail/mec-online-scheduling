@@ -14,7 +14,10 @@ import {
   CALENDAR_SCHEDULE_CREATE_RESET,
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
-import { getScheduleReferenceDetails, listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
+import { 
+  getScheduleReferenceDetails, 
+  listScheduleReferenceId,
+} from '../../actions/Sales/salesScheduleReferenceAction'
 import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
 import { listDestinationOption } from '../../actions/Admin/destinationDetailsActions'
 import {
@@ -36,9 +39,7 @@ const ViewCalendarScheduleModal = (props) => {
     calendarScheduleDetails, 
     size,
   } = props
-
-// console.warn(calendarScheduleDetails)
-
+  
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -66,6 +67,40 @@ const ViewCalendarScheduleModal = (props) => {
   // CommonJS
   const Swal = require('sweetalert2')
 
+  /**
+   * - Cancel Request
+   */
+  const handleCancelRequest = () => {
+    // Data Object
+    let data = {}
+    // Save Change Here...
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if(scheduleType === 'New-Schedule')
+              data = {...newScheduleFields, schedule_type: scheduleType, status: 'Canceled', user_id: userInfo.user.id}
+            else if (scheduleType === 'Training-Schedule')
+              data = {...trainingFields, schedule_type: scheduleType, status: 'Canceled', user_id: userInfo.user.id}
+            // 
+            if(mode === 'Add') {
+              // Create Calendar Schedule 
+              dispatch(createCalendarSchedule(data))
+            } else {
+              // Update Schedule
+              dispatch(approverActivityRequest(data))
+              // Refresh Datatable
+              dispatch(listCalendarSchedule())
+            }
+        }
+    })
+  }
   /**
    * - Approved Request
    */
@@ -149,8 +184,6 @@ const ViewCalendarScheduleModal = (props) => {
     if(mode === 'Edit') {
       dispatch(getScheduleReferenceDetails(ar_id))
     }
-    // console.warn(ar_id)
-
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -267,15 +300,32 @@ const ViewCalendarScheduleModal = (props) => {
 
         </Modal.Body>
         <Modal.Footer>
-            <Button size='sm' variant="secondary" onClick={onHide}>
-                Close
-            </Button>
-            <Button size='sm' variant="danger" onClick={handleRejectRequest} >
-                Reject Request
-            </Button>
-            <Button size='sm' variant="info" onClick={handleApprovedRequest} >
-                Approve Request
-            </Button>
+          <Button size='sm' variant="secondary" onClick={onHide}>
+            Close
+          </Button>
+            {/* Approver Button */}
+            {['Pre-Sales Approver','Post-Sales Approver','Super Approver'].includes(userInfo.user_role) && 
+              <>
+                {mode === 'Edit' && status === 'For Approval' &&
+                  <>
+                    <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                      Reject Request
+                    </Button>
+                    <Button size='sm' variant="info" onClick={handleApprovedRequest} >
+                      Approve Request
+                    </Button>
+                  </>
+                }
+
+                {status === 'Approved' && 
+                  <>
+                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                      Cancel Schedule
+                    </Button>
+                  </>
+                }
+              </>
+            }
         </Modal.Footer>
         </Modal>
     </>

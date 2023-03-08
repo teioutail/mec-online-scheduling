@@ -16,9 +16,10 @@ import {
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
 import { listActivityRequestForApprover } from '../../actions/Approver/approverActivityRequestAction'
-import MotherFolder from '../../components/Sales/MotherFolder'
 import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleReferenceAction'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
+import ApproverDetails from '../../components/Approver/ApproverDetails'
+import MotherFolder from '../../components/Sales/MotherFolder'
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
   //
@@ -186,6 +187,45 @@ const EditCalendarScheduleModal = (props) => {
        })
   }
 
+  /**
+   * -  Delegate Request
+   */
+  const handleDelegateRequest = () => {
+    // 
+    Swal.fire({
+      title: 'Reason For Delegation',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Look up',
+      showLoaderOnConfirm: true,
+      preConfirm: (login) => {
+        return fetch(`//api.github.com/users/${login}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(response.statusText)
+            }
+            return response.json()
+          })
+          .catch(error => {
+            Swal.showValidationMessage(
+              `Request failed: ${error}`
+            )
+          })
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `${result.value.login}'s avatar`,
+          imageUrl: result.value.avatar_url
+        })
+      }
+    })
+  }
+
   // Selected Calendar Details
   useEffect(() => {
     // 
@@ -200,8 +240,11 @@ const EditCalendarScheduleModal = (props) => {
     setScheduleType(sched_type || '')
     setStatus(status || '')
     setUserId(user_id || '')
-    //
-    dispatch(getScheduleReferenceDetails(ar_id))
+
+    // View Only on edit mode
+    if(mode === 'Edit') {
+      dispatch(getScheduleReferenceDetails(ar_id))
+    }
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -213,11 +256,11 @@ const EditCalendarScheduleModal = (props) => {
         calendarScheduleCreateMessage,
         'success'
       )
-      // User Role 
+      // User Role List View 
       const user = {
-        'activity_type': 'Pre-Sales',
+        'activity_type': userInfo.user.manage_team,
         'status': 'For Approval',
-        'list_type': 'view-for-approval'
+        'list_type': 'view-list'
       }
       // Refresh Datatable
       dispatch(listActivityRequestForApprover(user))
@@ -247,6 +290,7 @@ const EditCalendarScheduleModal = (props) => {
 
     // Show Success Update
     if(approverActivityUpdateSuccess) {
+      // 
       Swal.fire(
         'Success!',
         approverActivityUpdateMessage,
@@ -323,22 +367,39 @@ const EditCalendarScheduleModal = (props) => {
 
           { mode === 'Edit' && <MotherFolder mode={mode} /> }
 
+          { 
+            (mode === 'Edit' && status != 'For Approval') && 
+            <ApproverDetails
+              mode={mode} 
+              status={status}
+            />
+          }
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>
                 Close
             </Button>
-
             {/* Approver Button */}
             {['Pre-Sales Approver','Post-Sales Approver','Super Approver'].includes(userInfo.user_role) && 
               <>
-                {status === 'For-Approval' && (userId === userInfo.user.id) &&
+                {mode === 'Edit' && status === 'For Approval' &&
                   <>
                     <Button size='sm' variant="danger" onClick={handleRejectRequest} >
                       Reject Request
                     </Button>
                     <Button size='sm' variant="info" onClick={handleApprovedRequest} >
-                        Approve Request
+                      Approve Request
+                    </Button>
+                    <Button size='sm' variant="dark-outline" onClick={handleDelegateRequest} >
+                      Delegate Request
+                    </Button>
+                  </>
+                }
+
+                {status === 'Approved' && 
+                  <>
+                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                      Cancel Schedule
                     </Button>
                   </>
                 }

@@ -44,6 +44,7 @@ import {
     CALENDAR_SCHEDULE_CREATE_RESET, 
     CALENDAR_SCHEDULE_UPDATE_RESET,
   } from '../constants/Sales/salesCalendarScheduleConstants'
+import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../constants/Approver/approverActivityRequestConstants'
 
 const CalendarScheduleScreen = () => {
     // Locales
@@ -86,6 +87,10 @@ const CalendarScheduleScreen = () => {
     // Calendar Update Error
     const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
     const { error:errorUpdate } = calendarScheduleUpdate
+
+    //
+    const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
+    const { error:approverActivityUpdateError } = approverActivityUpdate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -182,7 +187,23 @@ const CalendarScheduleScreen = () => {
             //
             dispatch({ type: CALENDAR_SCHEDULE_UPDATE_RESET })
         }
-    }, [errorCreate, errorUpdate])
+
+        // Show Update Error on Activity Update
+        if(approverActivityUpdateError) {
+            // Loop Error Back-End Validation
+            for(const key in approverActivityUpdateError) {
+                if (approverActivityUpdateError.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${approverActivityUpdateError[key]}`)
+                }
+            }
+            //
+            dispatch({ type: ACTIVITY_FOR_APPROVER_UPDATE_RESET })
+        }
+
+    }, [errorCreate, 
+        errorUpdate, 
+        approverActivityUpdateError])
 
     //
     useEffect(() => {
