@@ -17,12 +17,13 @@ import {
 import { getScheduleReferenceDetails, listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
 import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
 import { listDestinationOption } from '../../actions/Admin/destinationDetailsActions'
-import { 
+import {
     approverActivityRequest, 
     listActivityRequestForApprover,
 } from '../../actions/Approver/approverActivityRequestAction'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 import MotherFolder from '../../components/Sales/MotherFolder'
+import ApproverDetails from '../../components/Approver/ApproverDetails'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const ViewCalendarScheduleModal = (props) => {
@@ -41,7 +42,10 @@ const ViewCalendarScheduleModal = (props) => {
   // Redux
   const dispatch = useDispatch()
   // setState
+  const [status, setStatus] = useState('')
   const [scheduleType, setScheduleType] = useState('')
+  const [arId , setArId] = useState('')
+
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
@@ -94,7 +98,6 @@ const ViewCalendarScheduleModal = (props) => {
         }
     })
   }
-
   /**
    * - Reject Request
    */
@@ -123,7 +126,6 @@ const ViewCalendarScheduleModal = (props) => {
                 } else {
                     // Update Schedule
                     dispatch(approverActivityRequest(data))
-                    
                 }
             }
        })
@@ -131,17 +133,24 @@ const ViewCalendarScheduleModal = (props) => {
 
   // Selected Calendar Details
   useEffect(() => {
-    const { sched_type, ar_id } = calendarScheduleDetails
+    // 
+    const { sched_type, ar_id, status } = calendarScheduleDetails
     // setState
     setScheduleType(sched_type || '')
-    //
-    dispatch(getScheduleReferenceDetails(ar_id))
+    setStatus(status || '')
+    setArId(ar_id || '')
     // Get List User Reference Id
     dispatch(listScheduleReferenceId())
     // Get List Activity Related To Option
     dispatch(listActivityRelatedToOption())
     // Get List of Destination Option
     dispatch(listDestinationOption())
+    // View Only on edit mode
+    if(mode === 'Edit') {
+      dispatch(getScheduleReferenceDetails(ar_id))
+    }
+    // console.warn(ar_id)
+
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -164,6 +173,7 @@ const ViewCalendarScheduleModal = (props) => {
 
     // Show Success Update
     if(approverActivityUpdateSuccess) {
+      //
         Swal.fire(
             'Success!',
             approverActivityUpdateMessage,
@@ -246,6 +256,14 @@ const ViewCalendarScheduleModal = (props) => {
           }
 
         { mode === 'Edit' && <MotherFolder mode={mode} /> }
+
+        { 
+          (mode === 'Edit' && status != 'For Approval') && 
+          <ApproverDetails 
+            mode={mode} 
+            status={status}
+          />
+        }
 
         </Modal.Body>
         <Modal.Footer>

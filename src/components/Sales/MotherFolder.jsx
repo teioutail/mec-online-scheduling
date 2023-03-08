@@ -53,8 +53,8 @@ const MotherFolder = (props) => {
             partner_contact_number,
             enduser_contact_number,
             created_at,
-            fullname, // not showing
             business_unit,
+            requested_by,
         } = scheduleReferenceDetail
 
         // setState
@@ -70,7 +70,7 @@ const MotherFolder = (props) => {
         setEndUserContactPerson(enduser_contact_person || "")
         setPartnerContactNumber(partner_contact_number || "")
         setEndUserContactNumber(enduser_contact_number || "")
-        setRequestedBy(fullname || "")
+        setRequestedBy(requested_by || "")
         setDateRequested(moment(created_at).format('L') || "")
         setSelectedBusinessUnit(business_unit || "")
         setActivityType(activity_type || "")

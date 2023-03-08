@@ -18,6 +18,7 @@ import {
 import { listActivityRequestForApprover } from '../../actions/Approver/approverActivityRequestAction'
 import MotherFolder from '../../components/Sales/MotherFolder'
 import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleReferenceAction'
+import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
   //
@@ -25,13 +26,13 @@ const EditCalendarScheduleModal = (props) => {
     show, mode, onHide, 
     artid, calendarScheduleDetails, size,
   } = props
+
   // Redux
   const dispatch = useDispatch()
   // setState
   const [scheduleType, setScheduleType] = useState('')
   const [status, setStatus] = useState('')
   const [userId, setUserId] = useState('')
-
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
@@ -53,16 +54,6 @@ const EditCalendarScheduleModal = (props) => {
   const { userInfo } = userLogin
   // CommonJS
   const Swal = require('sweetalert2')
-
-  // Event in select dropdown
-  const handleSelectedChange = (event) => {
-    //
-    const target = event.target
-    const selected = event.currentTarget.value
-    // const selected = target.selected
-    const name = target.name
-    // setStatus(selected)
-  }
 
   const handleSubmit = async () =>  {
     // Data Object
@@ -94,6 +85,7 @@ const EditCalendarScheduleModal = (props) => {
       }
     })
   }
+
   /**
    * - Approved Request
    */
@@ -127,6 +119,71 @@ const EditCalendarScheduleModal = (props) => {
             }
         }
     })
+  }
+  
+  /**
+   * - Approved Request
+   */
+  const handleApprovedRequest = () => {
+    // Data Object
+    let data = {}
+    // Save Change Here...
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if(scheduleType === 'New-Schedule')
+                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
+            else if (scheduleType === 'Training-Schedule')
+                data = {...trainingFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
+            // 
+            if(mode === 'Add') {
+                // Create Calendar Schedule 
+                dispatch(createCalendarSchedule(data))
+            } else {
+                // Update Schedule
+                dispatch(approverActivityRequest(data))
+            }
+        }
+    })
+  }
+  /**
+   * - Reject Request
+   */
+  const handleRejectRequest = () => {
+       // Data Object
+       let data = {}
+       // Save Change Here...
+       Swal.fire({
+           title: 'Are you sure?',
+           text: "You won't be able to revert this!",
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Yes, Proceed!'
+       }).then((result) => {
+           if (result.isConfirmed) {
+            if(scheduleType === 'New-Schedule')
+                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
+            else if (scheduleType === 'Training-Schedule')
+                data = {...trainingFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
+                // 
+                if(mode === 'Add') {
+                    // Create Calendar Schedule 
+                    // dispatch(createCalendarSchedule(data))
+                } else {
+                    // Update Schedule
+                    dispatch(approverActivityRequest(data))
+                }
+            }
+       })
   }
 
   // Selected Calendar Details
@@ -198,7 +255,7 @@ const EditCalendarScheduleModal = (props) => {
       // Refresh Datatable
       dispatch(listCalendarSchedule())
       dispatch({
-        type: CALENDAR_SCHEDULE_UPDATE_RESET,
+        type: ACTIVITY_FOR_APPROVER_UPDATE_RESET,
       })
       // Close Modal
       onHide()
@@ -271,23 +328,51 @@ const EditCalendarScheduleModal = (props) => {
             <Button size='sm' variant="secondary" onClick={onHide}>
                 Close
             </Button>
-            {/* Check if status is approved and logged-in user is same */}
 
-            {status !== 'Approved' && (userId === userInfo.user.id) &&  
+            {/* Approver Button */}
+            {['Pre-Sales Approver','Post-Sales Approver','Super Approver'].includes(userInfo.user_role) && 
               <>
-                <Button size='sm' variant="primary" onClick={handleSubmit} >
-                    Save Changes
-                </Button>
-                <Button size='sm' variant="warning" onClick={handleCancelRequest} >
-                  Cancel Schedule
-                </Button>
+                {status === 'For-Approval' && (userId === userInfo.user.id) &&
+                  <>
+                    <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                      Reject Request
+                    </Button>
+                    <Button size='sm' variant="info" onClick={handleApprovedRequest} >
+                        Approve Request
+                    </Button>
+                  </>
+                }
               </>
             }
 
-            {status === 'Approved' && 
-              <Button size='sm' variant="warning" onClick={handleCancelRequest} >
-                  Cancel Schedule
-              </Button>
+            {/* Approver Button */}
+            {['Sales'].includes(userInfo.user_role) && 
+              <>
+                {status !== 'For-Approval' && (userId === userInfo.user.id) &&
+                  <>
+                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                      Cancel Schedule
+                    </Button>
+                  </>
+                }
+            
+                {mode === 'Edit' && userId === userInfo.user.id &&
+                  <>
+                    <Button size='sm' variant="primary" onClick={handleSubmit} >
+                        Save Changes
+                    </Button>
+                  </>
+                }
+              </>
+            }
+
+            {/* Show Save Change Button */}
+            {mode === 'Add' && 
+              <>
+                <Button size='sm' variant="primary" onClick={handleSubmit} >
+                    Save Schedule
+                </Button>
+              </>
             }
         </Modal.Footer>
         </Modal>

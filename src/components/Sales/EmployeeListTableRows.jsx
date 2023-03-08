@@ -31,7 +31,7 @@ const EmployeeListTableRows = (props) => {
         // 
         const { employeeId, timeFrom, timeTo } = data;
         
-        console.log(data);
+        // console.log(data);
         return(
             <tr key={index}>
                 <td>

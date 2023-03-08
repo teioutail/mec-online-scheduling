@@ -20,9 +20,7 @@ import {
     listActivityRequestForApprover,
 } from '../../actions/Approver/approverActivityRequestAction'
 import moment from 'moment'
-import { 
-    getSelectedCalendarDetails,
-} from '../../actions/Sales/salesCalendarScheduleAction'
+import { getSelectedCalendarDetails } from '../../actions/Sales/salesCalendarScheduleAction'
 
 const ApproverCanceledScreen = () => {
     // Toastify
