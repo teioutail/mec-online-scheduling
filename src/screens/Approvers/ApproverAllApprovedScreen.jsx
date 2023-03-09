@@ -24,7 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 
-const ApproverApprovedScreen = () => {
+const ApproverAllApprovedScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -39,7 +39,7 @@ const ApproverApprovedScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     // Header title
-    const headerTitle = 'Approved Schedule'
+    const headerTitle = 'All Approved Schedule'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -165,7 +165,7 @@ const ApproverApprovedScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
@@ -230,4 +230,4 @@ const ApproverApprovedScreen = () => {
     )
 }
 
-export default ApproverApprovedScreen
+export default ApproverAllApprovedScreen

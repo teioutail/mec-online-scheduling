@@ -24,7 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 
-const ApproverDelegatedScreen = () => {
+const ApproverMyApprovedScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -39,7 +39,7 @@ const ApproverDelegatedScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     // Header title
-    const headerTitle = 'Delegated Schedule'
+    const headerTitle = 'My Approved Schedules'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -165,13 +165,14 @@ const ApproverDelegatedScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
-                'status': 'Approved',
-                'list_type': 'view-list'
+                'status': 'MyApproved',
+                'list_type': 'view-list',
+                'user_id' : userInfo.user.id,
             }
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
@@ -224,10 +225,11 @@ const ApproverDelegatedScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>
     )
 }
 
-export default ApproverDelegatedScreen
+export default ApproverMyApprovedScreen

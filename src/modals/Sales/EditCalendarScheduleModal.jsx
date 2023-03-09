@@ -20,6 +20,7 @@ import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleRe
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 import ApproverDetails from '../../components/Approver/ApproverDetails'
 import MotherFolder from '../../components/Sales/MotherFolder'
+import SweetAlert from 'react-bootstrap-sweetalert'
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
   //
