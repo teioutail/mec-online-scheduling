@@ -20,7 +20,6 @@ import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleRe
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 import ApproverDetails from '../../components/Approver/ApproverDetails'
 import MotherFolder from '../../components/Sales/MotherFolder'
-import SweetAlert from 'react-bootstrap-sweetalert'
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
   //
@@ -35,13 +34,15 @@ const EditCalendarScheduleModal = (props) => {
   const [scheduleType, setScheduleType] = useState('')
   const [status, setStatus] = useState('')
   const [userId, setUserId] = useState('')
+  // sweet alert 2
+  const [reason, setReason] = useState('')
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
-  const { loading:calendarDetailsLoading } = calendarScheduleDetailsInfo
+  const { loading:calendarDetailsLoading, calendar } = calendarScheduleDetailsInfo
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
@@ -127,102 +128,126 @@ const EditCalendarScheduleModal = (props) => {
    * - Approved Request
    */
   const handleApprovedRequest = () => {
-    // Data Object
-    let data = {}
-    // Save Change Here...
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Proceed!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            if(scheduleType === 'New-Schedule')
-                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
-            else if (scheduleType === 'Training-Schedule')
-                data = {...trainingFields, schedule_type: scheduleType, status: 'Approved', user_id: userInfo.user.id}
-            // 
-            if(mode === 'Add') {
-                // Create Calendar Schedule 
-                dispatch(createCalendarSchedule(data))
-            } else {
-                // Update Schedule
-                dispatch(approverActivityRequest(data))
-            }
-        }
-    })
+     // Data Object
+     let data = {}
+     // 
+     Swal.fire({
+       title: 'Approver Remarks',
+       input: 'text',
+       inputAttributes: {
+         autocapitalize: 'off'
+       },
+       showCancelButton: true,
+       confirmButtonText: 'Save',
+       showLoaderOnConfirm: true,
+       preConfirm: (res) => {
+         // 
+         if(scheduleType === 'New-Schedule')
+           data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: 'Approved', user_id: userInfo.user.id}
+         else if (scheduleType === 'Training-Schedule')
+           data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: 'Approved', user_id: userInfo.user.id}
+       },
+     }).then((result) => {
+       // 
+       if (result.isConfirmed) {
+         // 
+         if(mode === 'Add') {
+           // Create Calendar Schedule 
+           // dispatch(createCalendarSchedule(data))
+         } else {
+           // Update Schedule
+           dispatch(approverActivityRequest(data))
+         }
+       }
+     })
   }
+
+  /**
+   * 
+   * 
+   */
+  const handleDelegatedRequest = (state) => {
+    // 
+    alert()
+  }
+
   /**
    * - Reject Request
    */
   const handleRejectRequest = () => {
-       // Data Object
-       let data = {}
-       // Save Change Here...
-       Swal.fire({
-           title: 'Are you sure?',
-           text: "You won't be able to revert this!",
-           icon: 'warning',
-           showCancelButton: true,
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           confirmButtonText: 'Yes, Proceed!'
-       }).then((result) => {
-           if (result.isConfirmed) {
-            if(scheduleType === 'New-Schedule')
-                data = {...newScheduleFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
-            else if (scheduleType === 'Training-Schedule')
-                data = {...trainingFields, schedule_type: scheduleType, status: 'Rejected', user_id: userInfo.user.id}
-                // 
-                if(mode === 'Add') {
-                    // Create Calendar Schedule 
-                    // dispatch(createCalendarSchedule(data))
-                } else {
-                    // Update Schedule
-                    dispatch(approverActivityRequest(data))
-                }
-            }
-       })
+    // Data Object
+    let data = {}
+    // 
+    Swal.fire({
+      title: 'Reason For Rejection',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      showLoaderOnConfirm: true,
+      preConfirm: (res) => {
+        // 
+        if(scheduleType === 'New-Schedule')
+          data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: 'Rejected', user_id: userInfo.user.id}
+        else if (scheduleType === 'Training-Schedule')
+          data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: 'Rejected', user_id: userInfo.user.id}
+      },
+    }).then((result) => {
+      // 
+      if (result.isConfirmed) {
+        // 
+        if(mode === 'Add') {
+          // Create Calendar Schedule 
+          // dispatch(createCalendarSchedule(data))
+        } else {
+          // Update Schedule
+          dispatch(approverActivityRequest(data))
+        }
+      }
+    })
   }
 
   /**
    * -  Delegate Request
    */
   const handleDelegateRequest = () => {
+    // Data Object
+    let data = {}
+    // 
+    const status = (userInfo.user_role === 'Pre-Sales Approver' ? 
+      'DELEGATE_POSTSALES_SE_FOR_APPROVAL' : 
+      'DELEGATE_PRESALES_SE_FOR_APPROVAL'
+    )
     // 
     Swal.fire({
-      title: 'Reason For Delegation',
+      title: 'Reason For Delagation',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'
       },
       showCancelButton: true,
-      confirmButtonText: 'Look up',
+      confirmButtonText: 'Save',
       showLoaderOnConfirm: true,
-      preConfirm: (login) => {
-        return fetch(`//api.github.com/users/${login}`)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText)
-            }
-            return response.json()
-          })
-          .catch(error => {
-            Swal.showValidationMessage(
-              `Request failed: ${error}`
-            )
-          })
+      preConfirm: (res) => {
+        // 
+        if(scheduleType === 'New-Schedule')
+          data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
+        else if (scheduleType === 'Training-Schedule')
+          data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
       },
-      allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
+      // 
       if (result.isConfirmed) {
-        Swal.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url
-        })
+        // 
+        if(mode === 'Add') {
+          // Create Calendar Schedule 
+          // dispatch(createCalendarSchedule(data))
+        } else {
+          // Update Schedule
+          dispatch(approverActivityRequest(data))
+        }
       }
     })
   }
@@ -235,6 +260,7 @@ const EditCalendarScheduleModal = (props) => {
       ar_id, 
       status,
       user_id,
+      requested_by,
     } = calendarScheduleDetails
     
     // setState
@@ -265,7 +291,10 @@ const EditCalendarScheduleModal = (props) => {
       }
       // Refresh Datatable
       dispatch(listActivityRequestForApprover(user))
-      
+
+      // // Refresh Datatable
+      dispatch(listCalendarSchedule())
+
       dispatch({
         type: CALENDAR_SCHEDULE_CREATE_RESET,
       })
@@ -307,8 +336,8 @@ const EditCalendarScheduleModal = (props) => {
     }
 
   },[calendarScheduleCreateSuccess,
-     calendarScheduleUpdateSuccess,
-     approverActivityUpdateSuccess,])
+    calendarScheduleUpdateSuccess,
+    approverActivityUpdateSuccess,])
 
   return (
     <>
@@ -318,6 +347,8 @@ const EditCalendarScheduleModal = (props) => {
           onHide={onHide}
           backdrop="static"
           keyboard={false}
+          autoFocus={false}
+          enforceFocus={false}
           // autoFocus={false}
         >
         <Modal.Header closeButton>
@@ -385,18 +416,40 @@ const EditCalendarScheduleModal = (props) => {
               <>
                 {mode === 'Edit' && status === 'For Approval' &&
                   <>
-                    <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                    <Button size='sm' variant="outline-danger" onClick={handleRejectRequest} >
                       Reject Request
                     </Button>
-                    <Button size='sm' variant="info" onClick={handleApprovedRequest} >
+                    <Button size='sm' variant="outline-primary" onClick={handleApprovedRequest} >
                       Approve Request
                     </Button>
-                    <Button size='sm' variant="dark-outline" onClick={handleDelegateRequest} >
+                    <Button className="test" size='sm' variant="outline-secondary" onClick={handleDelegateRequest} >
                       Delegate Request
                     </Button>
                   </>
                 }
 
+                {/*  */}
+                {mode === 'Edit' && 
+                status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL' && 
+                userInfo.user_role === 'Pre-Sales Approver'  &&
+                  <>
+                    <Button size='sm' variant="success" onClick={handleDelegatedRequest} >
+                      Approved SE Request
+                    </Button>
+                  </>
+                }
+
+                {/*  */}
+                {mode === 'Edit' && 
+                status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' && 
+                userInfo.user_role === 'Post-Sales Approver'  &&
+                  <>
+                    <Button size='sm' variant="success" onClick={handleDelegatedRequest} >
+                      Approved SE Request
+                    </Button>
+                  </>
+                }
+                
                 {status === 'Approved' && 
                   <>
                     <Button size='sm' variant="warning" onClick={handleCancelRequest} >
