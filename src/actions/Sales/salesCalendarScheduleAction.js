@@ -146,9 +146,7 @@ export const getSelectedCalendarDetails = (id) => async(dispatch, getState) => {
         }
         // Call API Request
         const { data } = await axios.get(`/auth/calendar/${id}/edit`, config)
-
-        console.warn(data)
-
+        
         dispatch({
             type: CALENDAR_SCHEDULE_DETAILS_SUCCESS,
             payload: data,

@@ -47,6 +47,12 @@ const ApproverDetails = ({status, mode}) => {
             return 'Canceled'
         case 'Approved':
             return 'Approved'
+        case 'DELEGATE_POSTSALES_SE_FOR_APPROVAL':
+        case 'DELEGATE_PRESALES_SE_FOR_APPROVAL':
+            return 'For Approval'
+        case 'DELEGATED_POSTSALES_SE_APPROVED':
+        case 'DELEGATED_PRESALES_SE_APPROVED':
+            return 'Delegated Schedule Approved'
     }
   }
   //

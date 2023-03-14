@@ -35,7 +35,6 @@ const EditCalendarScheduleModal = (props) => {
   const [status, setStatus] = useState('')
   const [userId, setUserId] = useState('')
   // sweet alert 2
-  const [reason, setReason] = useState('')
   // Training Fields
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
@@ -55,6 +54,9 @@ const EditCalendarScheduleModal = (props) => {
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+  // Schedule Reference Details
+  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
+  const { schedule: { activity_type } } = scheduleReferenceDetails
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -93,35 +95,48 @@ const EditCalendarScheduleModal = (props) => {
    * - Approved Request
    */
   const handleCancelRequest = () => {
-    // Data Object
-    let data = {}
-    // Save Change Here...
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Proceed!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            if(scheduleType === 'New-Schedule')
-              data = {...newScheduleFields, schedule_type: scheduleType, status: 'Canceled', user_id: userInfo.user.id}
-            else if (scheduleType === 'Training-Schedule')
-              data = {...trainingFields, schedule_type: scheduleType, status: 'Canceled', user_id: userInfo.user.id}
-            // 
-            if(mode === 'Add') {
-              // Create Calendar Schedule 
-              dispatch(createCalendarSchedule(data))
-            } else {
-              // Update Schedule
-              dispatch(approverActivityRequest(data))
-              // Refresh Datatable
-              dispatch(listCalendarSchedule())
-            }
+     // Data Object
+     let data = {}
+     // 
+     Swal.fire({
+       title: 'Cancelation Remarks',
+       input: 'text',
+       inputAttributes: {
+         autocapitalize: 'off'
+       },
+       showCancelButton: true,
+       confirmButtonText: 'Save',
+       showLoaderOnConfirm: true,
+       preConfirm: (res) => {
+         // 
+         if(scheduleType === 'New-Schedule')
+           data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: 'Canceled', user_id: userInfo.user.id}
+         else if (scheduleType === 'Training-Schedule')
+           data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: 'Canceled', user_id: userInfo.user.id}
+        // 
+        if(mode === 'Add') {
+          // Create Calendar Schedule 
+          // dispatch(createCalendarSchedule(data))
+        } else {
+          // Update Schedule
+          dispatch(approverActivityRequest(data))
         }
-    })
+       },
+     }).then((result) => {
+       // 
+       if (result.isConfirmed) {
+         // 
+         if(mode === 'Add') {
+           // Create Calendar Schedule 
+           // dispatch(createCalendarSchedule(data))
+         } else {
+           // Update Schedule
+           dispatch(approverActivityRequest(data))
+           // Refresh Datatable
+           dispatch(listCalendarSchedule())
+         }
+       }
+     })
   }
   
   /**
@@ -163,12 +178,50 @@ const EditCalendarScheduleModal = (props) => {
   }
 
   /**
-   * 
-   * 
+   * - 
    */
-  const handleDelegatedRequest = (state) => {
+  const handleDelegatedApprovedRequest = (state) => {
+    // Data Object
+    let data = {}
+
+    let user_role = userInfo.user_role
     // 
-    alert()
+    const status = ( user_role === 'Pre-Sales Approver' ? 
+      'DELEGATED_POSTSALES_SE_APPROVED' : 
+      'DELEGATED_PRESALES_SE_APPROVED'
+    )
+
+    // 
+    Swal.fire({
+      title: user_role === 'Pre-Sales Approver' ? 'Pre-Sales Manager Remarks' : 
+      (user_role === 'Post-Sales Approver' ? 'Post-Sales Manager Remarks' : 'Manager Remarks'),
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      showLoaderOnConfirm: true,
+      preConfirm: (res) => {
+        // 
+        if(scheduleType === 'New-Schedule')
+          data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
+        else if (scheduleType === 'Training-Schedule')
+          data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
+      },
+    }).then((result) => {
+      // 
+      if (result.isConfirmed) {
+        // 
+        if(mode === 'Add') {
+          // Create Calendar Schedule 
+          // dispatch(createCalendarSchedule(data))
+        } else {
+          // Update Schedule
+          dispatch(approverActivityRequest(data))
+        }
+      }
+    })
   }
 
   /**
@@ -252,6 +305,84 @@ const EditCalendarScheduleModal = (props) => {
     })
   }
 
+  /**
+   * -  Delegate Request
+  */
+    const handleDelegateSuperApproverRequest = async () => {
+      // Data Object
+      let data = {}
+      // 
+      const { value: status } = await Swal.fire({
+        title: 'Select Manager Type',
+        input: 'select',
+        inputOptions: {
+          'DELEGATE_PRESALES_SE_FOR_APPROVAL': 'Pre-Sales Manager',
+          'DELEGATE_POSTSALES_SE_FOR_APPROVAL': 'Post-Sales Manager'
+        },
+        inputPlaceholder: '- Select -',
+        showCancelButton: true,
+        inputValidator: (status) => {
+          // 
+          return new Promise((resolve) => {
+              resolve()
+          })
+
+        },
+      })
+      
+      if (status) {
+        // Swal.fire(`You selected: ${status}`)
+          // 
+          if(scheduleType === 'New-Schedule')
+            data = {...newScheduleFields, schedule_type: scheduleType, status: status, user_id: userInfo.user.id}
+          else if (scheduleType === 'Training-Schedule')
+            data = {...trainingFields, schedule_type: scheduleType, status: status, user_id: userInfo.user.id}
+          // 
+          if(mode === 'Add') {
+            // Create Calendar Schedule 
+            // dispatch(createCalendarSchedule(data))
+          } else {
+            // Update Schedule
+            dispatch(approverActivityRequest(data))
+          }
+      }
+
+      // // 
+      // Swal.fire({
+      //   title: 'Reason For Delagation',
+      //   input: 'text',
+      //   inputAttributes: {
+      //     autocapitalize: 'off'
+      //   },
+      //   showCancelButton: true,
+      //   confirmButtonText: 'Save',
+      //   showLoaderOnConfirm: true,
+      //   preConfirm: (res) => {
+      //     // 
+      //     if(scheduleType === 'New-Schedule')
+      //       data = {...newScheduleFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
+      //     else if (scheduleType === 'Training-Schedule')
+      //       data = {...trainingFields, schedule_type: scheduleType, reasons: res, status: status, user_id: userInfo.user.id}
+      //   },
+      // }).then((result) => {
+      //   // 
+      //   if (result.isConfirmed) {
+      //     // 
+      //     if(mode === 'Add') {
+      //       // Create Calendar Schedule 
+      //       // dispatch(createCalendarSchedule(data))
+      //     } else {
+      //       // Update Schedule
+      //       dispatch(approverActivityRequest(data))
+      //     }
+      //   }
+      // })
+    }  
+
+  /**
+   * - 
+   */
+
   // Selected Calendar Details
   useEffect(() => {
     // 
@@ -291,8 +422,7 @@ const EditCalendarScheduleModal = (props) => {
       }
       // Refresh Datatable
       dispatch(listActivityRequestForApprover(user))
-
-      // // Refresh Datatable
+      // Refresh Datatable
       dispatch(listCalendarSchedule())
 
       dispatch({
@@ -412,45 +542,88 @@ const EditCalendarScheduleModal = (props) => {
                 Close
             </Button>
             {/* Approver Button */}
-            {['Pre-Sales Approver','Post-Sales Approver','Super Approver'].includes(userInfo.user_role) && 
+            {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
               <>
-                {mode === 'Edit' && status === 'For Approval' &&
+                {mode === 'Edit' && status === 'For Approval' && 
                   <>
-                    <Button size='sm' variant="outline-danger" onClick={handleRejectRequest} >
-                      Reject Request
-                    </Button>
-                    <Button size='sm' variant="outline-primary" onClick={handleApprovedRequest} >
-                      Approve Request
-                    </Button>
-                    <Button className="test" size='sm' variant="outline-secondary" onClick={handleDelegateRequest} >
-                      Delegate Request
-                    </Button>
+                    {(
+                      (activity_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
+                      (activity_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
+                      (userInfo.user_role === 'Super-Approver')
+                     ) && 
+                      <>
+                        <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
+                          Approve Request
+                        </Button>
+                        <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                          Reject Request
+                        </Button>
+
+                        {(userInfo.user_role === 'Pre-Sales Approver' || userInfo.user_role === 'Post-Sales Approver') && 
+                          <>
+                            <Button className="test" size='sm' variant="secondary" onClick={handleDelegateRequest} >
+                              Delegate Request
+                            </Button>
+                          </>
+                        }
+
+                        {userInfo.user_role === 'Super-Approver' && 
+                          <>
+                            <Button className="test" size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
+                              Delegate to Approver
+                            </Button>
+                          </>
+                        }
+                      </>
+                    }
+                    
                   </>
                 }
 
-                {/*  */}
                 {mode === 'Edit' && 
                 status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL' && 
                 userInfo.user_role === 'Pre-Sales Approver'  &&
                   <>
-                    <Button size='sm' variant="success" onClick={handleDelegatedRequest} >
+                    <Button size='sm' variant="success" onClick={handleDelegatedApprovedRequest} >
                       Approved SE Request
                     </Button>
                   </>
                 }
 
-                {/*  */}
                 {mode === 'Edit' && 
                 status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' && 
                 userInfo.user_role === 'Post-Sales Approver'  &&
                   <>
-                    <Button size='sm' variant="success" onClick={handleDelegatedRequest} >
+                    <Button size='sm' variant="success" onClick={handleDelegatedApprovedRequest} >
                       Approved SE Request
                     </Button>
                   </>
                 }
+
+                {mode === 'Edit' && 
+                  status === 'DELEGATED_PRESALES_SE_APPROVED' && 
+                  userInfo.user_role === 'Pre-Sales Approver'  &&
+                    <>
+                      <Button size='sm' variant="success" onClick={handleApprovedRequest} >
+                        Approved Activity Request
+                      </Button>
+                    </>
+                }
+
+                {mode === 'Edit' && 
+                  status === 'DELEGATED_POSTSALES_SE_APPROVED' && 
+                  userInfo.user_role === 'Post-Sales Approver'  &&
+                    <>
+                      <Button size='sm' variant="success" onClick={handleApprovedRequest} >
+                        Approved Activity Request
+                      </Button>
+                    </>
+                }
                 
-                {status === 'Approved' && 
+                {mode === 'Edit' && 
+                 status === 'Approved' &&
+                 activity_type === 'Pre-Sales' &&  
+                 (userInfo.user_role === 'Post-Sales Approver' || userInfo.user_role === 'Pre-Sales Approver' ) && 
                   <>
                     <Button size='sm' variant="warning" onClick={handleCancelRequest} >
                       Cancel Schedule
@@ -460,7 +633,7 @@ const EditCalendarScheduleModal = (props) => {
               </>
             }
 
-            {/* Approver Button */}
+            {/* Sales Button */}
             {['Sales'].includes(userInfo.user_role) && 
               <>
                 {status !== 'For-Approval' && (userId === userInfo.user.id) &&

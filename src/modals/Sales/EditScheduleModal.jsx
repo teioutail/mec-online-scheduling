@@ -197,8 +197,9 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                     size='sm'
                     as='select' 
                     aria-label="Status"
-                      value={activityType}
-                      onChange={(e) => setActivityType(e.target.value)}
+                    value={activityType}
+                    onChange={(e) => setActivityType(e.target.value)}
+                    disabled={(mode === 'Edit')}
                     >
                     <option value="">- Select -</option>
                     <option value="Post-Sales">Post-Sales Activity</option>
@@ -332,7 +333,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                     <Form.Control
                         size='sm'
                         type='text'
-                        placeholder='Role Name'
+                        placeholder='End-User Contact No.'
                         value={endUserContactNumber}
                         onChange={(e) => setEndUserContactNumber(e.target.value)}
                     />
@@ -341,7 +342,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
             </Row>
 
             <EditEmailBusinessUnit 
-              ref={EditEmailBusinessUnitRef}
+              ref={EditEmailBusinessUnitRef}  
               scheduleDetails={scheduleDetails}
             />
             

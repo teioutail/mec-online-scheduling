@@ -83,36 +83,31 @@ const CalendarScheduleScreen = () => {
     // Calendar Create Error
     const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
     const { error:errorCreate } = calendarScheduleCreate
-  
     // Calendar Update Error
     const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
     const { error:errorUpdate } = calendarScheduleUpdate
-
     //
     const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
     const { error:approverActivityUpdateError } = approverActivityUpdate
-
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
     // Calendar Schedule Lists
     const calendarScheduleList = useSelector(state => state.calendarScheduleList)
     const { loading:loadingList , calendar } = calendarScheduleList
-
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-    const { loading:loadingDetails , calendar:calendarScheduleDetail } = calendarScheduleDetails
-    
+    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
+ 
     // EditRoleModal
     const [show, setShow] = useState(false)
     //
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-
     // Global ID
     const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
+    const [activityType, setActivityType] = useState('');
 
     // Add Calendar Modal
     const handleCalendarScheduleView = (state) => {
@@ -128,8 +123,8 @@ const CalendarScheduleScreen = () => {
         setShow(true)
         setArtId(state.art_id)
         setMode('Edit')
+        // 
         dispatch(getSelectedCalendarDetails(state.art_id))
-        // setSelectedCalendarDetails(calendarScheduleDetail)
     }
 
     // Delete Schedule Reference
@@ -247,7 +242,7 @@ const CalendarScheduleScreen = () => {
                         eventPropGetter={(calendar) => {
                             const backgroundColor = calendar.colorEvento ? calendar.colorEvento : '#FFFFFF';
                             const color = calendar.color ? calendar.color : '#FFFFFF';
-                            return { style: { backgroundColor ,color} }
+                            return { style: { backgroundColor , color} }
                           }}
                     />}
 
