@@ -41,6 +41,7 @@ const ScheduleScreen = () => {
         progress: undefined,
         theme: "light",
     });   
+    
     // CommonJS
     const Swal = require('sweetalert2')
     //

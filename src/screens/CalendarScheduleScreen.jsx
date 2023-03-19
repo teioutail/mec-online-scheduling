@@ -4,7 +4,7 @@ import Footer from '../components/template/Footer'
 import SideMenu from '../components/template/SideMenu'
 import FormContainer from '../components/template/FormContainer'
 import Loader from '../components/Loader'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -253,6 +253,7 @@ const CalendarScheduleScreen = () => {
                         artid={artid}
                         calendarScheduleDetails={calendarScheduleDetail}
                         mode={mode}
+                        notify={notify}
                     />
 
                     <ToastContainer
