@@ -16,11 +16,12 @@ const EmailParticipants = (props) => {
     // Participants Email List
     const userEmail = useSelector(state => state.userEmail)
     const { emails:participants } = userEmail
-
+    // Email Participants
+    const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+    const { calendar: { recipients } } = calendarScheduleDetails
     // useState
     const [selectedParticipant, setSelectedParticipant] = useState([])
     const [additionalRemarks, setAdditionalRemarks] = useState('')
-    
     // Fields
     const [fields, setFields] = useState({
         additional_remarks: '', // additional remarks
@@ -38,7 +39,6 @@ const EmailParticipants = (props) => {
         newField[fieldName] = value
         setFields(newField)
     }
-
     // Object to get selected Email Participants
     const handleSelectedParticipants = (options) => {
         setSelectedParticipant(options)
@@ -51,8 +51,8 @@ const EmailParticipants = (props) => {
         // setState
         setParticipantListOptions(participants || [])
         // Selected Participants 
-        // setSelectedParticipant(email_participants || [])
-    },[participants])
+        setSelectedParticipant(recipients || [])
+    },[participants, recipients])
 
     // 
     useEffect(() => {
