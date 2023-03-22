@@ -1,3 +1,9 @@
 .sidenav {
   z-index: 5;
 }
+
+/* .react-time-picker__clock { display: none; } */
+
+.react-timerange-picker__wrapper {
+  border:none;
+}

@@ -14,12 +14,14 @@ const NewScheduleRequest = (props) => {
     artid, 
     calendarScheduleDetails, 
     setNewScheduleFields, 
-    mode 
+    mode,
+    scheduleType,
   } = props
 
   // useState
   const [relatedTeam, setRelatedTeam] = useState('')
-  const [activitySchedule, setActivitySchedule] = useState(new Date())
+  const [activitySchedule, setActivitySchedule] = useState([new Date(), new Date()])
+  const [startDate, endDate] = activitySchedule
   const [srArNo, setSrArNo] = useState('')
   const [referenceId, setReferenceId] = useState('')
   const [activityType, setActivityType] = useState('')
@@ -158,6 +160,7 @@ const NewScheduleRequest = (props) => {
                 updated_at,
             } = calendarScheduleDetails
             
+            // New Schedule Fields
             const { 
                 activity_related_to,
                 activity_schedule,
@@ -166,7 +169,7 @@ const NewScheduleRequest = (props) => {
                 sr_no,
                 destination:currentDestination,
             } = fieldval
-
+            
             // setState
             setRemarks(remarks || '')
             setPurposeOfActivity(purpose_of_activity || '')
@@ -176,11 +179,11 @@ const NewScheduleRequest = (props) => {
             setActivityType(activity_type || '')
             setSelectedDestination(currentDestination || '')
             setReferenceId(ar_id || '')
-            setActivitySchedule(moment(activity_schedule).toDate() || '')
+            // setActivitySchedule(moment(activity_schedule).toDate() || '')
             setSelectedEmployeeNames(persons || '')
-            // setDestinationListOptions(currentDestination || '')
+            if(activity_schedule)
+            setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
         }
-
     }, [])
 
     // 
@@ -309,6 +312,19 @@ const NewScheduleRequest = (props) => {
                 <Form.Group className="mb-3">
                 <Form.Label>Activity Schedule</Form.Label>
                 <DatePicker
+                    className='form-control form-control-sm'
+                    selectsRange={true}
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={(update) => {
+                        // setDateRange(update);
+                        setActivitySchedule(update)
+                        changeValueHandler('activity_schedule', activitySchedule)
+                        setNewScheduleFields(fields)
+                    }}
+                    isClearable={true}
+                />
+                {/* <DatePicker
                     customInput={<DatepickerCustomInput />}
                     selected={activitySchedule} 
                     onChange={(date) => {
@@ -316,7 +332,7 @@ const NewScheduleRequest = (props) => {
                         setActivitySchedule(date)
                         setNewScheduleFields(fields)
                     }} 
-                />
+                /> */}
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>

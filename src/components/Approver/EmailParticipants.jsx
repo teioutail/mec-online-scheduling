@@ -3,7 +3,6 @@ import { Form, Row, Col } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const EmailParticipants = (props) => {
     // 

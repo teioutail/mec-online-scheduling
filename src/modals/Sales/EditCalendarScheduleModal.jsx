@@ -62,8 +62,9 @@ const EditCalendarScheduleModal = (props) => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   // Schedule Reference Details
-  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  const { schedule: { activity_type } } = scheduleReferenceDetails
+  // const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
+  // const { schedule: { activity_type } } = scheduleReferenceDetails
+
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -516,16 +517,16 @@ const EditCalendarScheduleModal = (props) => {
       status,
       user_id,
     } = calendarScheduleDetails
-    
     // setState
     setScheduleType(sched_type || '')
     setStatus(status || '')
     setUserId(user_id || '')
 
-    // View Only on edit mode
-    if(mode === 'Edit') {
+    // View Only on Edit Mode and New Schedule
+    if(mode === 'Edit' && ar_id) {
       dispatch(getScheduleReferenceDetails(ar_id))
     }
+
   },[calendarScheduleDetails])
 
   // Show Success 
@@ -554,7 +555,6 @@ const EditCalendarScheduleModal = (props) => {
       // Close Modal
       onHide()
     }
-
     // Show Success Update
     if(calendarScheduleUpdateSuccess) {
       Swal.fire(
@@ -637,6 +637,7 @@ const EditCalendarScheduleModal = (props) => {
                   setNewScheduleFields={setNewScheduleFields}
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}
+                  scheduleType={scheduleType}
                 /> 
               }
               { scheduleType === 'Training-Schedule' && 
@@ -645,12 +646,13 @@ const EditCalendarScheduleModal = (props) => {
                   setTrainingFields={setTrainingFields}
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}
+                  scheduleType={scheduleType}
                 />
               }
             </>
           }
 
-          { mode === 'Edit' && <MotherFolder mode={mode} /> }
+          { (mode === 'Edit' && scheduleType === 'New-Schedule') && <MotherFolder mode={mode} /> }
 
           { 
             (mode === 'Edit' && status != 'For Approval') && 
@@ -661,6 +663,7 @@ const EditCalendarScheduleModal = (props) => {
           }
 
           {mode === 'Edit' && 
+          // scheduleType === 'New-Schedule' && 
           ((['For Approval',
             'Approved',
             'DELEGATE_PRESALES_SE_FOR_APPROVAL',
@@ -684,20 +687,34 @@ const EditCalendarScheduleModal = (props) => {
               }
             </>
           }
-
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>
                 Close
             </Button>
+
             {/* Approver Button */}
             {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
               <>
-                {mode === 'Edit' && status === 'For Approval' && 
+                {scheduleType === 'Training-Schedule' && 
+                 mode === 'Edit' &&
+                 status === 'For Approval' && 
+                 <>
+                  <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
+                    Approve Request
+                  </Button>
+                 </>
+                }
+
+                {scheduleType === 'New-Schedule' && 
+                 mode === 'Edit' && 
+                 status === 'For Approval' && 
                   <>
                     {(
-                      (activity_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
-                      (activity_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
+                      // (activity_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
+                      // (activity_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
+                      (userInfo.user_role === 'Pre-Sales Approver') || 
+                      (userInfo.user_role === 'Post-Sales Approver') || 
                       (userInfo.user_role === 'Super-Approver')
                      ) && 
                       <>
@@ -729,7 +746,8 @@ const EditCalendarScheduleModal = (props) => {
                   </>
                 }
 
-                {mode === 'Edit' && 
+                {scheduleType === 'New-Schedule' && 
+                 mode === 'Edit' && 
                 ((status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Pre-Sales Approver') || 
                  (status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Post-Sales Approver') || 
                  ((status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' || status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL') && userInfo.user_role === 'Super-Approver')
@@ -741,7 +759,8 @@ const EditCalendarScheduleModal = (props) => {
                   </>
                 }
 
-                {mode === 'Edit' && 
+                {scheduleType === 'New-Schedule' && 
+                 mode === 'Edit' && 
                   ((status === 'DELEGATED_PRESALES_SE_APPROVED' && userInfo.user_role === 'Pre-Sales Approver') ||
                    (status === 'DELEGATED_POSTSALES_SE_APPROVED' && userInfo.user_role === 'Post-Sales Approver') ||
                    ((status === 'DELEGATED_POSTSALES_SE_APPROVED' || status === 'DELEGATED_PRESALES_SE_APPROVED') && userInfo.user_role === 'Super-Approver')
@@ -754,6 +773,7 @@ const EditCalendarScheduleModal = (props) => {
                 }
                 
                 {mode === 'Edit' && 
+                //  scheduleType === 'New-Schedule' && 
                  status === 'Approved' &&
                 //  activity_type === 'Pre-Sales' &&  
                  (['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role)) && 
@@ -777,7 +797,7 @@ const EditCalendarScheduleModal = (props) => {
                   </>
                 }
             
-                {mode === 'Edit' && userId === userInfo.user.id &&
+                {scheduleType === 'New-Schedule' && mode === 'Edit' && userId === userInfo.user.id &&
                   <>
                     <Button size='sm' variant="primary" onClick={handleSubmit} >
                         Save Changes

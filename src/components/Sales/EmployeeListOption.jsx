@@ -11,7 +11,8 @@ const EmployeeListOption = (props) => {
     changeValueHandler, 
     selectedEmployeeNames, 
     setSelectedEmployeeNames, 
-    mode
+    mode,
+    scheduleType,
   } = props
 
   // Table Row Array For Engineers/Employee
@@ -76,7 +77,7 @@ const EmployeeListOption = (props) => {
               <tr>
                 <td colSpan={5}>
                   <Button variant="outline-secondary" size="sm" onClick={addTableRows} className=" font-weight-bold text-xs float-start">
-                      <FontAwesomeIcon icon={['fas', 'user-group']} /> Add Employee
+                      <FontAwesomeIcon icon={['fas', 'user-group']} /> Add {scheduleType === 'Training-Schedule' ? 'Attendees' : 'System Engineer'}
                   </Button>
                 </td>
               </tr>
@@ -87,7 +88,7 @@ const EmployeeListOption = (props) => {
               <tr>
                 <th className="text-uppercase text-xs font-weight-bolder opacity-7">FROM</th>
                 <th className="text-uppercase text-xs font-weight-bolder opacity-7">TO</th>
-                <th className="text-center text-uppercase  text-xs font-weight-bolder opacity-7">EMPLOYEE</th>
+                <th className="text-center text-uppercase  text-xs font-weight-bolder opacity-7">{scheduleType === 'Training-Schedule' ? 'Attendees' : 'Engineers'}</th>
                 <th className="text-center text-uppercase text-xs font-weight-bolder opacity-7">ACTION</th>
                 <th className="opacity-7"></th>
               </tr>
@@ -100,7 +101,6 @@ const EmployeeListOption = (props) => {
                 handleChange={handleChange}
                 mode={mode}
                 addNewRowState={addNewRowState}
-                
               />
             </tbody>
           </Table>
