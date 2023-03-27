@@ -7,7 +7,7 @@ import makeAnimated from 'react-select/animated'
 const EmailParticipants = (props) => {
     // 
     const {
-        setEmailParticipantsFields
+        setEmailParticipantsFields,
     } = props
 
     // React Select
@@ -17,7 +17,7 @@ const EmailParticipants = (props) => {
     const { emails:participants } = userEmail
     // Email Participants
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-    const { calendar: { recipients } } = calendarScheduleDetails
+    const { calendar: { recipients, reasons } } = calendarScheduleDetails
     // useState
     const [selectedParticipant, setSelectedParticipant] = useState([])
     const [additionalRemarks, setAdditionalRemarks] = useState('')
@@ -25,8 +25,9 @@ const EmailParticipants = (props) => {
     const [fields, setFields] = useState({
         additional_remarks: '', // additional remarks
         email: '',
+        recipients: '',
     })
-
+    
     // console.warn(fields)
     // const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
@@ -38,6 +39,7 @@ const EmailParticipants = (props) => {
         newField[fieldName] = value
         setFields(newField)
     }
+
     // Object to get selected Email Participants
     const handleSelectedParticipants = (options) => {
         setSelectedParticipant(options)
@@ -49,17 +51,23 @@ const EmailParticipants = (props) => {
     useEffect(() => {
         // setState
         setParticipantListOptions(participants || [])
-        // Selected Participants 
+        // Selected Participants and Additional Remarks 
         setSelectedParticipant(recipients || [])
+        setAdditionalRemarks(reasons || '')
+        // console.warn(recipients)
+        // setEmailParticipantsFields(recipients || [])
     },[participants, recipients])
 
     // 
     useEffect(() => {
+        //
         changeValueHandler('additional_remarks', additionalRemarks)
+        changeValueHandler('recipients',selectedParticipant)
         changeValueHandler('email', selectedParticipant)
+        // Set field value
+        setEmailParticipantsFields(fields)
     },[selectedParticipant, 
         additionalRemarks])
-
  //
  return (
     <>

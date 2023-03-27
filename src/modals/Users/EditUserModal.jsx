@@ -206,6 +206,12 @@ const EditUserModal = ({ show, mode , onHide, userid, userDetails }) => {
             <option value="7">Pre-Sales Approver</option>
             <option value="8">Post-Sales Approver</option>
             <option value="9">Super-Approver</option>
+            <option value="9">Super-Approver</option>
+            <option value="10">Custodian</option>
+            <option value="11">Training Approver</option>
+            <option value="12">TCC</option>
+            <option value="13">RMA</option>
+            <option value="14">Project Lead</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3">

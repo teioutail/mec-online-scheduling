@@ -1,12 +1,14 @@
 import React, { useState, forwardRef, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
-import EmployeeListOption from './EmployeeListOption'
+// import EmployeeListOption from './EmployeeListOption'
+import EmployeeListOptionTable from './EmployeeListOptionTable'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
+
 
 const NewScheduleRequest = (props) => {
   //
@@ -31,6 +33,7 @@ const NewScheduleRequest = (props) => {
   const [remarks, setRemarks] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
+  const [netsuiteLink, setNetsuitLink] = useState([])
 
     // Fields
     const [fields, setFields] = useState({
@@ -44,6 +47,7 @@ const NewScheduleRequest = (props) => {
         purpose_of_activity: '',
         remarks: '',
         employee_list:[],
+        netsuite_link: '',
         id: artid,
     })
 
@@ -55,18 +59,6 @@ const NewScheduleRequest = (props) => {
         newField[fieldName] = value
         setFields(newField)
     }
-
-    // Custom Textfield 
-    const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control 
-            size='sm'
-            type='text'
-            placeholder='Activity Schedule'
-            defaultValue={value}
-            onClick={onClick}
-            ref={ref}
-        />
-    ));
 
     // Schedule Reference Id List
     const scheduleReferenceIdList = useSelector(state => state.scheduleReferenceIdList)
@@ -97,7 +89,6 @@ const NewScheduleRequest = (props) => {
         changeValueHandler('destination', options)
         setNewScheduleFields(fields)
     }
-
     /**
      * @returns - Activity Related To Options
      */
@@ -168,8 +159,9 @@ const NewScheduleRequest = (props) => {
                 request_for_dtc,
                 sr_no,
                 destination:currentDestination,
+                netsuite_link,
             } = fieldval
-            
+
             // setState
             setRemarks(remarks || '')
             setPurposeOfActivity(purpose_of_activity || '')
@@ -179,10 +171,11 @@ const NewScheduleRequest = (props) => {
             setActivityType(activity_type || '')
             setSelectedDestination(currentDestination || '')
             setReferenceId(ar_id || '')
+            setNetsuitLink(netsuite_link || '')
             // setActivitySchedule(moment(activity_schedule).toDate() || '')
             setSelectedEmployeeNames(persons || '')
             if(activity_schedule)
-            setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
+                setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
         }
     }, [])
 
@@ -198,6 +191,8 @@ const NewScheduleRequest = (props) => {
         changeValueHandler('purpose_of_activity', purposeOfActivity)
         changeValueHandler('remarks', remarks)
         changeValueHandler('employee_list', selectedEmployeeNames)
+        changeValueHandler('netsuite_link', netsuiteLink)
+
         setNewScheduleFields(fields)
     },[activitySchedule,
         srArNo,
@@ -207,7 +202,8 @@ const NewScheduleRequest = (props) => {
         selectedDestination,
         dtc,
         purposeOfActivity,
-        remarks])
+        remarks,
+        netsuiteLink])
         
   //
   return (
@@ -230,6 +226,20 @@ const NewScheduleRequest = (props) => {
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Netsuite Link</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='Netsuite Link'
+                    value={netsuiteLink}
+                    onChange={(e) => {
+                        changeValueHandler('netsuite_link', e.target.value)
+                        setNetsuitLink(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
+                />
+                </Form.Group>
             </Col>
         </Row>
         <Row>
@@ -391,12 +401,21 @@ const NewScheduleRequest = (props) => {
             </Col>
         </Row>
         
-        <EmployeeListOption
+        {/* <EmployeeListOption
             calendarScheduleDetails={calendarScheduleDetails}
             changeValueHandler={changeValueHandler}
             selectedEmployeeNames={selectedEmployeeNames}
             setSelectedEmployeeNames={setSelectedEmployeeNames}
             mode={mode}
+        /> */}
+
+        <EmployeeListOptionTable
+            calendarScheduleDetails={calendarScheduleDetails}
+            changeValueHandler={changeValueHandler}
+            selectedEmployeeNames={selectedEmployeeNames}
+            setSelectedEmployeeNames={setSelectedEmployeeNames}
+            mode={mode}
+            scheduleType={scheduleType}
         />
     </>
   )

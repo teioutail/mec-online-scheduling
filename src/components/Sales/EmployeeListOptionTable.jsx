@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 // import EmployeeListTableRows from './EmployeeListTableRows'
 import EmployeeListTableRowsTime from './EmployeeListTableRowsTime'
 
-const EmployeeListOption = (props) => {
+const EmployeeListOptionTable = (props) => {
   //
   const { 
     changeValueHandler, 
@@ -23,11 +23,10 @@ const EmployeeListOption = (props) => {
 
   // Add New Table Rows
   const addTableRows = () => {
-    //
+    // 
     const rowsInput = {
       employeeId: '',
-      timeFrom: '',
-      timeTo: '',
+      duration: '',
     }
     // 
     setAddNewRowState(true)
@@ -35,10 +34,14 @@ const EmployeeListOption = (props) => {
   }
 
   // Delete Table Rows
-  const deleteTableRows = (index) => {
-    const rows = [...rowsData]
-    rows.splice(index, 1)
+  const deleteTableRows = (e, index) => {
+    const rows = [...rowsData].filter((v,i) => i !== index)
+    // const indx = rows.indexOf(index)
+    // rows.splice(indx, 1)
     setRowsData(rows)
+
+    e.preventDefault();
+
   }
   
   // Handle Adding Multiple Technician Feature
@@ -82,19 +85,21 @@ const EmployeeListOption = (props) => {
                   </Button>
                 </td>
               </tr>
+
               <tr>
                 <th colSpan="2" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
                 <th className="opacity-7"></th>
               </tr>
               <tr>
-                <th className="text-uppercase text-xs font-weight-bolder opacity-7">FROM</th>
-                <th className="text-uppercase text-xs font-weight-bolder opacity-7">TO</th>
+                <th colSpan="2" className="text-uppercase text-center text-xs font-weight-bolder opacity-7">SCHEDULED TIME</th>
+                {/* <th className="text-uppercase text-xs font-weight-bolder opacity-7">TO</th> */}
                 <th className="text-center text-uppercase  text-xs font-weight-bolder opacity-7">{scheduleType === 'Training-Schedule' ? 'Attendees' : 'Engineers'}</th>
                 <th className="text-center text-uppercase text-xs font-weight-bolder opacity-7">ACTION</th>
-                <th className="opacity-7"></th>
+                {/* <th className="opacity-7"></th> */}
               </tr>
             </thead>
             <tbody>
+
               {/* <EmployeeListTableRows 
                 rowsData={rowsData} 
                 deleteTableRows={deleteTableRows}
@@ -112,6 +117,7 @@ const EmployeeListOption = (props) => {
                 mode={mode}
                 addNewRowState={addNewRowState}
               />
+
             </tbody>
           </Table>
         </Col>
@@ -120,4 +126,4 @@ const EmployeeListOption = (props) => {
   )
 }
 
-export default EmployeeListOption
+export default EmployeeListOptionTable

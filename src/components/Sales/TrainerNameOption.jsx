@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react'
 import CreateTrainerNameSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated'
 
-const TrainerNameOption = ({trainer, trainerNames, selectedTrainerNames, setSelectedTrainerNames, changeValueHandler }) => {
+const TrainerNameOption = (props) => {
   // React Select
+  const {
+    trainer, options, 
+    selectedTrainerNames, setSelectedTrainerNames, 
+    changeValueHandler 
+  } = props
+
   // const animatedComponents = makeAnimated();
   //
   const handleSelectedTrainers = (options) => {
@@ -18,10 +24,10 @@ const TrainerNameOption = ({trainer, trainerNames, selectedTrainerNames, setSele
               closeMenuOnSelect={false}
               isMulti
               isClearable
-              // components={animatedComponents}
-              options={trainerNames}
+              options={options}
               onChange={handleSelectedTrainers}
               value={selectedTrainerNames}
+              // components={animatedComponents}
               placeholder={(trainer === 'SE' ? 
               <div>Select System Engineer</div> : 
               <div>Enter Trainer Name</div>)}

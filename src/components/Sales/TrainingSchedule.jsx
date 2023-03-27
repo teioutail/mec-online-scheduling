@@ -1,7 +1,8 @@
 import React, { useState, useEffect, forwardRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
-import EmployeeListOption from './EmployeeListOption'
+// import EmployeeListOption from './EmployeeListOption'
+import EmployeeListOptionTable from './EmployeeListOptionTable'
 import DatePicker from 'react-datepicker'
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker'
 // import TimeRangePicker from '@wojtekmaj/react-timerange-picker/dist/entry.nostyle';
@@ -10,14 +11,11 @@ import EditBusinessUnitOption from './EditBusinessUnitOption'
 import TrainerNameOption from './TrainerNameOption'
 import moment from 'moment'
 
-
 const TrainingSchedule = (props) => {
   //
   const { 
-    artid, 
-    calendarScheduleDetails, 
-    setTrainingFields, 
-    mode,
+    artid, calendarScheduleDetails, 
+    setTrainingFields, mode,
     scheduleType,
   } = props
 
@@ -69,18 +67,6 @@ const TrainingSchedule = (props) => {
     id: artid,
   })
   
-    // Custom Textfield 
-    const DatepickerCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <Form.Control 
-            size='sm'
-            type='text'
-            placeholder='Activity Schedule'
-            defaultValue={value}
-            onClick={onClick}
-            ref={ref}
-        />
-    ));
-    
   /**
    * - Value Setter
    */
@@ -205,6 +191,7 @@ const TrainingSchedule = (props) => {
                     <Form.Group className="mb-3">
                     <Form.Label>Trainer Name</Form.Label>
                         <TrainerNameOption 
+                            options={(participants)} // balikan mo to di nag shoshow yung participatns
                             selectedTrainerNames={selectedTrainerNames}
                             setSelectedTrainerNames={setSelectedTrainerNames}
                             trainer={trainer}
@@ -218,7 +205,7 @@ const TrainingSchedule = (props) => {
         <Row>
             <Col>
               <Form.Group className="mb-3">
-                <Form.Label>Training Topics</Form.Label>
+                <Form.Label>{trainer === 'Exam' ? 'Exam' : 'Training'} Topics</Form.Label>
                 <Form.Control 
                     size='sm'
                     as="textarea"
@@ -370,7 +357,18 @@ const TrainingSchedule = (props) => {
                 </Form.Group>
             </Col>
         </Row>
-        <EmployeeListOption 
+
+        {/* <EmployeeListOption 
+            training_type={trainingType}
+            calendarScheduleDetails={calendarScheduleDetails}
+            changeValueHandler={changeValueHandler}
+            selectedEmployeeNames={selectedEmployeeNames}
+            setSelectedEmployeeNames={setSelectedEmployeeNames}
+            mode={mode}
+            scheduleType={scheduleType}
+        /> */}
+
+        <EmployeeListOptionTable
             training_type={trainingType}
             calendarScheduleDetails={calendarScheduleDetails}
             changeValueHandler={changeValueHandler}
@@ -379,6 +377,7 @@ const TrainingSchedule = (props) => {
             mode={mode}
             scheduleType={scheduleType}
         />
+
     </>
   )
 }
