@@ -16,10 +16,16 @@ const EmployeeListOptionTable = (props) => {
     scheduleType,
   } = props
 
+  // Get Status
+  const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+  const { calendar: { status } } = calendarScheduleDetails
+
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
   // Add New Row State
   const [addNewRowState, setAddNewRowState] = useState(0)
+
+  // console.warn(rowsData)
 
   // Add New Table Rows
   const addTableRows = () => {
@@ -39,9 +45,7 @@ const EmployeeListOptionTable = (props) => {
     // const indx = rows.indexOf(index)
     // rows.splice(indx, 1)
     setRowsData(rows)
-
     e.preventDefault();
-
   }
   
   // Handle Adding Multiple Technician Feature
@@ -78,37 +82,28 @@ const EmployeeListOptionTable = (props) => {
         <Col>
           <Table className="table align-items-center mb-0">
             <thead>
+              {status !== 'Approved' && 
+                <>
+                  <tr>
+                    <td colSpan={5}>
+                      <Button variant="outline-secondary" size="sm" onClick={addTableRows} className=" font-weight-bold text-xs float-start">
+                          <FontAwesomeIcon icon={['fas', 'user-group']} /> Add {scheduleType === 'Training-Schedule' ? 'Attendees' : 'System Engineer'}
+                      </Button>
+                    </td>
+                  </tr>
+                </>
+              }
               <tr>
-                <td colSpan={5}>
-                  <Button variant="outline-secondary" size="sm" onClick={addTableRows} className=" font-weight-bold text-xs float-start">
-                      <FontAwesomeIcon icon={['fas', 'user-group']} /> Add {scheduleType === 'Training-Schedule' ? 'Attendees' : 'System Engineer'}
-                  </Button>
-                </td>
-              </tr>
-
-              <tr>
-                <th colSpan="2" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
+                <th colSpan="3" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>
                 <th className="opacity-7"></th>
               </tr>
               <tr>
                 <th colSpan="2" className="text-uppercase text-center text-xs font-weight-bolder opacity-7">SCHEDULED TIME</th>
-                {/* <th className="text-uppercase text-xs font-weight-bolder opacity-7">TO</th> */}
                 <th className="text-center text-uppercase  text-xs font-weight-bolder opacity-7">{scheduleType === 'Training-Schedule' ? 'Attendees' : 'Engineers'}</th>
-                <th className="text-center text-uppercase text-xs font-weight-bolder opacity-7">ACTION</th>
-                {/* <th className="opacity-7"></th> */}
+                {status !== 'Approved' && <th className="text-center text-uppercase text-xs font-weight-bolder opacity-7">ACTION</th>}
               </tr>
             </thead>
             <tbody>
-
-              {/* <EmployeeListTableRows 
-                rowsData={rowsData} 
-                deleteTableRows={deleteTableRows}
-                handleChangeAddEmployee={handleChangeAddEmployee}
-                handleChange={handleChange}
-                mode={mode}
-                addNewRowState={addNewRowState}
-              /> */}
-
               <EmployeeListTableRowsTime 
                 rowsData={rowsData} 
                 deleteTableRows={deleteTableRows}
@@ -117,7 +112,6 @@ const EmployeeListOptionTable = (props) => {
                 mode={mode}
                 addNewRowState={addNewRowState}
               />
-
             </tbody>
           </Table>
         </Col>

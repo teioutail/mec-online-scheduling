@@ -9,7 +9,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <SideMenu />
+      {/* <SideMenu /> */}
         <FormContainer>
           <Header />
             {/* Home Page Content Here */}

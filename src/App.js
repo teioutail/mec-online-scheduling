@@ -26,6 +26,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import ApproverAllApprovedScreen from './screens/Approvers/ApproverAllApprovedScreen'
+import SideMenu from './components/template/SideMenu'
 
 
 // This exports the whole icon packs for Brand and Solid.
@@ -41,6 +42,7 @@ function App() {
   return (
     <Router>        
       <div className="App">
+      <SideMenu />
         <Routes>
           <Route path='/' element={<HomeScreen/>} />
           <Route path='/home' element={<HomeScreen/>} />

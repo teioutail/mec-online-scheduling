@@ -11,7 +11,7 @@ const Dashboard = () => {
   
   return (
     <>
-      <SideMenu />
+      {/* <SideMenu /> */}
       <FormContainer>
         <Header headerTitle={headerTitle} />
           <Content />

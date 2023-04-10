@@ -199,7 +199,7 @@ const MenuCategoryScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleMenuCategoryView}>

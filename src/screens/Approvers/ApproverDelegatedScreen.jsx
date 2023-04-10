@@ -14,6 +14,7 @@ import {
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -185,7 +186,7 @@ const ApproverDelegatedScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <DataTable
@@ -202,8 +203,17 @@ const ApproverDelegatedScreen = () => {
                         pointerOnHover
                         selectableRowsHighlight
                     />
-
+{/* 
                     <ViewCalendarScheduleModal 
+                        size="lg"
+                        show={show} 
+                        onHide={handleClose} 
+                        artid={artid}
+                        mode={mode}
+                        calendarScheduleDetails={calendarScheduleDetail}
+                    /> */}
+
+                    <EditCalendarScheduleModal
                         size="lg"
                         show={show} 
                         onHide={handleClose} 

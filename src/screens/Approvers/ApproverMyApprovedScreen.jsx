@@ -186,7 +186,7 @@ const ApproverMyApprovedScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <DataTable

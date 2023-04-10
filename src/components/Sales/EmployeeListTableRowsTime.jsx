@@ -21,9 +21,9 @@ const EmployeeListTableRowsTime = (props) => {
   const userEmail = useSelector(state => state.userEmail)
   const { emails:fullname } = userEmail
 
-  // User Login Info
-  const userLogin = useSelector(state => state.userLogin)
-  const { userInfo } = userLogin
+  // Get Status
+  const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+  const { calendar: { status } } = calendarScheduleDetails
 
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
@@ -34,33 +34,11 @@ const EmployeeListTableRowsTime = (props) => {
     // 
     rowsData.map((data, index) => {
         // 
-        // const { employeeId, timeFrom, timeTo } = data;
         const { employeeId, duration } = data;
-        // console.warn(data);
+
         return(
             <tr key={index}>
                 <td colSpan="2">
-                    {/* <DatePicker
-                        className='form-control form-control-sm'
-                        selected={(mode === 'Edit' ? (timeFrom ? moment(timeFrom).toDate() : moment().toDate()) : timeFrom)} 
-                        timeInputLabel="Time:"
-                        dateFormat="MM/dd/yyyy h:mm a"
-                        showTime = {{ user12hours: true }} 
-                        showTimeInput
-                        onChange={(e) => handleChangeAddEmployee(index, "timeFrom", e)}
-                    /> */}
-                    {/* <td>
-                    <DatePicker
-                        className='form-control form-control-sm'
-                        selected={(mode === 'Edit' ? (timeTo ? moment(timeTo).toDate() : moment().toDate())  : timeTo)} 
-                        timeInputLabel="Time:"
-                        dateFormat="MM/dd/yyyy h:mm a"
-                        showTime = {{ user12hours: true }} 
-                        showTimeInput
-                        onChange={(e) => handleChangeAddEmployee(index, "timeTo", e)}
-                    />
-                    </td> */}
-
                     <TimeRangePicker 
                         className='form-control form-control-sm'
                         onChange={(time) => {
@@ -86,18 +64,14 @@ const EmployeeListTableRowsTime = (props) => {
                     </Form.Control>
                 </td>
                 <td className="align-middle">
-                    <a onClick={(e) => deleteTableRows(e, index)}className="btn btn-link text-danger text-gradient px-3 mb-0">
-                        <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
-                    </a>
+                    {status !== 'Approved' &&
+                        <>
+                            <a onClick={(e) => deleteTableRows(e, index)}className="btn btn-link text-danger text-gradient px-3 mb-0">
+                                <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
+                            </a>
+                        </>
+                    }
                 </td>
-                {/* <td className="align-middle">
-                    {userInfo.user_role !== 'Sales' && 
-                    <>
-                        <a onClick={deleteTableRows} className="btn btn-link text-danger text-gradient px-3 mb-0">
-                            <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
-                        </a>
-                    </>} 
-                </td> */}
             </tr>
         )
     })

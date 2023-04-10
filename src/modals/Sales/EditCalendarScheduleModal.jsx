@@ -16,12 +16,14 @@ import {
   CALENDAR_SCHEDULE_UPDATE_RESET,
 } from '../../constants/Sales/salesCalendarScheduleConstants'
 import { listActivityRequestForApprover } from '../../actions/Approver/approverActivityRequestAction'
-import { getScheduleReferenceDetails } from '../../actions/Sales/salesScheduleReferenceAction'
+import { getScheduleReferenceDetails, listScheduleReferenceId } from '../../actions/Sales/salesScheduleReferenceAction'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../../constants/Approver/approverActivityRequestConstants'
 import ApproverDetails from '../../components/Approver/ApproverDetails'
 import EmailParticipants from '../../components/Approver/EmailParticipants'
 import MotherFolder from '../../components/Sales/MotherFolder'
 import 'react-toastify/dist/ReactToastify.css';
+import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
+import JobOrderRequest from '../../components/Sales/JobOrderRequest'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
@@ -42,6 +44,8 @@ const EditCalendarScheduleModal = (props) => {
   const [trainingFields , setTrainingFields] = useState({})
   // New Schedule Fields
   const [newScheduleFields, setNewScheduleFields] = useState({})
+  // JO Request
+  const [joRequestFields, setJoRequestFields] = useState({})
   // Email Participants
   const [emailParticipantsFields, setEmailParticipantsFields] = useState({})
   // Calendar Schedule Details
@@ -71,7 +75,8 @@ const EditCalendarScheduleModal = (props) => {
     // Data Object
     let emails = emailParticipantsFields.email
     let email_addresses = ''
-    // console.warn(emails)
+    let userListId = [];
+    //
 
     // Email All Recipients
     if(emails) {
@@ -81,7 +86,18 @@ const EditCalendarScheduleModal = (props) => {
         return acc;
       }, []);
     }
-    
+
+    // 
+    if(newScheduleFields) {
+      // Get Employee List 
+      let emplist = newScheduleFields.employee_list
+      // Get user Id only
+      // userListId = emplist.map(empid => `employeeId: ${empid.employeeId}` )
+      userListId = emplist.map(empid => empid.employeeId )
+
+      // console.warn(userListId)
+    }
+
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -101,6 +117,7 @@ const EditCalendarScheduleModal = (props) => {
             recipients: emailParticipantsFields.email,
             email: email_addresses,
             user_id: userInfo.user.id,
+            user_list_id: userListId,
           }
         else if (scheduleType === 'Training-Schedule')
           data = {...trainingFields, 
@@ -112,6 +129,7 @@ const EditCalendarScheduleModal = (props) => {
           }
         // 
         if(mode === 'Add') {
+          // console.warn("tewting")
           // Create Calendar Schedule 
           dispatch(createCalendarSchedule(data))
         } else {
@@ -190,6 +208,7 @@ const EditCalendarScheduleModal = (props) => {
    * - Approved Request
    */
   const handleApprovedRequest = () => {
+    //
     let data = {}
     // Data Object
     let emails = emailParticipantsFields.email
@@ -201,6 +220,7 @@ const EditCalendarScheduleModal = (props) => {
         acc.push(curr.value);
         return acc;
       }, []);
+
     }
      // 
      Swal.fire({
@@ -540,26 +560,35 @@ const EditCalendarScheduleModal = (props) => {
       status,
       user_id,
     } = calendarScheduleDetails
-    
+
     // setState
     setScheduleType(sched_type || '')
     setStatus(status || '')
     setUserId(user_id || '')
-
-    // if(mode === 'Add') {
-    //   setEmailParticipantsFields({})
-    //   alert();
-    // }
-
-    // View Only on Edit Mode and New Schedule
-    if(mode === 'Edit' && ar_id) {
-      dispatch(getScheduleReferenceDetails(ar_id))
+    // Comment mo muna
+    if(mode === 'Add') {
+      // RMA, TCC, Sales - New Schedule Only
+      if(['RMA','TCC','Sales','Teamlead'].includes(userInfo.user_role)) {
+        setScheduleType('New-Schedule')
+      }
+      // 
+      if(['Training-Approver'].includes(userInfo.user_role)) {
+        setScheduleType('Training-Schedule')
+      }
     }
 
-  },[calendarScheduleDetails])
+    // View Only on Edit Mode and New Schedule
+    if(mode === 'Edit' && ar_id)
+      dispatch(getScheduleReferenceDetails(ar_id))
+
+  },[calendarScheduleDetails, mode])
 
   // Show Success 
   useEffect(() => {
+    // Get List User Reference Id
+    dispatch(listScheduleReferenceId())
+    // Get List Activity Related To Option
+    dispatch(listActivityRelatedToOption())
     // Show Success Adding of new records
     if(calendarScheduleCreateSuccess) {
       Swal.fire(
@@ -646,12 +675,13 @@ const EditCalendarScheduleModal = (props) => {
                       as='select' 
                       aria-label="Status"
                       value={scheduleType}
-                      disabled={(mode === 'Edit')}
+                      disabled={(mode === 'Edit' || (mode === 'Add' && ['RMA','TCC','Sales'].includes(userInfo.user_role)))}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >
                     <option value="">- Select -</option>
                     <option value="New-Schedule">New Schedule Request</option>
                     <option value="Training-Schedule">Training Schedule</option>
+                    <option value="JO-Request">Job Order Request</option>
                     </Form.Control>
                     </Form.Group>
                 </Col>
@@ -678,6 +708,16 @@ const EditCalendarScheduleModal = (props) => {
                   scheduleType={scheduleType}
                 />
               }
+              {
+                scheduleType === 'JO-Request' && 
+                <JobOrderRequest 
+                  artid={artid}
+                  setJoRequestFields={setJoRequestFields}
+                  calendarScheduleDetails={calendarScheduleDetails}
+                  mode={mode}
+                  scheduleType={scheduleType}
+                />
+              }
             </>
           }
 
@@ -691,34 +731,28 @@ const EditCalendarScheduleModal = (props) => {
             />
           }
 
-          {mode === 'Edit' && 
-          // scheduleType === 'New-Schedule' && 
-          (((['For Approval',
-            'Approved',
-            'DELEGATE_PRESALES_SE_FOR_APPROVAL',
-            'DELEGATE_POSTSALES_SE_FOR_APPROVAL',
-            'DELEGATED_POSTSALES_SE_APPROVED',
-            'DELEGATED_PRESALES_SE_APPROVED',
-          ].includes(status))
-          && ['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role))) && 
-            <>
-              {(
-                (activity_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
-                (activity_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
-                // (userInfo.user_role === 'Pre-Sales Approver') || 
-                // (userInfo.user_role === 'Post-Sales Approver') || 
-                (userInfo.user_role === 'Super-Approver')
-                ) &&
-                <EmailParticipants 
-                  mode={mode}
-                  setEmailParticipantsFields={setEmailParticipantsFields}
-                /> 
-              }
-            </>
+          {scheduleType && (['Add','Edit'].includes(mode)) && 
+          ['Pre-Sales Approver','Post-Sales Approver','Super-Approver','Training-Approver'].includes(userInfo.user_role) && 
+            <EmailParticipants
+              mode={mode}
+              setEmailParticipantsFields={setEmailParticipantsFields}
+            /> 
+          }
+          
+          {/* Sales, RMA, TCC, Project Lead  Button */}
+          {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
+              <>
+                {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) && 
+                  <EmailParticipants 
+                    mode={mode}
+                    setEmailParticipantsFields={setEmailParticipantsFields}
+                  /> 
+                }
+              </>
           }
 
           {/* Sales, RMA, TCC, Project Lead  Button */}
-          {['Sales','RMA','TCC'].includes(userInfo.user_role) && 
+          {/* {['Training-Approver'].includes(userInfo.user_role) && 
               <>
                 {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) && 
                   <EmailParticipants 
@@ -728,24 +762,33 @@ const EditCalendarScheduleModal = (props) => {
                   /> 
                 }
               </>
-          }
+          } */}
         </Modal.Body>
         <Modal.Footer>
             <Button size='sm' variant="secondary" onClick={onHide}>
                 Close
             </Button>
 
-            {/* Approver Button */}
-            {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
+            {/* Training Approver */}
+            {['Training-Approver','Super-Approver'].includes(userInfo.user_role) && 
               <>
-
                 {scheduleType === 'Training-Schedule' && 
                  mode === 'Edit' && 
-                 status !== 'Approved' && 
+                 ( ['Approved'].includes(status)) &&
                  userId === userInfo.user.id &&
                   <>
                     <Button size='sm' variant="info" onClick={handleSubmit} >
                         Save Changes
+                    </Button>
+                  </>
+                }
+
+                {scheduleType === 'Training-Schedule' && 
+                 mode === 'Edit' && 
+                 status === 'Approved' &&                     
+                  <>
+                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                      Cancel Schedule
                     </Button>
                   </>
                 }
@@ -757,10 +800,17 @@ const EditCalendarScheduleModal = (props) => {
                   <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
                     Approve Request
                   </Button>
+                  <Button size='sm' variant="danger" onClick={handleRejectRequest} >
+                    Reject Request
+                  </Button>
                  </>
                 }
+              </>
+            }
 
-
+            {/* Approver Button */}
+            {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
+              <>
                 {scheduleType === 'New-Schedule' && 
                  mode === 'Edit' && 
                  status === 'For Approval' && 
@@ -827,10 +877,9 @@ const EditCalendarScheduleModal = (props) => {
                     </>
                 }
                 
-                {mode === 'Edit' && 
-                //  scheduleType === 'New-Schedule' && 
+                {scheduleType === 'New-Schedule' && 
+                 mode === 'Edit' && 
                  status === 'Approved' &&
-                //  activity_type === 'Pre-Sales' &&  
                  (['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role)) && 
                   <>
                     <Button size='sm' variant="warning" onClick={handleCancelRequest} >
@@ -842,7 +891,7 @@ const EditCalendarScheduleModal = (props) => {
             }
 
             {/* Sales, RMA, TCC, Project Lead  Button */}
-            {['Sales','RMA','TCC'].includes(userInfo.user_role) && 
+            {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
               <>
                 {mode !== 'Add' && (userId === userInfo.user.id) &&
                   <>
@@ -854,16 +903,6 @@ const EditCalendarScheduleModal = (props) => {
                     </Button>
                   </>
                 }
-            
-                {/* {scheduleType === 'New-Schedule' && 
-                 mode === 'Edit' && 
-                 userId === userInfo.user.id &&
-                  <>
-                    <Button size='sm' variant="primary" onClick={handleSubmit} >
-                        Save Changes
-                    </Button>
-                  </>
-                } */}
               </>
             }
 

@@ -25,21 +25,30 @@ const SideMenu = () => {
     // Get User Role
     // console.warn(userInfo.user.user_type)
     // Delay execution of argon-dashboard.js for sidemenu
-    const script = document.createElement("script");
-    script.src = "assets/js/soft-ui-dashboard.js";
-    script.async = true;
-    document.body.appendChild(script);
-    // adding multiple classes to body tag
-    document.body.classList.add(
-      'g-sidenav-show',
-      'bg-gray-100'
-    );
 
-    // console.warn(userInfo.mainmenu)
-    setMainMenu(userInfo.mainmenu)
-    setSubMenu(userInfo.submenu)
+    if(userInfo){
+        
+        // console.warn(userInfo.mainmenu)
+        setMainMenu(userInfo.mainmenu)
+        setSubMenu(userInfo.submenu)
+
+        const script = document.createElement("script");
+        script.src = "assets/js/soft-ui-dashboard.js";
+        script.async = true;
+        document.body.appendChild(script);
+        // adding multiple classes to body tag
+        document.body.classList.add(
+          'g-sidenav-show',
+          'bg-gray-100'
+        );
+    
+    console.warn("test")
+    }
 
   },[userInfo, dispatch]);
+
+  
+  if(!userInfo) return <></>
 
   return (
     <>

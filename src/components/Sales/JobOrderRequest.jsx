@@ -8,14 +8,14 @@ import 'react-datepicker/dist/react-datepicker.css'
 import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
+import EditBusinessUnitOption from "./EditBusinessUnitOption"
 
-
-const NewScheduleRequest = (props) => {
+const JobOrderRequest = (props) => {
   //
   const { 
     artid, 
     calendarScheduleDetails, 
-    setNewScheduleFields, 
+    setJoRequestFields , 
     mode,
     scheduleType,
   } = props
@@ -25,7 +25,7 @@ const NewScheduleRequest = (props) => {
   const [activitySchedule, setActivitySchedule] = useState([new Date(), new Date()])
   const [startDate, endDate] = activitySchedule
   const [srArNo, setSrArNo] = useState('')
-  const [referenceId, setReferenceId] = useState('')
+
   const [activityType, setActivityType] = useState('')
   const [activityRelatedTo, setActivityRelatedTo] = useState('')
   const [dtc, setDtc] = useState('')
@@ -33,8 +33,13 @@ const NewScheduleRequest = (props) => {
   const [remarks, setRemarks] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
-  const [netsuiteLink, setNetsuitLink] = useState([])
-  
+
+    // Job Order Fields 
+    const [referenceId, setReferenceId] = useState('')
+    const [projectNo, setProjectNo] = useState('')
+    const [emailSubject, setEmailSubject] = useState('')
+    const [netsuiteLink, setNetsuiteLink] = useState('')
+
     // Fields
     const [fields, setFields] = useState({
         activity_schedule: '',
@@ -47,8 +52,11 @@ const NewScheduleRequest = (props) => {
         purpose_of_activity: '',
         remarks: '',
         employee_list:[],
-        netsuite_link: '',
         id: artid,
+
+        project_no: '',
+        email_subject: '',
+        netsuite_link: '',
     })
 
     /**
@@ -77,6 +85,9 @@ const NewScheduleRequest = (props) => {
         // 
         return <option 
             rel-team={row.activity_type}
+            project-no={row.project_no}
+            project-name={row.project_name}
+            netsuite-link={row.netsuite_link}
             key={key} 
             value={ row.ar_id }
             >{ row.reference_id } - {row.project_name}
@@ -87,7 +98,7 @@ const NewScheduleRequest = (props) => {
     const handleSelectedDestination = (options) => {
         setSelectedDestination(options)
         changeValueHandler('destination', options)
-        setNewScheduleFields(fields)
+        setJoRequestFields(fields)
     }
     /**
      * @returns - Activity Related To Options
@@ -126,9 +137,21 @@ const NewScheduleRequest = (props) => {
         let optionElement = state.target.childNodes[index]
         // Get attribute value
         let option =  optionElement.getAttribute('rel-team')
+        let project_no = optionElement.getAttribute('project-no')
+        let email_subject = optionElement.getAttribute('project-name')
+        let netsuite_link = optionElement.getAttribute('netsuite-link')
+        
         // Set Reference Id
         setReferenceId(state.target.value)
         changeValueHandler('ar_id', state.target.value)
+        changeValueHandler('project_no', project_no)
+        changeValueHandler('email_subject', email_subject)
+        changeValueHandler('netsuite_link', netsuite_link)
+
+        setEmailSubject(email_subject)
+        setProjectNo(project_no)
+        setNetsuiteLink(netsuite_link)
+
         setRelatedTeam(option)
     }
 
@@ -136,7 +159,6 @@ const NewScheduleRequest = (props) => {
     useEffect(() => {
         // Selected Calendar Details
         if(mode === 'Edit') {
-            
             const {  
                 art_id,
                 sched_type,
@@ -173,7 +195,7 @@ const NewScheduleRequest = (props) => {
             setActivityType(activity_type || '')
             setSelectedDestination(currentDestination || '')
             setReferenceId(ar_id || '')
-            setNetsuitLink(netsuite_link || '')
+            // setNetsuitLink(netsuite_link || '')
             // setActivitySchedule(moment(activity_schedule).toDate() || '')
             setSelectedEmployeeNames(persons || '')
             if(activity_schedule)
@@ -195,7 +217,7 @@ const NewScheduleRequest = (props) => {
         changeValueHandler('employee_list', selectedEmployeeNames)
         changeValueHandler('netsuite_link', netsuiteLink)
 
-        setNewScheduleFields(fields)
+        setJoRequestFields(fields)
     },[activitySchedule,
         srArNo,
         referenceId,
@@ -213,16 +235,70 @@ const NewScheduleRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>SR/AR No.</Form.Label>  
+                    <Form.Label>Reference Id</Form.Label>
+                    <Form.Control
+                        as='select' 
+                        size='sm'
+                        aria-label="Reference Id"
+                        value={referenceId}
+                        onChange={(e) => {
+                            handleReferenceIdOption(e)
+                            setJoRequestFields(fields)
+                        }}
+                    >
+                    <option value="">- Select -</option>
+                    { referenceIdOptions }
+                    </Form.Control>
+                </Form.Group>
+            </Col>
+        </Row>
+        <Row>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Project No.</Form.Label>  
                 <Form.Control 
                     size='sm'
                     type='text'
-                    placeholder='SR/AR No.'
-                    value={srArNo}
+                    placeholder='Project No.'
+                    value={projectNo}
                     onChange={(e) => {
-                        changeValueHandler('sr_no', e.target.value)
-                        setSrArNo(e.target.value)
-                        setNewScheduleFields(fields)
+                        changeValueHandler('project_no', e.target.value)
+                        setProjectNo(e.target.value)
+                        setJoRequestFields(fields)
+                    }}
+                />
+                </Form.Group>
+            </Col>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Email Subject</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='Email Subject'
+                    value={emailSubject}
+                    onChange={(e) => {
+                        changeValueHandler('email_subject', e.target.value)
+                        setEmailSubject(e.target.value)
+                        setJoRequestFields(fields)
+                    }}
+                />
+                </Form.Group>
+            </Col>
+        </Row>
+        <Row>
+        <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>MA No.</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='MA No.'
+                    value={netsuiteLink}
+                    onChange={(e) => {
+                        changeValueHandler('netsuite_link', e.target.value)
+                        // setNetsuitLink(e.target.value)
+                        setJoRequestFields(fields)
                     }}
                 />
                 </Form.Group>
@@ -237,8 +313,47 @@ const NewScheduleRequest = (props) => {
                     value={netsuiteLink}
                     onChange={(e) => {
                         changeValueHandler('netsuite_link', e.target.value)
-                        setNetsuitLink(e.target.value)
-                        setNewScheduleFields(fields)
+                        setNetsuiteLink(e.target.value)
+                        setJoRequestFields(fields)
+                    }}
+                />
+                </Form.Group>
+            </Col>
+        </Row>
+        <Row>
+            <Col sm={12} md={6} lg={6}>
+              <h6>Device Information</h6>
+            </Col>
+        </Row>
+        <Row>
+            <Col sm={12} md={6} lg={6}>
+            <Form.Group className="mb-3">
+                <Form.Label>Serial No.</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='Serial No.'
+                    value={netsuiteLink}
+                    onChange={(e) => {
+                        // changeValueHandler('netsuite_link', e.target.value)
+                        // setNetsuitLink(e.target.value)
+                        setJoRequestFields(fields)
+                    }}
+                />
+                </Form.Group>
+            </Col>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Part No.</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='Part No.'
+                    value={netsuiteLink}
+                    onChange={(e) => {
+                        changeValueHandler('netsuite_link', e.target.value)
+                        // setNetsuitLink(e.target.value)
+                        setJoRequestFields(fields)
                     }}
                 />
                 </Form.Group>
@@ -247,74 +362,33 @@ const NewScheduleRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Reference Id</Form.Label>
+                    <Form.Label>Warranty</Form.Label>
                     <Form.Control
-                        as='select' 
-                        size='sm'
-                        aria-label="Reference Id"
-                        value={referenceId}
-                        onChange={(e) => {
-                            handleReferenceIdOption(e)
-                            setNewScheduleFields(fields)
-                        }}
-                    >
-                    <option value="">- Select -</option>
-                    { referenceIdOptions }
+                            as='select' 
+                            size='sm'
+                            aria-label="Reference Id"
+                            value={referenceId}
+                            onChange={(e) => {
+                                handleReferenceIdOption(e)
+                                setJoRequestFields(fields)
+                            }}
+                        >
+                        <option value="">- Select -</option>
+                        <option value="Void Warranty">Void Warranty</option>
+                        <option value="Out Warranty">Out Warranty</option>
+                        <option value="In Warranty">In Warranty</option>
+                        <option value="Not Purchased from MEC">Not Purchased from MEC</option>
                     </Form.Control>
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Activity Type</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={activityType}
-                    onChange={(e) => {
-                        changeValueHandler('activity_type', e.target.value)
-                        setActivityType(e.target.value)
-                        setNewScheduleFields(fields)
-                    }}
-                >
-                <option value="">- Select -</option>
-                <option value="On-Site">On-Site</option>
-                <option value="In-House">In-House</option>
-                </Form.Control>
-                </Form.Group>
-            </Col>
-        </Row>
-        <Row>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                <Form.Label>Activity Related To</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={activityRelatedTo}
-                    onChange={(e) => {
-                        changeValueHandler('activity_related_to', e.target.value)
-                        setActivityRelatedTo(e.target.value)
-                        setNewScheduleFields(fields)
-                    }}
-                >
-                <option value="">- Select -</option>
-                { getActivityRelatedToOptions() }
-                </Form.Control>
-                </Form.Group>
-            </Col>
-            <Col sm={12} md={6} lg={6}>
-                <Form.Group className="mb-3">
-                    <Form.Label>Destination Details</Form.Label>
-                    <CreateSelect 
-                        isClearable
-                        options={destination}
-                        styles={reactSelectCustomStyles}
-                        onChange={(e) => {
-                            handleSelectedDestination(e)
-                        }}
-                        value={selectedDestination}
+                    <Form.Label>Business Unit</Form.Label>
+                    <EditBusinessUnitOption 
+                        changeValueHandler={changeValueHandler}
+                        // selectedBusinessUnit={selectedBusinessUnit}
+                        // setSelectedBusinessUnit={setSelectedBusinessUnit}
+                        mode={mode}
                     />
                 </Form.Group>
             </Col>
@@ -322,56 +396,50 @@ const NewScheduleRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Activity Schedule</Form.Label>
-                <DatePicker
-                    className='form-control form-control-sm'
-                    selectsRange={true}
-                    startDate={startDate}
-                    endDate={endDate}
-                    onChange={(update) => {
-                        // setDateRange(update);
-                        setActivitySchedule(update)
-                        changeValueHandler('activity_schedule', activitySchedule)
-                        setNewScheduleFields(fields)
-                    }}
-                    isClearable={true}
-                />
-                {/* <DatePicker
-                    customInput={<DatepickerCustomInput />}
-                    selected={activitySchedule} 
-                    onChange={(date) => {
-                        changeValueHandler('activity_schedule', date)
-                        setActivitySchedule(date)
-                        setNewScheduleFields(fields)
-                    }} 
-                /> */}
+                    <Form.Label>Request</Form.Label>
+                    <Form.Control
+                            as='select' 
+                            size='sm'
+                            aria-label="Request"
+                            value={referenceId}
+                            onChange={(e) => {
+                                handleReferenceIdOption(e)
+                                setJoRequestFields(fields)
+                            }}
+                        >
+                        <option value="">- Select -</option>
+                        <option value="Void Warranty">Void Warranty</option>
+                        <option value="Out Warranty">Out Warranty</option>
+                        <option value="In Warranty">In Warranty</option>
+                        <option value="Not Purchased from MEC">Not Purchased from MEC</option>
+                    </Form.Control>
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Request for DTC?</Form.Label>
-                <Form.Control
-                    size='sm'
-                    as='select' 
-                    aria-label="Status"
-                    value={dtc}
-                    onChange={(e) => {
-                        changeValueHandler('request_for_dtc', e.target.value)
-                        setDtc(e.target.value)
-                        setNewScheduleFields(fields)
-                    }}
-                >
-                <option value="">- Select -</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                </Form.Control>
+                    <Form.Label>Priority</Form.Label>
+                    <Form.Control
+                            as='select' 
+                            size='sm'
+                            aria-label="Priority"
+                            value={referenceId}
+                            onChange={(e) => {
+                                handleReferenceIdOption(e)
+                                setJoRequestFields(fields)
+                            }}
+                        >
+                        <option value="">- Select -</option>
+                        <option value="P1">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                    </Form.Control>
                 </Form.Group>
             </Col>
         </Row>
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>Purpose of Activity</Form.Label>
+                <Form.Label>Reported Problem</Form.Label>
                 <Form.Control 
                     size="sm"
                     as="textarea" 
@@ -380,14 +448,14 @@ const NewScheduleRequest = (props) => {
                     onChange={(e) => {
                         changeValueHandler('purpose_of_activity', e.target.value)
                         setPurposeOfActivity(e.target.value)
-                        setNewScheduleFields(fields)
+                        setJoRequestFields(fields)
                     }}
                 />
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Remarks</Form.Label>
+                    <Form.Label>Notes</Form.Label>
                     <Form.Control 
                         size="sm"
                         as="textarea" 
@@ -396,7 +464,7 @@ const NewScheduleRequest = (props) => {
                         onChange={(e) => {
                             changeValueHandler('remarks', e.target.value)
                             setRemarks(e.target.value)
-                            setNewScheduleFields(fields)
+                            setJoRequestFields(fields)
                         }}
                     />
                 </Form.Group>
@@ -419,8 +487,9 @@ const NewScheduleRequest = (props) => {
             mode={mode}
             scheduleType={scheduleType}
         />
+
     </>
   )
 }
 
-export default NewScheduleRequest
+export default JobOrderRequest

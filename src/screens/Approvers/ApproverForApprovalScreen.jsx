@@ -15,6 +15,7 @@ import {
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -77,42 +78,19 @@ const ApproverForApprovalScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-    // Columns
-    const columns = useMemo(
-		() => [
-            {   name: 'Schedule Reference No',
-                selector: row => row.reference_id,
-                sortable: true,
-            },
-            {   name: 'Date Requested',
-                selector: row => row.date_requested,
-                sortable: true,
-            },
-            {
-                name: 'Activity Related To',
-                selector: row => row.activity,
-                sortable: true,
-            },
-            {
-                name: 'Related Team',
-                selector: row => row.related_team,
-                sortable: true,
-            },
-            {
-                name: 'Activity Date',
-                selector: row => moment(row.activity_date).format('L'),
-                sortable: true,
-            },
-            {
-                name: 'Assigned Engineer',
-                selector: row => row.name,
-                sortable: true,
-            },
-            {
-                name: 'Status',
-                selector: row => row.status,
-                sortable: true,
-            },
+
+    // console.warn(userInfo.user_role)
+
+    const trainingScheduleHeader = () => {
+        // 
+        return [
+            { name: 'Training Type', selector: row => row.training_type, sortable: true },
+            { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
+            { name: 'Trainer', selector: row => row.trainer, sortable: true },
+            { name: 'Venue', selector: row => row.venue, sortable: true },
+            { name: 'Training Schedule',selector: row => moment(row.activity_date).format('L'), sortable: true },
+            { name: 'Duration',selector: row => row.name, sortable: true },
+            { name: 'Status', selector: row => row.status, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -134,11 +112,57 @@ const ApproverForApprovalScreen = () => {
                     </>
                 },
                 // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
-				ignoreRowClick: true,
-				allowOverflow: true,
-				button: true,
-			},
-		],
+                ignoreRowClick: true,
+                allowOverflow: true,
+                button: true,
+            },
+        ]
+    }
+
+    // New Schedule
+    const newScheduleHeader = () => {
+        //
+        return [
+            { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
+            { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
+            { name: 'Activity Related To', selector: row => row.activity, sortable: true },
+            { name: 'Related Team', selector: row => row.related_team, sortable: true },
+            { name: 'Activity Date',selector: row => moment(row.activity_date).format('L'), sortable: true },
+            { name: 'Assigned Engineer',selector: row => row.name, sortable: true },
+            { name: 'Status', selector: row => row.status, sortable: true },
+            {
+                name: 'Action',
+                cell: (row) => {
+                    //
+                    return <>
+                        <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}>
+                        {/* <div className="dropdown"> */}
+                            <button className="btn btn-link" id={row.art_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleEditScheduleView} id={row.art_id}>
+                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </>
+                },
+                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
+                ignoreRowClick: true,
+                allowOverflow: true,
+                button: true,
+            },
+        ]
+    }
+
+    // Columns
+    const columns = useMemo(
+		() => (userInfo.user_role === 'Training-Approver' ? 
+        trainingScheduleHeader() :
+        newScheduleHeader()),
 		[],
 	);
 
@@ -172,11 +196,13 @@ const ApproverForApprovalScreen = () => {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
+                'user_role': userInfo.user_role,
+                'list_type': 'view-list',
                 'status': 'For Approval',
-                'list_type': 'view-list'
             }
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
+
             // Get Business Unit
             dispatch(listBusinessUnitOption())
         } else {
@@ -187,7 +213,7 @@ const ApproverForApprovalScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <DataTable
@@ -205,7 +231,15 @@ const ApproverForApprovalScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <ViewCalendarScheduleModal 
+                    {/* <ViewCalendarScheduleModal 
+                        size="lg"
+                        show={show} 
+                        onHide={handleClose} 
+                        artid={artid}
+                        mode={mode}
+                        calendarScheduleDetails={calendarScheduleDetail}
+                    /> */}
+                    <EditCalendarScheduleModal
                         size="lg"
                         show={show} 
                         onHide={handleClose} 

@@ -108,7 +108,6 @@ const CalendarScheduleScreen = () => {
     const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
     const [activityType, setActivityType] = useState('');
-
     // Add Calendar Modal
     const handleCalendarScheduleView = (state) => {
         // Show Modal
@@ -116,7 +115,6 @@ const CalendarScheduleScreen = () => {
         // setMode State to Add
         setMode('Add')
     }
-
     //
     const handleViewCalendarInfo = (state) => {
         // Show Modal
@@ -224,7 +222,7 @@ const CalendarScheduleScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleCalendarScheduleView}>
@@ -236,7 +234,7 @@ const CalendarScheduleScreen = () => {
                         events={calendar}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 500 , margin: '50px'}}
+                        style={{ height: 700, margin: '50px'}}
                         popup
                         onSelectEvent={handleViewCalendarInfo}
                         eventPropGetter={(calendar) => {
@@ -248,7 +246,7 @@ const CalendarScheduleScreen = () => {
 
                     <EditCalendarScheduleModal 
                         size="lg"
-                        show={show} 
+                        show={show}
                         onHide={handleClose} 
                         artid={artid}
                         calendarScheduleDetails={calendarScheduleDetail}

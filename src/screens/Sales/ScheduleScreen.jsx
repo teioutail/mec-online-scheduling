@@ -194,7 +194,7 @@ const ScheduleScreen = () => {
                             <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
-                            <ul className="dropdown-menu">
+                            <ul className="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleReferenceView} id={row.ar_id}>
                                       <FontAwesomeIcon icon={['fas', 'pen-to-square']} /> Edit Schedule
@@ -291,7 +291,7 @@ const ScheduleScreen = () => {
 
     return (
         <>
-            <SideMenu />
+            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
@@ -305,7 +305,8 @@ const ScheduleScreen = () => {
                         pagination
                         responsive
                         columns={columns}
-                        data={rows}
+                        // data={rows}
+                        data={rows ? [rows[0]] : []}
                         progressPending={pending}
                         progressComponent={<Loader />}
                         highlightOnHover
