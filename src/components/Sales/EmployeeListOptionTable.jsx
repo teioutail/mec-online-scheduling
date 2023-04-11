@@ -33,6 +33,7 @@ const EmployeeListOptionTable = (props) => {
     const rowsInput = {
       employeeId: '',
       duration: '',
+      employeeName:'',
     }
     // 
     setAddNewRowState(true)
@@ -60,11 +61,14 @@ const EmployeeListOptionTable = (props) => {
   
   // Handle Adding Multiple SE/Employee
   const handleChangeAddEmployee = (index, name, value) => {
+    //
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
+    // 
+    console.warn(rowsInput)
   }
 
   // 

@@ -53,7 +53,7 @@ function App() {
           <Route path='/role-list' element={<RoleListScreen/>} />
           <Route path='/categories' element={<MenuCategoryScreen/>} />
           <Route path='/subcategories' element={<SubMenuCategoryScreen/>} />
-          <Route path='/saleschedule' element={<ScheduleScreen/>} />
+          <Route path='/motherfolder' element={<ScheduleScreen/>} />
           <Route path='/business-unit' element={<BusinessUnitScreen/>} />
           <Route path='/calendar-schedule' element={<CalendarScheduleScreen/>} />
           <Route path='/activity-related-to' element={<ActivityRelatedToScreen/>} />

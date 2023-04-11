@@ -34,7 +34,7 @@ const EmployeeListTableRowsTime = (props) => {
     // 
     rowsData.map((data, index) => {
         // 
-        const { employeeId, duration } = data;
+        const { employeeId, duration, employeeName } = data;
 
         return(
             <tr key={index}>
@@ -48,13 +48,19 @@ const EmployeeListTableRowsTime = (props) => {
                         clearIcon={null}
                         clockIcon={null}
                     />
+
                 </td>
+
                 <td className="align-middle text-center text-sm">
                     <Form.Control
                         size='sm'
                         as='select' 
                         aria-label="Status"
-                        onChange={(e)=>(handleChange(index, e))}
+                        onChange={(e) => {
+                            // 
+                            handleChange(index, e)
+                            handleChangeAddEmployee(index, "employeeName", e.target.options[e.target.selectedIndex].text)
+                        }}
                         value={employeeId}
                         name="employeeId"
                         // onChange={(e) => setScheduleType(e.target.value)}
@@ -63,10 +69,11 @@ const EmployeeListTableRowsTime = (props) => {
                     { fullNameOptions }
                     </Form.Control>
                 </td>
+                
                 <td className="align-middle">
                     {status !== 'Approved' &&
                         <>
-                            <a onClick={(e) => deleteTableRows(e, index)}className="btn btn-link text-danger text-gradient px-3 mb-0">
+                            <a onClick={(e) => deleteTableRows(e, index)} className="btn btn-link text-danger text-gradient px-3 mb-0">
                                 <FontAwesomeIcon className="me-2" icon={['fas', 'trash-alt']} /> Delete
                             </a>
                         </>

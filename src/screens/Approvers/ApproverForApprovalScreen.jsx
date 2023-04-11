@@ -5,16 +5,15 @@ import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import DataTable from 'react-data-table-component'
+import DataTable, { ExpanderComponentProps } from 'react-data-table-component'
 import Loader from '../../components/Loader'
-import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
 import { 
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+
 import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -79,8 +78,6 @@ const ApproverForApprovalScreen = () => {
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
 
-    // console.warn(userInfo.user_role)
-
     const trainingScheduleHeader = () => {
         // 
         return [
@@ -121,19 +118,21 @@ const ApproverForApprovalScreen = () => {
 
     // New Schedule
     const newScheduleHeader = () => {
-        //
+        // 
         return [
             { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
             { name: 'Activity Related To', selector: row => row.activity, sortable: true },
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
-            { name: 'Activity Date',selector: row => moment(row.activity_date).format('L'), sortable: true },
-            { name: 'Assigned Engineer',selector: row => row.name, sortable: true },
+            { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
+            { name: 'Assigned Engineer',selector: row => JSON.parse(row.employeeNames).map(empid =>  empid ), sortable: true }, // balikan mo to
             { name: 'Status', selector: row => row.status, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
-                    //
+
+                    console.warn(row.activity_date)
+
                     return <>
                         <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}>
                         {/* <div className="dropdown"> */}
@@ -220,6 +219,8 @@ const ApproverForApprovalScreen = () => {
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
+                        expandableRows	
+                        // expandableRowsComponent='test'
                         pagination
                         responsive
                         columns={columns}

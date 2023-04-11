@@ -45,7 +45,7 @@ const ScheduleScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Schedule Reference'
+    const headerTitle = 'Mother Folder'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -305,8 +305,8 @@ const ScheduleScreen = () => {
                         pagination
                         responsive
                         columns={columns}
-                        // data={rows}
-                        data={rows ? [rows[0]] : []}
+                        data={rows}
+                        // data={rows ? [rows[0]] : []}
                         progressPending={pending}
                         progressComponent={<Loader />}
                         highlightOnHover
