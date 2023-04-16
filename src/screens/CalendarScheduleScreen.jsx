@@ -18,7 +18,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import DatePicker from 'react-datepicker'
 
-import { 
+import {
     deleteScheduleReference,
     listScheduleReferenceId,
   } from '../actions/Sales/salesScheduleReferenceAction'

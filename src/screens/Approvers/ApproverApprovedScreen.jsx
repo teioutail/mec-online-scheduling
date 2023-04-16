@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
-import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
 import Loader from '../../components/Loader'
+import { getUsersEmailList } from '../../actions/userActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
 import { 
@@ -23,6 +23,7 @@ import moment from 'moment'
 import { 
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
+import ExpandableRowComponent from './ExpandableRowComponent'
 
 const ApproverApprovedScreen = () => {
     // Toastify
@@ -122,16 +123,15 @@ const ApproverApprovedScreen = () => {
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
             { name: 'Activity Related To', selector: row => row.activity, sortable: true },
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
-            { name: 'Activity Date',selector: row => moment(row.activity_date).format('L'), sortable: true },
-            { name: 'Assigned Engineer',selector: row => row.name, sortable: true },
-            { name: 'Status', selector: row => row.status, sortable: true },
+            { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
+            { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
                     //
                     return <>
-                        {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
-                        <div className="dropdown">
+                        <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}>
                             <button className="btn btn-link" id={row.art_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
@@ -199,6 +199,8 @@ const ApproverApprovedScreen = () => {
             dispatch(listActivityRequestForApprover(user))
             // Get Business Unit
             dispatch(listBusinessUnitOption())
+            // Get Users Email
+            dispatch(getUsersEmailList())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -214,6 +216,9 @@ const ApproverApprovedScreen = () => {
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
+                        expandableRows
+                        expandableRowsComponent={ExpandableRowComponent}
+                        expandableRowsComponentProps={{"someTitleProp": 'Approved'}} 
                         pagination
                         responsive
                         columns={columns}

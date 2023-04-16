@@ -13,7 +13,7 @@ import {
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
+import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -25,7 +25,7 @@ import {
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from './ExpandableRowComponent'
 
-const ApproverForApprovalScreen = () => {
+const ApproverAllRequestScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -36,12 +36,11 @@ const ApproverForApprovalScreen = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-    });
-    
+    });   
     // CommonJS
     const Swal = require('sweetalert2')
-    //
-    const headerTitle = 'Schedule For Approval'
+    // Header title
+    const headerTitle = 'All Requested Schedule'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -77,7 +76,8 @@ const ApproverForApprovalScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-
+    
+    // 
     const trainingScheduleHeader = () => {
         // 
         return [
@@ -115,10 +115,9 @@ const ApproverForApprovalScreen = () => {
             },
         ]
     }
-
     // New Schedule
     const newScheduleHeader = () => {
-        // 
+        //
         return [
             { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
@@ -126,7 +125,7 @@ const ApproverForApprovalScreen = () => {
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
-            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-warning'>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -154,13 +153,32 @@ const ApproverForApprovalScreen = () => {
         ]
     }
 
+    /**
+     * - Change Color 
+     */
+    const statusType = (type) => {
+        // 
+        switch(type) {
+            case 'For Approval':
+                return 'badge badge-sm bg-gradient-warning'
+            case 'Approved':
+                return 'badge badge-sm bg-gradient-success'
+            case 'Rejected': 
+                return 'badge badge-sm bg-gradient-danger'
+            case 'Canceled':
+                return 'badge badge-sm bg-gradient-secondary'
+            default:
+                return 'badge badge-sm bg-gradient-info'
+        } 
+    }
+
     // Columns
     const columns = useMemo(
-		() => (userInfo.user_role === 'Training-Approver' ? 
+        () => (userInfo.user_role === 'Training-Approver' ? 
         trainingScheduleHeader() :
         newScheduleHeader()),
-		[],
-	);
+        [],
+    );
 
     // useEffect for Error Message
     useEffect(() => {
@@ -187,14 +205,13 @@ const ApproverForApprovalScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
         // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
-                'user_role': userInfo.user_role,
-                'list_type': 'view-list',
-                'status': 'For Approval',
+                'status': 'All-Request',
+                'list_type': 'view-list'
             }
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
@@ -217,9 +234,9 @@ const ApproverForApprovalScreen = () => {
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
-                        expandableRows 
+                        expandableRows
                         expandableRowsComponent={ExpandableRowComponent}
-                        expandableRowsComponentProps={{"someTitleProp": 'For Approval'}} 
+                        expandableRowsComponentProps={{"someTitleProp": 'All Approved'}} 
                         pagination
                         responsive
                         columns={columns}
@@ -230,8 +247,8 @@ const ApproverForApprovalScreen = () => {
                         pointerOnHover
                         selectableRowsHighlight
                     />
-                    
-                    <EditCalendarScheduleModal
+
+                    <ViewCalendarScheduleModal 
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
@@ -258,4 +275,4 @@ const ApproverForApprovalScreen = () => {
     )
 }
 
-export default ApproverForApprovalScreen
+export default ApproverAllRequestScreen

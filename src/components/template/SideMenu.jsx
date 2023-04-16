@@ -41,8 +41,6 @@ const SideMenu = () => {
           'g-sidenav-show',
           'bg-gray-100'
         );
-    
-    console.warn("test")
     }
 
   },[userInfo, dispatch]);
