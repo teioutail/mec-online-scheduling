@@ -201,10 +201,8 @@ const SubMenuCategoryScreen = () => {
         if(userInfo && userInfo.user.user_type === 6) {
             // console.warn(JSON.stringify(users));
             dispatch(listSubMenuCategories())
-
             // Get Menu Categories
             dispatch(getMenuCategoryOptions())
-
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -217,7 +215,7 @@ const SubMenuCategoryScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleMenuCategoryView}>
+                    <Button variant="primary" size="sm" className="z-3 float-end" onClick={handleMenuCategoryView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

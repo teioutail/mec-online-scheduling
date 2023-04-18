@@ -86,16 +86,21 @@ const EditCalendarScheduleModal = (props) => {
         return acc;
       }, []);
     }
-
-    // 
-    if(newScheduleFields) {
+    
+    // - New Schedule Validation
+    if(scheduleType === 'New-Schedule') {
       // Get Employee List 
       let emplist = newScheduleFields.employee_list
       // Get user Id only
-      // userListId = emplist.map(empid => `employeeId: ${empid.employeeId}` )
       userListId = emplist.map(empid => empid.employeeId )
+    }
 
-      // console.warn(userListId)
+    // Training Schedule Validation
+    if(scheduleType === 'Training-Schedule') {
+        // Get Employee List 
+        let emplist = trainingFields.employee_list
+        // Get user Id only
+        userListId = emplist.map(empid => empid.employeeId )
     }
 
     // Save Change Here...
@@ -126,6 +131,7 @@ const EditCalendarScheduleModal = (props) => {
             recipients: emailParticipantsFields.email,
             email: email_addresses,
             user_id: userInfo.user.id,
+            user_list_id: userListId,
           }
         // 
         if(mode === 'Add') {
@@ -596,17 +602,9 @@ const EditCalendarScheduleModal = (props) => {
         calendarScheduleCreateMessage,
         'success'
       )
-      // User Role List View 
-      const user = {
-        'activity_type': userInfo.user.manage_team,
-        'status': 'For Approval',
-        'list_type': 'view-list'
-      }
-      // Refresh Datatable
-      dispatch(listActivityRequestForApprover(user))
       // Refresh Datatable
       dispatch(listCalendarSchedule())
-
+      // 
       dispatch({
         type: CALENDAR_SCHEDULE_CREATE_RESET,
       })
@@ -637,8 +635,22 @@ const EditCalendarScheduleModal = (props) => {
         approverActivityUpdateMessage,
         'success'
       )
+
+      // Refresh Datatable if exists
+      if((['/schedule-for-approval','/schedule-delegated'].includes(window.location.pathname))) {
+        // User Role List View 
+        const user = {
+          'activity_type': userInfo.user.manage_team,
+          'status': requestType(window.location.pathname),
+          'list_type': 'view-list'
+        }
+        // Refresh Datatable
+        dispatch(listActivityRequestForApprover(user))
+      }
+
       // Refresh Datatable
       dispatch(listCalendarSchedule())
+
       dispatch({
         type: ACTIVITY_FOR_APPROVER_UPDATE_RESET,
       })
@@ -649,6 +661,19 @@ const EditCalendarScheduleModal = (props) => {
   },[calendarScheduleCreateSuccess,
     calendarScheduleUpdateSuccess,
     approverActivityUpdateSuccess,])
+  
+  //
+  const requestType = (location) => {
+    //
+    switch(location) {
+      case '/schedule-for-approval':
+        return 'For Approval'
+      case '/schedule-delegated':
+        return 'Delegate'
+      default:
+        return ''
+    }
+  }
 
   return (
     <>
@@ -681,7 +706,7 @@ const EditCalendarScheduleModal = (props) => {
                     <option value="">- Select -</option>
                     <option value="New-Schedule">New Schedule Request</option>
                     <option value="Training-Schedule">Training Schedule</option>
-                    <option value="JO-Request">Job Order Request</option>
+                    {/* <option value="JO-Request">Job Order Request</option> */}
                     </Form.Control>
                     </Form.Group>
                 </Col>
@@ -731,7 +756,8 @@ const EditCalendarScheduleModal = (props) => {
             />
           }
 
-          {scheduleType && (['Add','Edit'].includes(mode)) && 
+          {/* {scheduleType && (['Add','Edit'].includes(mode)) &&  */}
+          {scheduleType && 
           ['Pre-Sales Approver','Post-Sales Approver','Super-Approver','Training-Approver'].includes(userInfo.user_role) && 
             <EmailParticipants
               mode={mode}
@@ -740,7 +766,7 @@ const EditCalendarScheduleModal = (props) => {
           }
           
           {/* Sales, RMA, TCC, Project Lead  Button */}
-          {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
+          {['Sales','RMA','TCC','Teamlead',].includes(userInfo.user_role) && 
               <>
                 {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) && 
                   <EmailParticipants 

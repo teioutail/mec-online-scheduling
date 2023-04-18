@@ -10,4 +10,5 @@
 
 .container-fluid div.sc-dmctIk{
   overflow: inherit !important;
+  position: static;
 }

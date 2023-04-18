@@ -42,7 +42,7 @@ const ApproverMyApprovedScreen = () => {
     // Header title
     const headerTitle = 'My Approved Schedules'
     // Redux
-    const dispatch = useDispatch()
+    const dispatch = useDispatch()  
     // useNavigate to redirect the user
     const navigate = useNavigate()
     // For Approval List
@@ -68,7 +68,7 @@ const ApproverMyApprovedScreen = () => {
     // Global ID
     const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
-    
+
     // Edit 
     const handleEditScheduleView = (state) => {
         setShow(true)

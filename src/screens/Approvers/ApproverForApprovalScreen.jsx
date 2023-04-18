@@ -24,6 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from './ExpandableRowComponent'
+import ExpandableRowComponentTraining from './ExpandableRowComponentTraining'
 
 const ApproverForApprovalScreen = () => {
     // Toastify
@@ -77,7 +78,7 @@ const ApproverForApprovalScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-
+    // 
     const trainingScheduleHeader = () => {
         // 
         return [
@@ -85,9 +86,10 @@ const ApproverForApprovalScreen = () => {
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Training Schedule',selector: row => moment(row.activity_date).format('L'), sortable: true },
-            { name: 'Duration',selector: row => row.name, sortable: true },
-            { name: 'Status', selector: row => row.status, sortable: true },
+            { name: 'Attendees', selector: row => row.venue, sortable: true },
+            { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
+            { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
+            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-warning'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -154,12 +156,9 @@ const ApproverForApprovalScreen = () => {
         ]
     }
 
-    // Columns
+    // Columns 
     const columns = useMemo(
-		() => (userInfo.user_role === 'Training-Approver' ? 
-        trainingScheduleHeader() :
-        newScheduleHeader()),
-		[],
+		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
 	);
 
     // useEffect for Error Message
@@ -218,7 +217,7 @@ const ApproverForApprovalScreen = () => {
                         // selectableRows
                         // data={users}
                         expandableRows 
-                        expandableRowsComponent={ExpandableRowComponent}
+                        expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
                         expandableRowsComponentProps={{"someTitleProp": 'For Approval'}} 
                         pagination
                         responsive
