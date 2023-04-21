@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
-import { Button, Form, Row, Col, Table } from 'react-bootstrap' 
+import { Button, Row, Col, Table } from 'react-bootstrap' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-datepicker/dist/react-datepicker.css'
 // import EmployeeListTableRows from './EmployeeListTableRows'
@@ -86,7 +86,8 @@ const EmployeeListOptionTable = (props) => {
         <Col>
           <Table className="table align-items-center mb-0">
             <thead>
-              {status !== 'Approved' && 
+              {mode === 'Add' && 
+              // {status !== 'Approved' && 
                 <>
                   <tr>
                     <td colSpan={5}>

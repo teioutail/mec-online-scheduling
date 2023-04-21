@@ -86,7 +86,7 @@ const ApproverForApprovalScreen = () => {
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Attendees', selector: row => row.venue, sortable: true },
+            { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
             { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
             { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-warning'>{row.status}</span>, sortable: true },
@@ -235,7 +235,7 @@ const ApproverForApprovalScreen = () => {
                         show={show} 
                         onHide={handleClose} 
                         artid={artid}
-                        mode={mode}
+                        mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
 

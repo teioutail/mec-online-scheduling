@@ -19,32 +19,43 @@ const SideMenu = () => {
   // useState
   const [mainmenu, setMainMenu] = useState([]);
   const [submenu, setSubMenu] = useState([]);
-
+  // 
+  const [show, setShow] = useState(false)
+  
   // 
   useEffect(() => {
     // Get User Role
-    // console.warn(userInfo.user.user_type)
-    // Delay execution of argon-dashboard.js for sidemenu
-
     if(userInfo){
-        
         // console.warn(userInfo.mainmenu)
         setMainMenu(userInfo.mainmenu)
         setSubMenu(userInfo.submenu)
-
-        const script = document.createElement("script");
-        script.src = "assets/js/soft-ui-dashboard.js";
-        script.async = true;
-        document.body.appendChild(script);
-        // adding multiple classes to body tag
-        document.body.classList.add(
-          'g-sidenav-show',
-          'bg-gray-100'
-        );
+        //
+        if(show === false) {
+            // adding multiple classes to body tag
+            document.body.classList.remove(
+                'g-sidenav-pinned'
+            );
+            setShow(true)
+        } else {
+            //
+            document.body.classList.add(
+                'bg-gray-100',
+                'g-sidenav-pinned'
+            );
+        }
+       
     }
 
   },[userInfo, dispatch]);
 
+  useEffect(() => {
+
+    const script = document.createElement("script");
+    script.src = "assets/js/soft-ui-dashboard.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+  },[])
   
   if(!userInfo) return <></>
 

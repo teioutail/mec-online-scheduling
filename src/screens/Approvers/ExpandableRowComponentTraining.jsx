@@ -24,6 +24,10 @@ const ExpandableRowComponentTraining = (d) => {
                         <td className="align-middle text-left text-sm">{d.data.venue}</td>
                     </tr>
                     <tr>
+                        <td className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"><b>Attendees</b></td>
+                        <td className="align-middle text-left text-sm">{JSON.parse(d.data.employeeNames).toString()}</td>
+                    </tr>
+                    <tr>
                         <td className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"><b>Training Schedule</b></td>
                         <td className="align-middle text-left text-sm">{`${moment(JSON.parse(d.data.training_schedule)[0]).format('L')} - ${moment(JSON.parse(d.data.training_schedule)[1]).format('L')}`}</td>
                     </tr>

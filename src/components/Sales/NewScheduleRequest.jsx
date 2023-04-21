@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'react-bootstrap' 
 // import EmployeeListOption from './EmployeeListOption'
@@ -8,7 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import CreateSelect from 'react-select/creatable'
 import { reactSelectCustomStyles } from "../../assets/js/custom_style"
 import moment from "moment"
-
 
 const NewScheduleRequest = (props) => {
   //

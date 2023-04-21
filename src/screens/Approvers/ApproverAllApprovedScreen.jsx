@@ -13,7 +13,7 @@ import {
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -24,6 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from './ExpandableRowComponent'
+import ExpandableRowComponentTraining from './ExpandableRowComponentTraining'
 
 const ApproverAllApprovedScreen = () => {
     // Toastify
@@ -70,6 +71,7 @@ const ApproverAllApprovedScreen = () => {
     const [mode, setMode] = useState('')
     // Edit 
     const handleEditScheduleView = (state) => {
+        alert("test");
         setShow(true)
         setArtId(state.target.id)
         setMode('Edit')
@@ -77,17 +79,18 @@ const ApproverAllApprovedScreen = () => {
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
 
-    // 
-    const trainingScheduleHeader = () => {
+   // 
+   const trainingScheduleHeader = () => {
         // 
         return [
             { name: 'Training Type', selector: row => row.training_type, sortable: true },
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Training Schedule',selector: row => moment(row.activity_date).format('L'), sortable: true },
-            { name: 'Duration',selector: row => row.name, sortable: true },
-            { name: 'Status', selector: row => row.status, sortable: true },
+            { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
+            { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -101,7 +104,7 @@ const ApproverAllApprovedScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleView} id={row.art_id}>
-                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
+                                    <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
                                     </Link>
                                 </li>
                             </ul>
@@ -115,9 +118,10 @@ const ApproverAllApprovedScreen = () => {
             },
         ]
     }
+  
     // New Schedule
     const newScheduleHeader = () => {
-        //
+        // 
         return [
             { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
@@ -125,7 +129,7 @@ const ApproverAllApprovedScreen = () => {
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
-            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -153,12 +157,9 @@ const ApproverAllApprovedScreen = () => {
         ]
     }
 
-    // Columns
+    // Columns 
     const columns = useMemo(
-        () => (userInfo.user_role === 'Training-Approver' ? 
-        trainingScheduleHeader() :
-        newScheduleHeader()),
-        [],
+        () => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
     );
 
     // useEffect for Error Message
@@ -183,6 +184,24 @@ const ApproverAllApprovedScreen = () => {
         setPending(loading)
     }, [activity, rows, loading])
     
+    /**
+     * - Change Color 
+     */
+    const statusType = (type) => {
+        // 
+        switch(type) {
+            case 'For Approval':
+                return 'badge badge-sm bg-gradient-warning'
+            case 'Approved':
+                return 'badge badge-sm bg-gradient-success'
+            case 'Rejected': 
+                return 'badge badge-sm bg-gradient-danger'
+            case 'Canceled':
+                return 'badge badge-sm bg-gradient-secondary'
+            default:
+                return 'badge badge-sm bg-gradient-info'
+        } 
+    }
     //
     useEffect(() => {
         // Check / Validate User Access
@@ -192,7 +211,9 @@ const ApproverAllApprovedScreen = () => {
             const user = {
                 'activity_type': userInfo.user.manage_team,
                 'status': 'All-Approved',
-                'list_type': 'view-list'
+                'list_type': 'view-list',
+                'user_id' : userInfo.user.id,
+                'user_role': userInfo.user_role,
             }
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
@@ -212,11 +233,11 @@ const ApproverAllApprovedScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <DataTable
-                         // title={headerTitle}
+                        // title={headerTitle}
                         // selectableRows
                         // data={users}
-                        expandableRows
-                        expandableRowsComponent={ExpandableRowComponent}
+                        expandableRows 
+                        expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
                         expandableRowsComponentProps={{"someTitleProp": 'All Approved'}} 
                         pagination
                         responsive
@@ -229,12 +250,12 @@ const ApproverAllApprovedScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <ViewCalendarScheduleModal 
+                    <EditCalendarScheduleModal
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
                         artid={artid}
-                        mode={mode}
+                        mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
 

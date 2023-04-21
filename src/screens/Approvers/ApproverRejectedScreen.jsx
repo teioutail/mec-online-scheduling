@@ -13,7 +13,6 @@ import {
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
 import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -180,7 +179,7 @@ const ApproverRejectedScreen = () => {
         setRows(activity)
         setPending(loading)
     }, [activity, rows, loading])
-    
+
     //
     useEffect(() => {
         // Check / Validate User Access
@@ -233,7 +232,7 @@ const ApproverRejectedScreen = () => {
                         show={show} 
                         onHide={handleClose} 
                         artid={artid}
-                        mode={mode}
+                        mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
 

@@ -288,7 +288,7 @@ const ViewCalendarScheduleModal = (props) => {
             </>
           }
 
-        { mode === 'Edit' && <MotherFolder mode={mode} /> }
+        { scheduleType === 'New-Schedule' && mode === 'Edit' && <MotherFolder mode={mode} /> }
 
         { 
           (mode === 'Edit' && status != 'For Approval') && 

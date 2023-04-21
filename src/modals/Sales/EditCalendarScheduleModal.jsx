@@ -50,7 +50,7 @@ const EditCalendarScheduleModal = (props) => {
   const [emailParticipantsFields, setEmailParticipantsFields] = useState({})
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
-  const { loading:calendarDetailsLoading, calendar } = calendarScheduleDetailsInfo
+  const { loading:calendarDetailsLoading, calendar: { reference_act_type }} = calendarScheduleDetailsInfo
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
@@ -65,7 +65,8 @@ const EditCalendarScheduleModal = (props) => {
   const { userInfo } = userLogin
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  const { schedule: { activity_type } } = scheduleReferenceDetails
+  // const { schedule: { activity_type } } = scheduleReferenceDetails
+
   // CommonJS
   const Swal = require('sweetalert2')
 
@@ -571,6 +572,7 @@ const EditCalendarScheduleModal = (props) => {
     setScheduleType(sched_type || '')
     setStatus(status || '')
     setUserId(user_id || '')
+
     // Comment mo muna
     if(mode === 'Add') {
       // RMA, TCC, Sales - New Schedule Only
@@ -756,9 +758,8 @@ const EditCalendarScheduleModal = (props) => {
             />
           }
 
-          {/* {scheduleType && (['Add','Edit'].includes(mode)) &&  */}
-          {scheduleType && 
-          ['Pre-Sales Approver','Post-Sales Approver','Super-Approver','Training-Approver'].includes(userInfo.user_role) && 
+          {/* {scheduleType &&  */}
+          {scheduleType && ['Pre-Sales Approver','Post-Sales Approver','Super-Approver','Training-Approver'].includes(userInfo.user_role) && 
             <EmailParticipants
               mode={mode}
               setEmailParticipantsFields={setEmailParticipantsFields}
@@ -768,6 +769,7 @@ const EditCalendarScheduleModal = (props) => {
           {/* Sales, RMA, TCC, Project Lead  Button */}
           {['Sales','RMA','TCC','Teamlead',].includes(userInfo.user_role) && 
               <>
+                {/* {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) &&  */}
                 {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) && 
                   <EmailParticipants 
                     mode={mode}
@@ -842,10 +844,10 @@ const EditCalendarScheduleModal = (props) => {
                  status === 'For Approval' && 
                   <>
                     {(
-                      (activity_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
-                      (activity_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
-                      // (userInfo.user_role === 'Pre-Sales Approver') || 
-                      // (userInfo.user_role === 'Post-Sales Approver') || 
+                      (reference_act_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
+                      (reference_act_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
+                      (userInfo.user_role === 'Pre-Sales Approver') || 
+                      (userInfo.user_role === 'Post-Sales Approver') || 
                       (userInfo.user_role === 'Super-Approver')
                      ) && 
                       <>
@@ -858,7 +860,7 @@ const EditCalendarScheduleModal = (props) => {
 
                         {(userInfo.user_role === 'Pre-Sales Approver' || userInfo.user_role === 'Post-Sales Approver') && 
                           <>
-                            <Button className="test" size='sm' variant="secondary" onClick={handleDelegateRequest} >
+                            <Button size='sm' variant="secondary" onClick={handleDelegateRequest} >
                               Delegate Request
                             </Button>
                           </>
@@ -866,7 +868,7 @@ const EditCalendarScheduleModal = (props) => {
 
                         {userInfo.user_role === 'Super-Approver' && 
                           <>
-                            <Button className="test" size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
+                            <Button size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
                               Delegate to Approver
                             </Button>
                           </>

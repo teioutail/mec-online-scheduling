@@ -231,7 +231,7 @@ const ApproverCanceledScreen = () => {
                         show={show} 
                         onHide={handleClose} 
                         artid={artid}
-                        mode={mode}
+                        mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
 

@@ -13,7 +13,7 @@ import {
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -24,6 +24,7 @@ import {
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from './ExpandableRowComponent'
+import ExpandableRowComponentTraining from './ExpandableRowComponentTraining'
 
 const ApproverMyApprovedScreen = () => {
     // Toastify
@@ -40,7 +41,7 @@ const ApproverMyApprovedScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     // Header title
-    const headerTitle = 'My Approved Schedules'
+    const headerTitle = 'My Approved Schedule'
     // Redux
     const dispatch = useDispatch()  
     // useNavigate to redirect the user
@@ -77,7 +78,7 @@ const ApproverMyApprovedScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-    //
+    // 
     const trainingScheduleHeader = () => {
         // 
         return [
@@ -85,9 +86,9 @@ const ApproverMyApprovedScreen = () => {
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Training Schedule',selector: row => moment(row.activity_date).format('L'), sortable: true },
-            { name: 'Duration',selector: row => row.name, sortable: true },
-            { name: 'Status', selector: row => row.status, sortable: true },
+            { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
+            { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
+            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -153,13 +154,11 @@ const ApproverMyApprovedScreen = () => {
             },
         ]
     }
-        // Columns
-        const columns = useMemo(
-            () => (userInfo.user_role === 'Training-Approver' ? 
-            trainingScheduleHeader() :
-            newScheduleHeader()),
-            [],
-        );
+
+    // Columns 
+    const columns = useMemo(
+		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
+	);
 
     // useEffect for Error Message
     useEffect(() => {
@@ -187,14 +186,15 @@ const ApproverMyApprovedScreen = () => {
     useEffect(() => {
         // Check / Validate User Access
         if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
-        // if(userInfo && userInfo.user.user_type === 1) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
                 'status': 'MyApproved',
                 'list_type': 'view-list',
                 'user_id' : userInfo.user.id,
+                'user_role': userInfo.user_role,
             }
+            // console.warn(user)
             // List All Activity Request
             dispatch(listActivityRequestForApprover(user))
             // Get Business Unit
@@ -212,13 +212,13 @@ const ApproverMyApprovedScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <DataTable
+                   <DataTable
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
                         expandableRows
-                        expandableRowsComponent={ExpandableRowComponent}
-                        expandableRowsComponentProps={{"someTitleProp": 'My Approved'}} 
+                        expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
+                        expandableRowsComponentProps={{"someTitleProp": 'Approved'}} 
                         pagination
                         responsive
                         columns={columns}
@@ -230,12 +230,12 @@ const ApproverMyApprovedScreen = () => {
                         selectableRowsHighlight
                     />
 
-                    <ViewCalendarScheduleModal 
+                    <EditCalendarScheduleModal
                         size="lg"
                         show={show} 
                         onHide={handleClose} 
                         artid={artid}
-                        mode={mode}
+                        mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
 
