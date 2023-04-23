@@ -294,10 +294,10 @@ const ScheduleScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleScheduleReferenceView}>
+                    <Button className="btn btn-sm bg-gradient-info mb-2 float-end" size="sm" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
-
+{/* className="btn btn-sm bg-gradient-info mb-0 float-end" */}
                     <DataTable
                         // title={headerTitle}
                         // selectableRows

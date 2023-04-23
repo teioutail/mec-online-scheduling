@@ -225,7 +225,7 @@ const CalendarScheduleScreen = () => {
             
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleCalendarScheduleView}>
+                    <Button  size="sm" className="btn btn-sm bg-gradient-info mb-0 float-end" onClick={handleCalendarScheduleView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
                     </Button>
 
