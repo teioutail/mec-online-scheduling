@@ -17,11 +17,11 @@ const Loader = () => {
         // </Spinner>
         <img src={imagegif} 
         style={{
-                    width: '100px',
-                    height: '100px',
-                    margin: 'auto',
-                    display: 'block',
-                }}/>
+            width: '100px',
+            height: '100px',
+            margin: 'auto',
+            display: 'block',
+        }}/>
     )
 }
 
