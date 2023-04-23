@@ -568,6 +568,7 @@ const EditCalendarScheduleModal = (props) => {
       user_id,
     } = calendarScheduleDetails
 
+    console.warn(reference_act_type)
     // setState
     setScheduleType(sched_type || '')
     setStatus(status || '')
@@ -846,8 +847,6 @@ const EditCalendarScheduleModal = (props) => {
                     {(
                       (reference_act_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
                       (reference_act_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
-                      (userInfo.user_role === 'Pre-Sales Approver') || 
-                      (userInfo.user_role === 'Post-Sales Approver') || 
                       (userInfo.user_role === 'Super-Approver')
                      ) && 
                       <>

@@ -71,7 +71,6 @@ const ApproverAllApprovedScreen = () => {
     const [mode, setMode] = useState('')
     // Edit 
     const handleEditScheduleView = (state) => {
-        alert("test");
         setShow(true)
         setArtId(state.target.id)
         setMode('Edit')

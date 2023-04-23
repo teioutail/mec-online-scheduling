@@ -13,7 +13,7 @@ import {
     ACTIVITY_FOR_APPROVER_UPDATE_RESET,
 } from '../../constants/Approver/approverActivityRequestConstants'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import ViewCalendarScheduleModal from '../../modals/Approver/ViewCalendarScheduleModal'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
@@ -156,7 +156,7 @@ const ApproverApprovedScreen = () => {
 
     // Columns 
     const columns = useMemo(
-		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
+		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()), []
 	);
 
     // useEffect for Error Message

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { 
     useDispatch, 
     useSelector, 
@@ -49,7 +48,7 @@ const SideMenu = () => {
   },[userInfo, dispatch]);
 
   useEffect(() => {
-
+    //
     const script = document.createElement("script");
     script.src = "assets/js/soft-ui-dashboard.js";
     script.async = true;
@@ -67,7 +66,7 @@ const SideMenu = () => {
             <a className="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
                 {/* <img src="%PUBLIC_URL%/assets/img/logo-ct-dark.png" className="navbar-brand-img h-100" alt="main_logo" /> */}
                 {/* <img src="%PUBLIC_URL%/assets/img/logo-ct-dark.png" className="navbar-brand-img h-100" alt="main_logo" /> */}
-                <span className="ms-1 font-weight-bold">Soft UI Dashboard</span>
+                <img src={process.env.PUBLIC_URL + '/assets/img/meclogoblue.png '} /> <span className="ms-1 font-weight-bold">MEC - Online Scheduling</span>
             </a>
             </div>
             <hr className="horizontal dark mt-0" />

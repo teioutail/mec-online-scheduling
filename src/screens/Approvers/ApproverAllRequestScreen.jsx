@@ -77,18 +77,17 @@ const ApproverAllRequestScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-    // 
-    const trainingScheduleHeader = () => {
+     // 
+     const trainingScheduleHeader = () => {
         // 
         return [
             { name: 'Training Type', selector: row => row.training_type, sortable: true },
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
             { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
-            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-warning'>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)} >{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -119,7 +118,7 @@ const ApproverAllRequestScreen = () => {
 
     // New Schedule
     const newScheduleHeader = () => {
-        // 
+        //
         return [
             { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
@@ -127,7 +126,7 @@ const ApproverAllRequestScreen = () => {
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
-            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-warning'>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)} >{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -157,8 +156,8 @@ const ApproverAllRequestScreen = () => {
 
     // Columns 
     const columns = useMemo(
-        () => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
-    );
+		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()), []
+	);
 
     /**
      * - Change Color 
@@ -236,7 +235,7 @@ const ApproverAllRequestScreen = () => {
                         // selectableRows
                         // data={users}
                         expandableRows
-                        expandableRowsComponent={ExpandableRowComponent}
+                        expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
                         expandableRowsComponentProps={{"someTitleProp": 'All Approved'}} 
                         pagination
                         responsive
