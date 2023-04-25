@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner } from 'react-bootstrap'
+// import { Spinner } from 'react-bootstrap'
 import imagegif from '../components/mecgif.gif'
 const Loader = () => {
     return (

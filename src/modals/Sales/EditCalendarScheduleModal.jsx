@@ -568,7 +568,6 @@ const EditCalendarScheduleModal = (props) => {
       user_id,
     } = calendarScheduleDetails
 
-    console.warn(reference_act_type)
     // setState
     setScheduleType(sched_type || '')
     setStatus(status || '')
@@ -794,9 +793,11 @@ const EditCalendarScheduleModal = (props) => {
           } */}
         </Modal.Body>
         <Modal.Footer>
-            <Button size='sm' variant="secondary" onClick={onHide}>
-                Close
-            </Button>
+          {calendarDetailsLoading ? <></> : <>
+
+          <Button size='sm' variant="secondary" onClick={onHide}>
+            Close
+          </Button>
 
             {/* Training Approver */}
             {['Training-Approver','Super-Approver'].includes(userInfo.user_role) && 
@@ -941,6 +942,8 @@ const EditCalendarScheduleModal = (props) => {
                 </Button>
               </>
             }
+          </> }
+          
         </Modal.Footer>
         </Modal>
     </>
