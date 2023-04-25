@@ -64,9 +64,7 @@ const EditCalendarScheduleModal = (props) => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   // Schedule Reference Details
-  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  // const { schedule: { activity_type } } = scheduleReferenceDetails
-
+  
   // CommonJS
   const Swal = require('sweetalert2')
 
