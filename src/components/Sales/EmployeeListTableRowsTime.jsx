@@ -36,6 +36,8 @@ const EmployeeListTableRowsTime = (props) => {
         // 
         const { employeeId, duration, employeeName } = data;
 
+        console.warn(rowsData);
+
         return(
             <tr key={index}>
                 <td colSpan="2">
