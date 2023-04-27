@@ -92,6 +92,7 @@ const TrainingSchedule = (props) => {
                 business_unit,
                 trainers,
                 persons,
+                employee_list,
             } = calendarScheduleDetails
 
             // Fields
@@ -118,7 +119,9 @@ const TrainingSchedule = (props) => {
             setSelectedBusinessUnit(trainingBU || '')
             // setTrainingSchedule(moment(training_schedule).toDate() || [])
             setSelectedTrainerNames(trainers || '')
-            setSelectedEmployeeNames(persons || '')
+            // setSelectedEmployeeNames(persons || '')
+            setSelectedEmployeeNames(employee_list || '')
+
             if(training_schedule)
             setTrainingSchedule([moment(training_schedule[0]).toDate(), moment(training_schedule[1]).toDate()] || [])
             // setDestinationListOptions(currentDestination || '')

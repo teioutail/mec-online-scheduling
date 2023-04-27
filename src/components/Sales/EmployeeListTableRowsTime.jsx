@@ -14,7 +14,7 @@ const EmployeeListTableRowsTime = (props) => {
     deleteTableRows, 
     handleChangeAddEmployee, 
     handleChange, 
-    mode, 
+    mode
  } = props
 
   // Get Fullname, Users Id
@@ -25,19 +25,21 @@ const EmployeeListTableRowsTime = (props) => {
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { status } } = calendarScheduleDetails
 
+    // console.warn(employee_list)
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
 
+//   console.log( typeof rowsData , "shit")
+    // return ( ! rowsData ? <></> : '' ) 
+
   return(
     // 
     rowsData.map((data, index) => {
         // 
-        const { employeeId, duration, employeeName } = data;
-
-        console.warn(rowsData);
-
+        const { user_id: employeeId, duration } = data;
+        // console.warn(typeof duration)
         return(
             <tr key={index}>
                 <td colSpan="2">
@@ -46,11 +48,11 @@ const EmployeeListTableRowsTime = (props) => {
                         onChange={(time) => {
                             handleChangeAddEmployee(index, "duration", time)
                         }}
-                        value={duration}
+                        value={(mode === 'Edit' ? JSON.parse(duration) : duration)}
+                        // value={duration}
                         clearIcon={null}
                         clockIcon={null}
-                    />
-
+                    /> 
                 </td>
 
                 <td className="align-middle text-center text-sm">

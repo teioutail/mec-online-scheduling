@@ -86,7 +86,8 @@ const ApproverAllApprovedScreen = () => {
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            // { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            { name: 'Attendees', selector: row => row.employeeNames, sortable: true }, // balikan mo to
             { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
             { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
@@ -103,7 +104,7 @@ const ApproverAllApprovedScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleView} id={row.art_id}>
-                                    <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
+                                        <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
                                     </Link>
                                 </li>
                             </ul>

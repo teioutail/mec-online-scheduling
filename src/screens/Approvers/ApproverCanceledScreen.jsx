@@ -83,6 +83,7 @@ const ApproverCanceledScreen = () => {
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
+            { name: 'Attendees', selector: row => row.employeeNames, sortable: true }, // balikan mo to
             { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
             { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-secondary'>{row.status}</span>, sortable: true },
@@ -123,7 +124,7 @@ const ApproverCanceledScreen = () => {
             { name: 'Activity Related To', selector: row => row.activity, sortable: true },
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
-            { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            { name: 'Assigned Engineer', selector: row => row.employeeNames, sortable: true }, // balikan mo to
             { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-secondary'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',

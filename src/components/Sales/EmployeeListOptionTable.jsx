@@ -19,6 +19,8 @@ const EmployeeListOptionTable = (props) => {
   // Get Status
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { status } } = calendarScheduleDetails
+  
+  // console.warn(selectedEmployeeNames)
 
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
@@ -32,7 +34,7 @@ const EmployeeListOptionTable = (props) => {
     // 
     const rowsInput = {
       employeeId: '',
-      duration: '',
+      duration: [],
       employeeName:'',
     }
     // 
@@ -62,13 +64,15 @@ const EmployeeListOptionTable = (props) => {
   // Handle Adding Multiple SE/Employee
   const handleChangeAddEmployee = (index, name, value) => {
     //
+    // console.log({index, name, value});
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
+    // console.log(rowsInput);
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
     // 
-    console.warn(rowsInput)
+    // console.warn(rowsInput)
   }
 
   // 

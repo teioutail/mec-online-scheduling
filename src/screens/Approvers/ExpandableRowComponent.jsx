@@ -25,7 +25,7 @@ const ExpandableRowComponent = (d) => {
                     </tr>
                     <tr>
                         <td className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"><b>Employee Names</b></td>
-                        <td className="align-middle text-left text-sm">{JSON.parse(d.data.employeeNames).toString()}</td>
+                        <td className="align-middle text-left text-sm">{d.data.employeeNames}</td>
                     </tr>
                     <tr>
                         <td className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"><b>Related Team</b></td>

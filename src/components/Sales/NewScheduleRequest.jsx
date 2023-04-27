@@ -50,6 +50,7 @@ const NewScheduleRequest = (props) => {
         id: artid,
     })
 
+    // console.log(fields)
     /**
      * - Value Setter
      */
@@ -150,6 +151,7 @@ const NewScheduleRequest = (props) => {
                 updated,
                 created_at,
                 updated_at,
+                employee_list, // list of employees sa activity_employee_table
             } = calendarScheduleDetails
             
             // New Schedule Fields
@@ -163,6 +165,7 @@ const NewScheduleRequest = (props) => {
                 netsuite_link,
             } = fieldval
 
+            // console.warn(calendarScheduleDetails)
             // setState
             setRemarks(remarks || '')
             setPurposeOfActivity(purpose_of_activity || '')
@@ -174,7 +177,9 @@ const NewScheduleRequest = (props) => {
             setReferenceId(ar_id || '')
             setNetsuitLink(netsuite_link || '')
             // setActivitySchedule(moment(activity_schedule).toDate() || '')
-            setSelectedEmployeeNames(persons || '')
+            // setSelectedEmployeeNames(persons || '')
+            setSelectedEmployeeNames(employee_list || '')
+
             if(activity_schedule)
                 setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
         }
