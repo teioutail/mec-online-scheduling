@@ -11,58 +11,76 @@ import moment from "moment"
 import EditBusinessUnitOption from "./EditBusinessUnitOption"
 
 const JobOrderRequest = (props) => {
-  //
-  const { 
-    artid, 
-    calendarScheduleDetails, 
-    setJoRequestFields , 
-    mode,
-    scheduleType,
-  } = props
+    //
+    const { 
+        artid, 
+        calendarScheduleDetails, 
+        setJoRequestFields , 
+        mode,
+        scheduleType,
+    } = props
 
-  // useState
-  const [relatedTeam, setRelatedTeam] = useState('')
-  const [activitySchedule, setActivitySchedule] = useState([new Date(), new Date()])
-  const [startDate, endDate] = activitySchedule
-  const [srArNo, setSrArNo] = useState('')
+    //   console.warn(scheduleType);
 
-  const [activityType, setActivityType] = useState('')
-  const [activityRelatedTo, setActivityRelatedTo] = useState('')
-  const [dtc, setDtc] = useState('')
-  const [purposeOfActivity, setPurposeOfActivity] = useState('')
-  const [remarks, setRemarks] = useState('')
-  const [selectedDestination, setSelectedDestination] = useState('')
-  const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
+    // useState
+    const [relatedTeam, setRelatedTeam] = useState('')
+    const [activitySchedule, setActivitySchedule] = useState([new Date(), new Date()])
+    const [startDate, endDate] = activitySchedule
+    const [srArNo, setSrArNo] = useState('')
 
+    const [activityType, setActivityType] = useState('')
+    const [activityRelatedTo, setActivityRelatedTo] = useState('')
+    const [dtc, setDtc] = useState('')
+    const [purposeOfActivity, setPurposeOfActivity] = useState('')
+    const [remarks, setRemarks] = useState('')
+    const [selectedDestination, setSelectedDestination] = useState('')
+    const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
     // Job Order Fields 
-    const [referenceId, setReferenceId] = useState('')
-    const [projectNo, setProjectNo] = useState('')
-    const [emailSubject, setEmailSubject] = useState('')
-    const [netsuiteLink, setNetsuiteLink] = useState('')
-
+    const [referenceId, setReferenceId]     = useState('')
+    const [projectNo, setProjectNo]         = useState('')
+    const [emailSubject, setEmailSubject]   = useState('')
+    const [netsuiteLink, setNetsuiteLink]   = useState('')
+    const [maNo, setMaNo]                   = useState('')
+    const [serialNo, setSerialNo]           = useState('')
+    const [partNo, setPartNo]               = useState('')
+    const [warranty, setWarranty]           = useState('')
+    const [requestType, setRequestType]     = useState('')
+    const [priority, setPriority]           = useState('')
+    const [reportedProblem,setReportedProblem] = useState('')
+    const [notes, setNotes]                 = useState('')
+    const [caseNo, setCaseNo]               = useState('')
+    const [selectedBusinessUnit, setSelectedBusinessUnit] = useState([])
     // Fields
     const [fields, setFields] = useState({
-        activity_schedule: '',
-        sr_no: '',
-        ar_id: '',
-        activity_type: '',
-        activity_related_to: '',
-        destination: '',
-        request_for_dtc: '',
-        purpose_of_activity: '',
-        remarks: '',
-        employee_list:[],
         id: artid,
-
+        ar_id: '',
         project_no: '',
         email_subject: '',
         netsuite_link: '',
+        serial_no: '',
+        part_no: '',
+        warranty: '',
+        request_type: '',
+        priority: '',
+        reported_problem: '',
+        notes: '',
+        case_no: '',
+        // activity_schedule: '',
+        // sr_no: '',
+        // activity_type: '',
+        // activity_related_to: '',
+        // destination: '',
+        // request_for_dtc: '',
+        // purpose_of_activity: '',
+        // remarks: '',
+        // employee_list:[],
     })
-
+    
     /**
      * - Value Setter
      */
     const changeValueHandler = (fieldName, value) => {
+        // 
         const newField = fields
         newField[fieldName] = value
         setFields(newField)
@@ -83,11 +101,13 @@ const JobOrderRequest = (props) => {
     // Reference Id Options
     const referenceIdOptions = (refid ? refid.map((row, key) => {
         // 
+        console.warn(row)
         return <option 
             rel-team={row.activity_type}
             project-no={row.project_no}
             project-name={row.project_name}
             netsuite-link={row.netsuite_link}
+            case-no={row.case_no}
             key={key} 
             value={ row.ar_id }
             >{ row.reference_id } - {row.project_name}
@@ -140,25 +160,27 @@ const JobOrderRequest = (props) => {
         let project_no = optionElement.getAttribute('project-no')
         let email_subject = optionElement.getAttribute('project-name')
         let netsuite_link = optionElement.getAttribute('netsuite-link')
-        
+        let case_no = optionElement.getAttribute('case-no')
         // Set Reference Id
         setReferenceId(state.target.value)
         changeValueHandler('ar_id', state.target.value)
         changeValueHandler('project_no', project_no)
         changeValueHandler('email_subject', email_subject)
         changeValueHandler('netsuite_link', netsuite_link)
-
+        changeValueHandler('case_no', case_no)
+        // 
         setEmailSubject(email_subject)
         setProjectNo(project_no)
         setNetsuiteLink(netsuite_link)
-
         setRelatedTeam(option)
+        setCaseNo(case_no)
     }
 
     // Get Edit Details
     useEffect(() => {
         // Selected Calendar Details
         if(mode === 'Edit') {
+            //
             const {  
                 art_id,
                 sched_type,
@@ -218,6 +240,7 @@ const JobOrderRequest = (props) => {
         changeValueHandler('netsuite_link', netsuiteLink)
 
         setJoRequestFields(fields)
+        
     },[activitySchedule,
         srArNo,
         referenceId,
@@ -249,6 +272,22 @@ const JobOrderRequest = (props) => {
                     <option value="">- Select -</option>
                     { referenceIdOptions }
                     </Form.Control>
+                </Form.Group>
+            </Col>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group className="mb-3">
+                <Form.Label>Case No.</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='Case No.'
+                    value={caseNo}
+                    onChange={(e) => {
+                        changeValueHandler('case_no', e.target.value)
+                        setCaseNo(e.target.value)
+                        setJoRequestFields(fields)
+                    }}
+                />
                 </Form.Group>
             </Col>
         </Row>
@@ -294,10 +333,10 @@ const JobOrderRequest = (props) => {
                     size='sm'
                     type='text'
                     placeholder='MA No.'
-                    value={netsuiteLink}
+                    value={maNo}
                     onChange={(e) => {
-                        changeValueHandler('netsuite_link', e.target.value)
-                        // setNetsuitLink(e.target.value)
+                        changeValueHandler('ma_no', e.target.value)
+                        setMaNo(e.target.value)
                         setJoRequestFields(fields)
                     }}
                 />
@@ -333,10 +372,10 @@ const JobOrderRequest = (props) => {
                     size='sm'
                     type='text'
                     placeholder='Serial No.'
-                    value={netsuiteLink}
+                    value={serialNo}
                     onChange={(e) => {
-                        // changeValueHandler('netsuite_link', e.target.value)
-                        // setNetsuitLink(e.target.value)
+                        changeValueHandler('serial_no', e.target.value)
+                        setSerialNo(e.target.value)
                         setJoRequestFields(fields)
                     }}
                 />
@@ -349,10 +388,10 @@ const JobOrderRequest = (props) => {
                     size='sm'
                     type='text'
                     placeholder='Part No.'
-                    value={netsuiteLink}
+                    value={partNo}
                     onChange={(e) => {
-                        changeValueHandler('netsuite_link', e.target.value)
-                        // setNetsuitLink(e.target.value)
+                        changeValueHandler('part_no', e.target.value)
+                        setPartNo(e.target.value)
                         setJoRequestFields(fields)
                     }}
                 />
@@ -366,10 +405,11 @@ const JobOrderRequest = (props) => {
                     <Form.Control
                             as='select' 
                             size='sm'
-                            aria-label="Reference Id"
-                            value={referenceId}
+                            aria-label="Warranty"
+                            value={warranty}
                             onChange={(e) => {
-                                handleReferenceIdOption(e)
+                                changeValueHandler('warranty', e.target.value)
+                                setWarranty(e.target.value)
                                 setJoRequestFields(fields)
                             }}
                         >
@@ -386,8 +426,8 @@ const JobOrderRequest = (props) => {
                     <Form.Label>Business Unit</Form.Label>
                     <EditBusinessUnitOption 
                         changeValueHandler={changeValueHandler}
-                        // selectedBusinessUnit={selectedBusinessUnit}
-                        // setSelectedBusinessUnit={setSelectedBusinessUnit}
+                        selectedBusinessUnit={selectedBusinessUnit}
+                        setSelectedBusinessUnit={setSelectedBusinessUnit}
                         mode={mode}
                     />
                 </Form.Group>
@@ -396,22 +436,26 @@ const JobOrderRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Request</Form.Label>
+                    <Form.Label>Request Type</Form.Label>
                     <Form.Control
                             as='select' 
                             size='sm'
-                            aria-label="Request"
-                            value={referenceId}
+                            aria-label="Request Type"
+                            value={requestType}
                             onChange={(e) => {
-                                handleReferenceIdOption(e)
+                                changeValueHandler('request_type', e.target.value)
+                                setRequestType(e.target.value)
                                 setJoRequestFields(fields)
                             }}
                         >
                         <option value="">- Select -</option>
-                        <option value="Void Warranty">Void Warranty</option>
-                        <option value="Out Warranty">Out Warranty</option>
-                        <option value="In Warranty">In Warranty</option>
-                        <option value="Not Purchased from MEC">Not Purchased from MEC</option>
+                        <option value="Testing of Service Unit">Testing of Service Unit</option>
+                        <option value="Testing of Replacement/Repaired Unit">Testing of Replacement/Repaired Unit</option>
+                        <option value="Testing of Demo Unit">Testing of Demo Unit</option>
+                        <option value="Testing of Returned SU">Testing of Returned SU</option>
+                        <option value="Testing of Critical Spare">Testing of Critical Spare</option>
+                        <option value="For Initial Assessment">For Initial Assessment</option>
+                        <option value="For Documentation">For Documentation</option>
                     </Form.Control>
                 </Form.Group>
             </Col>
@@ -422,9 +466,10 @@ const JobOrderRequest = (props) => {
                             as='select' 
                             size='sm'
                             aria-label="Priority"
-                            value={referenceId}
+                            value={priority}
                             onChange={(e) => {
-                                handleReferenceIdOption(e)
+                                changeValueHandler('priority', e.target.value)
+                                setPriority(e.target.value)
                                 setJoRequestFields(fields)
                             }}
                         >
@@ -444,10 +489,10 @@ const JobOrderRequest = (props) => {
                     size="sm"
                     as="textarea" 
                     rows={2} 
-                    value={purposeOfActivity}
+                    value={reportedProblem}
                     onChange={(e) => {
-                        changeValueHandler('purpose_of_activity', e.target.value)
-                        setPurposeOfActivity(e.target.value)
+                        changeValueHandler('reported_problem', e.target.value)
+                        setReportedProblem(e.target.value)
                         setJoRequestFields(fields)
                     }}
                 />
@@ -460,33 +505,27 @@ const JobOrderRequest = (props) => {
                         size="sm"
                         as="textarea" 
                         rows={2}
-                        value={remarks}
+                        value={notes}
                         onChange={(e) => {
-                            changeValueHandler('remarks', e.target.value)
-                            setRemarks(e.target.value)
+                            changeValueHandler('notes', e.target.value)
+                            setNotes(e.target.value)
                             setJoRequestFields(fields)
                         }}
                     />
                 </Form.Group>
             </Col>
         </Row>
-        
-        {/* <EmployeeListOption
-            calendarScheduleDetails={calendarScheduleDetails}
-            changeValueHandler={changeValueHandler}
-            selectedEmployeeNames={selectedEmployeeNames}
-            setSelectedEmployeeNames={setSelectedEmployeeNames}
-            mode={mode}
-        /> */}
 
-        <EmployeeListOptionTable
-            calendarScheduleDetails={calendarScheduleDetails}
-            changeValueHandler={changeValueHandler}
-            selectedEmployeeNames={selectedEmployeeNames}
-            setSelectedEmployeeNames={setSelectedEmployeeNames}
-            mode={mode}
-            scheduleType={scheduleType}
-        />
+        {mode !== 'Add' && 
+            <EmployeeListOptionTable
+                calendarScheduleDetails={calendarScheduleDetails}
+                changeValueHandler={changeValueHandler}
+                selectedEmployeeNames={selectedEmployeeNames}
+                setSelectedEmployeeNames={setSelectedEmployeeNames}
+                mode={mode}
+                scheduleType={scheduleType}
+            />
+        } 
 
     </>
   )

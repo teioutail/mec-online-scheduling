@@ -21,6 +21,7 @@ import ApproverCanceledScreen from './screens/Approvers/ApproverCanceledScreen'
 import ApproverDelegatedScreen from './screens/Approvers/ApproverDelegatedScreen'
 import ApproverMyApprovedScreen from './screens/Approvers/ApproverMyApprovedScreen'
 import ApproverAllRequestScreen from './screens/Approvers/ApproverAllRequestScreen'
+import CasesScreen from './screens/TeamLead/CasesScreen'
 import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -68,6 +69,7 @@ function App() {
           <Route path='/schedule-myapproved' element={<ApproverMyApprovedScreen />} />
           <Route path='/schedule-all-approved' element={<ApproverAllApprovedScreen/>} />
           <Route path='/schedule-all-requested' element={<ApproverAllRequestScreen/> } />
+          <Route path='/cases' element={<CasesScreen/> } />
         </Routes>
       </div>
     </Router>

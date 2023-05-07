@@ -77,20 +77,18 @@ const ApproverAllApprovedScreen = () => {
         // Call API Here...
         dispatch(getSelectedCalendarDetails(state.target.id))
     }
-
-   // 
-   const trainingScheduleHeader = () => {
+      // 
+      const trainingScheduleHeader = () => {
         // 
         return [
             { name: 'Training Type', selector: row => row.training_type, sortable: true },
             { name: 'Training Topic', selector: row => row.training_topic, sortable: true },
             { name: 'Trainer', selector: row => row.trainer, sortable: true },
             { name: 'Venue', selector: row => row.venue, sortable: true },
-            // { name: 'Attendees', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
             { name: 'Attendees', selector: row => row.employeeNames, sortable: true }, // balikan mo to
             { name: 'Training Schedule',selector: row => `${moment(JSON.parse(row.training_schedule)[0]).format('L')} - ${moment(JSON.parse(row.training_schedule)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Duration',selector: row => `${JSON.parse(row.duration)[0]} - ${JSON.parse(row.duration)[1]}`, sortable: true },
-            { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -104,7 +102,7 @@ const ApproverAllApprovedScreen = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <Link className="dropdown-item" onClick={handleEditScheduleView} id={row.art_id}>
-                                        <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
+                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Schedule
                                     </Link>
                                 </li>
                             </ul>
@@ -121,15 +119,17 @@ const ApproverAllApprovedScreen = () => {
   
     // New Schedule
     const newScheduleHeader = () => {
-        // 
+        //
         return [
             { name: 'Schedule Reference No', selector: row => row.reference_id, sortable: true },
             { name: 'Date Requested', selector: row => row.date_requested, sortable: true },
             { name: 'Activity Related To', selector: row => row.activity, sortable: true },
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
-            { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
-            { name: 'Status', selector: row => <span className={statusType(row.status)}>{row.status}</span>, sortable: true },
+            { name: 'Assigned Engineer', selector: row => row.employeeNames, sortable: true }, // balikan mo to
+            // { name: 'Assigned Engineer', selector: row => JSON.parse(row.employeeNames).toString(), sortable: true }, // balikan mo to
+            // { name: 'Assigned Engineer', selector: row => row.employee_list.map(x=>x.a).toString(), sortable: true }, // balikan mo to
+            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -159,8 +159,8 @@ const ApproverAllApprovedScreen = () => {
 
     // Columns 
     const columns = useMemo(
-        () => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()),[]
-    );
+		() => (userInfo.user_role === 'Training-Approver' ? trainingScheduleHeader() : newScheduleHeader()), []
+	);
 
     // useEffect for Error Message
     useEffect(() => {
@@ -232,11 +232,11 @@ const ApproverAllApprovedScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <DataTable
+                <DataTable
                         // title={headerTitle}
                         // selectableRows
                         // data={users}
-                        expandableRows 
+                        expandableRows
                         expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
                         expandableRowsComponentProps={{"someTitleProp": 'All Approved'}} 
                         pagination
@@ -271,6 +271,7 @@ const ApproverAllApprovedScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>

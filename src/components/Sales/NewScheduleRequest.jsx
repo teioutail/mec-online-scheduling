@@ -179,7 +179,7 @@ const NewScheduleRequest = (props) => {
             // setActivitySchedule(moment(activity_schedule).toDate() || '')
             // setSelectedEmployeeNames(persons || '')
             setSelectedEmployeeNames(employee_list || '')
-
+            // Activity Schedule
             if(activity_schedule)
                 setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
         }

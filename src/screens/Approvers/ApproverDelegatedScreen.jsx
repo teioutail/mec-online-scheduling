@@ -192,6 +192,7 @@ const ApproverDelegatedScreen = () => {
             const user = {
                 'activity_type': userInfo.user.manage_team,
                 'status': 'Delegate',
+                'user_id' : userInfo.user.id,
                 'list_type': 'view-list'
             }
             // List All Activity Request

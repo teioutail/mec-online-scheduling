@@ -190,6 +190,7 @@ const ApproverRejectedScreen = () => {
             const user = {
                 'activity_type': userInfo.user.manage_team,
                 'user_role': userInfo.user_role,
+                'user_id' : userInfo.user.id,
                 'list_type': 'view-list',
                 'status': 'Rejected',
             }

@@ -204,6 +204,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
                     <option value="">- Select -</option>
                     <option value="Post-Sales">Post-Sales Activity</option>
                     <option value="Pre-Sales">Pre-Sales Activity</option>
+                    {/* Temporary options di makita kung ano ginawa ng previous developer kung san nakuha yung cases */}
+                    <option value="Case">Case</option>
+                    <option value="Leave">Leave</option>
+                    <option value="Training">Training</option>
                     </Form.Control>
                     </Form.Group>
                 </Col>

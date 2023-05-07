@@ -108,6 +108,11 @@ import {
     approverActivityUpdateReducer,
 } from './reducers/Approver/approverActivityRequestReducers'
 
+// Case Reducers
+import { 
+    caseRequestListReducer,
+} from './reducers/TeamLead/caseRequestReducer'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -172,6 +177,7 @@ const reducer = combineReducers({
     destinationListOption:destinationListOptionReducer,
     approverActivityList: approverActivityListReducer,
     approverActivityUpdate: approverActivityUpdateReducer,
+    caseRequestList: caseRequestListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

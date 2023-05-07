@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import Header from '../components/template/Header'
-import Footer from '../components/template/Footer'
-import FormContainer from '../components/template/FormContainer'
+import Header from '../../components/template/Header'
+import Footer from '../../components/template/Footer'
+import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component'
-import Loader from '../components/Loader'
+import Loader from '../../components/Loader'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     listRoles,
     getRoleDetails,
     deleteRole,
-} from '../actions/roleActions'
+} from '../../actions/roleActions'
 
 import { 
     faPlus,
@@ -26,19 +26,25 @@ import {
     ROLE_DETAILS_RESET,
     ROLE_CREATE_RESET,
     ROLE_UPDATE_RESET,
- } from '../constants/roleConstants'
+ } from '../../constants/roleConstants'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import EditRoleModal from '../modals/Role/EditRoleModal'
-import RoleAccessModal from '../modals/Role/RoleAccessModal'
+import EditRoleModal from '../../modals/Role/EditRoleModal'
+import RoleAccessModal from '../../modals/Role/RoleAccessModal'
+import EditCaseModal from '../../modals/TeamLead/EditCaseModal'
 
-import { listMenuCategories } from '../actions/menuCategoryActions'
-import { listSubMenuCategories } from '../actions/menuSubCategoryAction'
+import EditCalendarScheduleModal from '../../modals/Sales/EditCalendarScheduleModal'
+
+import { listMenuCategories } from '../../actions/menuCategoryActions'
+import { listSubMenuCategories } from '../../actions/menuSubCategoryAction'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { listBusinessUnitOption } from '../../actions/businessUnitActions'
+import { listCases } from '../../actions/TeamLead/caseRequestAction'
 
-const RoleListScreen = () => {
+const CaseScreen = () => {
+
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -49,21 +55,25 @@ const RoleListScreen = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-    });   
+    });
 
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Role List'
+    const headerTitle = 'Case List'
     // Redux
     const dispatch = useDispatch()
 
     // useNavigate to redirect the user
     const navigate = useNavigate() 
 
+    // Case List
+    const caseRequestList = useSelector(state => state.caseRequestList)
+    const { loading, error, cases } = caseRequestList
+
     // Role List
-    const roleList = useSelector(state => state.roleList)
-    const { loading, error, roles } = roleList
+    // const roleList = useSelector(state => state.roleList)
+    // const { loading, error, roles } = roleList
     
     // Role Create Error
     const roleCreate = useSelector(state => state.roleCreate)
@@ -105,11 +115,16 @@ const RoleListScreen = () => {
     const handleShow = () => setShow(true)
 
     // Global ID
-    const [roleid, setRoleId] = useState('')
+    const [artid, setArtId] = useState('')
+
     const [mode, setMode] = useState('')
 
+    // Calendar Schedule Details
+    const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
+
     // Add User Modal
-    const handleRoleView = (state) => {
+    const handleCaseView = (state) => {
         // Show Modal
         handleShow()
         // setMode State to Add
@@ -123,7 +138,7 @@ const RoleListScreen = () => {
     // Edit Role
     const handleEditRoleView = (state) => {
         setShow(true)
-        setRoleId(state.target.id)
+        setArtId(state.target.id)
         setMode('Edit')
         // Call API Here...
         dispatch(getRoleDetails(state.target.id))
@@ -132,7 +147,7 @@ const RoleListScreen = () => {
     // Role Access 
     const handleRoleAccessView = (state) => {
         handleRoleAccessShow()
-        setRoleId(state.target.id)
+        setArtId(state.target.id)
         setMode('Edit')
         // Call API Here...
     }
@@ -168,17 +183,27 @@ const RoleListScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Role ID',
-                selector: row => row.role_id,
+            {   name: 'Schedule Type',
+                selector: row => row.sched_type,
                 sortable: true,
             },
-            {   name: 'Name',
-                selector: row => row.name,
+            {   name: 'Case No',
+                selector: row => row.case_no,
                 sortable: true,
             },
             {
-                name: 'Description',
-                selector: row => row.description,
+                name: 'Partner',
+                selector: row => row.partner_company_name,
+                sortable: true,
+            },
+            {
+                name: 'End User',
+                selector: row => row.enduser_company_name,
+                sortable: true,
+            },
+            {
+                name: 'Business Unit',
+                selector: row => row.business_unit,
                 sortable: true,
             },
             {
@@ -254,19 +279,19 @@ const RoleListScreen = () => {
 
     // Set Row Value
     useEffect(() => {
-        setRows(roles)
+        setRows(cases)
         setPending(loading)
-    }, [roles, rows, loading])
-
+    }, [cases, rows, loading])
 
     //
     useEffect(() => {
-        // Check if user is admin else, redirect user
-        if(userInfo && userInfo.user.user_type === 6) {
-            //
-            dispatch(listRoles())
-            dispatch(listMenuCategories())
-            dispatch(listSubMenuCategories())
+        // Check / Validate User Access
+        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
+
+            // View all Cases
+            dispatch(listCases())
+            // Get Business Unit
+            dispatch(listBusinessUnitOption())
         } else {
             // Redirect to login page
             navigate('/signin')
@@ -278,53 +303,63 @@ const RoleListScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
-                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
-                    </Button>
+                <Button  size="sm" className="btn btn-sm bg-gradient-info mb-1 float-end" onClick={handleCaseView}>
+                    <FontAwesomeIcon icon={['fas', 'plus']} /> Add Case
+                </Button>
 
-                    <DataTable
-                        // title={headerTitle}
-                        // selectableRows
-                        // data={users}
-                        pagination
-                        responsive
-                        columns={columns}
-                        data={rows}
-                        progressPending={pending}
-                        progressComponent={<Loader />}
-                        highlightOnHover
-                        pointerOnHover
-                        selectableRowsHighlight
-                    />
+                <DataTable
+                    // title={headerTitle}
+                    // selectableRows
+                    // data={users}
+                    pagination
+                    responsive
+                    columns={columns}
+                    data={rows}
+                    progressPending={pending}
+                    progressComponent={<Loader />}
+                    highlightOnHover
+                    pointerOnHover
+                    selectableRowsHighlight
+                />
+                
+                {/* <EditCaseModal 
+                    show={show} 
+                    onHide={handleClose} 
+                    roleid={roleid}
+                    roleDetails={roleDetail}
+                    mode={mode}
+                /> */}
 
-                    <EditRoleModal 
-                        show={show} 
-                        onHide={handleClose} 
-                        roleid={roleid}
-                        roleDetails={roleDetail}
-                        mode={mode}
-                    />
+                <EditCalendarScheduleModal 
+                    size="lg"
+                    show={show}
+                    onHide={handleClose} 
+                    artid={artid}
+                    calendarScheduleDetails={calendarScheduleDetail}
+                    mode={mode}
+                    notify={notify}
+                />
 
-                    <RoleAccessModal 
-                        show={showRoleAccess} 
-                        onHide={handleRoleAccessClose} 
-                        roleid={roleid}
-                        categories={categories}
-                        subcategories={subcategories}
-                    />
+                {/* <RoleAccessModal 
+                    show={showRoleAccess} 
+                    onHide={handleRoleAccessClose} 
+                    roleid={roleid}
+                    categories={categories}
+                    subcategories={subcategories}
+                /> */}
 
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={2000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                    />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
 
                 <Footer />
             </FormContainer>
@@ -332,4 +367,4 @@ const RoleListScreen = () => {
     )
 }
 
-export default RoleListScreen
+export default CaseScreen

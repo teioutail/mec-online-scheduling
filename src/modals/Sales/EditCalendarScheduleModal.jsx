@@ -34,6 +34,8 @@ const EditCalendarScheduleModal = (props) => {
     notify, 
   } = props
 
+  // console.warn(mode);
+
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -132,9 +134,17 @@ const EditCalendarScheduleModal = (props) => {
             user_id: userInfo.user.id,
             user_list_id: userListId,
           }
+        else if (scheduleType === 'JO-Request')
+          data = {...joRequestFields,
+            schedule_type: scheduleType,
+          }
+
+          // alert('testilng lang laksdnf');
+          
         // 
         if(mode === 'Add') {
-          // console.warn("tewting")
+          //
+          console.warn(data)
           // Create Calendar Schedule 
           dispatch(createCalendarSchedule(data))
         } else {
@@ -250,7 +260,7 @@ const EditCalendarScheduleModal = (props) => {
             email: email_addresses,
             user_id: userInfo.user.id,
             requested_by: userId
-          } 
+          }
         else if (scheduleType === 'Training-Schedule')
           // 
           data = {...trainingFields, 
@@ -706,7 +716,7 @@ const EditCalendarScheduleModal = (props) => {
                     <option value="">- Select -</option>
                     <option value="New-Schedule">New Schedule Request</option>
                     <option value="Training-Schedule">Training Schedule</option>
-                    {/* <option value="JO-Request">Job Order Request</option> */}
+                    <option value="JO-Request">Job Order Request</option>
                     </Form.Control>
                     </Form.Group>
                 </Col>
@@ -765,10 +775,10 @@ const EditCalendarScheduleModal = (props) => {
           }
           
           {/* Sales, RMA, TCC, Project Lead  Button */}
-          {['Sales','RMA','TCC','Teamlead',].includes(userInfo.user_role) && 
+          {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
               <>
                 {/* {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) &&  */}
-                {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) && 
+                {((mode === 'Add' && scheduleType !== 'JO-Request') || (mode === 'Edit' && status === 'For Approval')) && 
                   <EmailParticipants 
                     mode={mode}
                     setEmailParticipantsFields={setEmailParticipantsFields}

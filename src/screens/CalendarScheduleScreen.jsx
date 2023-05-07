@@ -51,6 +51,7 @@ const CalendarScheduleScreen = () => {
     const locales = {
         "en-US": require("date-fns/locale/en-US")
     }
+
     // 
     const localizer = dateFnsLocalizer({
         format,
@@ -222,7 +223,6 @@ const CalendarScheduleScreen = () => {
 
     return (
         <>
-            
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button  size="sm" className="btn btn-sm bg-gradient-info mb-0 float-end" onClick={handleCalendarScheduleView}>
