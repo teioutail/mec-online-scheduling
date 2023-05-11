@@ -295,9 +295,9 @@ const ScheduleScreen = () => {
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button className="btn btn-sm bg-gradient-info mb-2 float-end" size="sm" onClick={handleScheduleReferenceView}>
-                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Mother Folder
                     </Button>
-{/* className="btn btn-sm bg-gradient-info mb-0 float-end" */}
+                    {/* className="btn btn-sm bg-gradient-info mb-0 float-end" */}
                     <DataTable
                         // title={headerTitle}
                         // selectableRows

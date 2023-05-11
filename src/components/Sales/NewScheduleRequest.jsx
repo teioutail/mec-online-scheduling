@@ -77,6 +77,8 @@ const NewScheduleRequest = (props) => {
         // 
         return <option 
             rel-team={row.activity_type}
+            net-suite={row.netsuite_link}
+            enduser-address={row.enduser_site_address}
             key={key} 
             value={ row.ar_id }
             >{ row.reference_id } - {row.project_name}
@@ -89,6 +91,7 @@ const NewScheduleRequest = (props) => {
         changeValueHandler('destination', options)
         setNewScheduleFields(fields)
     }
+    
     /**
      * @returns - Activity Related To Options
      */
@@ -126,17 +129,27 @@ const NewScheduleRequest = (props) => {
         let optionElement = state.target.childNodes[index]
         // Get attribute value
         let option =  optionElement.getAttribute('rel-team')
+        let netsuite = optionElement.getAttribute('net-suite')
+        let enduser_address = optionElement.getAttribute('enduser-address')
         // Set Reference Id
         setReferenceId(state.target.value)
-        changeValueHandler('ar_id', state.target.value)
+        // Assign destination record from mother folder
+        setSelectedDestination({"label":enduser_address,"value":enduser_address,"__isNew__":true})
         setRelatedTeam(option)
+        // Mother Folder Netsuite Link
+        setNetsuitLink(netsuite)
+        //
+        changeValueHandler('destination', destination)
+        changeValueHandler('ar_id', state.target.value)
+        // set 
+        setNewScheduleFields(fields)
     }
 
     // Get Edit Details
     useEffect(() => {
         // Selected Calendar Details
         if(mode === 'Edit') {
-            
+            // 
             const {  
                 art_id,
                 sched_type,
@@ -151,9 +164,11 @@ const NewScheduleRequest = (props) => {
                 updated,
                 created_at,
                 updated_at,
-                employee_list, // list of employees sa activity_employee_table
+                employee_list // list of employees sa activity_employee_table
             } = calendarScheduleDetails
             
+            // console.warn(employee_list)
+
             // New Schedule Fields
             const { 
                 activity_related_to,
@@ -179,6 +194,8 @@ const NewScheduleRequest = (props) => {
             // setActivitySchedule(moment(activity_schedule).toDate() || '')
             // setSelectedEmployeeNames(persons || '')
             setSelectedEmployeeNames(employee_list || '')
+            // setSelectedEmployeeNames(employee_list.map(empid => empid.employeeId ) || '')
+            
             // Activity Schedule
             if(activity_schedule)
                 setActivitySchedule([moment(activity_schedule[0]).toDate(), moment(activity_schedule[1]).toDate()] || [])
@@ -188,18 +205,19 @@ const NewScheduleRequest = (props) => {
     // 
     useEffect(() => {
         //
+        // console.warn(selectedEmployeeNames)
         changeValueHandler('activity_schedule', activitySchedule)
         changeValueHandler('sr_no', srArNo)
         changeValueHandler('ar_id', referenceId)
         changeValueHandler('activity_type', activityType)
         changeValueHandler('activity_related_to', activityRelatedTo)
-        changeValueHandler('destination', selectedDestination)
         changeValueHandler('request_for_dtc', dtc)
         changeValueHandler('purpose_of_activity', purposeOfActivity)
         changeValueHandler('remarks', remarks)
         changeValueHandler('employee_list', selectedEmployeeNames)
         changeValueHandler('netsuite_link', netsuiteLink)
-
+        changeValueHandler('destination', selectedDestination)
+        
         setNewScheduleFields(fields)
     },[activitySchedule,
         srArNo,
@@ -218,18 +236,20 @@ const NewScheduleRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                <Form.Label>SR/AR No.</Form.Label>  
-                <Form.Control 
-                    size='sm'
-                    type='text'
-                    placeholder='SR/AR No.'
-                    value={srArNo}
-                    onChange={(e) => {
-                        changeValueHandler('sr_no', e.target.value)
-                        setSrArNo(e.target.value)
-                        setNewScheduleFields(fields)
-                    }}
-                />
+                    <Form.Label>Reference Id</Form.Label>
+                    <Form.Control
+                        as='select' 
+                        size='sm'
+                        aria-label="Reference Id"
+                        value={referenceId}
+                        onChange={(e) => {
+                            handleReferenceIdOption(e)
+                            setNewScheduleFields(fields)
+                        }}
+                    >
+                    <option value="">- Select -</option>
+                    { referenceIdOptions }
+                    </Form.Control>
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>
@@ -252,20 +272,18 @@ const NewScheduleRequest = (props) => {
         <Row>
             <Col sm={12} md={6} lg={6}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Reference Id</Form.Label>
-                    <Form.Control
-                        as='select' 
-                        size='sm'
-                        aria-label="Reference Id"
-                        value={referenceId}
-                        onChange={(e) => {
-                            handleReferenceIdOption(e)
-                            setNewScheduleFields(fields)
-                        }}
-                    >
-                    <option value="">- Select -</option>
-                    { referenceIdOptions }
-                    </Form.Control>
+                <Form.Label>SR/AR No.</Form.Label>  
+                <Form.Control 
+                    size='sm'
+                    type='text'
+                    placeholder='SR/AR No.'
+                    value={srArNo}
+                    onChange={(e) => {
+                        changeValueHandler('sr_no', e.target.value)
+                        setSrArNo(e.target.value)
+                        setNewScheduleFields(fields)
+                    }}
+                />
                 </Form.Group>
             </Col>
             <Col sm={12} md={6} lg={6}>

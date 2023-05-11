@@ -16,6 +16,10 @@ const EmployeeListOptionTable = (props) => {
     scheduleType,
   } = props
 
+  // User Login Info
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
   // Get Status
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { status } } = calendarScheduleDetails
@@ -26,9 +30,6 @@ const EmployeeListOptionTable = (props) => {
   const [rowsData, setRowsData] = useState([])
   // Add New Row State
   const [addNewRowState, setAddNewRowState] = useState(0)
-
-  // console.warn(rowsData)
-
   // Add New Table Rows
   const addTableRows = () => {
     // 
@@ -44,11 +45,16 @@ const EmployeeListOptionTable = (props) => {
 
   // Delete Table Rows
   const deleteTableRows = (e, index) => {
-    const rows = [...rowsData].filter((v,i) => i !== index)
-    // const indx = rows.indexOf(index)
-    // rows.splice(indx, 1)
-    setRowsData(rows)
     e.preventDefault();
+    alert(index);
+    // console.warn(index)
+
+    const rows = [...rowsData].filter((v , i) => i !== index)
+    // console.warn(rows)
+    setRowsData(rows)
+    // console.warn(rowsData)
+    // setSelectedEmployeeNames(rowsData)
+    // changeValueHandler('employee_list', rowsData)
   }
   
   // Handle Adding Multiple Technician Feature
@@ -81,6 +87,7 @@ const EmployeeListOptionTable = (props) => {
     if(mode === 'Edit') {
      setRowsData(selectedEmployeeNames)
     }
+
   }, [selectedEmployeeNames])
 
   //
@@ -90,7 +97,7 @@ const EmployeeListOptionTable = (props) => {
         <Col>
           <Table className="table align-items-center mb-0">
             <thead>
-              {mode === 'Add' && 
+              {(mode === 'Add' || (mode === 'Edit' && ['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role))) &&
               // {status !== 'Approved' && 
                 <>
                   <tr>

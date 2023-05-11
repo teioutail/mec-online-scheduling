@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
+import { Button, Modal, Form, Row, Col, ButtonGroup } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -24,6 +24,7 @@ import MotherFolder from '../../components/Sales/MotherFolder'
 import 'react-toastify/dist/ReactToastify.css';
 import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
 import JobOrderRequest from '../../components/Sales/JobOrderRequest'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
@@ -143,8 +144,6 @@ const EditCalendarScheduleModal = (props) => {
           
         // 
         if(mode === 'Add') {
-          //
-          console.warn(data)
           // Create Calendar Schedule 
           dispatch(createCalendarSchedule(data))
         } else {
@@ -801,157 +800,179 @@ const EditCalendarScheduleModal = (props) => {
           } */}
         </Modal.Body>
         <Modal.Footer>
-          {calendarDetailsLoading ? <></> : <>
+          <Row>
+            <Col>
+              <ButtonGroup aria-label="Buttons" className="flex-wrap">
+              {/* <ButtonGroup aria-label="Buttons"> */}
+                {calendarDetailsLoading ? <></> : <>
+                  {/* Training Approver */}
+                  {['Training-Approver','Super-Approver'].includes(userInfo.user_role) && 
+                    <>
+                      {scheduleType === 'Training-Schedule' && 
+                      mode === 'Edit' && 
+                      ( ['Approved'].includes(status)) &&
+                      userId === userInfo.user.id &&
+                        <>
+                          <Button size='sm' variant="info" onClick={handleSubmit} >
+                              Save Changes
+                          </Button>
+                        </>
+                      }
 
-          <Button size='sm' variant="secondary" onClick={onHide}>
-            Close
-          </Button>
+                      {scheduleType === 'Training-Schedule' && 
+                      mode === 'Edit' && 
+                      status === 'Approved' &&                     
+                        <>
+                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                            Cancel Schedule
+                          </Button>
+                        </>
+                      }
 
-            {/* Training Approver */}
-            {['Training-Approver','Super-Approver'].includes(userInfo.user_role) && 
-              <>
-                {scheduleType === 'Training-Schedule' && 
-                 mode === 'Edit' && 
-                 ( ['Approved'].includes(status)) &&
-                 userId === userInfo.user.id &&
-                  <>
-                    <Button size='sm' variant="info" onClick={handleSubmit} >
-                        Save Changes
-                    </Button>
-                  </>
-                }
-
-                {scheduleType === 'Training-Schedule' && 
-                 mode === 'Edit' && 
-                 status === 'Approved' &&                     
-                  <>
-                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
-                      Cancel Schedule
-                    </Button>
-                  </>
-                }
-
-                {scheduleType === 'Training-Schedule' && 
-                 mode === 'Edit' &&
-                 status === 'For Approval' && 
-                 <>
-                  <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
-                    Approve Request
-                  </Button>
-                  <Button size='sm' variant="danger" onClick={handleRejectRequest} >
-                    Reject Request
-                  </Button>
-                 </>
-                }
-              </>
-            }
-
-            {/* Approver Button */}
-            {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
-              <>
-                {scheduleType === 'New-Schedule' && 
-                 mode === 'Edit' && 
-                 status === 'For Approval' && 
-                  <>
-                    {(
-                      (reference_act_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
-                      (reference_act_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
-                      (userInfo.user_role === 'Super-Approver')
-                     ) && 
+                      {scheduleType === 'Training-Schedule' && 
+                      mode === 'Edit' &&
+                      status === 'For Approval' && 
                       <>
-                        <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
+                        {/* <Button size='sm' variant="primary" onClick={handleApprovedRequest} >
                           Approve Request
                         </Button>
                         <Button size='sm' variant="danger" onClick={handleRejectRequest} >
                           Reject Request
-                        </Button>
-
-                        {(userInfo.user_role === 'Pre-Sales Approver' || userInfo.user_role === 'Post-Sales Approver') && 
-                          <>
-                            <Button size='sm' variant="secondary" onClick={handleDelegateRequest} >
-                              Delegate Request
-                            </Button>
-                          </>
-                        }
-
-                        {userInfo.user_role === 'Super-Approver' && 
-                          <>
-                            <Button size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
-                              Delegate to Approver
-                            </Button>
-                          </>
-                        }
+                        </Button> */}
+                          <Button size='sm' variant="btn bg-gradient-primary" onClick={handleApprovedRequest} >
+                            <FontAwesomeIcon icon={['fas', 'check']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                            &nbsp;Approve
+                          </Button>
+                          <Button size='sm' variant="btn bg-gradient-danger" onClick={handleRejectRequest} >
+                            <FontAwesomeIcon icon={['fas', 'circle-xmark']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                            &nbsp;Reject
+                          </Button>
                       </>
-                    }
-                    
-                  </>
-                }
+                      }
+                    </>
+                  }
 
-                {scheduleType === 'New-Schedule' && 
-                 mode === 'Edit' && 
-                ((status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Pre-Sales Approver') || 
-                 (status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Post-Sales Approver') || 
-                 ((status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' || status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL') && userInfo.user_role === 'Super-Approver')
-                 )  &&
-                  <>
-                    <Button size='sm' variant="success" onClick={handleDelegatedApprovedRequest} >
-                      Approved SE Request
-                    </Button>
-                  </>
-                }
-
-                {scheduleType === 'New-Schedule' && 
-                 mode === 'Edit' && 
-                  ((status === 'DELEGATED_PRESALES_SE_APPROVED' && userInfo.user_role === 'Pre-Sales Approver') ||
-                   (status === 'DELEGATED_POSTSALES_SE_APPROVED' && userInfo.user_role === 'Post-Sales Approver') ||
-                   ((status === 'DELEGATED_POSTSALES_SE_APPROVED' || status === 'DELEGATED_PRESALES_SE_APPROVED') && userInfo.user_role === 'Super-Approver')
-                  ) &&
+                  {/* Approver Button */}
+                  {['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role) && 
                     <>
-                      <Button size='sm' variant="success" onClick={handleApprovedRequest} >
-                        Approved Activity Request
+                      {scheduleType === 'New-Schedule' && 
+                      mode === 'Edit' && 
+                      status === 'For Approval' && 
+                        <>
+                          {(
+                            (reference_act_type === 'Pre-Sales' && userInfo.user_role === 'Pre-Sales Approver') || 
+                            (reference_act_type === 'Post-Sales' && userInfo.user_role === 'Post-Sales Approver') || 
+                            (userInfo.user_role === 'Super-Approver')
+                          ) && 
+                            <>
+                            <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
+                              <FontAwesomeIcon icon={['fas', 'floppy-disk']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                                 &nbsp;Save
+                              </Button>
+                              <Button size='sm' variant="btn bg-gradient-primary" onClick={handleApprovedRequest} >
+                                <FontAwesomeIcon icon={['fas', 'check']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                                &nbsp;Approve
+                              </Button>
+                              <Button size='sm' variant="btn bg-gradient-danger" onClick={handleRejectRequest} >
+                                <FontAwesomeIcon icon={['fas', 'circle-xmark']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                                &nbsp;Reject
+                              </Button>
+
+                              {(userInfo.user_role === 'Pre-Sales Approver' || userInfo.user_role === 'Post-Sales Approver') && 
+                                <>
+                                  <Button size='sm' variant="btn bg-gradient-warning" onClick={handleDelegateRequest} >
+                                  <FontAwesomeIcon icon={['fas', 'users']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                                    &nbsp;Delegate
+                                  </Button>
+                                </>
+                              }
+
+                              {userInfo.user_role === 'Super-Approver' && 
+                                <>
+                                  <Button size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
+                                    Delegate to Approver
+                                  </Button>
+                                </>
+                              }
+                            </>
+                          }
+                          
+                        </>
+                      }
+
+                      {scheduleType === 'New-Schedule' && 
+                      mode === 'Edit' && 
+                      ((status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Pre-Sales Approver') || 
+                      (status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' && userInfo.user_role === 'Post-Sales Approver') || 
+                      ((status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' || status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL') && userInfo.user_role === 'Super-Approver')
+                      )  &&
+                        <>
+                          <Button size='sm' variant="success" onClick={handleDelegatedApprovedRequest} >
+                            Approved SE Request
+                          </Button>
+                        </>
+                      }
+
+                      {scheduleType === 'New-Schedule' && 
+                      mode === 'Edit' && 
+                        ((status === 'DELEGATED_PRESALES_SE_APPROVED' && userInfo.user_role === 'Pre-Sales Approver') ||
+                        (status === 'DELEGATED_POSTSALES_SE_APPROVED' && userInfo.user_role === 'Post-Sales Approver') ||
+                        ((status === 'DELEGATED_POSTSALES_SE_APPROVED' || status === 'DELEGATED_PRESALES_SE_APPROVED') && userInfo.user_role === 'Super-Approver')
+                        ) &&
+                          <>
+                            <Button size='sm' variant="success" onClick={handleApprovedRequest} >
+                              Approved Activity Request
+                            </Button>
+                          </>
+                      }
+                      
+                      {scheduleType === 'New-Schedule' && 
+                      mode === 'Edit' && 
+                      status === 'Approved' &&
+                      (['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role)) && 
+                        <>
+                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                            Cancel Schedule
+                          </Button>
+                        </>
+                      }
+                    </>
+                  }
+
+                  {/* Sales, RMA, TCC, Project Lead  Button */}
+
+                  {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && status !== 'Canceled' && 
+                    <>
+                      {mode !== 'Add' && (userId === userInfo.user.id) &&
+                        <>
+                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                            Cancel Schedule
+                          </Button>
+                          <Button size='sm' variant="primary" onClick={handleSubmit} >
+                              Save Changes
+                          </Button>
+                        </>
+                      }
+                    </>
+                  }
+
+                  {/* Show Save Change Button */}
+                  {mode === 'Add' && 
+                    <>
+                      <Button size='sm' variant="primary" onClick={handleSubmit} >
+                          Save Schedule
                       </Button>
                     </>
-                }
-                
-                {scheduleType === 'New-Schedule' && 
-                 mode === 'Edit' && 
-                 status === 'Approved' &&
-                 (['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role)) && 
-                  <>
-                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
-                      Cancel Schedule
-                    </Button>
-                  </>
-                }
-              </>
-            }
-
-            {/* Sales, RMA, TCC, Project Lead  Button */}
-            {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
-              <>
-                {mode !== 'Add' && (userId === userInfo.user.id) &&
-                  <>
-                    <Button size='sm' variant="warning" onClick={handleCancelRequest} >
-                      Cancel Schedule
-                    </Button>
-                    <Button size='sm' variant="primary" onClick={handleSubmit} >
-                        Save Changes
-                    </Button>
-                  </>
-                }
-              </>
-            }
-
-            {/* Show Save Change Button */}
-            {mode === 'Add' && 
-              <>
-                <Button size='sm' variant="primary" onClick={handleSubmit} >
-                    Save Schedule
+                  }
+                </> }
+                <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
+                  <FontAwesomeIcon icon={['fas', 'xmark']} className="text-light text-lg opacity-10" aria-hidden="true"/>
+                  &nbsp;Close
                 </Button>
-              </>
-            }
-          </> }
-          
+              </ButtonGroup> 
+            </Col>
+          </Row>
+
         </Modal.Footer>
         </Modal>
     </>

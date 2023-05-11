@@ -14,7 +14,8 @@ const EmployeeListTableRowsTime = (props) => {
     deleteTableRows, 
     handleChangeAddEmployee, 
     handleChange, 
-    mode
+    mode,
+    addNewRowState,
  } = props
 
   // Get Fullname, Users Id
@@ -25,20 +26,22 @@ const EmployeeListTableRowsTime = (props) => {
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { status } } = calendarScheduleDetails
 
-    // console.warn(employee_list)
+    //   console.warn(persons)
+
   // User List
   const fullNameOptions = (fullname ? fullname.map((row, key) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
 
-//   console.log( typeof rowsData , "shit")
-    // return ( ! rowsData ? <></> : '' ) 
+  console.warn(rowsData)
 
   return(
     // 
     rowsData.map((data, index) => {
+        //
+        // console.warn(index)
         // 
-        const { user_id: employeeId, duration } = data;
+        const { employeeId, duration } = data;
         // console.warn(typeof duration)
         return(
             <tr key={index}>
@@ -48,7 +51,9 @@ const EmployeeListTableRowsTime = (props) => {
                         onChange={(time) => {
                             handleChangeAddEmployee(index, "duration", time)
                         }}
-                        value={(mode === 'Edit' ? JSON.parse(duration) : duration)}
+                        // value={(addNewRowState === true ? JSON.parse(duration) : duration)}
+                        // Error nag uupdate lahat pag nag add ng new column ayusin mo 
+                        value={(mode === 'Edit' && addNewRowState === true  ? ["09:00","16:00"] : (mode === 'Edit' ? JSON.parse(duration) : duration)  )}
                         // value={duration}
                         clearIcon={null}
                         clockIcon={null}
