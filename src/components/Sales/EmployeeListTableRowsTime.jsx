@@ -33,7 +33,7 @@ const EmployeeListTableRowsTime = (props) => {
     return <option key={ key } value={ row.id }>{ row.label }</option>
   }) : <></>)
 
-  console.warn(rowsData)
+//   console.warn(rowsData)
 
   return(
     // 
@@ -53,7 +53,7 @@ const EmployeeListTableRowsTime = (props) => {
                         }}
                         // value={(addNewRowState === true ? JSON.parse(duration) : duration)}
                         // Error nag uupdate lahat pag nag add ng new column ayusin mo 
-                        value={(mode === 'Edit' && addNewRowState === true  ? ["09:00","16:00"] : (mode === 'Edit' ? JSON.parse(duration) : duration)  )}
+                        value={(mode === 'Edit' && addNewRowState === true  ? ['09:00','16:00'] : duration  )}
                         // value={duration}
                         clearIcon={null}
                         clockIcon={null}

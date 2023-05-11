@@ -46,15 +46,12 @@ const EmployeeListOptionTable = (props) => {
   // Delete Table Rows
   const deleteTableRows = (e, index) => {
     e.preventDefault();
-    alert(index);
-    // console.warn(index)
-
     const rows = [...rowsData].filter((v , i) => i !== index)
     // console.warn(rows)
     setRowsData(rows)
     // console.warn(rowsData)
     // setSelectedEmployeeNames(rowsData)
-    // changeValueHandler('employee_list', rowsData)
+    changeValueHandler('employee_list', rows)
   }
   
   // Handle Adding Multiple Technician Feature

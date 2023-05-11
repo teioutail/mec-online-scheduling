@@ -125,6 +125,7 @@ const EditCalendarScheduleModal = (props) => {
             email: email_addresses,
             user_id: userInfo.user.id,
             user_list_id: userListId,
+            art_id: artid,
           }
         else if (scheduleType === 'Training-Schedule')
           data = {...trainingFields, 
@@ -134,6 +135,7 @@ const EditCalendarScheduleModal = (props) => {
             email: email_addresses,
             user_id: userInfo.user.id,
             user_list_id: userListId,
+            art_id: artid,
           }
         else if (scheduleType === 'JO-Request')
           data = {...joRequestFields,
