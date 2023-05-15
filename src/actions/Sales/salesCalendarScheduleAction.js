@@ -16,10 +16,9 @@ import {
 } from "../../constants/Sales/salesCalendarScheduleConstants"
 
 // View List of Calendar Schedule
-export const listCalendarSchedule = () => async (dispatch, getState) => {
+export const listCalendarSchedule = (role) => async (dispatch, getState) => {
     //
     try {
-
         dispatch({
             type: CALENDAR_SCHEDULE_LIST_REQUEST,
         })
@@ -31,8 +30,12 @@ export const listCalendarSchedule = () => async (dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
+        
         // Call API Request
-        const { data } = await axios.get(`/auth/calendar`, config)
+        // const { data } = await axios.get(`/auth/calendar/${role}`, config)
+
+        const { data } = await axios.get(`/auth/calendar-schedule-list/${role}`, config)
+        // console.warn(role);
 
         dispatch({
             type: CALENDAR_SCHEDULE_LIST_SUCCESS,

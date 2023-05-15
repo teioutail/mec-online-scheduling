@@ -30,6 +30,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ScheduleScreen = () => {
+    
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -45,7 +46,7 @@ const ScheduleScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Mother Folder'
+    const headerTitle = 'Mother Folders'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user

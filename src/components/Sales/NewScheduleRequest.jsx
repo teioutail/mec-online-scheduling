@@ -17,6 +17,7 @@ const NewScheduleRequest = (props) => {
     setNewScheduleFields, 
     mode,
     scheduleType,
+    userId,
   } = props
 
   // useState
@@ -441,6 +442,7 @@ const NewScheduleRequest = (props) => {
             setSelectedEmployeeNames={setSelectedEmployeeNames}
             mode={mode}
             scheduleType={scheduleType}
+            userId={userId}
         />
     </>
   )

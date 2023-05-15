@@ -14,6 +14,7 @@ const EmployeeListOptionTable = (props) => {
     setSelectedEmployeeNames, 
     mode,
     scheduleType,
+    userId,
   } = props
 
   // User Login Info
@@ -94,7 +95,11 @@ const EmployeeListOptionTable = (props) => {
         <Col>
           <Table className="table align-items-center mb-0">
             <thead>
-              {(mode === 'Add' || (mode === 'Edit' && ['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role))) &&
+              {/* Approver Role */}
+              {
+                ((mode === 'Add' || (mode === 'Edit' && ['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role))) ||
+                ((mode === 'Add' || (mode === 'Edit' && userId === userInfo.user.id)))
+              ) &&
               // {status !== 'Approved' && 
                 <>
                   <tr>
@@ -105,6 +110,10 @@ const EmployeeListOptionTable = (props) => {
                     </td>
                   </tr>
                 </>
+              }
+              {/*  */}
+              {
+
               }
               <tr>
                 <th colSpan="3" className="text-center text-uppercase text-xs font-weight-bolder opacity-7">DATE</th>

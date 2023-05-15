@@ -51,7 +51,6 @@ const CalendarScheduleScreen = () => {
     const locales = {
         "en-US": require("date-fns/locale/en-US")
     }
-
     // 
     const localizer = dateFnsLocalizer({
         format,
@@ -143,7 +142,7 @@ const CalendarScheduleScreen = () => {
                 // Delete Schedule
                 dispatch(deleteScheduleReference(state.target.id))
                 // Refresh Datatable
-                dispatch(listCalendarSchedule())
+                dispatch(listCalendarSchedule(userInfo.user_role))
                 // Show Success Request
                 Swal.fire(
                     'Success!',
@@ -204,7 +203,7 @@ const CalendarScheduleScreen = () => {
         // Validate User Login Access
         if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
             // Get List of Calendar Schedule
-            dispatch(listCalendarSchedule())
+            dispatch(listCalendarSchedule(userInfo.user_role))
             // Get List of Destination Option
             dispatch(listDestinationOption())
             // Get List User Reference Id
@@ -223,6 +222,7 @@ const CalendarScheduleScreen = () => {
 
     return (
         <>
+            
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button  size="sm" className="btn btn-sm bg-gradient-info mb-0 float-end" onClick={handleCalendarScheduleView}>

@@ -585,7 +585,7 @@ const EditCalendarScheduleModal = (props) => {
     // Comment mo muna
     if(mode === 'Add') {
       // RMA, TCC, Sales - New Schedule Only
-      if(['RMA','TCC','Sales','Teamlead'].includes(userInfo.user_role)) {
+      if(['RMA','TCC','Sales','Teamlead','Project Lead'].includes(userInfo.user_role)) {
         setScheduleType('New-Schedule')
       }
       // 
@@ -711,7 +711,7 @@ const EditCalendarScheduleModal = (props) => {
                       as='select' 
                       aria-label="Status"
                       value={scheduleType}
-                      disabled={(mode === 'Edit' || (mode === 'Add' && ['RMA','TCC','Sales'].includes(userInfo.user_role)))}
+                      disabled={(mode === 'Edit' || (mode === 'Add' && ['RMA','TCC'].includes(userInfo.user_role)))}
                       onChange={(e) => setScheduleType(e.target.value)}
                     >
                     <option value="">- Select -</option>
@@ -733,6 +733,7 @@ const EditCalendarScheduleModal = (props) => {
                   calendarScheduleDetails={calendarScheduleDetails}
                   mode={mode}
                   scheduleType={scheduleType}
+                  userId={userId}
                 /> 
               }
               { scheduleType === 'Training-Schedule' && 
@@ -776,7 +777,7 @@ const EditCalendarScheduleModal = (props) => {
           }
           
           {/* Sales, RMA, TCC, Project Lead  Button */}
-          {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && 
+          {['Sales','RMA','TCC','Teamlead','Project Lead'].includes(userInfo.user_role) && 
               <>
                 {/* {((mode === 'Add' && scheduleType) || (mode === 'Edit' && status === 'For Approval')) &&  */}
                 {((mode === 'Add' && scheduleType !== 'JO-Request') || (mode === 'Edit' && status === 'For Approval')) && 
@@ -943,7 +944,7 @@ const EditCalendarScheduleModal = (props) => {
 
                   {/* Sales, RMA, TCC, Project Lead  Button */}
 
-                  {['Sales','RMA','TCC','Teamlead'].includes(userInfo.user_role) && status !== 'Canceled' && 
+                  {['Sales','RMA','TCC','Teamlead','Project Lead'].includes(userInfo.user_role) && status !== 'Canceled' && 
                     <>
                       {mode !== 'Add' && (userId === userInfo.user.id) &&
                         <>
