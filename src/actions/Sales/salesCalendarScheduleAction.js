@@ -33,9 +33,7 @@ export const listCalendarSchedule = (role) => async (dispatch, getState) => {
         
         // Call API Request
         // const { data } = await axios.get(`/auth/calendar/${role}`, config)
-
         const { data } = await axios.get(`/auth/calendar-schedule-list/${role}`, config)
-        // console.warn(role);
 
         dispatch({
             type: CALENDAR_SCHEDULE_LIST_SUCCESS,

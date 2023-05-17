@@ -23,10 +23,10 @@ import moment from 'moment'
 import { 
     getSelectedCalendarDetails,
 } from '../../actions/Sales/salesCalendarScheduleAction'
-import ExpandableRowComponent from './ExpandableRowComponent'
-import ExpandableRowComponentTraining from './ExpandableRowComponentTraining'
+import ExpandableRowComponent from '../Approvers/ExpandableRowComponent'
+import ExpandableRowComponentTraining from '../Approvers/ExpandableRowComponentTraining'
 
-const ApproverMyApprovedScreen = () => {
+const MyTrainingScreen = () => {
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -38,10 +38,11 @@ const ApproverMyApprovedScreen = () => {
         progress: undefined,
         theme: "light",
     });   
+    
     // CommonJS
     const Swal = require('sweetalert2')
     // Header title
-    const headerTitle = 'My Approved Schedule'
+    const headerTitle = 'My Trainings'
     // Redux
     const dispatch = useDispatch()  
     // useNavigate to redirect the user
@@ -129,7 +130,7 @@ const ApproverMyApprovedScreen = () => {
             { name: 'Related Team', selector: row => row.related_team, sortable: true },
             { name: 'Activity Date',selector: row => `${moment(JSON.parse(row.activity_date)[0]).format('L')} - ${moment(JSON.parse(row.activity_date)[1]).format('L')}`, sortable: true }, // Ongoing
             { name: 'Assigned Engineer', selector: row => row.employeeNames, sortable: true }, // balikan mo to
-            { name: 'Status', selector: row => <span className='badge badge-sm bg-gradient-success'>{row.status}</span>, sortable: true },
+            { name: 'Status', selector: row => <span className={statusType(row.status)} >{row.status}</span>, sortable: true },
             {
                 name: 'Action',
                 cell: (row) => {
@@ -156,6 +157,25 @@ const ApproverMyApprovedScreen = () => {
             },
         ]
     }
+
+    /**
+     * - Change Color 
+     */
+        const statusType = (type) => {
+            // 
+            switch(type) {
+                case 'For Approval':
+                    return 'badge badge-sm bg-gradient-warning'
+                case 'Approved':
+                    return 'badge badge-sm bg-gradient-success'
+                case 'Rejected': 
+                    return 'badge badge-sm bg-gradient-danger'
+                case 'Canceled':
+                    return 'badge badge-sm bg-gradient-secondary'
+                default:
+                    return 'badge badge-sm bg-gradient-info'
+            } 
+        }
 
     // Columns 
     const columns = useMemo(
@@ -187,7 +207,7 @@ const ApproverMyApprovedScreen = () => {
     //
     useEffect(() => {
         // Check / Validate User Access
-        if(userInfo.submenu.find(x => x.url === window.location.pathname)) {
+        if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
             // User Role 
             const user = {
                 'activity_type': userInfo.user.manage_team,
@@ -210,27 +230,7 @@ const ApproverMyApprovedScreen = () => {
     }, [dispatch, navigate, userInfo])
 
     return (
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     <>
+        <>
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
@@ -280,4 +280,4 @@ const ApproverMyApprovedScreen = () => {
     )
 }
 
-export default ApproverMyApprovedScreen
+export default MyTrainingScreen

@@ -32,7 +32,7 @@ const EditCalendarScheduleModal = (props) => {
   const { 
     show, mode, onHide, 
     artid, calendarScheduleDetails, size,
-    notify, 
+    notify, setShow2
   } = props
 
   // console.warn(mode);
@@ -957,6 +957,18 @@ const EditCalendarScheduleModal = (props) => {
                         </>
                       }
                     </>
+                  }
+
+                  {/* Engineer */}
+                  {['Engineer'].includes(userInfo.user_role) && 
+                    <>
+                      <Button size='sm' variant="btn bg-gradient-primary" onClick={() => setShow2(true)} >
+                          Update Request
+                      </Button>
+                      <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
+                          Update Inventory
+                      </Button>
+                    </> 
                   }
 
                   {/* Show Save Change Button */}
