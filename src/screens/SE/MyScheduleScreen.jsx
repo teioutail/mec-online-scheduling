@@ -235,7 +235,6 @@ const MyScheduleScreen = () => {
 
     return (
         <>
-            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                    <DataTable
@@ -244,7 +243,7 @@ const MyScheduleScreen = () => {
                         // data={users}
                         expandableRows
                         expandableRowsComponent={userInfo.user_role === 'Training-Approver' ? ExpandableRowComponentTraining : ExpandableRowComponent}
-                        expandableRowsComponentProps={{"someTitleProp": 'Approved'}} 
+                        expandableRowsComponentProps={{"someTitleProp": 'My Schedules'}} 
                         pagination
                         responsive
                         columns={columns}
@@ -269,6 +268,7 @@ const MyScheduleScreen = () => {
                     <UpdateRequestModal 
                         show={show2}
                         artid={artid}
+                        setShow2={setShow2} // 
                     />
 
                     <ToastContainer

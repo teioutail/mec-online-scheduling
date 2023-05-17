@@ -7,20 +7,18 @@ import EmployeeUpdateCompletion from '../../components/SE/EmployeeUpdateCompleti
 import { useSelector } from 'react-redux'
 
 const UpdateRequestModal = (props) => {
-
-    const { show } = props
-    
-// 
-//   const [show, setShow] = useState(false);
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
+    const { show , setShow2 } = props
+    //   const [show, setShow] = useState(false);
+    const handleClose = () => {
+        setShow2(false);
+    }
+    //   const handleShow = () => setShow(true);
 
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
   const { loading:calendarDetailsLoading, calendar: { reference_act_type }} = calendarScheduleDetailsInfo
 
   // Fields
-  const [srAttachment, setSrAttachment] = useState([])
   const [srNo, setSrNo] = useState()
   const [actionsTaken, setActionsTaken] = useState()
   const [findings, setFindings] = useState()
@@ -28,11 +26,46 @@ const UpdateRequestModal = (props) => {
   const [recommendation, setRecommendation] = useState()
   const [remarks, setRemarks] = useState()
   const [conforme, setConforme] = useState()
+  const [srAttachment, setSrAttachment] = useState([])
+
   // 
   const onFileChange = (files) => {
     setSrAttachment(files)
     // console.warn(srAttachment)
   }
+
+    // Fields
+    const [fields, setFields] = useState({
+        sr_no: '',
+        actions_taken: '',
+        findings: '',
+        pending: '',
+        recommendation: '',
+        remarks: '',
+        conforme: '',
+        attachment: [],
+        // id: artid,
+        // ar_id: '',
+        // activity_type: '',
+        // activity_related_to: '',
+        // destination: '',
+        // request_for_dtc: '',
+        // purpose_of_activity: '',
+        // remarks: '',
+        // employee_list:[],
+        // netsuite_link: '',
+        // srAtt: '',
+    })
+
+    /**
+     * - Value Setter
+    */
+    const changeValueHandler = (fieldName, value) => {
+        const newField = fields
+        newField[fieldName] = value
+        setFields(newField)
+    }
+    
 
   return (
     <>
@@ -43,7 +76,7 @@ const UpdateRequestModal = (props) => {
       <Modal
         size='lg' 
         show={show}
-        onHide={show}
+        onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
@@ -59,13 +92,14 @@ const UpdateRequestModal = (props) => {
                     <Form.Control 
                         size='sm'
                         type='text'
-                        // placeholder='Netsuite Link'
-                        // value={netsuiteLink}
-                        // onChange={(e) => {
-                        //     changeValueHandler('netsuite_link', e.target.valufse)
-                        //     setNetsuitLink(e.target.value)
-                        //     setNewScheduleFields(fields)
-                        // }}
+                        placeholder='SR No.'
+                        value={srNo}
+                        onChange={(e) => {
+                            changeValueHandler('sr_no', e.target.value)
+                            setSrNo(e.target.value)
+                            // setNewScheduleFields(fields)
+                            console.warn(fields)
+                        }}
                     />
                     </Form.Group>
                 </Col>
@@ -79,12 +113,13 @@ const UpdateRequestModal = (props) => {
                             size="sm"
                             as="textarea" 
                             rows={2}
-                            // value={remarks}
-                            // onChange={(e) => {
-                            //     changeValueHandler('remarks', e.target.value)
-                            //     setRemarks(e.target.value)
-                            //     setNewScheduleFields(fields)
-                            // }}
+                            value={actionsTaken}
+                            onChange={(e) => {
+                                changeValueHandler('actions_taken', e.target.value)
+                                setActionsTaken(e.target.value)
+                                // setNewScheduleFields(fields)
+                                console.warn(fields)
+                            }}
                         />
                     </Form.Group>
                 </Col>
@@ -98,12 +133,13 @@ const UpdateRequestModal = (props) => {
                             size="sm"
                             as="textarea" 
                             rows={2}
-                            // value={remarks}
-                            // onChange={(e) => {
-                            //     changeValueHandler('remarks', e.target.value)
-                            //     setRemarks(e.target.value)
-                            //     setNewScheduleFields(fields)
-                            // }}
+                            value={findings}
+                            onChange={(e) => {
+                                changeValueHandler('findings', e.target.value)
+                                setFindings(e.target.value)
+                                console.warn(fields)
+                                // setNewScheduleFields(fields)
+                            }}
                         />
                     </Form.Group>
                 </Col>
@@ -114,12 +150,13 @@ const UpdateRequestModal = (props) => {
                             size="sm"
                             as="textarea" 
                             rows={2}
-                            // value={remarks}
-                            // onChange={(e) => {
-                            //     changeValueHandler('remarks', e.target.value)
-                            //     setRemarks(e.target.value)
-                            //     setNewScheduleFields(fields)
-                            // }}
+                            value={pending}
+                            onChange={(e) => {
+                                changeValueHandler('pending', e.target.value)
+                                setPending(e.target.value)
+                                console.warn(fields)
+                                // setNewScheduleFields(fields)
+                            }}
                         />
                     </Form.Group>
                 </Col>
@@ -133,12 +170,13 @@ const UpdateRequestModal = (props) => {
                             size="sm"
                             as="textarea" 
                             rows={2}
-                            // value={remarks}
-                            // onChange={(e) => {
-                            //     changeValueHandler('remarks', e.target.value)
-                            //     setRemarks(e.target.value)
-                            //     setNewScheduleFields(fields)
-                            // }}
+                            value={recommendation}
+                            onChange={(e) => {
+                                changeValueHandler('recommendation', e.target.value)
+                                setRecommendation(e.target.value)
+                                // setNewScheduleFields(fields)
+                                console.warn(fields)
+                            }}
                         />
                     </Form.Group>
                 </Col>
@@ -149,12 +187,13 @@ const UpdateRequestModal = (props) => {
                             size="sm"
                             as="textarea" 
                             rows={2}
-                            // value={remarks}
-                            // onChange={(e) => {
-                            //     changeValueHandler('remarks', e.target.value)
-                            //     setRemarks(e.target.value)
-                            //     setNewScheduleFields(fields)
-                            // }}
+                            value={remarks}
+                            onChange={(e) => {
+                                changeValueHandler('remarks', e.target.value)
+                                setRemarks(e.target.value)
+                                // setNewScheduleFields(fields)
+                                console.warn(fields)
+                            }}
                         />
                     </Form.Group>
                 </Col>
@@ -167,13 +206,14 @@ const UpdateRequestModal = (props) => {
                     <Form.Control 
                         size='sm'
                         type='text'
-                        // placeholder='Netsuite Link'
-                        // value={netsuiteLink}
-                        // onChange={(e) => {
-                        //     changeValueHandler('netsuite_link', e.target.value)
-                        //     setNetsuitLink(e.target.value)
-                        //     setNewScheduleFields(fields)
-                        // }}
+                        placeholder='Conforme'
+                        value={conforme}
+                        onChange={(e) => {
+                            changeValueHandler('conforme', e.target.value)
+                            setConforme(e.target.value)
+                            // setNewScheduleFields(fields)
+                            console.warn(fields)
+                        }}
                     />
                     </Form.Group>
                 </Col>
@@ -187,16 +227,22 @@ const UpdateRequestModal = (props) => {
                 <Col sm={12} md={12} lg={12}>
                     <Form.Label>SR Attachment</Form.Label>  
                     <Attachment
-                        onFileChange={(files) => onFileChange(files)}
+                        // onFileChange={(files) => onFileChange(files)}
+                        onFileChange={(e) => {
+                            onFileChange(e)
+                            changeValueHandler('attachment', e)
+                            console.warn(fields)
+                            // setNewScheduleFields(fields)
+                        }}
                     />
                 </Col>
             </Row>
 
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button> */}
+          </Button>
           <Button variant="btn bg-gradient-primary">Update</Button>
         </Modal.Footer>
       </Modal>

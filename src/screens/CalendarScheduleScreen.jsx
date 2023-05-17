@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Header from '../components/template/Header'
 import Footer from '../components/template/Footer'
-import SideMenu from '../components/template/SideMenu'
 import FormContainer from '../components/template/FormContainer'
 import Loader from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
@@ -45,6 +44,7 @@ import {
     CALENDAR_SCHEDULE_UPDATE_RESET,
   } from '../constants/Sales/salesCalendarScheduleConstants'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../constants/Approver/approverActivityRequestConstants'
+import UpdateRequestModal from '../modals/SE/UpdateRequestModal'
 
 const CalendarScheduleScreen = () => {
     // Locales
@@ -103,7 +103,8 @@ const CalendarScheduleScreen = () => {
  
     // EditRoleModal
     const [show, setShow] = useState(false)
-    //
+    // UpdateRequestModal
+    const [show2, setShow2] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     // Global ID
@@ -224,12 +225,14 @@ const CalendarScheduleScreen = () => {
 
     return (
         <>
-            
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button  size="sm" className="btn btn-sm bg-gradient-info mb-0 float-end" onClick={handleCalendarScheduleView}>
-                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
-                    </Button>
+                
+                    {userInfo.user_role !== "Engineer" &&  
+                        <Button  size="sm" className="btn btn-sm bg-gradient-info mb-0 float-end" onClick={handleCalendarScheduleView}>
+                            <FontAwesomeIcon icon={['fas', 'plus']} /> Add Schedule
+                        </Button>
+                    }
 
                     {loadingList ? <Loader/> : <Calendar
                         localizer={localizer}
@@ -249,11 +252,18 @@ const CalendarScheduleScreen = () => {
                     <EditCalendarScheduleModal 
                         size="lg"
                         show={show}
+                        setShow2={setShow2} // 
                         onHide={handleClose} 
                         artid={artid}
                         calendarScheduleDetails={calendarScheduleDetail}
                         mode={mode}
                         notify={notify}
+                    />
+
+                    <UpdateRequestModal
+                        show={show2}
+                        artid={artid}
+                        setShow2={setShow2} // 
                     />
 
                     <ToastContainer
