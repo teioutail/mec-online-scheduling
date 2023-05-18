@@ -960,7 +960,7 @@ const EditCalendarScheduleModal = (props) => {
                   }
 
                   {/* Engineer */}
-                  {['Engineer'].includes(userInfo.user_role) && 
+                  {(['Engineer'].includes(userInfo.user_role) && status !== 'For Approval') && 
                     <>
                       <Button size='sm' variant="btn bg-gradient-primary" onClick={() => setShow2(true)} >
                           Update Request

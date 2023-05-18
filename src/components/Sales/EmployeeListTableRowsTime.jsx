@@ -12,7 +12,7 @@ const EmployeeListTableRowsTime = (props) => {
   const { 
     rowsData, 
     deleteTableRows, 
-    handleChangeAddEmployee, 
+    handleChangeAddEmployee,
     handleChange, 
     mode,
     addNewRowState,
@@ -55,8 +55,7 @@ const EmployeeListTableRowsTime = (props) => {
                         // Error nag uupdate lahat pag nag add ng new column ayusin mo 
                         value={(mode === 'Edit' && addNewRowState === true  ? ['09:00','16:00'] : duration  )}
                         // value={duration}
-                        clearIcon={null}
-                        clockIcon={null}
+                        disableClock 
                     /> 
                 </td>
 

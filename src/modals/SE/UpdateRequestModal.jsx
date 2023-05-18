@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -27,6 +27,7 @@ const UpdateRequestModal = (props) => {
   const [remarks, setRemarks] = useState()
   const [conforme, setConforme] = useState()
   const [srAttachment, setSrAttachment] = useState([])
+  const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
 
   // 
   const onFileChange = (files) => {
@@ -66,6 +67,12 @@ const UpdateRequestModal = (props) => {
         setFields(newField)
     }
     
+    useEffect(() => {
+        //
+        // setSelectedEmployeeNames(employee_list || '')
+        // console.warn(employee_list)
+
+    }, [selectedEmployeeNames])
 
   return (
     <>
@@ -220,7 +227,9 @@ const UpdateRequestModal = (props) => {
             </Row>
 
             <EmployeeUpdateCompletion
+                changeValueHandler={changeValueHandler}
                 mode='Edit'
+                // selectedEmployeeNames={selectedEmployeeNames}
             />
             
             <Row>

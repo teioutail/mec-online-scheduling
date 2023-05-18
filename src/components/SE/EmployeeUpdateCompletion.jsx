@@ -16,11 +16,16 @@ const EmployeeUpdateCompletion = (props) => {
     scheduleType,
   } = props
 
+  // console.warn(selectedEmployeeNames)
+
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
   // Add New Row State
   const [addNewRowState, setAddNewRowState] = useState(0)
-
+  // Get Status
+  const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
+  const { calendar: { employee_list } } = calendarScheduleDetails
+  
   // Add New Table Rows
   const addTableRows = () => {
     //
@@ -30,12 +35,11 @@ const EmployeeUpdateCompletion = (props) => {
     //   timeTo: '',
     // }
 
+    // 
     const rowsInput = {
       employeeId: '',
-      timeIn: '',
-      timeOut: '',
-      breakStart: '',
-      breakEnd: '',
+      time: [],
+      break:[],
     }
 
     // 
@@ -58,31 +62,38 @@ const EmployeeUpdateCompletion = (props) => {
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
+
+    console.warn(rowsData)
   }
   
   // Handle Adding Multiple SE/Employee
   const handleChangeAddEmployee = (index, name, value) => {
+    //
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
+
+    console.warn(rowsData)
   }
 
   // 
   useEffect(() => {
     // 
     if(mode === 'Edit') {
-     setRowsData(selectedEmployeeNames)
+     setRowsData(employee_list)
+    //  console.warn(rowsData)
     }
-  }, [selectedEmployeeNames])
+
+  }, [])
 
   //
   return (
     <>
       <Row>
         <Col>
-          <Table className="table align-items-center mb-0">
+          <Table responsive className="table align-items-center mb-0">
             <thead>
               {/* <tr>
                 <td colSpan={5}>
@@ -106,7 +117,8 @@ const EmployeeUpdateCompletion = (props) => {
             </thead>
             <tbody>
               <SeTableRowsTime
-                rowsData={rowsData} 
+                rowsData={rowsData}
+                setRowsData={setRowsData}
                 deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}

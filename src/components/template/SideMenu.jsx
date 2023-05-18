@@ -44,7 +44,6 @@ const SideMenu = () => {
         }
        
     }
-
   },[userInfo, dispatch]);
 
   useEffect(() => {
