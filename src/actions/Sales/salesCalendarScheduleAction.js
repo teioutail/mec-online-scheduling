@@ -68,8 +68,7 @@ export const createCalendarSchedule = (calendar) => async (dispatch) => {
 
         // Call API Request
         const { data } = await axios.post('/auth/calendar', calendar, config)
-        console.warn(data)
-        
+
         dispatch({
             type: CALENDAR_SCHEDULE_CREATE_SUCCESS,
             payload: data,

@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-bootstrap/Modal';
 import Attachment from '../../components/upload/attachment';
 import EmployeeUpdateCompletion from '../../components/SE/EmployeeUpdateCompletion';
-import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { createActivityUpdateRequest } from '../../actions/SE/seActivityUpdateAction';
 
 const UpdateRequestModal = (props) => {
-    const { show , setShow2 } = props
-    //   const [show, setShow] = useState(false);
-    const handleClose = () => {
-        setShow2(false);
-    }
-    //   const handleShow = () => setShow(true);
+  // 
+  const { 
+    show , 
+    setShow2 
+  } = props
+  
+  // 
+  const handleClose = () => {
+    setShow2(false);
+  }
+
+  // Redux
+  const dispatch = useDispatch()
+
+  const MAX_COUNT = 5;
 
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
@@ -29,12 +40,35 @@ const UpdateRequestModal = (props) => {
   const [srAttachment, setSrAttachment] = useState([])
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
 
+  const [uploadedFiles, setUploadedFiles] = useState([])
+  const [fileLimit, setFileLimit] = useState(false);
   // 
   const onFileChange = (files) => {
     setSrAttachment(files)
-    // console.warn(srAttachment)
+    // console.warn(files)
   }
-
+  
+  // Save test
+  const handleSubmit = async () => {
+    // Save Change Here...
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            // Data Object
+            let data = {...fields}
+            // Save SE Activity Update
+            dispatch(createActivityUpdateRequest(data))
+        }
+      })
+  }
+  
     // Fields
     const [fields, setFields] = useState({
         sr_no: '',
@@ -45,6 +79,7 @@ const UpdateRequestModal = (props) => {
         remarks: '',
         conforme: '',
         attachment: [],
+        employee_list:[],
         // id: artid,
         // ar_id: '',
         // activity_type: '',
@@ -53,10 +88,35 @@ const UpdateRequestModal = (props) => {
         // request_for_dtc: '',
         // purpose_of_activity: '',
         // remarks: '',
-        // employee_list:[],
         // netsuite_link: '',
         // srAtt: '',
     })
+
+    // 
+    const handleUploadFiles = files => {
+        const uploaded = [...uploadedFiles];
+        let limitExceeded = false;
+        files.some((file) => {
+            if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+                uploaded.push(file);
+                if (uploaded.length === MAX_COUNT) setFileLimit(true);
+                if (uploaded.length > MAX_COUNT) {
+                    alert(`You can only add a maximum of ${MAX_COUNT} files`);
+                    setFileLimit(false);
+                    limitExceeded = true;
+                    return true;
+                }
+            }
+        })
+        if (!limitExceeded) setUploadedFiles(uploaded)
+    }
+    
+    const handleFileEvent =  (e) => {
+        // const chosenFiles = Array.prototype.slice.call(e.target.files)
+        const chosenFiles = Array.prototype.slice.call(e)
+        // console.warn(chosenFiles)
+        handleUploadFiles(chosenFiles);
+    }
 
     /**
      * - Value Setter
@@ -66,13 +126,20 @@ const UpdateRequestModal = (props) => {
         newField[fieldName] = value
         setFields(newField)
     }
-    
+
+    // 
     useEffect(() => {
         //
-        // setSelectedEmployeeNames(employee_list || '')
-        // console.warn(employee_list)
-
-    }, [selectedEmployeeNames])
+        changeValueHandler('sr_no', srNo)
+        changeValueHandler('actions_taken', actionsTaken)
+        changeValueHandler('findings', findings)
+        changeValueHandler('pending', pending)
+        changeValueHandler('recommendation', recommendation)
+        changeValueHandler('remarks', remarks)
+        changeValueHandler('conforme', conforme)
+        changeValueHandler('attachment', srAttachment)
+        // changeValueHandler('employee_list', activitySchedule)
+    },[])
 
   return (
     <>
@@ -104,8 +171,6 @@ const UpdateRequestModal = (props) => {
                         onChange={(e) => {
                             changeValueHandler('sr_no', e.target.value)
                             setSrNo(e.target.value)
-                            // setNewScheduleFields(fields)
-                            console.warn(fields)
                         }}
                     />
                     </Form.Group>
@@ -124,8 +189,6 @@ const UpdateRequestModal = (props) => {
                             onChange={(e) => {
                                 changeValueHandler('actions_taken', e.target.value)
                                 setActionsTaken(e.target.value)
-                                // setNewScheduleFields(fields)
-                                console.warn(fields)
                             }}
                         />
                     </Form.Group>
@@ -144,8 +207,6 @@ const UpdateRequestModal = (props) => {
                             onChange={(e) => {
                                 changeValueHandler('findings', e.target.value)
                                 setFindings(e.target.value)
-                                console.warn(fields)
-                                // setNewScheduleFields(fields)
                             }}
                         />
                     </Form.Group>
@@ -161,8 +222,6 @@ const UpdateRequestModal = (props) => {
                             onChange={(e) => {
                                 changeValueHandler('pending', e.target.value)
                                 setPending(e.target.value)
-                                console.warn(fields)
-                                // setNewScheduleFields(fields)
                             }}
                         />
                     </Form.Group>
@@ -181,8 +240,6 @@ const UpdateRequestModal = (props) => {
                             onChange={(e) => {
                                 changeValueHandler('recommendation', e.target.value)
                                 setRecommendation(e.target.value)
-                                // setNewScheduleFields(fields)
-                                console.warn(fields)
                             }}
                         />
                     </Form.Group>
@@ -198,8 +255,6 @@ const UpdateRequestModal = (props) => {
                             onChange={(e) => {
                                 changeValueHandler('remarks', e.target.value)
                                 setRemarks(e.target.value)
-                                // setNewScheduleFields(fields)
-                                console.warn(fields)
                             }}
                         />
                     </Form.Group>
@@ -218,8 +273,6 @@ const UpdateRequestModal = (props) => {
                         onChange={(e) => {
                             changeValueHandler('conforme', e.target.value)
                             setConforme(e.target.value)
-                            // setNewScheduleFields(fields)
-                            console.warn(fields)
                         }}
                     />
                     </Form.Group>
@@ -229,7 +282,8 @@ const UpdateRequestModal = (props) => {
             <EmployeeUpdateCompletion
                 changeValueHandler={changeValueHandler}
                 mode='Edit'
-                // selectedEmployeeNames={selectedEmployeeNames}
+                selectedEmployeeNames={selectedEmployeeNames}
+                setSelectedEmployeeNames={setSelectedEmployeeNames}
             />
             
             <Row>
@@ -237,11 +291,13 @@ const UpdateRequestModal = (props) => {
                     <Form.Label>SR Attachment</Form.Label>  
                     <Attachment
                         // onFileChange={(files) => onFileChange(files)}
-                        onFileChange={(e) => {
-                            onFileChange(e)
-                            changeValueHandler('attachment', e)
-                            console.warn(fields)
-                            // setNewScheduleFields(fields)
+                        onFileChange={(files) => {
+                            onFileChange(files)
+                            handleFileEvent(files)
+                            // console.warn(files)
+                            // const test = files.map(item => {
+                            // })
+                            changeValueHandler('attachment', files)
                         }}
                     />
                 </Col>
@@ -252,7 +308,7 @@ const UpdateRequestModal = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="btn bg-gradient-primary">Update</Button>
+          <Button variant="btn bg-gradient-primary" onClick={handleSubmit}>Update</Button>
         </Modal.Footer>
       </Modal>
     </>

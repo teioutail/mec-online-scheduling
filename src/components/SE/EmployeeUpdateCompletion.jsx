@@ -16,8 +16,6 @@ const EmployeeUpdateCompletion = (props) => {
     scheduleType,
   } = props
 
-  // console.warn(selectedEmployeeNames)
-
   // Table Row Array For Engineers/Employee
   const [rowsData, setRowsData] = useState([])
   // Add New Row State
@@ -25,35 +23,7 @@ const EmployeeUpdateCompletion = (props) => {
   // Get Status
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { employee_list } } = calendarScheduleDetails
-  
-  // Add New Table Rows
-  const addTableRows = () => {
-    //
-    // const rowsInput = {
-    //   employeeId: '',
-    //   timeFrom: '',
-    //   timeTo: '',
-    // }
 
-    // 
-    const rowsInput = {
-      employeeId: '',
-      time: [],
-      break:[],
-    }
-
-    // 
-    setAddNewRowState(true)
-    setRowsData([...rowsData, rowsInput])
-  }
-
-  // Delete Table Rows
-  const deleteTableRows = (index) => {
-    const rows = [...rowsData]
-    rows.splice(index, 1)
-    setRowsData(rows)
-  }
-  
   // Handle Adding Multiple Technician Feature
   const handleChange = (index, event) => {
     const { name, value } = event.target
@@ -62,8 +32,6 @@ const EmployeeUpdateCompletion = (props) => {
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
-
-    console.warn(rowsData)
   }
   
   // Handle Adding Multiple SE/Employee
@@ -74,26 +42,26 @@ const EmployeeUpdateCompletion = (props) => {
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
-
-    console.warn(rowsData)
   }
 
   // 
   useEffect(() => {
     // 
     if(mode === 'Edit') {
-     setRowsData(employee_list)
-    //  console.warn(rowsData)
+      setSelectedEmployeeNames(employee_list)
+      setRowsData(selectedEmployeeNames)
     }
-
-  }, [])
+  }, [selectedEmployeeNames])
 
   //
   return (
     <>
       <Row>
         <Col>
-          <Table responsive className="table align-items-center mb-0">
+          <Table 
+            responsive 
+            className="table align-items-center mb-0"
+          >
             <thead>
               {/* <tr>
                 <td colSpan={5}>
@@ -119,7 +87,6 @@ const EmployeeUpdateCompletion = (props) => {
               <SeTableRowsTime
                 rowsData={rowsData}
                 setRowsData={setRowsData}
-                deleteTableRows={deleteTableRows}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
                 mode={mode}

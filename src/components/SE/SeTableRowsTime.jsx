@@ -11,7 +11,6 @@ const SeTableRowsTime = (props) => {
   //
   const { 
     rowsData,
-    deleteTableRows, 
     handleChangeAddEmployee, 
     handleChange,
     mode,
@@ -35,7 +34,7 @@ const SeTableRowsTime = (props) => {
       //
       const { employeeId, duration } = data;
       
-      console.warn(employeeId)
+    //   console.warn(employeeId)
 
       return(
           <tr key={index}>
@@ -45,10 +44,7 @@ const SeTableRowsTime = (props) => {
                       onChange={(time) => {
                           handleChangeAddEmployee(index, "time", time)
                       }}
-                      // value={(addNewRowState === true ? JSON.parse(duration) : duration)}
-                      // Error nag uupdate lahat pag nag add ng new column ayusin mo 
-                      value={(mode === 'Edit' && addNewRowState === true  ? ['09:00','16:00'] : duration  )}
-                      // value={duration}
+                      value={['09:00','18:00']}
                       disableClock 
                   /> 
               </td>
@@ -57,6 +53,7 @@ const SeTableRowsTime = (props) => {
                       size='sm'
                       as='select' 
                       aria-label="Status"
+                      disabled
                       onChange={(e) => {
                           // 
                           handleChange(index, e)
@@ -64,7 +61,6 @@ const SeTableRowsTime = (props) => {
                       }}
                       value={employeeId}
                       name="employeeId"
-                      // onChange={(e) => setScheduleType(e.target.value)}
                   >
                   <option value="">- Select -</option>
                   { fullNameOptions }
@@ -76,17 +72,20 @@ const SeTableRowsTime = (props) => {
                       onChange={(time) => {
                           handleChangeAddEmployee(index, "break", time)
                       }}
-                      // value={(addNewRowState === true ? JSON.parse(duration) : duration)}
-                      // Error nag uupdate lahat pag nag add ng new column ayusin mo 
                       value={['12:00','13:00']}
-                      // value={(mode === 'Edit' && addNewRowState === true  ? ['12:00','13:00'] : duration  )}
-                      // value={duration}
                       disableClock
                   /> 
               </td>
               <td>
+                {/* Balikan mo to  */}
                   <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="" />
+                      <Form.Check 
+                        type="checkbox" 
+                        label="" 
+                        onChange={(e) => {
+                            handleChangeAddEmployee(index, "nobreak", e)
+                        }}
+                    />
                   </Form.Group>
               </td>
           </tr>
