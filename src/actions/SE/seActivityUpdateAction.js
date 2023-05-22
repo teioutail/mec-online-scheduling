@@ -32,7 +32,6 @@ export const createActivityUpdateRequest = (activity) => async (dispatch) => {
 
         // Form Data
         let formData = new FormData()
-        
         formData.append('sr_no', activity.sr_no)
         formData.append('actions_taken', activity.actions_taken)
         formData.append('findings', activity.findings)
@@ -40,49 +39,12 @@ export const createActivityUpdateRequest = (activity) => async (dispatch) => {
         formData.append('recommendation', activity.recommendation)
         formData.append('remarks', activity.remarks)
         formData.append('conforme', activity.conforme)
-        // 
+        formData.append('updated_by', activity.updated_by)
+        // Multiple File Upload
         activity.attachment.map(file=> {
-            // console.warn(file)
-            formData.append('attachments[]',file)
-
+            formData.append('attachments[]', file)
         })
         
-
-        // const chosenFiles = Array.prototype.slice.call(activity.attachment)
-
-        // console.warn(chosenFiles)
-        // console.warn(activity.attachment)
-
-        // console.log(activity.attachment[0]);
-
-        // return false;
-        // const tae = []
-        // activity.attachment.map(file=> {
-        //     console.warn(file)
-        //     // tae.push(file);
-
-        //     formData.append('attachments',file.name)
-
-        // })
-        
-        // formData.append("attachment", tae)
-        // activity.attachment.forEach(img => {
-        //     // console.warn(img)
-        //     const { File } = img
-        //     console.warn(File)
-        //     // formData.append("productPhotos", img)
-        // })
-
-        // for (let i = 0; i < files.length; i++) {
-        //     formData.append('files', files[i]);
-        // }
-
-        // alert(activity.attachment.length)
-
-        // formData.append("attachment" , selectedFile);
-        // formData.append('actions_taken', activity.actions_taken)
-        // console.warn()
-
         // Header 
         const config = {
             headers: {
@@ -92,7 +54,6 @@ export const createActivityUpdateRequest = (activity) => async (dispatch) => {
 
         // Call API Request
         const { data } = await axios.post('/auth/se-activity', formData, config)
-        
         console.warn(data)
 
         dispatch({

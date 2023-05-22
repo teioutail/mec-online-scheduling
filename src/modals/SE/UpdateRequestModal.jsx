@@ -29,6 +29,10 @@ const UpdateRequestModal = (props) => {
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
   const { loading:calendarDetailsLoading, calendar: { reference_act_type }} = calendarScheduleDetailsInfo
 
+  // User Login Info
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
   // Fields
   const [srNo, setSrNo] = useState()
   const [actionsTaken, setActionsTaken] = useState()
@@ -62,7 +66,12 @@ const UpdateRequestModal = (props) => {
       }).then((result) => {
         if (result.isConfirmed) {
             // Data Object
-            let data = {...fields}
+            let data = {
+                ...fields, 
+                updated_by: userInfo.user.id,
+            }
+            // 
+            console.warn(data)
             // Save SE Activity Update
             dispatch(createActivityUpdateRequest(data))
         }
@@ -91,32 +100,6 @@ const UpdateRequestModal = (props) => {
         // netsuite_link: '',
         // srAtt: '',
     })
-
-    // 
-    const handleUploadFiles = files => {
-        const uploaded = [...uploadedFiles];
-        let limitExceeded = false;
-        files.some((file) => {
-            if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-                uploaded.push(file);
-                if (uploaded.length === MAX_COUNT) setFileLimit(true);
-                if (uploaded.length > MAX_COUNT) {
-                    alert(`You can only add a maximum of ${MAX_COUNT} files`);
-                    setFileLimit(false);
-                    limitExceeded = true;
-                    return true;
-                }
-            }
-        })
-        if (!limitExceeded) setUploadedFiles(uploaded)
-    }
-    
-    const handleFileEvent =  (e) => {
-        // const chosenFiles = Array.prototype.slice.call(e.target.files)
-        const chosenFiles = Array.prototype.slice.call(e)
-        // console.warn(chosenFiles)
-        handleUploadFiles(chosenFiles);
-    }
 
     /**
      * - Value Setter
@@ -148,7 +131,7 @@ const UpdateRequestModal = (props) => {
       </Button> */}
 
       <Modal
-        size='lg' 
+        size='lg'
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -293,10 +276,6 @@ const UpdateRequestModal = (props) => {
                         // onFileChange={(files) => onFileChange(files)}
                         onFileChange={(files) => {
                             onFileChange(files)
-                            handleFileEvent(files)
-                            // console.warn(files)
-                            // const test = files.map(item => {
-                            // })
                             changeValueHandler('attachment', files)
                         }}
                     />
