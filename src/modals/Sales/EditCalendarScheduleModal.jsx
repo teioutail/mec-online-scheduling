@@ -178,6 +178,7 @@ const EditCalendarScheduleModal = (props) => {
         return acc;
       }, []);
     }
+
     // 
     Swal.fire({
     title: 'Are you sure?',

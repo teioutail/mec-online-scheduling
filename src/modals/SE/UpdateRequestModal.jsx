@@ -107,7 +107,8 @@ const UpdateRequestModal = (props) => {
     // 
     useEffect(() => {
         // 
-        const { activity:{ 
+        const { activity:{
+            sr_no, 
             art_id, 
             actions_taken,
             findings,
@@ -118,7 +119,7 @@ const UpdateRequestModal = (props) => {
             attachment
         } } = seActivityUpdateDetails
         // Set State
-        setSrNo(art_id || '')
+        setSrNo(sr_no || '')
         setActionsTaken(actions_taken || '')
         setFindings(findings || '')
         setPending(pending || '')
@@ -320,16 +321,18 @@ const UpdateRequestModal = (props) => {
                             { ! srAttachment ? <></> : srAttachment.map((file, index) => {
                                 return (
                                 <p className='text-sm text-info text-gradient' key={index}>
-                                    <Link className="nav-link" download to={file}>
+                                    {/* <Link className="nav-link" download to={file}>
                                         <FontAwesomeIcon className="me-2" icon={['fas', 'file']} /> {file}
-                                    </Link>
+                                    </Link> */}
+                                    <a className="nav-link" download href={file}>
+                                        <FontAwesomeIcon className="me-2" icon={['fas', 'file']} /> {file}
+                                    </a>
                                 </p>)
                             })}
                         </Col>
                     </Row>
                 </>
             }
-            
             </>}
         </Modal.Body>
         <Modal.Footer>
