@@ -34,11 +34,24 @@ const EmployeeUpdateCompletion = (props) => {
     changeValueHandler('employee_list', rowsData)
   }
   
+  
   // Handle Adding Multiple SE/Employee
   const handleChangeAddEmployee = (index, name, value) => {
     //
     const rowsInput = [...rowsData]
     rowsInput[index][name] = value
+    setRowsData(rowsInput)
+    setSelectedEmployeeNames(rowsData)
+    changeValueHandler('employee_list', rowsData)
+  }
+
+  // Event in checkbox
+  const handleCheckboxChange = (index, name, event) => {
+    //
+    const rowsInput = [...rowsData]
+    const target = event.target
+    const checked = target.checked
+    rowsInput[index][name] = (checked === true ? 1 : 0)
     setRowsData(rowsInput)
     setSelectedEmployeeNames(rowsData)
     changeValueHandler('employee_list', rowsData)
@@ -89,6 +102,7 @@ const EmployeeUpdateCompletion = (props) => {
                 setRowsData={setRowsData}
                 handleChangeAddEmployee={handleChangeAddEmployee}
                 handleChange={handleChange}
+                handleCheckboxChange={handleCheckboxChange}
                 mode={mode}
                 addNewRowState={addNewRowState}
               />

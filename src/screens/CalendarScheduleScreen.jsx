@@ -263,7 +263,8 @@ const CalendarScheduleScreen = () => {
                     <UpdateRequestModal
                         show={show2}
                         artid={artid}
-                        setShow2={setShow2} // 
+                        setShow2={setShow2}
+                        onHide={handleClose}
                     />
 
                     <ToastContainer

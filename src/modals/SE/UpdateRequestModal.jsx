@@ -6,33 +6,41 @@ import Modal from 'react-bootstrap/Modal';
 import Attachment from '../../components/upload/attachment';
 import EmployeeUpdateCompletion from '../../components/SE/EmployeeUpdateCompletion';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { createActivityUpdateRequest } from '../../actions/SE/seActivityUpdateAction';
+import { 
+    createActivityUpdateRequest,
+} from '../../actions/SE/seActivityUpdateAction';
+import { listCalendarSchedule } from '../../actions/Sales/salesCalendarScheduleAction';
+import { ACTIVITY_UPDATE_CREATE_RESET } from '../../constants/SE/seActivityUpdateConstants';
+import Loader from '../../components/Loader';
 
 const UpdateRequestModal = (props) => {
   // 
   const { 
     show , 
-    setShow2 
+    setShow2,
+    onHide,
   } = props
-  
   // 
   const handleClose = () => {
     setShow2(false);
   }
-
   // Redux
   const dispatch = useDispatch()
-
-  const MAX_COUNT = 5;
-
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
-  const { loading:calendarDetailsLoading, calendar: { reference_act_type }} = calendarScheduleDetailsInfo
-
+  const { calendar: { art_id, status }} = calendarScheduleDetailsInfo
+  // Activity Schedule Create Success Message
+  const seActivityUpdateCreate = useSelector(state => state.seActivityUpdateCreate)
+  const { success:seActivityUpdateCreateSuccess, message:seActivityUpdateCreateMessage } = seActivityUpdateCreate
+    // Activity Schedule Create Success Message
+    const seActivityUpdateDetails = useSelector(state => state.seActivityUpdateDetails)
+    const { loading:seActivityUpdateDetailsLoading } = seActivityUpdateDetails
+ 
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
+  // CommonJS
+  const Swal = require('sweetalert2')
   // Fields
   const [srNo, setSrNo] = useState()
   const [actionsTaken, setActionsTaken] = useState()
@@ -43,13 +51,9 @@ const UpdateRequestModal = (props) => {
   const [conforme, setConforme] = useState()
   const [srAttachment, setSrAttachment] = useState([])
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
-
-  const [uploadedFiles, setUploadedFiles] = useState([])
-  const [fileLimit, setFileLimit] = useState(false);
-  // 
+  // File Handler
   const onFileChange = (files) => {
     setSrAttachment(files)
-    // console.warn(files)
   }
   
   // Save test
@@ -68,10 +72,9 @@ const UpdateRequestModal = (props) => {
             // Data Object
             let data = {
                 ...fields, 
+                art_id: art_id,
                 updated_by: userInfo.user.id,
             }
-            // 
-            console.warn(data)
             // Save SE Activity Update
             dispatch(createActivityUpdateRequest(data))
         }
@@ -89,16 +92,6 @@ const UpdateRequestModal = (props) => {
         conforme: '',
         attachment: [],
         employee_list:[],
-        // id: artid,
-        // ar_id: '',
-        // activity_type: '',
-        // activity_related_to: '',
-        // destination: '',
-        // request_for_dtc: '',
-        // purpose_of_activity: '',
-        // remarks: '',
-        // netsuite_link: '',
-        // srAtt: '',
     })
 
     /**
@@ -112,17 +105,50 @@ const UpdateRequestModal = (props) => {
 
     // 
     useEffect(() => {
-        //
-        changeValueHandler('sr_no', srNo)
-        changeValueHandler('actions_taken', actionsTaken)
-        changeValueHandler('findings', findings)
-        changeValueHandler('pending', pending)
-        changeValueHandler('recommendation', recommendation)
-        changeValueHandler('remarks', remarks)
-        changeValueHandler('conforme', conforme)
-        changeValueHandler('attachment', srAttachment)
-        // changeValueHandler('employee_list', activitySchedule)
-    },[])
+        // 
+        const { activity:{ 
+            art_id, 
+            actions_taken,
+            findings,
+            pending,
+            recommendation,
+            remarks,
+            conforme,
+            attachment
+        } } = seActivityUpdateDetails
+        // Set State
+        setSrNo(art_id || '')
+        setActionsTaken(actions_taken || '')
+        setFindings(findings || '')
+        setPending(pending || '')
+        setRecommendation(recommendation || '')
+        setRemarks(remarks || '')
+        setConforme(conforme || '')
+        setSrAttachment(attachment || '')
+    },[seActivityUpdateDetails])
+
+    // Show sweet alert message
+    useEffect(() => {
+        // Show Success Adding of new records
+        if(seActivityUpdateCreateSuccess) {
+            Swal.fire(
+                'Success!',
+                seActivityUpdateCreateMessage,
+                'success'
+            )
+            // Refresh Datatable
+            dispatch(listCalendarSchedule())
+            // 
+            dispatch({
+                type: ACTIVITY_UPDATE_CREATE_RESET,
+            })
+            // Close Both Modals
+            handleClose()
+            onHide()
+        }
+
+    },[seActivityUpdateCreateSuccess,
+    seActivityUpdateCreateMessage]);
 
   return (
     <>
@@ -142,7 +168,9 @@ const UpdateRequestModal = (props) => {
           <Modal.Title>Update Request</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <Row>
+            { seActivityUpdateDetailsLoading ? <Loader /> : 
+            <>
+                  <Row>
                 <Col sm={12} md={6} lg={6}>
                     <Form.Group>
                     <Form.Label>SR No.</Form.Label>  
@@ -268,26 +296,31 @@ const UpdateRequestModal = (props) => {
                 selectedEmployeeNames={selectedEmployeeNames}
                 setSelectedEmployeeNames={setSelectedEmployeeNames}
             />
-            
-            <Row>
-                <Col sm={12} md={12} lg={12}>
-                    <Form.Label>SR Attachment</Form.Label>  
-                    <Attachment
-                        // onFileChange={(files) => onFileChange(files)}
-                        onFileChange={(files) => {
-                            onFileChange(files)
-                            changeValueHandler('attachment', files)
-                        }}
-                    />
-                </Col>
-            </Row>
 
+            { ! ['Completed'].includes(status) && <>
+                <Row>
+                    <Col sm={12} md={12} lg={12}>
+                        <Form.Label>SR Attachment</Form.Label> 
+                        <Attachment
+                            // onFileChange={(files) => onFileChange(files)}
+                            onFileChange={(files) => {
+                                onFileChange(files)
+                                changeValueHandler('attachment', files)
+                            }}
+                        />
+                    </Col>
+                </Row>
+            </>
+            }
+            </>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="btn bg-gradient-primary" onClick={handleSubmit}>Update</Button>
+
+          { ! ['Completed'].includes(status) && <Button variant="btn bg-gradient-primary" onClick={handleSubmit}>Update</Button> }
+
         </Modal.Footer>
       </Modal>
     </>

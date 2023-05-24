@@ -13,8 +13,9 @@ const SeTableRowsTime = (props) => {
     rowsData,
     handleChangeAddEmployee, 
     handleChange,
-    mode,
-    addNewRowState,
+    handleCheckboxChange,
+    // mode,
+    // addNewRowState,
  } = props
 
   // Get Fullname, Users Id
@@ -82,8 +83,9 @@ const SeTableRowsTime = (props) => {
                       <Form.Check 
                         type="checkbox" 
                         label="" 
+                        name="nobreak"
                         onChange={(e) => {
-                            handleChangeAddEmployee(index, "nobreak", e)
+                            handleCheckboxChange(index, "nobreak", e)
                         }}
                     />
                   </Form.Group>

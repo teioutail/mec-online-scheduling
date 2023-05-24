@@ -25,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { listActivityRelatedToOption } from '../../actions/Admin/activityRelatedToActions'
 import JobOrderRequest from '../../components/Sales/JobOrderRequest'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getSelectedActivityUpdateDetails } from '../../actions/SE/seActivityUpdateAction'
 
 // import CloseButton from 'react-bootstrap/CloseButton';
 const EditCalendarScheduleModal = (props) => {
@@ -53,7 +54,7 @@ const EditCalendarScheduleModal = (props) => {
   const [emailParticipantsFields, setEmailParticipantsFields] = useState({})
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
-  const { loading:calendarDetailsLoading, calendar: { reference_act_type }} = calendarScheduleDetailsInfo
+  const { loading:calendarDetailsLoading, calendar: { reference_act_type, art_id }} = calendarScheduleDetailsInfo
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
@@ -141,9 +142,6 @@ const EditCalendarScheduleModal = (props) => {
           data = {...joRequestFields,
             schedule_type: scheduleType,
           }
-
-          // alert('testilng lang laksdnf');
-          
         // 
         if(mode === 'Add') {
           // Create Calendar Schedule 
@@ -154,6 +152,13 @@ const EditCalendarScheduleModal = (props) => {
         }
       }
     })
+  }
+
+  // View Selected Details
+  const handleViewDetails = async () => {
+    // Show Selected Activity 
+    dispatch(getSelectedActivityUpdateDetails(art_id))
+    setShow2(true)
   }
 
   /**
@@ -209,6 +214,7 @@ const EditCalendarScheduleModal = (props) => {
             requested_by: userId
           }
       }
+
       // 
       if(mode === 'Add') {
         // Create Calendar Schedule 
@@ -960,11 +966,20 @@ const EditCalendarScheduleModal = (props) => {
                   }
 
                   {/* Engineer */}
-                  {(['Engineer'].includes(userInfo.user_role) && status !== 'For Approval') && 
+                  {(['Engineer'].includes(userInfo.user_role)) && 
                     <>
-                      <Button size='sm' variant="btn bg-gradient-primary" onClick={() => setShow2(true)} >
+                      {( ! ['For Approval','Completed'].includes(status)) && 
+                        <Button size='sm' variant="btn bg-gradient-primary" onClick={() => setShow2(true)} >
                           Update Request
-                      </Button>
+                        </Button>
+                      }
+
+                      { ['Completed'].includes(status) && 
+                        <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewDetails}>
+                          View Activity Update
+                        </Button>
+                      }
+
                       <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
                           Update Inventory
                       </Button>

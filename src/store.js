@@ -113,6 +113,12 @@ import {
     caseRequestListReducer,
 } from './reducers/TeamLead/caseRequestReducer'
 
+// SE Activity Update Reducer
+import { 
+    seActivityUpdateCreateReducer, 
+    seActivityUpdateDetailsReducer,
+} from './reducers/SE/seActivityUpdateReducer'
+
 // Reducers
 const reducer = combineReducers({
     userLogin:userLoginReducer,
@@ -178,8 +184,11 @@ const reducer = combineReducers({
     approverActivityList: approverActivityListReducer,
     approverActivityUpdate: approverActivityUpdateReducer,
     caseRequestList: caseRequestListReducer,
+    seActivityUpdateCreate:seActivityUpdateCreateReducer,
+    seActivityUpdateDetails:seActivityUpdateDetailsReducer,
 })
 
+// 
 const userInfoFromStorage = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo'))
 : null
