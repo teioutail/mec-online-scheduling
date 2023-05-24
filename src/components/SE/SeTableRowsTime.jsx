@@ -33,9 +33,7 @@ const SeTableRowsTime = (props) => {
   // 
   rowsData.map((data, index) => {
       //
-      const { employeeId, duration } = data;
-      
-    //   console.warn(employeeId)
+      const { employeeId, time:realtime, break:realbreak, nobreak:realnobreak } = data;
 
       return(
           <tr key={index}>
@@ -45,7 +43,7 @@ const SeTableRowsTime = (props) => {
                       onChange={(time) => {
                           handleChangeAddEmployee(index, "time", time)
                       }}
-                      value={['09:00','18:00']}
+                      value={realtime ? realtime : ['09:00','18:00']}
                       disableClock 
                   /> 
               </td>
@@ -73,7 +71,8 @@ const SeTableRowsTime = (props) => {
                       onChange={(time) => {
                           handleChangeAddEmployee(index, "break", time)
                       }}
-                      value={['12:00','13:00']}
+                      value={realbreak ? realbreak : ['12:00','13:00']}
+                      disabled={realnobreak ? true : false}
                       disableClock
                   /> 
               </td>
@@ -84,6 +83,8 @@ const SeTableRowsTime = (props) => {
                         type="checkbox" 
                         label="" 
                         name="nobreak"
+                        disabled={realnobreak ? true : false}
+                        checked={realnobreak ? true : false}
                         onChange={(e) => {
                             handleCheckboxChange(index, "nobreak", e)
                         }}

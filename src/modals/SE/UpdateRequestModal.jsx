@@ -12,6 +12,8 @@ import {
 import { listCalendarSchedule } from '../../actions/Sales/salesCalendarScheduleAction';
 import { ACTIVITY_UPDATE_CREATE_RESET } from '../../constants/SE/seActivityUpdateConstants';
 import Loader from '../../components/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const UpdateRequestModal = (props) => {
   // 
@@ -35,7 +37,6 @@ const UpdateRequestModal = (props) => {
     // Activity Schedule Create Success Message
     const seActivityUpdateDetails = useSelector(state => state.seActivityUpdateDetails)
     const { loading:seActivityUpdateDetailsLoading } = seActivityUpdateDetails
- 
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -55,7 +56,7 @@ const UpdateRequestModal = (props) => {
   const onFileChange = (files) => {
     setSrAttachment(files)
   }
-  
+
   // Save test
   const handleSubmit = async () => {
     // Save Change Here...
@@ -165,7 +166,7 @@ const UpdateRequestModal = (props) => {
       >
         
         <Modal.Header closeButton>
-          <Modal.Title>Update Request</Modal.Title>
+          <Modal.Title>Activity Request</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             { seActivityUpdateDetailsLoading ? <Loader /> : 
@@ -297,21 +298,38 @@ const UpdateRequestModal = (props) => {
                 setSelectedEmployeeNames={setSelectedEmployeeNames}
             />
 
-            { ! ['Completed'].includes(status) && <>
-                <Row>
-                    <Col sm={12} md={12} lg={12}>
-                        <Form.Label>SR Attachment</Form.Label> 
-                        <Attachment
-                            // onFileChange={(files) => onFileChange(files)}
-                            onFileChange={(files) => {
-                                onFileChange(files)
-                                changeValueHandler('attachment', files)
-                            }}
-                        />
-                    </Col>
-                </Row>
-            </>
+            { ! ['Completed'].includes(status) ? 
+                <>
+                    <Row>
+                        <Col sm={12} md={12} lg={12}>
+                            <Form.Label>SR Attachment</Form.Label> 
+                            <Attachment
+                                // onFileChange={(files) => onFileChange(files)}
+                                onFileChange={(files) => {
+                                    onFileChange(files)
+                                    changeValueHandler('attachment', files)
+                                }}
+                            />
+                        </Col>
+                    </Row>
+                </> : 
+                <>
+                    <Row>
+                        <Col sm={12} md={12} lg={12}>
+                            <Form.Label>Attached Files</Form.Label> 
+                            { ! srAttachment ? <></> : srAttachment.map((file, index) => {
+                                return (
+                                <p className='text-sm text-info text-gradient' key={index}>
+                                    <Link className="nav-link" download to={file}>
+                                        <FontAwesomeIcon className="me-2" icon={['fas', 'file']} /> {file}
+                                    </Link>
+                                </p>)
+                            })}
+                        </Col>
+                    </Row>
+                </>
             }
+            
             </>}
         </Modal.Body>
         <Modal.Footer>

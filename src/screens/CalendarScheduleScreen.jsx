@@ -45,6 +45,7 @@ import {
   } from '../constants/Sales/salesCalendarScheduleConstants'
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../constants/Approver/approverActivityRequestConstants'
 import UpdateRequestModal from '../modals/SE/UpdateRequestModal'
+import { ACTIVITY_UPDATE_CREATE_RESET } from '../constants/SE/seActivityUpdateConstants'
 
 const CalendarScheduleScreen = () => {
     // Locales
@@ -86,6 +87,9 @@ const CalendarScheduleScreen = () => {
     // Calendar Update Error
     const calendarScheduleUpdate = useSelector(state => state.calendarScheduleUpdate)
     const { error:errorUpdate } = calendarScheduleUpdate
+    // SE Activity Update Error
+    const seActivityUpdateCreate = useSelector(state => state.seActivityUpdateCreate)
+    const { error:seActivityUpdateCreateError } = seActivityUpdateCreate
     //
     const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
     const { error:approverActivityUpdateError } = approverActivityUpdate
@@ -184,6 +188,19 @@ const CalendarScheduleScreen = () => {
             dispatch({ type: CALENDAR_SCHEDULE_UPDATE_RESET })
         }
 
+        // Show Activity Update Error
+        if(seActivityUpdateCreateError) {
+            // Loop Error Back-End Validation
+            for(const key in seActivityUpdateCreateError) {
+                if (seActivityUpdateCreateError.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${seActivityUpdateCreateError[key]}`)
+                }
+            }
+            //
+            dispatch({ type: ACTIVITY_UPDATE_CREATE_RESET })
+        }
+
         // Show Update Error on Activity Update
         if(approverActivityUpdateError) {
             // Loop Error Back-End Validation
@@ -199,6 +216,7 @@ const CalendarScheduleScreen = () => {
 
     }, [errorCreate, 
         errorUpdate, 
+        seActivityUpdateCreateError,
         approverActivityUpdateError])
 
     //
