@@ -28,6 +28,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
 
 const ScheduleScreen = () => {
     
@@ -46,7 +47,7 @@ const ScheduleScreen = () => {
     // CommonJS
     const Swal = require('sweetalert2')
     //
-    const headerTitle = 'Mother Folders'
+    const headerTitle = 'Mother Folder'
     // Redux
     const dispatch = useDispatch()
     // useNavigate to redirect the user
@@ -71,20 +72,18 @@ const ScheduleScreen = () => {
     // Schedule Info / Details
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
-
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
-
     // EditRoleModal
     const [show, setShow] = useState(false)
+    // Inventory
+    const [showInventory, setShowInventory] = useState(false)
     // 
     const [showRoleAccess, setShowRoleAccess] = useState()
     // Role Access View Modal
     const handleRoleAccessClose = () => setShowRoleAccess(false)
-    const handleRoleAccessShow = () => setShowRoleAccess(true)
     //
-    const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     // Global ID
@@ -111,14 +110,12 @@ const ScheduleScreen = () => {
         // Call API Here...
         dispatch(getScheduleReferenceDetails(state.target.id))
     }
-
-    // Role Access 
-    const handleRoleAccessView = (state) => {
-        handleRoleAccessShow()
+    // Inventory 
+    const handleInventoryView = (state) => {
+        setShowInventory(true);
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
-        
     }
 
     // Delete Schedule Reference
@@ -152,7 +149,7 @@ const ScheduleScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Schedule Reference No',
+            {   name: 'Reference No',
                 selector: row => row.reference_id,
                 sortable: true,
             },
@@ -207,17 +204,17 @@ const ScheduleScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
                                       <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleRoleAccessView} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
                                       <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
                                     </Link>
                                 </li>
@@ -318,7 +315,16 @@ const ScheduleScreen = () => {
                     <EditScheduleModal 
                         size="lg"
                         show={show} 
-                        onHide={handleClose} 
+                        onHide={() => setShow(false)} 
+                        scheduleid={scheduleid}
+                        scheduleDetails={scheduleDetail}
+                        mode={mode}
+                    />
+
+                    <EditInventoryModal 
+                        size="lg"
+                        show={showInventory} 
+                        onHide={() => setShowInventory(false) } 
                         scheduleid={scheduleid}
                         scheduleDetails={scheduleDetail}
                         mode={mode}

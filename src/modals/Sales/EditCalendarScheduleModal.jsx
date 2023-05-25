@@ -178,7 +178,6 @@ const EditCalendarScheduleModal = (props) => {
         return acc;
       }, []);
     }
-
     // 
     Swal.fire({
     title: 'Are you sure?',
@@ -312,7 +311,7 @@ const EditCalendarScheduleModal = (props) => {
     // 
     let user_role = userInfo.user_role
     // 
-    const status = ( user_role === 'Pre-Sales Approver' ?'DELEGATED_POSTSALES_SE_APPROVED':'DELEGATED_PRESALES_SE_APPROVED')
+    const status = ( user_role === 'Pre-Sales Approver' ? 'DELEGATED_POSTSALES_SE_APPROVED':'DELEGATED_PRESALES_SE_APPROVED')
     // 
     Swal.fire({
       title: 'Are you sure?',
@@ -823,7 +822,7 @@ const EditCalendarScheduleModal = (props) => {
                       ( ['Approved'].includes(status)) &&
                       userId === userInfo.user.id &&
                         <>
-                          <Button size='sm' variant="info" onClick={handleSubmit} >
+                          <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
                               Save Changes
                           </Button>
                         </>
@@ -833,7 +832,7 @@ const EditCalendarScheduleModal = (props) => {
                       mode === 'Edit' && 
                       status === 'Approved' &&                     
                         <>
-                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                          <Button size='sm' variant="btn bg-gradient-warning" onClick={handleCancelRequest} >
                             Cancel Schedule
                           </Button>
                         </>
@@ -899,7 +898,7 @@ const EditCalendarScheduleModal = (props) => {
 
                               {userInfo.user_role === 'Super-Approver' && 
                                 <>
-                                  <Button size='sm' variant="secondary" onClick={handleDelegateSuperApproverRequest} >
+                                  <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleDelegateSuperApproverRequest} >
                                     Delegate to Approver
                                   </Button>
                                 </>
@@ -917,7 +916,7 @@ const EditCalendarScheduleModal = (props) => {
                       ((status === 'DELEGATE_POSTSALES_SE_FOR_APPROVAL' || status === 'DELEGATE_PRESALES_SE_FOR_APPROVAL') && userInfo.user_role === 'Super-Approver')
                       )  &&
                         <>
-                          <Button size='sm' variant="success" onClick={handleDelegatedApprovedRequest} >
+                          <Button size='sm' variant="btn bg-gradient-success" onClick={handleDelegatedApprovedRequest} >
                             Approved SE Request
                           </Button>
                         </>
@@ -930,7 +929,7 @@ const EditCalendarScheduleModal = (props) => {
                         ((status === 'DELEGATED_POSTSALES_SE_APPROVED' || status === 'DELEGATED_PRESALES_SE_APPROVED') && userInfo.user_role === 'Super-Approver')
                         ) &&
                           <>
-                            <Button size='sm' variant="success" onClick={handleApprovedRequest} >
+                            <Button size='sm' variant="btn bg-gradient-success" onClick={handleApprovedRequest} >
                               Approved Activity Request
                             </Button>
                           </>
@@ -941,7 +940,7 @@ const EditCalendarScheduleModal = (props) => {
                       status === 'Approved' &&
                       (['Pre-Sales Approver','Post-Sales Approver','Super-Approver'].includes(userInfo.user_role)) && 
                         <>
-                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                          <Button size='sm' variant="btn bg-gradient-warning" onClick={handleCancelRequest} >
                             Cancel Schedule
                           </Button>
                         </>
@@ -955,10 +954,10 @@ const EditCalendarScheduleModal = (props) => {
                     <>
                       {mode !== 'Add' && (userId === userInfo.user.id) &&
                         <>
-                          <Button size='sm' variant="warning" onClick={handleCancelRequest} >
+                          <Button size='sm' variant="btn bg-gradient-warning" onClick={handleCancelRequest} >
                             Cancel Schedule
                           </Button>
-                          <Button size='sm' variant="primary" onClick={handleSubmit} >
+                          <Button size='sm' variant="btn bg-gradient-primary" onClick={handleSubmit} >
                               Save Changes
                           </Button>
                         </>
@@ -975,11 +974,11 @@ const EditCalendarScheduleModal = (props) => {
                         </Button>
                       }
 
-                      { ['Completed'].includes(status) && 
+                      {/* { ['Completed'].includes(status) && 
                         <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewDetails}>
                           View Activity Update
                         </Button>
-                      }
+                      } */}
 
                       <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
                           Update Inventory
@@ -987,10 +986,16 @@ const EditCalendarScheduleModal = (props) => {
                     </> 
                   }
 
+                  { (scheduleType === 'New-Schedule' && ['Completed'].includes(status) && mode !== 'Add') && 
+                    <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewDetails}>
+                      View Activity Update
+                    </Button>
+                  }           
+                  
                   {/* Show Save Change Button */}
                   {mode === 'Add' && 
                     <>
-                      <Button size='sm' variant="primary" onClick={handleSubmit} >
+                      <Button size='sm' variant="btn bg-gradient-primary" onClick={handleSubmit} >
                           Save Schedule
                       </Button>
                     </>

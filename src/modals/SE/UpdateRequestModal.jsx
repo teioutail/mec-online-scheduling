@@ -43,20 +43,19 @@ const UpdateRequestModal = (props) => {
   // CommonJS
   const Swal = require('sweetalert2')
   // Fields
-  const [srNo, setSrNo] = useState()
-  const [actionsTaken, setActionsTaken] = useState()
-  const [findings, setFindings] = useState()
-  const [pending, setPending] = useState()
-  const [recommendation, setRecommendation] = useState()
-  const [remarks, setRemarks] = useState()
-  const [conforme, setConforme] = useState()
+  const [srNo, setSrNo] = useState('')
+  const [actionsTaken, setActionsTaken] = useState('')
+  const [findings, setFindings] = useState('')
+  const [pending, setPending] = useState('')
+  const [recommendation, setRecommendation] = useState('')
+  const [remarks, setRemarks] = useState('')
+  const [conforme, setConforme] = useState('')
   const [srAttachment, setSrAttachment] = useState([])
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
   // File Handler
   const onFileChange = (files) => {
     setSrAttachment(files)
   }
-
   // Save test
   const handleSubmit = async () => {
     // Save Change Here...
@@ -109,7 +108,7 @@ const UpdateRequestModal = (props) => {
         // 
         const { activity:{
             sr_no, 
-            art_id, 
+            // art_id, 
             actions_taken,
             findings,
             pending,
@@ -118,6 +117,7 @@ const UpdateRequestModal = (props) => {
             conforme,
             attachment
         } } = seActivityUpdateDetails
+
         // Set State
         setSrNo(sr_no || '')
         setActionsTaken(actions_taken || '')
@@ -127,6 +127,7 @@ const UpdateRequestModal = (props) => {
         setRemarks(remarks || '')
         setConforme(conforme || '')
         setSrAttachment(attachment || '')
+
     },[seActivityUpdateDetails])
 
     // Show sweet alert message
@@ -154,20 +155,16 @@ const UpdateRequestModal = (props) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button> */}
-
-      <Modal
-        size='lg'
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
+        <Modal
+            size='lg'
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+        >
         
         <Modal.Header closeButton>
-          <Modal.Title>Activity Request</Modal.Title>
+          <Modal.Title>Updates</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             { seActivityUpdateDetailsLoading ? <Loader /> : 
@@ -224,6 +221,7 @@ const UpdateRequestModal = (props) => {
                         />
                     </Form.Group>
                 </Col>
+
                 <Col sm={12} md={6} lg={6}>
                     <Form.Group>
                         <Form.Label>Pending</Form.Label>
