@@ -118,6 +118,7 @@ import {
     seActivityUpdateCreateReducer, 
     seActivityUpdateDetailsReducer,
 } from './reducers/SE/seActivityUpdateReducer'
+import { motherFolderInventoryCreateReducer } from './reducers/Sales/motherFolderInventoryReducers'
 
 // Reducers
 const reducer = combineReducers({
@@ -186,6 +187,7 @@ const reducer = combineReducers({
     caseRequestList: caseRequestListReducer,
     seActivityUpdateCreate:seActivityUpdateCreateReducer,
     seActivityUpdateDetails:seActivityUpdateDetailsReducer,
+    motherFolderInventoryCreate: motherFolderInventoryCreateReducer,
 })
 
 // 

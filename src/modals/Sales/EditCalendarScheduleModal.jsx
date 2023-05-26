@@ -723,7 +723,7 @@ const EditCalendarScheduleModal = (props) => {
                     <option value="">- Select -</option>
                     <option value="New-Schedule">New Schedule Request</option>
                     <option value="Training-Schedule">Training Schedule</option>
-                    <option value="JO-Request">Job Order Request</option>
+                    {/* <option value="JO-Request">Job Order Request</option> */}
                     </Form.Control>
                     </Form.Group>
                 </Col>

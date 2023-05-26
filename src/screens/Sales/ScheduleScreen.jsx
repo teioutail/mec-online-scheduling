@@ -29,6 +29,7 @@ import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
+import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
 const ScheduleScreen = () => {
     
@@ -64,6 +65,10 @@ const ScheduleScreen = () => {
     // Schedule Update Error
     const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
     const { error:errorUpdate } = scheduleReferenceUpdate
+
+    // Schedule Reference Create Success Message
+    const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
+    const { error:motherFolderInventoryErrorCreate, message:motherFolderInventoryErrorMessage } = motherFolderInventoryCreate
 
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
@@ -263,7 +268,23 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
         }
-    }, [errorCreate, errorUpdate])
+
+          // Show Update Error
+          if(motherFolderInventoryErrorCreate) {
+            // Loop Error Back-End Validation
+            for(const key in motherFolderInventoryErrorCreate) {
+                if (motherFolderInventoryErrorCreate.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${motherFolderInventoryErrorCreate[key]}`)
+                }
+            }
+            //
+            dispatch({ type: INVENTORY_CREATE_RESET })
+        }
+
+    }, [errorCreate, 
+        errorUpdate, 
+        motherFolderInventoryErrorCreate])
 
     // Set Row Value
     useEffect(() => {

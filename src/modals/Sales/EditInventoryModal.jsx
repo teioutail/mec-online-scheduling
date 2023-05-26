@@ -11,35 +11,26 @@ import {
 import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
+import { 
+  createMotherFolderInventory,
+} from '../../actions/Sales/motherFolderInventoryAction'
+import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
-const EditInventoryModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size }) => {
-  // PostSalesInput Component Reference
-  const postSalesInputRef = useRef()
-  // EditEmailBusinessUnit Component Reference
-  const EditEmailBusinessUnitRef = useRef()
+const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
-  const [activityType, setActivityType] = useState('')
-  const [projectName, setProjectName] = useState('')
-  const [projectedAmount, setProjectedAmount] = useState('')
-  const [partnerCompanyName, setPartnerCompanyName] = useState('')
-  const [endUserCompanyName, setEndUserCompanyName] = useState('')
-  const [partnerSiteAddress, setPartnerSiteAddress] = useState('')
-  const [endUserSiteAddress, setEndUserSiteAddress] = useState('')
-  const [partnerContactPerson, setPartnerContactPerson] = useState('')
-  const [endUserContactPerson, setEndUserContactPerson] = useState('')
-  const [partnerContactNumber, setPartnerContactNumber] = useState('')
-  const [endUserContactNumber, setEndUserContactNumber] = useState('')
-  const [emailParticipants, setEmailParticipants] = useState([])
+  const [brand, setBrand] = useState('')
+  const [partNo, setPartNo] = useState('')
+  const [serialNo, setSerialNo] = useState('')
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
   const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
 
   // Schedule Reference Create Success Message
-  const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
-  const { success:scheduleReferenceCreateSuccess, message:scheduleReferenceCreateMessage } = scheduleReferenceCreate
+  const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
+  const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
 
   // Schedule Reference Update Success Message
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
@@ -65,39 +56,13 @@ const EditInventoryModal = ({ show , mode, onHide, scheduleid, scheduleDetails, 
   // 
   const handleSubmit = async () =>  {
     // Data
-    let schedule = {
-      id: scheduleid,
-      activity_type: activityType,
-      project_name: projectName,
-      projected_amount: projectedAmount,
-      partner_company_name: partnerCompanyName,
-      enduser_company_name: endUserCompanyName,
-      partner_site_address: partnerSiteAddress,
-      enduser_site_address: endUserSiteAddress,
-      partner_contact_person: partnerContactPerson,
-      enduser_contact_person: endUserContactPerson,
-      partner_contact_number: partnerContactNumber,
-      enduser_contact_number: endUserContactNumber,
-      user_id: userInfo.user.id,
-      email_participants: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.emailParticipants),
-      business_unit: (EditEmailBusinessUnitRef.current === undefined ? '' : EditEmailBusinessUnitRef.current.businessUnit),
+    let data = {
+      brand: brand,
+      part_number: partNo,
+      serial_number: serialNo,
+      ar_id: scheduleid,
     }
 
-    // 
-    if(activityType === "Post-Sales") {
-      // Post-Sales 
-      schedule.project_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.projectNo);
-      schedule.case_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.caseNo);
-      schedule.sa_no = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.saNo);
-      schedule.netsuite_link = (postSalesInputRef.current === undefined ? '' : postSalesInputRef.current.netsuitLink);
-    } else {
-      // Clear Fields if Pre-Sales
-      schedule.project_no = '';
-      schedule.case_no = '';
-      schedule.sa_no = '';
-      schedule.netsuite_link = '';
-    }
- 
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -108,15 +73,10 @@ const EditInventoryModal = ({ show , mode, onHide, scheduleid, scheduleDetails, 
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Proceed!'
     }).then((result) => {
+      // Show confirm
       if (result.isConfirmed) {
-        // 
-        if(mode === 'Add') {
-          // Create Schedule 
-          dispatch(createScheduleReference(schedule))
-        } else {
-          // Update Schedule
-          dispatch(updateScheduleReference(schedule))
-        }
+        // Save New Device
+        dispatch(createMotherFolderInventory(data))
       }
     })
   }
@@ -124,104 +84,105 @@ const EditInventoryModal = ({ show , mode, onHide, scheduleid, scheduleDetails, 
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(scheduleReferenceCreateSuccess) {
+    if(motherFolderInventoryCreateSuccess) {
       Swal.fire(
         'Success!',
-        scheduleReferenceCreateMessage,
+        motherFolderInventoryCreateMessage,
         'success'
       )
       // Refresh Datatable
       dispatch(listScheduleReference())
       // Close Modal
       onHide()
+      // Clear Fields
+      setBrand('')
+      setPartNo('')
+      setSerialNo('')
+      // 
+      dispatch({
+        type: INVENTORY_CREATE_RESET,
+      })
     }
 
     // Show Success Update
-    if(scheduleReferenceUpdateSuccess) {
-      Swal.fire(
-        'Success!',
-        scheduleReferenceUpdateMessage,
-        'success'
-      )
-      // Refresh Datatable
-      dispatch(listScheduleReference())
-      // Close Modal
-      onHide()
-    }
+    // if(scheduleReferenceUpdateSuccess) {
+    //   Swal.fire(
+    //     'Success!',
+    //     scheduleReferenceUpdateMessage,
+    //     'success'
+    //   )
+    //   // Refresh Datatable
+    //   dispatch(listScheduleReference())
+    //   // Close Modal
+    //   onHide()
+    // }
 
-  },[scheduleReferenceCreateMessage, scheduleReferenceUpdateSuccess])
+  },[motherFolderInventoryCreateSuccess])
 
   // 
   useEffect(() => {
-    // Selected Schedule Details
-    const {  
-      activity_type,
-      project_name,
-      projected_amount,
-      partner_company_name,
-      enduser_company_name,
-      partner_site_address,
-      enduser_site_address,
-      partner_contact_person,
-      enduser_contact_person,
-      partner_contact_number,
-      enduser_contact_number
-    } = scheduleDetails
-    // setState
-    setActivityType(activity_type || "")
-    setProjectName(project_name || "")
-    setProjectedAmount(projected_amount || "")
-    setPartnerCompanyName(partner_company_name || "")
-    setEndUserCompanyName(enduser_company_name || "")
-    setPartnerSiteAddress(partner_site_address || "")
-    setEndUserSiteAddress(enduser_site_address || "")
-    setPartnerContactPerson(partner_contact_person || "")
-    setEndUserContactPerson(enduser_contact_person || "")
-    setPartnerContactNumber(partner_contact_number || "")
-    setEndUserContactNumber(enduser_contact_number || "")
+   
   }, [scheduleDetails, dispatch])
 
   return (
     <>
-        <Modal  size={size} show={show} onHide={onHide}>
+        <Modal  
+          size={size} 
+          show={show} 
+          onHide={onHide}
+        >
         <Modal.Header closeButton>
           {/* <Modal.Title>{ mode === 'Add' ? 'Add Inventory' : 'Edit Inventory'  }</Modal.Title> */}
           <Modal.Title>Inventory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col>
-              <Table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Brand</th>
-                    <th>Part No</th>
-                    <th>Serial No</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
+        <Row>
+          <Col sm={12} md={6} lg={4}>
+              <Form.Group className="mb-3">
+              <Form.Label>Brand</Form.Label>  
+              <Form.Control 
+                  size='sm'
+                  type='text'
+                  placeholder='Brand'
+                  value={brand}
+                  onChange={(e) => {
+                    // 
+                    setBrand(e.target.value)
+                  }}
+              />
+              </Form.Group>
+          </Col>
+          <Col sm={12} md={6} lg={4}>
+              <Form.Group className="mb-3">
+              <Form.Label>Part No.</Form.Label>  
+              <Form.Control 
+                  size='sm'
+                  type='text'
+                  placeholder='Part No.'
+                  value={partNo}
+                  onChange={(e) => {
+                    //
+                    setPartNo(e.target.value)
+                  }}
+              />
+              </Form.Group>
+          </Col>
+          <Col sm={12} md={6} lg={4}>
+              <Form.Group className="mb-3">
+              <Form.Label>Serial No.</Form.Label>  
+              <Form.Control 
+                  size='sm'
+                  type='text'
+                  placeholder='Serial No.'
+                  value={serialNo}
+                  onChange={(e) => {
+                    //
+                    setSerialNo(e.target.value)
+                  }}
+              />
+              </Form.Group>
+          </Col>
+        </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button size='sm' variant="secondary" onClick={onHide}>
