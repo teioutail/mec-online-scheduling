@@ -10,12 +10,13 @@ const Footer = () => {
                 <div className="row align-items-center justify-content-lg-between">
                     <div className="col-lg-6 mb-lg-0 mb-4">
                     <div className="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
+                        {/* © <script>
                         document.write(new Date().getFullYear())
                         </script>,
                         made with <i className="fa fa-heart"></i> by
                         <a href="https://www.creative-tim.com" className="font-weight-bold">Creative Tim</a>
-                        for a better web.
+                        for a better web. */}
+                        <a href="#" className="font-weight-bold">&copy;MEC Networks Corporation. All rights reserved.</a>
                     </div>
                     </div>
                     <div className="col-lg-6">
