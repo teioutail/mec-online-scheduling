@@ -30,6 +30,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
 import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
+import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 
 const ScheduleScreen = () => {
     
@@ -84,6 +85,7 @@ const ScheduleScreen = () => {
     const [show, setShow] = useState(false)
     // Inventory
     const [showInventory, setShowInventory] = useState(false)
+    const [showGroupInventory, setShowGroupInventory] = useState(false)
     // 
     const [showRoleAccess, setShowRoleAccess] = useState()
     // Role Access View Modal
@@ -115,9 +117,18 @@ const ScheduleScreen = () => {
         // Call API Here...
         dispatch(getScheduleReferenceDetails(state.target.id))
     }
+
     // Inventory 
     const handleInventoryView = (state) => {
         setShowInventory(true);
+        setScheduleId(state.target.id)
+        setMode('Edit')
+        // Call API Here...
+    }
+
+    // Group Inventory
+    const handleGroupInventoryView = (state) => {
+        setShowGroupInventory(true);
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
@@ -154,39 +165,13 @@ const ScheduleScreen = () => {
     // Columns
     const columns = useMemo(
 		() => [
-            {   name: 'Reference No',
-                selector: row => row.reference_id,
-                sortable: true,
-            },
-            {   name: 'Project Name',
-                selector: row => row.project_name,
-                sortable: true,
-            },
-            {
-                name: 'Project No',
-                selector: row => row.project_no,
-                sortable: true,
-            },
-            {
-                name: 'Case No',
-                selector: row => row.case_no,
-                sortable: true,
-            },
-            {
-                name: 'SA No',
-                selector: row => row.sa_no,
-                sortable: true,
-            },
-            {
-                name: 'Partner',
-                selector: row => row.partner_company_name,
-                sortable: true,
-            },
-            {
-                name: 'End-User',
-                selector: row => row.enduser_company_name,
-                sortable: true,
-            },
+            { name: 'Reference No',selector: row => row.reference_id, sortable: true },
+            { name: 'Project Name',selector: row => row.project_name,sortable: true },
+            { name: 'Project No',selector: row => row.project_no, sortable: true },
+            { name: 'Case No',selector: row => row.case_no, sortable: true },
+            { name: 'SA No',selector: row => row.sa_no, sortable: true },
+            { name: 'Partner',selector: row => row.partner_company_name,sortable: true },
+            { name: 'End-User',selector: row => row.enduser_company_name, sortable: true},
             {
                 name: 'Action',
                 cell: (row) => {
@@ -214,7 +199,7 @@ const ScheduleScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleGroupInventoryView} id={row.ar_id}>
                                         <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
                                     </Link>
                                 </li>
@@ -269,7 +254,7 @@ const ScheduleScreen = () => {
             dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
         }
 
-          // Show Update Error
+          // Show Mother Folder Error
           if(motherFolderInventoryErrorCreate) {
             // Loop Error Back-End Validation
             for(const key in motherFolderInventoryErrorCreate) {
@@ -346,6 +331,15 @@ const ScheduleScreen = () => {
                         size="lg"
                         show={showInventory} 
                         onHide={() => setShowInventory(false) } 
+                        scheduleid={scheduleid}
+                        scheduleDetails={scheduleDetail}
+                        mode={mode}
+                    />
+
+                    <EditGroupInventoryModal
+                        size="lg"
+                        show={showGroupInventory} 
+                        onHide={() => setShowGroupInventory(false) } 
                         scheduleid={scheduleid}
                         scheduleDetails={scheduleDetail}
                         mode={mode}

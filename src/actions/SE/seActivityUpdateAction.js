@@ -44,7 +44,6 @@ export const createActivityUpdateRequest = (activity) => async (dispatch) => {
         }
         // Call API Request
         const { data } = await axios.post('/auth/se-activity', formData, config)
-        console.warn(data)
 
         dispatch({
             type: ACTIVITY_UPDATE_CREATE_SUCCESS,

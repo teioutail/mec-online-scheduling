@@ -12,17 +12,25 @@ import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
 import { 
+    createMotherFolderBulkInventory,
   createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
-const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
+const EditGroupInventoryModal = (props) => {
+  
+  const { show, 
+    onHide, 
+    scheduleDetails, 
+    size, 
+    scheduleid 
+  } = props
+
   // Redux
   const dispatch = useDispatch()
   // setState
-  const [brand, setBrand] = useState('')
-  const [partNo, setPartNo] = useState('')
-  const [serialNo, setSerialNo] = useState('')
+  const [selectedFile, setSelectedFile] = useState()
+  const [isFilePicked, setIsFilePicked] = useState(false)
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
@@ -54,19 +62,18 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   }
 
   // 
-  const handleSubmit = async () =>  {
-    // Data
-    let data = {
-      brand: brand,
-      part_number: partNo,
-      serial_number: serialNo,
-      ar_id: scheduleid,
-    }
+  const changeHandler = (e) => {
+    // 
+    setSelectedFile(e.target.files[0])
+    // setIsSelected(true)
+  }
 
+  // 
+  const handleSubmit = async () =>  {
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You won't be able to revert thiss!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -76,7 +83,8 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
       // Show confirm
       if (result.isConfirmed) {
         // Save New Device
-        dispatch(createMotherFolderInventory(data))
+        console.warn(selectedFile)
+        dispatch(createMotherFolderBulkInventory(selectedFile))
       }
     })
   }
@@ -85,6 +93,7 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   useEffect(() => {
     // Show Success Adding of new records
     if(motherFolderInventoryCreateSuccess) {
+      // 
       Swal.fire(
         'Success!',
         motherFolderInventoryCreateMessage,
@@ -94,28 +103,11 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
       dispatch(listScheduleReference())
       // Close Modal
       onHide()
-      // Clear Fields
-      setBrand('')
-      setPartNo('')
-      setSerialNo('')
       // 
       dispatch({
         type: INVENTORY_CREATE_RESET,
       })
     }
-
-    // Show Success Update
-    // if(scheduleReferenceUpdateSuccess) {
-    //   Swal.fire(
-    //     'Success!',
-    //     scheduleReferenceUpdateMessage,
-    //     'success'
-    //   )
-    //   // Refresh Datatable
-    //   dispatch(listScheduleReference())
-    //   // Close Modal
-    //   onHide()
-    // }
 
   },[motherFolderInventoryCreateSuccess])
 
@@ -134,63 +126,43 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
         >
         <Modal.Header closeButton>
           {/* <Modal.Title>{ mode === 'Add' ? 'Add Inventory' : 'Edit Inventory'  }</Modal.Title> */}
-          <Modal.Title>Add Inventory</Modal.Title>
+          <Modal.Title>Group Inventory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Row>
-          <Col sm={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-              <Form.Label>Brand</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='Brand'
-                  value={brand}
-                  onChange={(e) => {
-                    // 
-                    setBrand(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
-          <Col sm={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-              <Form.Label>Part No.</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='Part No.'
-                  value={partNo}
-                  onChange={(e) => {
-                    //
-                    setPartNo(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
-          <Col sm={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-              <Form.Label>Serial No.</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='Serial No.'
-                  value={serialNo}
-                  onChange={(e) => {
-                    //
-                    setSerialNo(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
-        </Row>
+            <Row>
+            <Col sm={12} md={6} lg={6}>
+                <Form.Group controlId="formFileLg" className="mb-3">
+                    <Form.Label>Upload Inventory</Form.Label>
+                    <Form.Control 
+                        type="file" 
+                        size="lg" 
+                        onChange={changeHandler}
+                    />
+                    {/* {isSelected ? (
+                        <Row>
+                            <Col>
+                                <p>Filename: {selectedFile.name}</p>
+                                <p>Filetype: {selectedFile.type}</p>
+                                <p>Size in bytes: {selectedFile.size}</p>
+                                <p>
+                                    lastModifiedDate:{' '}
+                                    {selectedFile.lastModifiedDate.toLocaleDateString()}
+                                </p>    
+                            </Col>
+                        </Row>
+                        ) : (
+                            <p>Select a file to show details</p>
+                        )} */}
+                </Form.Group>
+            </Col>
+            </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button size='sm' variant="secondary" onClick={onHide}>
               Close
           </Button>
           <Button size='sm' variant="primary" onClick={handleSubmit} >
-              Save Changes
+              UPLOAD INVENTORY
           </Button>
         </Modal.Footer>
         </Modal>
@@ -198,4 +170,4 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   )
 }
 
-export default EditInventoryModal
+export default EditGroupInventoryModal
