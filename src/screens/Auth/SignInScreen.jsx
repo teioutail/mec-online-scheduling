@@ -6,6 +6,7 @@ import Loader from '../../components/Loader'
 import Message from '../../components/Message'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoaderFullScreen from '../../components/LoaderFullScreen'
 
 // 
 const SignInScreen = () => {
@@ -67,7 +68,7 @@ const SignInScreen = () => {
       />}
 
     {/* {error && <Message variant='danger'>{error}</Message>} */}
-    { loading && <Loader /> }
+    { loading && <LoaderFullScreen /> }
 
       <main className="main-content  mt-0">
         <section>
