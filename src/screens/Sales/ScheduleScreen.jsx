@@ -25,7 +25,7 @@ import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
-import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
+import { INVENTORY_CREATE_BULK_RESET, INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 
 const ScheduleScreen = () => {
@@ -57,9 +57,12 @@ const ScheduleScreen = () => {
     // Schedule Update Error
     const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
     const { error:errorUpdate } = scheduleReferenceUpdate
-    // Schedule Reference Create Success Message
+    // Mother Folder Create Error Message
     const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
     const { error:motherFolderInventoryErrorCreate, message:motherFolderInventoryErrorMessage } = motherFolderInventoryCreate
+    // Mother Folder Bulk Upload Create Error Message
+    const motherFolderInventoryBulkCreate = useSelector(state => state.motherFolderInventoryBulkCreate)
+    const { error:motherFolderInventoryBulkErrorCreate, message:motherFolderInventoryBulkCreateErrorMessage } = motherFolderInventoryBulkCreate
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -244,9 +247,23 @@ const ScheduleScreen = () => {
             dispatch({ type: INVENTORY_CREATE_RESET })
         }
 
+        // Show Bulk Upload Error
+        if(motherFolderInventoryBulkErrorCreate) {
+            // Loop Error Back-End Validation
+            for(const key in motherFolderInventoryBulkErrorCreate) {
+                if (motherFolderInventoryBulkErrorCreate.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${motherFolderInventoryBulkErrorCreate[key]}`)
+                }
+            }
+            //
+            dispatch({ type: INVENTORY_CREATE_BULK_RESET })
+        }
+        
     }, [errorCreate, 
-        errorUpdate, 
-        motherFolderInventoryErrorCreate])
+        errorUpdate,
+        motherFolderInventoryErrorCreate,
+        motherFolderInventoryBulkErrorCreate])
 
     // Set Row Value
     useEffect(() => {

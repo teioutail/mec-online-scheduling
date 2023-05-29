@@ -55,7 +55,7 @@ export const createMotherFolderBulkInventory = (file) => async (dispatch) => {
         }
         // Call API Request
         const { data } = await axios.post('/auth/inventory-bulk-upload', formData, config)
-
+        console.warn(data)
         dispatch({
             type: INVENTORY_CREATE_BULK_SUCCESS,
             payload: data,

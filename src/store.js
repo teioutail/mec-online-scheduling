@@ -118,7 +118,12 @@ import {
     seActivityUpdateCreateReducer, 
     seActivityUpdateDetailsReducer,
 } from './reducers/SE/seActivityUpdateReducer'
-import { motherFolderInventoryCreateReducer } from './reducers/Sales/motherFolderInventoryReducers'
+
+// Mother Folder Inventory Reducer
+import { 
+    motherFolderInventoryBulkCreateReducer, 
+    motherFolderInventoryCreateReducer,
+} from './reducers/Sales/motherFolderInventoryReducers'
 
 // Reducers
 const reducer = combineReducers({
@@ -188,6 +193,8 @@ const reducer = combineReducers({
     seActivityUpdateCreate:seActivityUpdateCreateReducer,
     seActivityUpdateDetails:seActivityUpdateDetailsReducer,
     motherFolderInventoryCreate: motherFolderInventoryCreateReducer,
+    motherFolderInventoryBulkCreate:motherFolderInventoryBulkCreateReducer,
+    
 })
 
 // 

@@ -8,14 +8,14 @@ import {
   createScheduleReference,
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput
- from '../../components/Sales/PostSalesInput'
+
 import { 
     createMotherFolderBulkInventory,
-  createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
-import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
+
+import { 
+    INVENTORY_CREATE_RESET,
+} from '../../constants/Sales/motherFolderInventoryConstants'
 
 const EditGroupInventoryModal = (props) => {
   
@@ -30,7 +30,7 @@ const EditGroupInventoryModal = (props) => {
   const dispatch = useDispatch()
   // setState
   const [selectedFile, setSelectedFile] = useState()
-  const [isFilePicked, setIsFilePicked] = useState(false)
+//   const [isFilePicked, setIsFilePicked] = useState(false)
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
@@ -43,6 +43,10 @@ const EditGroupInventoryModal = (props) => {
   // Schedule Reference Update Success Message
   const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
   const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
+  
+  // Inventory Bulk Upload
+  const motherFolderInventoryBulkCreate = useSelector(state => state.motherFolderInventoryBulkCreate)
+  const { success:motherFolderInventoryBulkCreateSuccess, message:motherFolderInventoryBulkCreateMessage} = motherFolderInventoryBulkCreate
   
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
@@ -83,7 +87,7 @@ const EditGroupInventoryModal = (props) => {
       // Show confirm
       if (result.isConfirmed) {
         // Save New Device
-        console.warn(selectedFile)
+        // console.warn(selectedFile)
         dispatch(createMotherFolderBulkInventory(selectedFile))
       }
     })
@@ -92,11 +96,11 @@ const EditGroupInventoryModal = (props) => {
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    if(motherFolderInventoryCreateSuccess) {
+    if(motherFolderInventoryBulkCreateSuccess) {
       // 
       Swal.fire(
         'Success!',
-        motherFolderInventoryCreateMessage,
+        motherFolderInventoryBulkCreateMessage,
         'success'
       )
       // Refresh Datatable
@@ -109,7 +113,7 @@ const EditGroupInventoryModal = (props) => {
       })
     }
 
-  },[motherFolderInventoryCreateSuccess])
+  },[motherFolderInventoryBulkCreateSuccess])
 
   // 
   useEffect(() => {
