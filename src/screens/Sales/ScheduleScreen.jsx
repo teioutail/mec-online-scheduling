@@ -13,16 +13,13 @@ import {
   getScheduleReferenceDetails,
   deleteScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-
 import { getUsersEmailList } from '../../actions/userActions'
 import { listBusinessUnitOption } from '../../actions/businessUnitActions'
-
 import { 
   SCHEDULE_REFERENCE_CREATE_RESET,
   SCHEDULE_REFERENCE_DETAILS_RESET,
   SCHEDULE_REFERENCE_UPDATE_RESET,
 } from '../../constants/Sales/salesScheduleReferenceConstants'
-
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
@@ -66,7 +63,6 @@ const ScheduleScreen = () => {
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
     // Schedule Info / Details
     const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
     const { schedule:scheduleDetail } = scheduleReferenceDetails
@@ -102,7 +98,6 @@ const ScheduleScreen = () => {
         // Call API Here...
         dispatch(getScheduleReferenceDetails(state.target.id))
     }
-
     // Inventory 
     const handleInventoryView = (state) => {
         setShowInventory(true);
@@ -110,7 +105,6 @@ const ScheduleScreen = () => {
         setMode('Edit')
         // Call API Here...
     }
-
     // Group Inventory
     const handleGroupInventoryView = (state) => {
         setShowGroupInventory(true);
@@ -118,7 +112,6 @@ const ScheduleScreen = () => {
         setMode('Edit')
         // Call API Here...
     }
-
     // Delete Schedule Reference
     const handleDeleteScheduleReference = (state) => {
         // Save Change Here...
@@ -146,7 +139,6 @@ const ScheduleScreen = () => {
             }
         })
     }
-
     // Columns
     const columns = useMemo(
 		() => [
@@ -238,13 +230,14 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
         }
-          // Show Mother Folder Error
-          if(motherFolderInventoryErrorCreate) {
+
+        // Show Mother Folder Error
+        if(motherFolderInventoryErrorCreate) {
             // Loop Error Back-End Validation
             for(const key in motherFolderInventoryErrorCreate) {
                 if (motherFolderInventoryErrorCreate.hasOwnProperty(key)) {
                     // Show Error
-                    // notify(`${motherFolderInventoryErrorMessage[key]}`)
+                    notify(`${motherFolderInventoryErrorCreate[key]}`)
                 }
             }
             //
@@ -252,7 +245,7 @@ const ScheduleScreen = () => {
         }
 
     }, [errorCreate, 
-        errorUpdate,
+        errorUpdate, 
         motherFolderInventoryErrorCreate])
 
     // Set Row Value

@@ -9,7 +9,7 @@
   width: auto;
 }
 
-.sc-iJnaPW{
+.container-fluid div.sc-dmctIk{
   overflow: inherit !important;
   position: static;
 }
@@ -48,13 +48,9 @@
   align-items: center;
 }
 
-/* .g-sidenav-pinned {
-  color: #1a73cc !important;
-} */
 @media only screen and (max-width: 1199px) {
 
   .text-light {
-    color: #4183ff !important;
+    color: #1a73cc !important;
   }
-
 }
