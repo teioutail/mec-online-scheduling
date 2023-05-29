@@ -1,5 +1,6 @@
 import React from 'react'
 import imagegif from '../components/mecgif.gif'
+
 const LoaderFullScreen = () => {
 
   return (
@@ -13,6 +14,8 @@ const LoaderFullScreen = () => {
         }}/>
     </div>
   )
+
 }
 
 export default LoaderFullScreen
+ 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
-import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,7 +32,6 @@ import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInvent
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 
 const ScheduleScreen = () => {
-    
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -44,8 +42,7 @@ const ScheduleScreen = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-    });   
-    
+    });
     // CommonJS
     const Swal = require('sweetalert2')
     //
@@ -54,23 +51,18 @@ const ScheduleScreen = () => {
     const dispatch = useDispatch()
     // useNavigate to redirect the user
     const navigate = useNavigate()
-
     // Schedule List
     const scheduleReferenceList = useSelector(state => state.scheduleReferenceList)
     const { loading , schedules } = scheduleReferenceList
-    
     // Schedule Create Error
     const scheduleReferenceCreate = useSelector(state => state.scheduleReferenceCreate)
     const { error:errorCreate } = scheduleReferenceCreate
-  
     // Schedule Update Error
     const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
     const { error:errorUpdate } = scheduleReferenceUpdate
-
     // Schedule Reference Create Success Message
     const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
     const { error:motherFolderInventoryErrorCreate, message:motherFolderInventoryErrorMessage } = motherFolderInventoryCreate
-
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -86,17 +78,11 @@ const ScheduleScreen = () => {
     // Inventory
     const [showInventory, setShowInventory] = useState(false)
     const [showGroupInventory, setShowGroupInventory] = useState(false)
-    // 
-    const [showRoleAccess, setShowRoleAccess] = useState()
-    // Role Access View Modal
-    const handleRoleAccessClose = () => setShowRoleAccess(false)
     //
     const handleShow = () => setShow(true)
-
     // Global ID
     const [scheduleid, setScheduleId] = useState('')
     const [mode, setMode] = useState('')
-
     // Add User Modal
     const handleScheduleReferenceView = (state) => {
         // Show Modal
@@ -108,7 +94,6 @@ const ScheduleScreen = () => {
             type: SCHEDULE_REFERENCE_DETAILS_RESET,
         })
     }
-
     // Edit Role
     const handleEditScheduleReferenceView = (state) => {
         setShow(true)
@@ -170,8 +155,8 @@ const ScheduleScreen = () => {
             { name: 'Project No',selector: row => row.project_no, sortable: true },
             { name: 'Case No',selector: row => row.case_no, sortable: true },
             { name: 'SA No',selector: row => row.sa_no, sortable: true },
-            { name: 'Partner',selector: row => row.partner_company_name,sortable: true },
-            { name: 'End-User',selector: row => row.enduser_company_name, sortable: true},
+            // { name: 'Partner',selector: row => row.partner_company_name,sortable: true },
+            // { name: 'End-User',selector: row => row.enduser_company_name, sortable: true},
             {
                 name: 'Action',
                 cell: (row) => {
@@ -253,14 +238,13 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: SCHEDULE_REFERENCE_UPDATE_RESET })
         }
-
           // Show Mother Folder Error
           if(motherFolderInventoryErrorCreate) {
             // Loop Error Back-End Validation
             for(const key in motherFolderInventoryErrorCreate) {
                 if (motherFolderInventoryErrorCreate.hasOwnProperty(key)) {
                     // Show Error
-                    notify(`${motherFolderInventoryErrorCreate[key]}`)
+                    // notify(`${motherFolderInventoryErrorMessage[key]}`)
                 }
             }
             //
@@ -268,7 +252,7 @@ const ScheduleScreen = () => {
         }
 
     }, [errorCreate, 
-        errorUpdate, 
+        errorUpdate,
         motherFolderInventoryErrorCreate])
 
     // Set Row Value
@@ -295,7 +279,6 @@ const ScheduleScreen = () => {
 
     return (
         <>
-            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <Button className="btn btn-sm bg-gradient-info mb-2 float-end" size="sm" onClick={handleScheduleReferenceView}>

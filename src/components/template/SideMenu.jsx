@@ -35,6 +35,7 @@ const SideMenu = () => {
                 'g-sidenav-pinned'
             );
             setShow(true)
+
         } else {
             //
             document.body.classList.add(
@@ -42,7 +43,6 @@ const SideMenu = () => {
                 'g-sidenav-pinned'
             );
         }
-       
     }
   },[userInfo, dispatch]);
 

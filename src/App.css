@@ -1,14 +1,15 @@
 .sidenav {
   z-index: 5;
 }
-
-/* .react-time-picker__clock { display: none; } */
-
 .react-timerange-picker__wrapper {
   border:none;
 }
-
 .container-fluid div.sc-dmctIk{
+  overflow: inherit !important;
+  width: auto;
+}
+
+.sc-iJnaPW{
   overflow: inherit !important;
   position: static;
 }
@@ -45,4 +46,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* .g-sidenav-pinned {
+  color: #1a73cc !important;
+} */
+@media only screen and (max-width: 1199px) {
+
+  .text-light {
+    color: #4183ff !important;
+  }
+
 }
