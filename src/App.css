@@ -48,6 +48,12 @@
   align-items: center;
 }
 
+
+.btn-close {
+  background-color: #817d7d;
+  color:#030202 !important;
+}
+
 @media only screen and (max-width: 1199px) {
 
   .text-light {

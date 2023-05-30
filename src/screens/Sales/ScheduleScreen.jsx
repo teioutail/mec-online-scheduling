@@ -27,6 +27,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
 import { INVENTORY_CREATE_BULK_RESET, INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
+import ViewInventoryModal from '../../modals/Sales/ViewInventoryModal'
 
 const ScheduleScreen = () => {
     // Toastify
@@ -77,6 +78,7 @@ const ScheduleScreen = () => {
     // Inventory
     const [showInventory, setShowInventory] = useState(false)
     const [showGroupInventory, setShowGroupInventory] = useState(false)
+    const [showInventoryList, setShowInventoryList] = useState(false)
     //
     const handleShow = () => setShow(true)
     // Global ID
@@ -114,6 +116,12 @@ const ScheduleScreen = () => {
         setScheduleId(state.target.id)
         setMode('Edit')
         // Call API Here...
+    }
+    // View Inventory List
+    const handleInventoryListView = (state) => {
+        setShowInventoryList(true)
+        setScheduleId(state.target.id)
+        setMode('Edit')
     }
     // Delete Schedule Reference
     const handleDeleteScheduleReference = (state) => {
@@ -184,7 +192,7 @@ const ScheduleScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryListView} id={row.ar_id}>
                                       <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
                                     </Link>
                                 </li>
@@ -259,7 +267,7 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: INVENTORY_CREATE_BULK_RESET })
         }
-        
+
     }, [errorCreate, 
         errorUpdate,
         motherFolderInventoryErrorCreate,
@@ -333,6 +341,14 @@ const ScheduleScreen = () => {
                         size="lg"
                         show={showGroupInventory} 
                         onHide={() => setShowGroupInventory(false) } 
+                        scheduleid={scheduleid}
+                        scheduleDetails={scheduleDetail}
+                        mode={mode}
+                    />
+
+                    <ViewInventoryModal
+                        show={showInventoryList} 
+                        onHide={() => setShowInventoryList(false) } 
                         scheduleid={scheduleid}
                         scheduleDetails={scheduleDetail}
                         mode={mode}
