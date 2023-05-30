@@ -207,7 +207,6 @@ const ApproverCanceledScreen = () => {
 
     return (
         <>
-            {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
                     <DataTable

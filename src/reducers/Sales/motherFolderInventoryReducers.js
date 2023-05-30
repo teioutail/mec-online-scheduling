@@ -7,6 +7,10 @@ import {
     INVENTORY_CREATE_REQUEST, 
     INVENTORY_CREATE_RESET, 
     INVENTORY_CREATE_SUCCESS,
+    INVENTORY_LIST_FAIL,
+    INVENTORY_LIST_REQUEST,
+    INVENTORY_LIST_RESET,
+    INVENTORY_LIST_SUCCESS,
 } from "../../constants/Sales/motherFolderInventoryConstants"
 
 // Create Mother Folder Reducer
@@ -38,6 +42,23 @@ export const motherFolderInventoryBulkCreateReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case INVENTORY_CREATE_BULK_RESET:
             return {}
+        default:
+            return state
+    }
+}
+
+// List Inventory Reducer
+export const motherFolderInventoryListReducer = (state = { inventory: [] }, action ) => {
+    //
+    switch(action.type) {
+        case INVENTORY_LIST_REQUEST:
+            return { loading: true }
+        case INVENTORY_LIST_SUCCESS:
+            return { loading: false, inventory: action.payload }
+        case INVENTORY_LIST_FAIL:
+            return { loading: false, error: action.payload }
+        case INVENTORY_LIST_RESET:
+            return { inventory: [] }
         default:
             return state
     }

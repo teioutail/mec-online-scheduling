@@ -28,8 +28,12 @@ import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
 import { INVENTORY_CREATE_BULK_RESET, INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 import ViewInventoryModal from '../../modals/Sales/ViewInventoryModal'
+import { 
+    listMotherFolderInventory,
+} from '../../actions/Sales/motherFolderInventoryAction'
 
 const ScheduleScreen = () => {
+    
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -121,6 +125,7 @@ const ScheduleScreen = () => {
     const handleInventoryListView = (state) => {
         setShowInventoryList(true)
         setScheduleId(state.target.id)
+        dispatch(listMotherFolderInventory())
         setMode('Edit')
     }
     // Delete Schedule Reference

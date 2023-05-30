@@ -15,7 +15,7 @@ import {
   createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
-import CloseButton from 'react-bootstrap/CloseButton';
+import DataTable from 'react-data-table-component'
 
 const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
@@ -145,11 +145,25 @@ const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
           /> */}
         </Modal.Header>
         <Modal.Body>
-        <Row>
+        {/* <Row>
           <Col sm={12} md={6} lg={4}>
             <p>asdf</p>
           </Col>
-        </Row>
+        </Row> */}
+            <DataTable
+                // title={headerTitle}
+                // selectableRows
+                // data={users}
+                pagination
+                responsive
+                // columns={columns}
+                // data={rows}
+                // progressPending={pending}
+                progressComponent={<Loader />}
+                highlightOnHover
+                pointerOnHover
+                selectableRowsHighlight
+            />
         </Modal.Body>
         <Modal.Footer>
           <Button size='sm' variant="secondary" onClick={onHide}>
