@@ -66,7 +66,7 @@ const ScheduleScreen = () => {
     const { error:motherFolderInventoryErrorCreate, message:motherFolderInventoryErrorMessage } = motherFolderInventoryCreate
     // Mother Folder Bulk Upload Create Error Message
     const motherFolderInventoryBulkCreate = useSelector(state => state.motherFolderInventoryBulkCreate)
-    const { error:motherFolderInventoryBulkErrorCreate, message:motherFolderInventoryBulkCreateErrorMessage } = motherFolderInventoryBulkCreate
+    const { error:motherFolderInventoryBulkCreateError, message:motherFolderInventoryBulkCreateMessage } = motherFolderInventoryBulkCreate
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -260,12 +260,12 @@ const ScheduleScreen = () => {
         }
 
         // Show Bulk Upload Error
-        if(motherFolderInventoryBulkErrorCreate) {
+        if(motherFolderInventoryBulkCreateError) {
             // Loop Error Back-End Validation
-            for(const key in motherFolderInventoryBulkErrorCreate) {
-                if (motherFolderInventoryBulkErrorCreate.hasOwnProperty(key)) {
+            for(const key in motherFolderInventoryBulkCreateError) {
+                if (motherFolderInventoryBulkCreateError.hasOwnProperty(key)) {
                     // Show Error
-                    notify(`${motherFolderInventoryBulkErrorCreate[key]}`)
+                    notify(`${motherFolderInventoryBulkCreateError[key]}`)
                 }
             }
             //
@@ -275,7 +275,7 @@ const ScheduleScreen = () => {
     }, [errorCreate, 
         errorUpdate,
         motherFolderInventoryErrorCreate,
-        motherFolderInventoryBulkErrorCreate])
+        motherFolderInventoryBulkCreateError])
 
     // Set Row Value
     useEffect(() => {

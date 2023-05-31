@@ -2,9 +2,11 @@ import axios from 'axios'
 import { 
     INVENTORY_CREATE_BULK_FAIL,
     INVENTORY_CREATE_BULK_REQUEST,
+    INVENTORY_CREATE_BULK_RESET,
     INVENTORY_CREATE_BULK_SUCCESS,
     INVENTORY_CREATE_FAIL, 
     INVENTORY_CREATE_REQUEST, 
+    INVENTORY_CREATE_RESET, 
     INVENTORY_CREATE_SUCCESS,
     INVENTORY_LIST_FAIL,
     INVENTORY_LIST_REQUEST,
@@ -26,9 +28,14 @@ export const createMotherFolderInventory = (device) => async (dispatch) => {
         }
         // Call API Request
         const { data } = await axios.post('/auth/inventory', device, config)
+
         dispatch({
             type: INVENTORY_CREATE_SUCCESS,
             payload: data,
+        })
+
+        dispatch({
+            type: INVENTORY_CREATE_RESET,
         })
     } catch(error) {
         //
@@ -48,6 +55,7 @@ export const createMotherFolderBulkInventory = (file, scheduleid) => async (disp
         })
         // Form Data
         let formData = new FormData()
+        
         formData.append('file', file)
         formData.append('ar_id', scheduleid);
         // Header 
@@ -58,7 +66,7 @@ export const createMotherFolderBulkInventory = (file, scheduleid) => async (disp
         }
         // Call API Request
         const { data } = await axios.post('/auth/inventory-bulk-upload', formData, config)
-        console.warn(data)
+
         dispatch({
             type: INVENTORY_CREATE_BULK_SUCCESS,
             payload: data,
@@ -89,7 +97,7 @@ export const listMotherFolderInventory = (id) => async (dispatch, getState) => {
         }
         // Call API Request
         const { data } = await axios.get(`/auth/select-inventory/${id}`, config)
-        console.warn(data)
+
         dispatch({
             type: INVENTORY_LIST_SUCCESS,
             payload: data,
