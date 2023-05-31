@@ -258,7 +258,6 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: INVENTORY_CREATE_RESET })
         }
-
         // Show Bulk Upload Error
         if(motherFolderInventoryBulkCreateError) {
             // Loop Error Back-End Validation

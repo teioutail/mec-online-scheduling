@@ -123,6 +123,7 @@ import {
 import { 
     motherFolderInventoryBulkCreateReducer, 
     motherFolderInventoryCreateReducer,
+    motherFolderInventoryDeleteReducer,
     motherFolderInventoryListReducer,
 } from './reducers/Sales/motherFolderInventoryReducers'
 
@@ -196,6 +197,7 @@ const reducer = combineReducers({
     motherFolderInventoryCreate: motherFolderInventoryCreateReducer,
     motherFolderInventoryBulkCreate:motherFolderInventoryBulkCreateReducer,
     motherFolderInventoryList:motherFolderInventoryListReducer,
+    motherFolderInventoryDelete:motherFolderInventoryDeleteReducer,
 })
 
 // 

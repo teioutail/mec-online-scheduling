@@ -8,6 +8,9 @@ import {
     INVENTORY_CREATE_REQUEST, 
     INVENTORY_CREATE_RESET, 
     INVENTORY_CREATE_SUCCESS,
+    INVENTORY_DELETE_FAIL,
+    INVENTORY_DELETE_REQUEST,
+    INVENTORY_DELETE_SUCCESS,
     INVENTORY_LIST_FAIL,
     INVENTORY_LIST_REQUEST,
     INVENTORY_LIST_SUCCESS,
@@ -53,11 +56,12 @@ export const createMotherFolderBulkInventory = (file, scheduleid) => async (disp
         dispatch({
             type: INVENTORY_CREATE_BULK_REQUEST,
         })
+
         // Form Data
         let formData = new FormData()
-        
         formData.append('file', file)
         formData.append('ar_id', scheduleid);
+
         // Header 
         const config = {
             headers: {
@@ -76,7 +80,7 @@ export const createMotherFolderBulkInventory = (file, scheduleid) => async (disp
         //
         dispatch({
             type: INVENTORY_CREATE_BULK_FAIL,
-            payload: error.response.data.errorfss,
+            payload: error.response.data.error,
         })
     }
 }
@@ -111,3 +115,40 @@ export const listMotherFolderInventory = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+// Delete Inventory Item
+export const deleteInventory = (id) => async (dispatch, getState) => {
+    //
+    try {
+        dispatch({
+            type: INVENTORY_DELETE_REQUEST,
+        })
+        
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers : {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        }
+        
+        // Call API Request
+        const { data } = await axios.delete(`/auth/inventory/${id}`, config)
+
+        dispatch({
+            type: INVENTORY_DELETE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: INVENTORY_DELETE_FAIL,
+            payload: 
+            error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+

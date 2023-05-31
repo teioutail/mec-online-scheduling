@@ -7,6 +7,9 @@ import {
     INVENTORY_CREATE_REQUEST, 
     INVENTORY_CREATE_RESET, 
     INVENTORY_CREATE_SUCCESS,
+    INVENTORY_DELETE_FAIL,
+    INVENTORY_DELETE_REQUEST,
+    INVENTORY_DELETE_SUCCESS,
     INVENTORY_LIST_FAIL,
     INVENTORY_LIST_REQUEST,
     INVENTORY_LIST_RESET,
@@ -59,6 +62,20 @@ export const motherFolderInventoryListReducer = (state = { inventory: [] }, acti
             return { loading: false, error: action.payload }
         case INVENTORY_LIST_RESET:
             return { inventory: [] }
+        default:
+            return state
+    }
+}
+
+// Inventory Delete Reducer
+export const motherFolderInventoryDeleteReducer = (state = {}, action) => {
+    switch(action.type) {
+        case INVENTORY_DELETE_REQUEST:
+            return { loading: true }
+        case INVENTORY_DELETE_SUCCESS:
+            return { loading: false, success: true, message: action.payload }
+        case INVENTORY_DELETE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

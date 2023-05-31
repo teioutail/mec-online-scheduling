@@ -12,10 +12,10 @@ import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
 import { 
-  createMotherFolderInventory,
+  deleteInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { 
-  INVENTORY_CREATE_RESET,
+  INVENTORY_CREATE_RESET, INVENTORY_DELETE_RESET,
 } from '../../constants/Sales/motherFolderInventoryConstants'
 import DataTable from 'react-data-table-component'
 import { useMemo } from 'react'
@@ -25,16 +25,15 @@ import { Link } from 'react-router-dom'
 const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
-  // setState
-  const [brand, setBrand] = useState('')
-  const [partNo, setPartNo] = useState('')
-  const [serialNo, setSerialNo] = useState('')
   // Datatables
   const [pending, setPending] = useState(true)
   const [rows, setRows] = useState([])
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
+  // Schedule Reference Create Success Message
+  const motherFolderInventoryDelete = useSelector(state => state.motherFolderInventoryDelete)
+  const { success:motherFolderInventoryDeleteSuccess, message:motherFolderInventoryDeleteMessage } = motherFolderInventoryDelete
   // Mother Folder Inventory List
   const motherFolderInventoryList = useSelector(state => state.motherFolderInventoryList)
   const { loading, inventory } = motherFolderInventoryList  
@@ -56,40 +55,15 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
                     return <>
                         {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
                         <div className="dropdown">
-                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-link" id={row.arit_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <Link className="dropdown-item" id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryDelete} id={row.arit_id}>
                                       <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Item
                                     </Link>
                                 </li>
-                                {/* <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleGroupInventoryView} id={row.ar_id}>
-                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleInventoryListView} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
-                                    </Link>
-                                </li> */}
                             </ul>
                         </div>
                     </>
@@ -103,16 +77,8 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
 		[],
 	);
 
-  // 
-  const handleSubmit = async () =>  {
-    // Data
-    let data = {
-      brand: brand,
-      part_number: partNo,
-      serial_number: serialNo,
-      ar_id: scheduleid,
-    }
-
+  // Delete Record
+  const handleInventoryDelete = async (state) =>  {
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -123,10 +89,10 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Proceed!'
     }).then((result) => {
-      // Show confirm
+      // Show confirm Deletion 
       if (result.isConfirmed) {
-        // Save New Device
-        dispatch(createMotherFolderInventory(data))
+        // Delete Selected Device
+        dispatch(deleteInventory(state.target.id))
       }
     })
   }
@@ -144,30 +110,30 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
       dispatch(listScheduleReference())
       // Close Modal
       onHide()
-      // Clear Fields
-      setBrand('')
-      setPartNo('')
-      setSerialNo('')
       // 
       dispatch({
         type: INVENTORY_CREATE_RESET,
       })
     }
 
-    // Show Success Update
-    // if(scheduleReferenceUpdateSuccess) {
-    //   Swal.fire(
-    //     'Success!',
-    //     scheduleReferenceUpdateMessage,
-    //     'success'
-    //   )
-    //   // Refresh Datatable
-    //   dispatch(listScheduleReference())
-    //   // Close Modal
-    //   onHide()
-    // }
-
-  },[motherFolderInventoryCreateSuccess])
+    // Show Success Adding of new records
+    if(motherFolderInventoryDeleteSuccess) {
+      Swal.fire(
+        'Success!',
+        motherFolderInventoryDeleteMessage,
+        'success'
+      )
+      // Refresh Datatable
+      dispatch(listScheduleReference())
+      // Close Modal
+      onHide()
+      // 
+      dispatch({
+        type: INVENTORY_DELETE_RESET,
+      })
+    }
+  },[motherFolderInventoryCreateSuccess,
+    motherFolderInventoryDeleteSuccess])
 
   // Set Row Value
   useEffect(() => {
