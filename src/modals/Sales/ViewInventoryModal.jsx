@@ -14,45 +14,94 @@ import PostSalesInput
 import { 
   createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
-import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
+import { 
+  INVENTORY_CREATE_RESET,
+} from '../../constants/Sales/motherFolderInventoryConstants'
 import DataTable from 'react-data-table-component'
+import { useMemo } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
-const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
+const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
   const [brand, setBrand] = useState('')
   const [partNo, setPartNo] = useState('')
   const [serialNo, setSerialNo] = useState('')
-
-  // Schedule Reference Details
-  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
-
+  // Datatables
+  const [pending, setPending] = useState(true)
+  const [rows, setRows] = useState([])
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
-
-  // Schedule Reference Update Success Message
-  const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-  const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
-  
+  // Mother Folder Inventory List
+  const motherFolderInventoryList = useSelector(state => state.motherFolderInventoryList)
+  const { loading, inventory } = motherFolderInventoryList  
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
   // CommonJS
   const Swal = require('sweetalert2')
-
-  // Event in select dropdown
-  const handleSelectedChange = (event) => {
-    //
-    const target = event.target
-    const selected = event.currentTarget.value
-    // const selected = target.selected
-    const name = target.name
-    // setStatus(selected)
-  }
+  // Columns
+  const columns = useMemo(
+		() => [
+            { name: 'Brand',selector: row => row.brand, sortable: true },
+            { name: 'Part No',selector: row => row.part_number,sortable: true },
+            { name: 'Serial No',selector: row => row.serial_number, sortable: true },
+            {
+                name: 'Action',
+                cell: (row) => {
+                    //
+                    return <>
+                        {/* <div className="dropdown" style={{ position: 'absolute', zIndex: '1' }}> */}
+                        <div className="dropdown">
+                            <button className="btn btn-link" id={row.role_id} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon icon={['fas', 'ellipsis-vertical']} />
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <Link className="dropdown-item" id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Item
+                                    </Link>
+                                </li>
+                                {/* <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleInventoryView} id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'box']} /> Individual Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleGroupInventoryView} id={row.ar_id}>
+                                        <FontAwesomeIcon icon={['fas', 'layer-group']} /> Group Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleInventoryListView} id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
+                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
+                                    </Link>
+                                </li> */}
+                            </ul>
+                        </div>
+                    </>
+                },
+                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
+				ignoreRowClick: true,
+				allowOverflow: true,
+				button: true,
+			},
+		],
+		[],
+	);
 
   // 
   const handleSubmit = async () =>  {
@@ -120,10 +169,11 @@ const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
 
   },[motherFolderInventoryCreateSuccess])
 
-  // 
+  // Set Row Value
   useEffect(() => {
-   
-  }, [scheduleDetails, dispatch])
+    setRows(inventory)
+    setPending(loading)
+  }, [inventory, rows, loading])
 
   return (
     <>
@@ -138,27 +188,16 @@ const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
         >
           {/* <Modal.Title>{ mode === 'Add' ? 'Add Inventory' : 'Edit Inventory'  }</Modal.Title> */}
           <Modal.Title>View Inventory List</Modal.Title>
-          {/* <CloseButton 
-            className="btn-close" 
-            aria-label="Close"
-            variant="white"   
-          /> */}
         </Modal.Header>
         <Modal.Body>
-        {/* <Row>
-          <Col sm={12} md={6} lg={4}>
-            <p>asdf</p>
-          </Col>
-        </Row> */}
             <DataTable
                 // title={headerTitle}
                 // selectableRows
-                // data={users}
                 pagination
                 responsive
-                // columns={columns}
-                // data={rows}
-                // progressPending={pending}
+                columns={columns}
+                data={rows}
+                progressPending={pending}
                 progressComponent={<Loader />}
                 highlightOnHover
                 pointerOnHover
@@ -168,9 +207,6 @@ const ViewInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
         <Modal.Footer>
           <Button size='sm' variant="secondary" onClick={onHide}>
               Close
-          </Button>
-          <Button size='sm' variant="primary" onClick={handleSubmit} >
-              Save Changes
           </Button>
         </Modal.Footer>
         </Modal>

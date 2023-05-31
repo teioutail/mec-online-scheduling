@@ -30,7 +30,6 @@ export const createMotherFolderInventory = (device) => async (dispatch) => {
             type: INVENTORY_CREATE_SUCCESS,
             payload: data,
         })
-
     } catch(error) {
         //
         dispatch({
@@ -41,15 +40,16 @@ export const createMotherFolderInventory = (device) => async (dispatch) => {
 }
 
 // Upload Bulk Records 
-export const createMotherFolderBulkInventory = (file) => async (dispatch) => {
-    // 
+export const createMotherFolderBulkInventory = (file, scheduleid) => async (dispatch) => {
+    //
     try {
         dispatch({
             type: INVENTORY_CREATE_BULK_REQUEST,
         })
         // Form Data
-        let formData = new FormData();
-        formData.append('file', file);
+        let formData = new FormData()
+        formData.append('file', file)
+        formData.append('ar_id', scheduleid);
         // Header 
         const config = {
             headers: {
@@ -74,25 +74,22 @@ export const createMotherFolderBulkInventory = (file) => async (dispatch) => {
 }
 
 // View List of Schedule Reference
-export const listMotherFolderInventory = () => async (dispatch, getState) => {
+export const listMotherFolderInventory = (id) => async (dispatch, getState) => {
     //
     try {
         dispatch({
             type: INVENTORY_LIST_REQUEST,
         })
-
         const { userLogin : { userInfo }} = getState()
-
         // Header
         const config = {
             headers: {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
-
         // Call API Request
-        const { data } = await axios.get(`/auth/inventory/`, config)
-
+        const { data } = await axios.get(`/auth/select-inventory/${id}`, config)
+        console.warn(data)
         dispatch({
             type: INVENTORY_LIST_SUCCESS,
             payload: data,

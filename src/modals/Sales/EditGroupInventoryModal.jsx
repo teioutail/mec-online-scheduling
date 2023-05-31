@@ -20,8 +20,7 @@ import {
 const EditGroupInventoryModal = (props) => {
   
   const { show, 
-    onHide, 
-    scheduleDetails, 
+    onHide,
     size, 
     scheduleid 
   } = props
@@ -87,8 +86,7 @@ const EditGroupInventoryModal = (props) => {
       // Show confirm
       if (result.isConfirmed) {
         // Save New Device
-        // console.warn(selectedFile)
-        dispatch(createMotherFolderBulkInventory(selectedFile))
+        dispatch(createMotherFolderBulkInventory(selectedFile, scheduleid))
       }
     })
   }
@@ -115,11 +113,6 @@ const EditGroupInventoryModal = (props) => {
 
   },[motherFolderInventoryBulkCreateSuccess])
 
-  // 
-  useEffect(() => {
-   
-  }, [scheduleDetails, dispatch])
-
   return (
     <>
         <Modal  
@@ -142,21 +135,6 @@ const EditGroupInventoryModal = (props) => {
                         size="lg" 
                         onChange={changeHandler}
                     />
-                    {/* {isSelected ? (
-                        <Row>
-                            <Col>
-                                <p>Filename: {selectedFile.name}</p>
-                                <p>Filetype: {selectedFile.type}</p>
-                                <p>Size in bytes: {selectedFile.size}</p>
-                                <p>
-                                    lastModifiedDate:{' '}
-                                    {selectedFile.lastModifiedDate.toLocaleDateString()}
-                                </p>    
-                            </Col>
-                        </Row>
-                        ) : (
-                            <p>Select a file to show details</p>
-                        )} */}
                 </Form.Group>
             </Col>
             </Row>

@@ -33,7 +33,6 @@ import {
 } from '../../actions/Sales/motherFolderInventoryAction'
 
 const ScheduleScreen = () => {
-    
     // Toastify
     const notify = (msg) => toast.error(msg, {
         position: "top-right",
@@ -125,7 +124,7 @@ const ScheduleScreen = () => {
     const handleInventoryListView = (state) => {
         setShowInventoryList(true)
         setScheduleId(state.target.id)
-        dispatch(listMotherFolderInventory())
+        dispatch(listMotherFolderInventory(state.target.id))
         setMode('Edit')
     }
     // Delete Schedule Reference
