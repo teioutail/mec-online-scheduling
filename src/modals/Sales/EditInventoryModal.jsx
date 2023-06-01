@@ -1,16 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Button, Modal, Form, Row, Col, Table } from 'react-bootstrap' 
+import React, { useState, useEffect } from 'react'
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../../components/Loader'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { 
-  listScheduleReference,
-  createScheduleReference,
-  updateScheduleReference,
-} from '../../actions/Sales/salesScheduleReferenceAction'
-import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput
- from '../../components/Sales/PostSalesInput'
 import { 
   createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
@@ -30,21 +20,9 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
 
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
-  const { userInfo } = userLogin
 
   // CommonJS
   const Swal = require('sweetalert2')
-
-  // Event in select dropdown
-  const handleSelectedChange = (event) => {
-    //
-    const target = event.target
-    const selected = event.currentTarget.value
-    // const selected = target.selected
-    const name = target.name
-    // setStatus(selected)
-  }
-
   // 
   const handleSubmit = async () =>  {
     // Data
@@ -162,10 +140,10 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
         </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button size='sm' variant="secondary" onClick={onHide}>
+          <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
               Close
           </Button>
-          <Button size='sm' variant="primary" onClick={handleSubmit} >
+          <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
               Save Changes
           </Button>
         </Modal.Footer>

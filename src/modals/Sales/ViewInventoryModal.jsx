@@ -171,7 +171,7 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
             />
         </Modal.Body>
         <Modal.Footer>
-          <Button size='sm' variant="secondary" onClick={onHide}>
+          <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
               Close
           </Button>
         </Modal.Footer>

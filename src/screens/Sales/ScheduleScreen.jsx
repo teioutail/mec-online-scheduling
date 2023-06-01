@@ -25,7 +25,10 @@ import EditScheduleModal from '../../modals/Sales/EditScheduleModal'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditInventoryModal from '../../modals/Sales/EditInventoryModal'
-import { INVENTORY_CREATE_BULK_RESET, INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
+import { 
+    INVENTORY_CREATE_BULK_RESET, 
+    INVENTORY_CREATE_RESET,
+} from '../../constants/Sales/motherFolderInventoryConstants'
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 import ViewInventoryModal from '../../modals/Sales/ViewInventoryModal'
 import { 
@@ -309,6 +312,7 @@ const ScheduleScreen = () => {
         <>
             <FormContainer>
                 <Header headerTitle={headerTitle} />
+                
                     <Button className="btn btn-sm bg-gradient-info mb-2 float-end" size="sm" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Mother Folder
                     </Button>

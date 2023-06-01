@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Modal, Form, Row, Col, Table } from 'react-bootstrap' 
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -113,30 +113,76 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
           <Modal.Title>Activity Reference Status</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Row>
-          <Col sm={12} md={6} lg={6}>
-              <Form.Group className="mb-3">
-              <Form.Label>Win/Close</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='PO Number'
-                  value={brand}
-                  onChange={(e) => {
-                    // 
-                    setBrand(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
-        
-        </Row>
+            <Row>
+                <Col>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Win/Close</Form.Label>  
+                    <Form.Control 
+                        size='sm'
+                        type='text'
+                        placeholder='PO Number'
+                        className='mb-1'
+                        value={brand}
+                        onChange={(e) => {
+                            // 
+                            setBrand(e.target.value)
+                        }}
+                    />
+                    <Form.Control 
+                        size='sm'
+                        type='text'
+                        placeholder='COA Date'
+                        value={brand}
+                        onChange={(e) => {
+                            // 
+                            setBrand(e.target.value)
+                        }}
+                    />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Lose/Cancelled</Form.Label>  
+                    <Form.Control 
+                        size='sm'
+                        type='text'
+                        placeholder='Reason'
+                        className='mb-1'
+                        value={brand}
+                        onChange={(e) => {
+                            // 
+                            setBrand(e.target.value)
+                        }}
+                    />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Group className="mb-3">
+                    <Form.Label>On Hold</Form.Label>  
+                    <Form.Control 
+                        size='sm'
+                        type='text'
+                        placeholder='Reason'
+                        className='mb-1'
+                        value={brand}
+                        onChange={(e) => {
+                            // 
+                            setBrand(e.target.value)
+                        }}
+                    />
+                    </Form.Group>
+                </Col>
+            </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button size='sm' variant="secondary" onClick={onHide}>
+          <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
               Close
           </Button>
-          <Button size='sm' variant="primary" onClick={handleSubmit} >
+          <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
               Save Changes
           </Button>
         </Modal.Footer>

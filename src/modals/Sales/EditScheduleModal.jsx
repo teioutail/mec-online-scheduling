@@ -359,10 +359,10 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
           </>}
         </Modal.Body>
         <Modal.Footer>
-        <Button size='sm' variant="secondary" onClick={onHide}>
+        <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
             Close
         </Button>
-        <Button size='sm' variant="primary" onClick={handleSubmit} >
+        <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
             Save Changes
         </Button>
         </Modal.Footer>
