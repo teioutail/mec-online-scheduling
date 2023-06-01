@@ -14,7 +14,7 @@ import {
 } from '../../actions/Sales/motherFolderInventoryAction'
 
 import { 
-    INVENTORY_CREATE_RESET,
+  INVENTORY_CREATE_BULK_RESET,
 } from '../../constants/Sales/motherFolderInventoryConstants'
 
 const EditGroupInventoryModal = (props) => {
@@ -107,7 +107,7 @@ const EditGroupInventoryModal = (props) => {
       onHide()
       // 
       dispatch({
-        type: INVENTORY_CREATE_RESET,
+        type: INVENTORY_CREATE_BULK_RESET,
       })
     }
 

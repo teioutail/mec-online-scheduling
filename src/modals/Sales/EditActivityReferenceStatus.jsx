@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Row, Col, Table } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
@@ -16,7 +16,7 @@ import {
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
-const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
+const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -110,17 +110,17 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
         >
         <Modal.Header closeButton>
           {/* <Modal.Title>{ mode === 'Add' ? 'Add Inventory' : 'Edit Inventory'  }</Modal.Title> */}
-          <Modal.Title>Add Inventory</Modal.Title>
+          <Modal.Title>Activity Reference Status</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Row>
-          <Col sm={12} md={6} lg={4}>
+          <Col sm={12} md={6} lg={6}>
               <Form.Group className="mb-3">
-              <Form.Label>Brand</Form.Label>  
+              <Form.Label>Win/Close</Form.Label>  
               <Form.Control 
                   size='sm'
                   type='text'
-                  placeholder='Brand'
+                  placeholder='PO Number'
                   value={brand}
                   onChange={(e) => {
                     // 
@@ -129,36 +129,7 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
               />
               </Form.Group>
           </Col>
-          <Col sm={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-              <Form.Label>Part No.</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='Part No.'
-                  value={partNo}
-                  onChange={(e) => {
-                    //
-                    setPartNo(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
-          <Col sm={12} md={6} lg={4}>
-              <Form.Group className="mb-3">
-              <Form.Label>Serial No.</Form.Label>  
-              <Form.Control 
-                  size='sm'
-                  type='text'
-                  placeholder='Serial No.'
-                  value={serialNo}
-                  onChange={(e) => {
-                    //
-                    setSerialNo(e.target.value)
-                  }}
-              />
-              </Form.Group>
-          </Col>
+        
         </Row>
         </Modal.Body>
         <Modal.Footer>
@@ -174,4 +145,4 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   )
 }
 
-export default EditInventoryModal
+export default EditActivityReferenceStatus

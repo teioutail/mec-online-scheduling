@@ -23,12 +23,14 @@ export const createMotherFolderInventory = (device) => async (dispatch) => {
         dispatch({
             type: INVENTORY_CREATE_REQUEST,
         })
+        
         // Header
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
+
         // Call API Request
         const { data } = await axios.post('/auth/inventory', device, config)
 
@@ -61,7 +63,6 @@ export const createMotherFolderBulkInventory = (file, scheduleid) => async (disp
         let formData = new FormData()
         formData.append('file', file)
         formData.append('ar_id', scheduleid);
-
         // Header 
         const config = {
             headers: {
@@ -131,7 +132,6 @@ export const deleteInventory = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access_token}`,
             },
         }
-        
         // Call API Request
         const { data } = await axios.delete(`/auth/inventory/${id}`, config)
 

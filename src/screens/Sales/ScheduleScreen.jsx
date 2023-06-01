@@ -31,6 +31,7 @@ import ViewInventoryModal from '../../modals/Sales/ViewInventoryModal'
 import { 
     listMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
+import EditActivityReferenceStatus from '../../modals/Sales/EditActivityReferenceStatus'
 
 const ScheduleScreen = () => {
     // Toastify
@@ -82,6 +83,7 @@ const ScheduleScreen = () => {
     const [showInventory, setShowInventory] = useState(false)
     const [showGroupInventory, setShowGroupInventory] = useState(false)
     const [showInventoryList, setShowInventoryList] = useState(false)
+    const [showInventoryStatus, setShowInventoryStatus] = useState(false);
     //
     const handleShow = () => setShow(true)
     // Global ID
@@ -125,6 +127,12 @@ const ScheduleScreen = () => {
         setShowInventoryList(true)
         setScheduleId(state.target.id)
         dispatch(listMotherFolderInventory(state.target.id))
+        setMode('Edit')
+    }
+    // View Status
+    const handleInventoryStatus = (state) => {
+        setShowInventoryStatus(true)
+        setScheduleId(state.target.id)
         setMode('Edit')
     }
     // Delete Schedule Reference
@@ -181,7 +189,7 @@ const ScheduleScreen = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
+                                    <Link className="dropdown-item" onClick={handleInventoryStatus} id={row.ar_id}>
                                       <FontAwesomeIcon icon={['fas', 'clipboard-list']} /> Change Status
                                     </Link>
                                 </li>
@@ -209,7 +217,6 @@ const ScheduleScreen = () => {
                         </div>
                     </>
                 },
-                // cell: (row) => <button onClick={handleButtonClick} id={row.id}>Action</button>,
 				ignoreRowClick: true,
 				allowOverflow: true,
 				button: true,
@@ -305,7 +312,7 @@ const ScheduleScreen = () => {
                     <Button className="btn btn-sm bg-gradient-info mb-2 float-end" size="sm" onClick={handleScheduleReferenceView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Mother Folder
                     </Button>
-                    {/* className="btn btn-sm bg-gradient-info mb-0 float-end" */}
+    
                     <DataTable
                         // title={headerTitle}
                         // selectableRows
@@ -357,6 +364,14 @@ const ScheduleScreen = () => {
                         mode={mode}
                     />
 
+                    <EditActivityReferenceStatus 
+                        show={showInventoryStatus} 
+                        onHide={() => setShowInventoryStatus(false) } 
+                        scheduleid={scheduleid}
+                        scheduleDetails={scheduleDetail}
+                        mode={mode}
+                    />
+
                     <ToastContainer
                         position="top-right"
                         autoClose={2000}
@@ -369,6 +384,7 @@ const ScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>
