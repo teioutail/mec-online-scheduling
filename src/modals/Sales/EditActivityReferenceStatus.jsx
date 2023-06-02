@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap' 
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../../components/Loader'
+// import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { 
-  listScheduleReference,
-  createScheduleReference,
-  updateScheduleReference,
-} from '../../actions/Sales/salesScheduleReferenceAction'
-import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput
- from '../../components/Sales/PostSalesInput'
 import { 
   createMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
-import { INVENTORY_CREATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
 const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
-  const [brand, setBrand] = useState('')
-  const [partNo, setPartNo] = useState('')
-  const [serialNo, setSerialNo] = useState('')
+  const [radioStatus, setRadioStatus] = useState('')
 
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
-
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -35,26 +23,13 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
   // CommonJS
   const Swal = require('sweetalert2')
 
-  // Event in select dropdown
-  const handleSelectedChange = (event) => {
-    //
-    const target = event.target
-    const selected = event.currentTarget.value
-    // const selected = target.selected
-    const name = target.name
-    // setStatus(selected)
-  }
-
   // 
   const handleSubmit = async () =>  {
     // Data
     let data = {
-      brand: brand,
-      part_number: partNo,
-      serial_number: serialNo,
+      status: radioStatus,
       ar_id: scheduleid,
     }
-
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -115,65 +90,98 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
         <Modal.Body>
             <Row>
                 <Col>
-                    <Form.Group className="mb-3">
-                    <Form.Label>Win/Close</Form.Label>  
-                    <Form.Control 
-                        size='sm'
-                        type='text'
-                        placeholder='PO Number'
-                        className='mb-1'
-                        value={brand}
+                    <Form.Group className="mb-3">  
+                    <Form.Check
+                        type='radio'
+                        value='Win/Close'
+                        checked={radioStatus === 'Win/Close'}
+                        label='Win/Close'
+                        name='status'
                         onChange={(e) => {
-                            // 
-                            setBrand(e.target.value)
+                            setRadioStatus(e.target.value)
+
                         }}
                     />
-                    <Form.Control 
-                        size='sm'
-                        type='text'
-                        placeholder='COA Date'
-                        value={brand}
-                        onChange={(e) => {
-                            // 
-                            setBrand(e.target.value)
-                        }}
-                    />
+                    {radioStatus === 'Win/Close' &&  
+                        <>
+                            <Form.Control 
+                                size='sm'
+                                type='text'
+                                placeholder='PO Number'
+                                className='mb-1'
+                                // value={brand}
+                                // onChange={(e) => {
+                                //     // 
+                                //     setBrand(e.target.value)
+                                // }}
+                            />
+                            <Form.Control
+                                size='sm'
+                                type='text'
+                                placeholder='COA Date'
+                                // value={brand}
+                                // onChange={(e) => {
+                                //     // 
+                                //     setBrand(e.target.value)
+                                // }}
+                            />
+                        </>
+                    }
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <Form.Group className="mb-3">
-                    <Form.Label>Lose/Cancelled</Form.Label>  
-                    <Form.Control 
-                        size='sm'
-                        type='text'
-                        placeholder='Reason'
-                        className='mb-1'
-                        value={brand}
-                        onChange={(e) => {
-                            // 
-                            setBrand(e.target.value)
-                        }}
-                    />
+                    <Form.Check
+                        type='radio'
+                        value='Lose/Cancelled'
+                        checked={radioStatus === 'Lose/Cancelled'}
+                        label='Lose/Cancelled'
+                        name='status'
+                        onChange={(e)=>{setRadioStatus(e.target.value)}}
+                    /> 
+                    {radioStatus === 'Lose/Cancelled' &&  
+                        <Form.Control 
+                            size='sm'
+                            type='text'
+                            placeholder='Reason'
+                            className='mb-1'
+                            // value={brand}
+                            // onChange={(e) => {
+                            //     // 
+                            //     setBrand(e.target.value)
+                            // }}
+                        />
+                    }
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <Form.Group className="mb-3">
-                    <Form.Label>On Hold</Form.Label>  
-                    <Form.Control 
-                        size='sm'
-                        type='text'
-                        placeholder='Reason'
-                        className='mb-1'
-                        value={brand}
-                        onChange={(e) => {
-                            // 
-                            setBrand(e.target.value)
-                        }}
-                    />
+                    {/* <Form.Label>On Hold</Form.Label>   */}
+                    <Form.Check
+                        type='radio'
+                        value='On Hold'
+                        checked={radioStatus === 'On Hold'}
+                        label='On Hold'
+                        name='status'
+                        onChange={(e)=>{setRadioStatus(e.target.value)}}
+                    /> 
+                    {radioStatus === 'On Hold' &&  
+                        <Form.Control 
+                            size='sm'
+                            type='text'
+                            placeholder='Reason'
+                            className='mb-1'
+                            // value={brand}
+                            // onChange={(e) => {
+                            //     // 
+                            //     setBrand(e.target.value)
+                            // }}
+                        />
+                    }
                     </Form.Group>
                 </Col>
             </Row>
