@@ -8,6 +8,10 @@ import {
     INVENTORY_CREATE_REQUEST, 
     INVENTORY_CREATE_RESET, 
     INVENTORY_CREATE_SUCCESS,
+    INVENTORY_CREATE_UPDATE_FAIL,
+    INVENTORY_CREATE_UPDATE_REQUEST,
+    INVENTORY_CREATE_UPDATE_RESET,
+    INVENTORY_CREATE_UPDATE_SUCCESS,
     INVENTORY_DELETE_FAIL,
     INVENTORY_DELETE_REQUEST,
     INVENTORY_DELETE_SUCCESS,
@@ -100,6 +104,7 @@ export const listMotherFolderInventory = (id) => async (dispatch, getState) => {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
+        
         // Call API Request
         const { data } = await axios.get(`/auth/select-inventory/${id}`, config)
 
@@ -152,3 +157,42 @@ export const deleteInventory = (id) => async (dispatch, getState) => {
     }
 }
 
+// 
+export const createOrUpdateInventoryStatus = (info) => async (dispatch, getState) => {
+     //
+     try {
+        dispatch({
+            type: INVENTORY_CREATE_UPDATE_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                Authorization: `Bearer ${userInfo.access_token}`,
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post('/auth/inventory-create-update', info, config)
+
+        // console.warn(data)
+
+        dispatch({
+            type: INVENTORY_CREATE_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+        dispatch({
+            type: INVENTORY_CREATE_UPDATE_RESET,
+        })
+    } catch(error) {
+        //
+        dispatch({
+            type: INVENTORY_CREATE_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}

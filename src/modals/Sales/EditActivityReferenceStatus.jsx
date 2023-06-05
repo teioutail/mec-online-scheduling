@@ -4,14 +4,19 @@ import { useDispatch, useSelector } from 'react-redux'
 // import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
-  createMotherFolderInventory,
+    createOrUpdateInventoryStatus,
 } from '../../actions/Sales/motherFolderInventoryAction'
+import { inventoryStatus, } from '../../actions/commonAction'
 
 const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
   const dispatch = useDispatch()
   // setState
   const [radioStatus, setRadioStatus] = useState('')
+  const [reason, setReason] = useState('')
+  // 
+  const [poNumber , setPoNumber] = useState('')
+  const [coaDate, setCoaDate] = useState('')
 
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
@@ -19,17 +24,23 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
   // CommonJS
   const Swal = require('sweetalert2')
 
   // 
   const handleSubmit = async () =>  {
     // Data
-    let data = {
+    let info = {
       status: radioStatus,
       ar_id: scheduleid,
+      po_number: poNumber,
+      coa_date: coaDate,
+      reason: reason,
     }
+    
+    // let data = inventoryStatus(info)
+    console.warn(info)
+
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -42,8 +53,8 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
     }).then((result) => {
       // Show confirm
       if (result.isConfirmed) {
-        // Save New Device
-        dispatch(createMotherFolderInventory(data))
+        // Save or Update Device
+        dispatch(createOrUpdateInventoryStatus(info))
       }
     })
   }
@@ -109,21 +120,33 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                                 type='text'
                                 placeholder='PO Number'
                                 className='mb-1'
-                                // value={brand}
-                                // onChange={(e) => {
-                                //     // 
-                                //     setBrand(e.target.value)
-                                // }}
+                                value={poNumber}
+                                onChange={(e) => {
+                                    // 
+                                    setPoNumber(e.target.value)
+                                }}
                             />
                             <Form.Control
                                 size='sm'
                                 type='text'
                                 placeholder='COA Date'
-                                // value={brand}
-                                // onChange={(e) => {
-                                //     // 
-                                //     setBrand(e.target.value)
-                                // }}
+                                className='mb-1'
+                                value={coaDate}
+                                onChange={(e) => {
+                                    // 
+                                    setCoaDate(e.target.value)
+                                }}
+                            />
+                            <Form.Control
+                                size='sm'
+                                type='text'
+                                placeholder='Reason'
+                                className='mb-1'
+                                value={reason}
+                                onChange={(e) => {
+                                    // 
+                                    setReason(e.target.value)
+                                }}
                             />
                         </>
                     }
@@ -139,7 +162,9 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                         checked={radioStatus === 'Lose/Cancelled'}
                         label='Lose/Cancelled'
                         name='status'
-                        onChange={(e)=>{setRadioStatus(e.target.value)}}
+                        onChange={(e) => { 
+                            setRadioStatus(e.target.value) 
+                        }}
                     /> 
                     {radioStatus === 'Lose/Cancelled' &&  
                         <Form.Control 
@@ -147,11 +172,11 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                             type='text'
                             placeholder='Reason'
                             className='mb-1'
-                            // value={brand}
-                            // onChange={(e) => {
-                            //     // 
-                            //     setBrand(e.target.value)
-                            // }}
+                            value={reason}
+                            onChange={(e) => {
+                                // 
+                                setReason(e.target.value)
+                            }}
                         />
                     }
                     </Form.Group>
@@ -167,7 +192,7 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                         checked={radioStatus === 'On Hold'}
                         label='On Hold'
                         name='status'
-                        onChange={(e)=>{setRadioStatus(e.target.value)}}
+                        onChange={(e) => {setRadioStatus(e.target.value)}}
                     /> 
                     {radioStatus === 'On Hold' &&  
                         <Form.Control 
@@ -175,11 +200,11 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                             type='text'
                             placeholder='Reason'
                             className='mb-1'
-                            // value={brand}
-                            // onChange={(e) => {
-                            //     // 
-                            //     setBrand(e.target.value)
-                            // }}
+                            value={reason}
+                            onChange={(e) => {
+                                // 
+                                setReason(e.target.value)
+                            }}
                         />
                     }
                     </Form.Group>
