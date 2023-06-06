@@ -9,9 +9,12 @@ import {
   updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput
- from '../../components/Sales/PostSalesInput'
-import { SCHEDULE_REFERENCE_CREATE_RESET, SCHEDULE_REFERENCE_UPDATE_RESET } from '../../constants/Sales/salesScheduleReferenceConstants'
+import PostSalesInput from '../../components/Sales/PostSalesInput'
+import { 
+  SCHEDULE_REFERENCE_CREATE_RESET, 
+  SCHEDULE_REFERENCE_UPDATE_RESET, 
+} from '../../constants/Sales/salesScheduleReferenceConstants'
+
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
   // PostSalesInput Component Reference
   const postSalesInputRef = useRef()

@@ -17,10 +17,6 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
-
-  // User Login Info
-  const userLogin = useSelector(state => state.userLogin)
-
   // CommonJS
   const Swal = require('sweetalert2')
   // 
@@ -32,7 +28,6 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
       serial_number: serialNo,
       ar_id: scheduleid,
     }
-
     // Save Change Here...
     Swal.fire({
       title: 'Are you sure?',
@@ -54,29 +49,26 @@ const EditInventoryModal = ({ show, onHide, scheduleDetails, size, scheduleid })
   // Show Success 
   useEffect(() => {
     // Show Success Adding of new records
-    
-    // if(motherFolderInventoryCreate) {
-    //   // 
-    //   Swal.fire(
-    //     'Success!',
-    //     motherFolderInventoryCreateMessage,
-    //     'success'
-    //   )
-    //   // Refresh Datatable
-    //   dispatch(listScheduleReference())
-    //   // Close Modal
-    //   onHide()
-    //   // Clear Fields
-    //   setBrand('')
-    //   setPartNo('')
-    //   setSerialNo('')
-    //   // 
-    //   dispatch({
-    //     type: INVENTORY_CREATE_RESET,
-    //   })
-    // }
+    if(motherFolderInventoryCreateSuccess) {
+      // 
+      Swal.fire(
+        'Success!',
+        motherFolderInventoryCreateMessage,
+        'success'
+      )
+      // Close Modal
+      onHide()
+      // Clear Fields
+      setBrand('')
+      setPartNo('')
+      setSerialNo('')
+      // // 
+      dispatch({
+        type: INVENTORY_CREATE_RESET,
+      })
+    }
 
-  },[motherFolderInventoryCreate])
+  },[motherFolderInventoryCreateSuccess])
 
   return (
     <>

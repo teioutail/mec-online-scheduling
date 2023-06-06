@@ -30,25 +30,20 @@ export const createMotherFolderInventory = (device) => async (dispatch) => {
         dispatch({
             type: INVENTORY_CREATE_REQUEST,
         })
-        
         // Header
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
             }
         }
-
         // Call API Request
         const { data } = await axios.post('/auth/inventory', device, config)
-
+        // 
         dispatch({
             type: INVENTORY_CREATE_SUCCESS,
             payload: data,
         })
 
-        dispatch({
-            type: INVENTORY_CREATE_RESET,
-        })
     } catch(error) {
         //
         dispatch({
