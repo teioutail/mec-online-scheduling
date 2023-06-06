@@ -18,6 +18,9 @@ import {
     INVENTORY_LIST_FAIL,
     INVENTORY_LIST_REQUEST,
     INVENTORY_LIST_SUCCESS,
+    INVENTORY_STATUS_VIEW_DETAILS_FAIL,
+    INVENTORY_STATUS_VIEW_DETAILS_REQUEST,
+    INVENTORY_STATUS_VIEW_DETAILS_SUCCESS,
 } from "../../constants/Sales/motherFolderInventoryConstants"
 
 // Create New Inventory Item
@@ -164,9 +167,7 @@ export const createOrUpdateInventoryStatus = (info) => async (dispatch, getState
         dispatch({
             type: INVENTORY_CREATE_UPDATE_REQUEST,
         })
-
         const { userLogin: { userInfo } } = getState()
-
         // Header
         const config = {
             headers: {
@@ -174,24 +175,55 @@ export const createOrUpdateInventoryStatus = (info) => async (dispatch, getState
                 Authorization: `Bearer ${userInfo.access_token}`,
             }
         }
-
         // Call API Request
         const { data } = await axios.post('/auth/inventory-create-update', info, config)
-
-        // console.warn(data)
 
         dispatch({
             type: INVENTORY_CREATE_UPDATE_SUCCESS,
             payload: data,
         })
 
-        dispatch({
-            type: INVENTORY_CREATE_UPDATE_RESET,
-        })
     } catch(error) {
         //
         dispatch({
             type: INVENTORY_CREATE_UPDATE_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// Get Selected Calendar Details Action
+export const getSelectedInventoryStatus = (id) => async (dispatch, getState) => {
+    // 
+    try {
+        dispatch({
+            type: INVENTORY_STATUS_VIEW_DETAILS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${userInfo.access_token}`
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.get(`/auth/inventory/${id}/edit`, config)
+        
+        console.warn(data)
+
+        dispatch({
+            type: INVENTORY_STATUS_VIEW_DETAILS_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        // 
+        dispatch({
+            type: INVENTORY_STATUS_VIEW_DETAILS_FAIL,
             payload: error.response.data.errors,
         })
     }

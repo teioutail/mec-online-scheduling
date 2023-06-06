@@ -32,6 +32,7 @@ import {
 import EditGroupInventoryModal from '../../modals/Sales/EditGroupInventoryModal'
 import ViewInventoryModal from '../../modals/Sales/ViewInventoryModal'
 import { 
+    getSelectedInventoryStatus,
     listMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import EditActivityReferenceStatus from '../../modals/Sales/EditActivityReferenceStatus'
@@ -136,6 +137,7 @@ const ScheduleScreen = () => {
     const handleInventoryStatus = (state) => {
         setShowInventoryStatus(true)
         setScheduleId(state.target.id)
+        dispatch(getSelectedInventoryStatus(state.target.id))
         setMode('Edit')
     }
     // Delete Schedule Reference

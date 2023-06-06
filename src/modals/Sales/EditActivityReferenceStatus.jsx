@@ -7,6 +7,8 @@ import {
     createOrUpdateInventoryStatus,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { inventoryStatus, } from '../../actions/commonAction'
+import Loader from '../../components/Loader'
+import { INVENTORY_CREATE_UPDATE_RESET } from '../../constants/Sales/motherFolderInventoryConstants'
 
 const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, scheduleid }) => {
   // Redux
@@ -17,16 +19,18 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
   // 
   const [poNumber , setPoNumber] = useState('')
   const [coaDate, setCoaDate] = useState('')
-
   // Schedule Reference Create Success Message
-  const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
-  const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
+  const motherFolderInventoryCreateUpdate = useSelector(state => state.motherFolderInventoryCreateUpdate)
+  const { success:motherFolderInventoryCreateUpdateSuccess, message:motherFolderInventoryCreateUpdateMessage } = motherFolderInventoryCreateUpdate
+  // Mother Folder Status Details
+  const motherFolderInventoryDetails = useSelector(state => state.motherFolderInventoryDetails)
+  const { loading, inventory } = motherFolderInventoryDetails
+
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   // CommonJS
   const Swal = require('sweetalert2')
-
   // 
   const handleSubmit = async () =>  {
     // Data
@@ -37,9 +41,7 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
       coa_date: coaDate,
       reason: reason,
     }
-    
     // let data = inventoryStatus(info)
-    console.warn(info)
 
     // Save Change Here...
     Swal.fire({
@@ -58,33 +60,41 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
       }
     })
   }
-
+    // Show Success 
+    useEffect(() => {
+        // Show Success Adding of new records
+        if(motherFolderInventoryCreateUpdateSuccess) {
+          Swal.fire(
+            'Success!',
+            motherFolderInventoryCreateUpdateMessage,
+            'success'
+          )
+         dispatch({
+            type: INVENTORY_CREATE_UPDATE_RESET,
+         })
+          // Close Modal
+          onHide()
+        }
+    },[motherFolderInventoryCreateUpdateSuccess])
+      
   // Show Success 
   useEffect(() => {
-    // Show Success Adding of new records
-    
-    // if(motherFolderInventoryCreate) {
-    //   // 
-    //   Swal.fire(
-    //     'Success!',
-    //     motherFolderInventoryCreateMessage,
-    //     'success'
-    //   )
-    //   // Refresh Datatable
-    //   dispatch(listScheduleReference())
-    //   // Close Modal
-    //   onHide()
-    //   // Clear Fields
-    //   setBrand('')
-    //   setPartNo('')
-    //   setSerialNo('')
-    //   // 
-    //   dispatch({
-    //     type: INVENTORY_CREATE_RESET,
-    //   })
-    // }
-
-  },[motherFolderInventoryCreate])
+    // Get the first object
+    if(inventory[0]) {
+        // Get Selected Details
+        const { 
+            status, 
+            reasons, 
+            po_number, 
+            coa_date,
+        } = inventory[0]
+        // set State value
+        setRadioStatus(status || "")
+        setReason(reasons || "")
+        setPoNumber(po_number || "")
+        setCoaDate(coa_date || "")
+    }
+  },[inventory])
 
   return (
     <>
@@ -99,7 +109,8 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
           <Modal.Title>Activity Reference Status</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <Row>
+           {loading ? <Loader/> : <>
+           <Row>
                 <Col>
                     <Form.Group className="mb-3">  
                     <Form.Check
@@ -210,6 +221,8 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                     </Form.Group>
                 </Col>
             </Row>
+           </>
+           }
         </Modal.Body>
         <Modal.Footer>
           <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>

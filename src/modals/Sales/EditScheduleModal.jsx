@@ -11,6 +11,7 @@ import {
 import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
 import PostSalesInput
  from '../../components/Sales/PostSalesInput'
+import { SCHEDULE_REFERENCE_CREATE_RESET, SCHEDULE_REFERENCE_UPDATE_RESET } from '../../constants/Sales/salesScheduleReferenceConstants'
 const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, size, emails }) => {
   // PostSalesInput Component Reference
   const postSalesInputRef = useRef()
@@ -30,7 +31,7 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   const [endUserContactPerson, setEndUserContactPerson] = useState('')
   const [partnerContactNumber, setPartnerContactNumber] = useState('')
   const [endUserContactNumber, setEndUserContactNumber] = useState('')
-  const [emailParticipants, setEmailParticipants] = useState([])
+  // const [emailParticipants, setEmailParticipants] = useState([])
 
   // Schedule Reference Details
   const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
@@ -124,11 +125,17 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
   useEffect(() => {
     // Show Success Adding of new records
     if(scheduleReferenceCreateSuccess) {
+      // 
       Swal.fire(
         'Success!',
         scheduleReferenceCreateMessage,
         'success'
       )
+
+     dispatch({
+        type: SCHEDULE_REFERENCE_CREATE_RESET,
+     })
+
       // Refresh Datatable
       dispatch(listScheduleReference())
       // Close Modal
@@ -137,11 +144,17 @@ const EditScheduleModal = ({ show , mode, onHide, scheduleid, scheduleDetails, s
 
     // Show Success Update
     if(scheduleReferenceUpdateSuccess) {
+      // 
       Swal.fire(
         'Success!',
         scheduleReferenceUpdateMessage,
         'success'
       )
+
+      dispatch({
+        type: SCHEDULE_REFERENCE_UPDATE_RESET,
+      })
+
       // Refresh Datatable
       dispatch(listScheduleReference())
       // Close Modal
