@@ -5,12 +5,7 @@ import Loader from '../../components/Loader'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { 
   listScheduleReference,
-  createScheduleReference,
-  updateScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
-import EditEmailBusinessUnit from '../../components/Sales/EditEmailBusinessUnit'
-import PostSalesInput
- from '../../components/Sales/PostSalesInput'
 import { 
   deleteInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'

@@ -260,9 +260,9 @@ const CalendarScheduleScreen = () => {
 
                     <UpdateInventoryModal
                         showInventory={showInventory}
-                        artid={artid}
+                        calendarScheduleDetails={calendarScheduleDetail}
                         setShowInventory={setShowInventory}
-                        onHide={handleClose}
+                        onHide={() => setShowInventory(false)}
                     />
 
                     <ToastContainer
