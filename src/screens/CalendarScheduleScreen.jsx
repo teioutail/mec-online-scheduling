@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/template/Header'
 import Footer from '../components/template/Footer'
 import FormContainer from '../components/template/FormContainer'
@@ -15,8 +15,6 @@ import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import DatePicker from 'react-datepicker'
-
 import {
     deleteScheduleReference,
     listScheduleReferenceId,
@@ -28,7 +26,6 @@ import {
   } from '../actions/Sales/salesCalendarScheduleAction'
   
   import {  
-      getSeUsersList, 
       getUsersEmailList,
   } from '../actions/userActions'
   
@@ -46,6 +43,7 @@ import {
 import { ACTIVITY_FOR_APPROVER_UPDATE_RESET } from '../constants/Approver/approverActivityRequestConstants'
 import UpdateRequestModal from '../modals/SE/UpdateRequestModal'
 import { ACTIVITY_UPDATE_CREATE_RESET } from '../constants/SE/seActivityUpdateConstants'
+import UpdateInventoryModal from '../modals/SE/UpdateInventoryModal'
 
 const CalendarScheduleScreen = () => {
     // Locales
@@ -109,12 +107,14 @@ const CalendarScheduleScreen = () => {
     const [show, setShow] = useState(false)
     // UpdateRequestModal
     const [show2, setShow2] = useState(false)
+    // UpdateInventoryModal
+    const [showInventory, setShowInventory] = useState(false)
+
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     // Global ID
     const [artid, setArtId] = useState('')
     const [mode, setMode] = useState('')
-    const [activityType, setActivityType] = useState('');
     // Add Calendar Modal
     const handleCalendarScheduleView = (state) => {
         // Show Modal
@@ -130,34 +130,6 @@ const CalendarScheduleScreen = () => {
         setMode('Edit')
         // 
         dispatch(getSelectedCalendarDetails(state.art_id))
-    }
-
-    // Delete Schedule Reference
-    const handleDeleteScheduleReference = (state) => {
-        // Save Change Here...
-        Swal.fire({
-            title: 'Delete this schedule?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Proceed!'
-        }).then((result) => {
-            // 
-            if (result.isConfirmed) {
-                // Delete Schedule
-                dispatch(deleteScheduleReference(state.target.id))
-                // Refresh Datatable
-                dispatch(listCalendarSchedule(userInfo.user_role))
-                // Show Success Request
-                Swal.fire(
-                    'Success!',
-                    'Schedule Successfully Deleted.',
-                    'success'
-                )
-            }
-        })
     }
 
     // useEffect for Error Message
@@ -270,7 +242,8 @@ const CalendarScheduleScreen = () => {
                     <EditCalendarScheduleModal 
                         size="lg"
                         show={show}
-                        setShow2={setShow2} // 
+                        setShow2={setShow2} //
+                        setShowInventory={setShowInventory} // 
                         onHide={handleClose} 
                         artid={artid}
                         calendarScheduleDetails={calendarScheduleDetail}
@@ -282,6 +255,13 @@ const CalendarScheduleScreen = () => {
                         show={show2}
                         artid={artid}
                         setShow2={setShow2}
+                        onHide={handleClose}
+                    />
+
+                    <UpdateInventoryModal
+                        showInventory={showInventory}
+                        artid={artid}
+                        setShowInventory={setShowInventory}
                         onHide={handleClose}
                     />
 
@@ -297,6 +277,7 @@ const CalendarScheduleScreen = () => {
                         pauseOnHover
                         theme="light"
                     />
+
                 <Footer />
             </FormContainer>
         </>

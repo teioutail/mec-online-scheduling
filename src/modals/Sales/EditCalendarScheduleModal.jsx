@@ -33,11 +33,8 @@ const EditCalendarScheduleModal = (props) => {
   const { 
     show, mode, onHide, 
     artid, calendarScheduleDetails, size,
-    notify, setShow2
+    notify, setShow2, setShowInventory
   } = props
-
-  // console.warn(mode);
-
   // Redux
   const dispatch = useDispatch()
   // setState
@@ -159,6 +156,11 @@ const EditCalendarScheduleModal = (props) => {
     // Show Selected Activity 
     dispatch(getSelectedActivityUpdateDetails(art_id))
     setShow2(true)
+  }
+  // 
+  const handleViewInventory = () => {
+    // Show Selected Inventory
+    setShowInventory(true)
   }
 
   /**
@@ -569,10 +571,6 @@ const EditCalendarScheduleModal = (props) => {
       }
     }
 
-  /**
-   * - 
-   */
-
   // Selected Calendar Details
   useEffect(() => {
     // 
@@ -980,8 +978,8 @@ const EditCalendarScheduleModal = (props) => {
                         </Button>
                       } */}
 
-                      <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
-                          Update Inventory
+                      <Button size='sm' variant="btn bg-gradient-info" onClick={handleViewInventory} >
+                        Update Inventory
                       </Button>
                     </> 
                   }
