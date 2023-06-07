@@ -163,9 +163,8 @@ const UpdateInventoryModal = (props) => {
             backdrop="static"
             keyboard={false}
         >
-        
         <Modal.Header closeButton>
-          <Modal.Title>Inventory</Modal.Title>
+          <Modal.Title>Update Inventory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             { seActivityUpdateDetailsLoading ? <Loader /> : 
