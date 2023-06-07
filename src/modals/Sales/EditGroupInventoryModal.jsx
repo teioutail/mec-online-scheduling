@@ -29,27 +29,12 @@ const EditGroupInventoryModal = (props) => {
   const dispatch = useDispatch()
   // setState
   const [selectedFile, setSelectedFile] = useState()
-//   const [isFilePicked, setIsFilePicked] = useState(false)
+  //   const [isFilePicked, setIsFilePicked] = useState(false)
 
-  // Schedule Reference Details
-  const scheduleReferenceDetails = useSelector(state => state.scheduleReferenceDetails)
-  const { loading:scheduleReferenceLoading } = scheduleReferenceDetails
 
-  // Schedule Reference Create Success Message
-  const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
-  const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
-
-  // Schedule Reference Update Success Message
-  const scheduleReferenceUpdate = useSelector(state => state.scheduleReferenceUpdate)
-  const { success:scheduleReferenceUpdateSuccess, message:scheduleReferenceUpdateMessage } = scheduleReferenceUpdate
-  
-  // Inventory Bulk Upload
+  // Inventory Bulk Upload Success
   const motherFolderInventoryBulkCreate = useSelector(state => state.motherFolderInventoryBulkCreate)
   const { success:motherFolderInventoryBulkCreateSuccess, message:motherFolderInventoryBulkCreateMessage} = motherFolderInventoryBulkCreate
-  
-  // User Login Info
-  const userLogin = useSelector(state => state.userLogin)
-  const { userInfo } = userLogin
 
   // CommonJS
   const Swal = require('sweetalert2')

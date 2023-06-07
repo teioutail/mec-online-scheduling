@@ -270,8 +270,10 @@ const ScheduleScreen = () => {
             //
             dispatch({ type: INVENTORY_CREATE_RESET })
         }
+
         // Show Bulk Upload Error
         if(motherFolderInventoryBulkCreateError) {
+            alert("adsf");
             // Loop Error Back-End Validation
             for(const key in motherFolderInventoryBulkCreateError) {
                 if (motherFolderInventoryBulkCreateError.hasOwnProperty(key)) {
@@ -283,7 +285,7 @@ const ScheduleScreen = () => {
             dispatch({ type: INVENTORY_CREATE_BULK_RESET })
         }
 
-    }, [errorCreate, 
+    },[errorCreate, 
         errorUpdate,
         motherFolderInventoryErrorCreate,
         motherFolderInventoryBulkCreateError])

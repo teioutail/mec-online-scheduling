@@ -203,7 +203,6 @@ const reducer = combineReducers({
     motherFolderInventoryDetails:motherFolderInventoryDetailsReducer,
     motherFolderInventoryCreateUpdate:motherFolderInventoryCreateUpdateReducer,
 })
-
 // 
 const userInfoFromStorage = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo'))

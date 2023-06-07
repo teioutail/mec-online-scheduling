@@ -102,7 +102,7 @@ export const motherFolderInventoryDetailsReducer = (state= { inventory: {} } , a
         case INVENTORY_STATUS_VIEW_DETAILS_RESET:
             return { inventory: {} }
         default: 
-            return state
+           return state
     }
 }
 
