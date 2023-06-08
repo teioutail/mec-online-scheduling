@@ -51,7 +51,7 @@ const EditCalendarScheduleModal = (props) => {
   const [emailParticipantsFields, setEmailParticipantsFields] = useState({})
   // Calendar Schedule Details
   const calendarScheduleDetailsInfo = useSelector(state => state.calendarScheduleDetails)
-  const { loading:calendarDetailsLoading, calendar: { reference_act_type, art_id }} = calendarScheduleDetailsInfo
+  const { loading:calendarDetailsLoading, calendar: { reference_act_type, art_id, activity_count }} = calendarScheduleDetailsInfo
   // Calendar Schedule Create Success Message
   const calendarScheduleCreate = useSelector(state => state.calendarScheduleCreate)
   const { success:calendarScheduleCreateSuccess, message:calendarScheduleCreateMessage } = calendarScheduleCreate
@@ -978,9 +978,15 @@ const EditCalendarScheduleModal = (props) => {
                         </Button>
                       } */}
 
-                      <Button size='sm' variant="btn bg-gradient-info" onClick={handleViewInventory} >
-                        Update Inventory
-                      </Button>
+                      {/* Tuloy mo bukas */}
+                      {activity_count > 0 ? 
+                        <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewInventory} >
+                          View Inventory
+                        </Button> : 
+                        <Button size='sm' variant="btn bg-gradient-info" onClick={handleViewInventory} >
+                          Update Inventory
+                        </Button>
+                      }
                       
                     </> 
                   }

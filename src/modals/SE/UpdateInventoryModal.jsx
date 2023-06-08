@@ -7,7 +7,7 @@ import {
   listScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 import { 
-    createInventoryUpdate,
+  createInventoryUpdate,
   deleteInventory, 
   listMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
@@ -101,7 +101,6 @@ const UpdateInventoryModal = (props) => {
             device: selectedData,
             art_id: art_id,
         }
-
         if(selectedData) {
             Swal.fire({
                 title: 'Are you sure?',
