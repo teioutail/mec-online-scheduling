@@ -7,11 +7,13 @@ import {
   listScheduleReference,
 } from '../../actions/Sales/salesScheduleReferenceAction'
 import { 
+    createInventoryUpdate,
   deleteInventory, 
   listMotherFolderInventory,
 } from '../../actions/Sales/motherFolderInventoryAction'
 import { 
-  INVENTORY_CREATE_RESET, INVENTORY_DELETE_RESET,
+  INVENTORY_CREATE_RESET, 
+  INVENTORY_DELETE_RESET,
 } from '../../constants/Sales/motherFolderInventoryConstants'
 import DataTable from 'react-data-table-component'
 import { useMemo } from 'react'
@@ -28,7 +30,9 @@ const UpdateInventoryModal = (props) => {
   // Datatables
   const [pending, setPending] = useState(true)
   const [rows, setRows] = useState([])
-  const [totalRows, setTotalRows] = useState(10);
+  // Selected Data
+  const [selectedData, setSelectedData] = React.useState();
+
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
@@ -41,7 +45,7 @@ const UpdateInventoryModal = (props) => {
 
   // Calendar Schedule Details
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-  const { calendar: { ar_id } } = calendarScheduleDetails
+  const { calendar: { ar_id, art_id } } = calendarScheduleDetails
 
   // CommonJS
   const Swal = require('sweetalert2')
@@ -80,33 +84,62 @@ const UpdateInventoryModal = (props) => {
 		[],
 	);
 
-  // Delete Record
-  const handleInventoryDelete = async (state) =>  {
-    // Save Change Here...
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Proceed!'
-    }).then((result) => {
-      // Show confirm Deletion 
-      if (result.isConfirmed) {
-        // Delete Selected Device
-        dispatch(deleteInventory(state.target.id))
-      }
-    })
-  }
+    /**
+     * - 
+     */
+    const handleChange = (state) => {
+        // 
+        setSelectedData(state.selectedRows);
+    };
 
-  /**
-   * 
-   * @param {rows} rows 
-   */
-  const handleApplySelectedRows = (rows) => {
-    console.warn('test')
-  }
+    /**
+     * - 
+     */
+    const handleSubmit = () => {
+        // 
+        const data = {
+            device: selectedData,
+            art_id: art_id,
+        }
+
+        if(selectedData) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Proceed!'
+            }).then((result) => {
+                // Show confirm Deletion 
+                if (result.isConfirmed) {
+                    // Insert Device Update
+                    dispatch(createInventoryUpdate(data))
+                }
+            })
+        }
+    }
+
+    // Delete Record
+    const handleInventoryDelete = async (state) =>  {
+        // Save Change Here...
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+        }).then((result) => {
+        // Show confirm Deletion 
+        if (result.isConfirmed) {
+            // Delete Selected Device
+            dispatch(deleteInventory(state.target.id))
+        }
+        })
+    }
 
   // 
   useEffect(() => {
@@ -190,18 +223,20 @@ const UpdateInventoryModal = (props) => {
                 highlightOnHover
                 pointerOnHover
                 selectableRowsHighlight
-                // paginationTotalRows={1}
-                // paginationPerPage={5}
-                selectableRowSelected={handleApplySelectedRows}
+                onSelectedRowsChange={handleChange}
             />
         </Modal.Body>
         <Modal.Footer>
+          <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit}>
+              Save Changes
+          </Button>
           <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
               Close
           </Button>
         </Modal.Footer>
         </Modal>
     </>
+    
   )
 }
 

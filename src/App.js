@@ -32,7 +32,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import ApproverAllApprovedScreen from './screens/Approvers/ApproverAllApprovedScreen'
 import SideMenu from './components/template/SideMenu'
 
-
 // This exports the whole icon packs for Brand and Solid.
 library.add(fas)
 

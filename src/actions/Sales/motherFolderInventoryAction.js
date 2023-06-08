@@ -21,6 +21,9 @@ import {
     INVENTORY_STATUS_VIEW_DETAILS_FAIL,
     INVENTORY_STATUS_VIEW_DETAILS_REQUEST,
     INVENTORY_STATUS_VIEW_DETAILS_SUCCESS,
+    INVENTORY_UPDATE_FAIL,
+    INVENTORY_UPDATE_REQUEST,
+    INVENTORY_UPDATE_SUCCESS,
 } from "../../constants/Sales/motherFolderInventoryConstants"
 
 // Create New Inventory Item
@@ -96,13 +99,14 @@ export const listMotherFolderInventory = (id) => async (dispatch, getState) => {
             type: INVENTORY_LIST_REQUEST,
         })
         const { userLogin : { userInfo }} = getState()
+
         // Header
         const config = {
             headers: {
                 'Authorization': `Bearer ${userInfo.access_token}`
             }
         }
-        
+
         // Call API Request
         const { data } = await axios.get(`/auth/select-inventory/${id}`, config)
 
@@ -219,6 +223,39 @@ export const getSelectedInventoryStatus = (id) => async (dispatch, getState) => 
         // 
         dispatch({
             type: INVENTORY_STATUS_VIEW_DETAILS_FAIL,
+            payload: error.response.data.errors,
+        })
+    }
+}
+
+// 
+export const createInventoryUpdate = (info) => async (dispatch) => {
+    //
+    try {
+
+        dispatch({
+            type: INVENTORY_UPDATE_REQUEST,
+        })
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+        // Call API Request
+        const { data } = await axios.post('/auth/device-update', info, config)
+
+        console.warn(data)
+        // 
+        dispatch({
+            type: INVENTORY_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch(error) {
+        //
+        dispatch({
+            type: INVENTORY_UPDATE_FAIL,
             payload: error.response.data.errors,
         })
     }

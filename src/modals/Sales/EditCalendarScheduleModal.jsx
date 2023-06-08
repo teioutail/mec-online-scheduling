@@ -981,6 +981,7 @@ const EditCalendarScheduleModal = (props) => {
                       <Button size='sm' variant="btn bg-gradient-info" onClick={handleViewInventory} >
                         Update Inventory
                       </Button>
+                      
                     </> 
                   }
 
