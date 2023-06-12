@@ -140,7 +140,7 @@ const ViewInventoryModal = ({ show, onHide, size, scheduleid }) => {
     <>
         <Modal  
           size={size} 
-          show={show} 
+          show={show}
           onHide={onHide}
           fullscreen={true}
         >

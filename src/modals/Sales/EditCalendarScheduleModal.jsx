@@ -964,7 +964,7 @@ const EditCalendarScheduleModal = (props) => {
                   }
 
                   {/* Engineer */}
-                  {(['Engineer'].includes(userInfo.user_role)) && 
+                  {( scheduleType === 'New-Schedule' && ['Engineer'].includes(userInfo.user_role)) && 
                     <>
                       {( ! ['For Approval','Completed'].includes(status)) && 
                         <Button size='sm' variant="btn bg-gradient-primary" onClick={() => setShow2(true)} >
@@ -978,7 +978,6 @@ const EditCalendarScheduleModal = (props) => {
                         </Button>
                       } */}
 
-                      {/* Tuloy mo bukas */}
                       {activity_count > 0 ? 
                         <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewInventory} >
                           View Inventory
@@ -1000,7 +999,7 @@ const EditCalendarScheduleModal = (props) => {
                   {/* Show Save Change Button */}
                   {mode === 'Add' && 
                     <>
-                      <Button size='sm' variant="btn bg-gradient-primary" onClick={handleSubmit} >
+                      <Button size='sm' variant="btn bg-gradient-info" onClick={handleSubmit} >
                           Save Schedule
                       </Button>
                     </>
