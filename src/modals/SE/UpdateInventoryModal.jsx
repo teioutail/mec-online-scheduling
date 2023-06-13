@@ -42,7 +42,6 @@ const UpdateInventoryModal = (props) => {
   // Mother Folder Inventory List
   const motherFolderInventoryList = useSelector(state => state.motherFolderInventoryList)
   const { loading, inventory } = motherFolderInventoryList
-
   // Calendar Schedule Details
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { ar_id, art_id } } = calendarScheduleDetails
@@ -101,6 +100,7 @@ const UpdateInventoryModal = (props) => {
             device: selectedData,
             art_id: art_id,
         }
+        console.warn(data)
         if(selectedData) {
             Swal.fire({
                 title: 'Are you sure?',

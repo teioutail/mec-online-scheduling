@@ -158,6 +158,7 @@ const EditCalendarScheduleModal = (props) => {
     dispatch(getSelectedActivityUpdateDetails(art_id))
     setShow2(true)
   }
+
   // 
   const handleViewInventory = () => {
     // Show Selected Inventory
@@ -995,7 +996,7 @@ const EditCalendarScheduleModal = (props) => {
                     <Button size='sm' variant="btn bg-gradient-secondary" onClick={handleViewDetails}>
                       View Activity Update
                     </Button>
-                  }           
+                  }      
                   
                   {/* Show Save Change Button */}
                   {mode === 'Add' && 

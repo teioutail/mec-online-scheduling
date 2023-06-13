@@ -52,7 +52,7 @@ const UpdateRequestModal = (props) => {
   const [conforme, setConforme] = useState('')
   const [srAttachment, setSrAttachment] = useState([])
   const [selectedEmployeeNames, setSelectedEmployeeNames] = useState([])
-  
+
   // File Handler
   const onFileChange = (files) => {
     setSrAttachment(files)
@@ -336,7 +336,7 @@ const UpdateRequestModal = (props) => {
             </>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="btn btn-btn bg-gradient-secondary btn-sm" onClick={handleClose}>
             Close
           </Button>
 

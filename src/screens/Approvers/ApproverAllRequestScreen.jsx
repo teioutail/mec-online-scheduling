@@ -25,6 +25,8 @@ import {
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from './ExpandableRowComponent'
 import ExpandableRowComponentTraining from './ExpandableRowComponentTraining'
+import UpdateInventoryModal from '../../modals/SE/UpdateInventoryModal'
+import UpdateRequestModal from '../../modals/SE/UpdateRequestModal'
 
 const ApproverAllRequestScreen = () => {
     // Toastify
@@ -63,6 +65,8 @@ const ApproverAllRequestScreen = () => {
     const [rows, setRows] = useState([])
     // EditRoleModal
     const [show, setShow] = useState(false)
+    // UpdateRequestModal
+    const [show2, setShow2] = useState(false)
     // Modal State
     const handleClose = () => setShow(false)
     // const handleShow = () => setShow(true)
@@ -252,11 +256,25 @@ const ApproverAllRequestScreen = () => {
                     <EditCalendarScheduleModal
                         size="lg"
                         show={show} 
+                        setShow2={setShow2} //
                         onHide={handleClose} 
                         artid={artid}
                         mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
                     />
+
+                    <UpdateRequestModal
+                        show={show2}
+                        artid={artid}
+                        setShow2={setShow2} // 
+                    />
+
+                    {/* <UpdateInventoryModal
+                        showInventory={showInventory}
+                        calendarScheduleDetails={calendarScheduleDetail}
+                        setShowInventory={setShowInventory}
+                        onHide={() => setShowInventory(false)}
+                    /> */}
 
                     <ToastContainer
                         position="top-right"

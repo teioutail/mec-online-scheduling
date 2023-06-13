@@ -109,7 +109,6 @@ const CalendarScheduleScreen = () => {
     const [show2, setShow2] = useState(false)
     // UpdateInventoryModal
     const [showInventory, setShowInventory] = useState(false)
-
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     // Global ID

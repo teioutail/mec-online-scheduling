@@ -27,6 +27,7 @@ import {
 import ExpandableRowComponent from '../Approvers/ExpandableRowComponent'
 import ExpandableRowComponentTraining from '../Approvers/ExpandableRowComponentTraining'
 import { ACTIVITY_UPDATE_CREATE_RESET } from '../../constants/SE/seActivityUpdateConstants'
+import UpdateInventoryModal from '../../modals/SE/UpdateInventoryModal'
 
 
 const MyScheduleScreen = () => {
@@ -63,7 +64,7 @@ const MyScheduleScreen = () => {
     const { userInfo } = userLogin
     // Calendar Schedule Details
     const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-    const { calendar:calendarScheduleDetail } = calendarScheduleDetails
+    const { calendar:calendarScheduleDetail, art_id } = calendarScheduleDetails
     // Datatables
     const [pending, setPending] = useState(true)
     const [rows, setRows] = useState([])
@@ -291,6 +292,13 @@ const MyScheduleScreen = () => {
                         show={show2}
                         artid={artid}
                         setShow2={setShow2} // 
+                    />
+
+                    <UpdateInventoryModal
+                        showInventory={showInventory}
+                        calendarScheduleDetails={calendarScheduleDetail}
+                        setShowInventory={setShowInventory}
+                        onHide={() => setShowInventory(false)}
                     />
 
                     <ToastContainer
