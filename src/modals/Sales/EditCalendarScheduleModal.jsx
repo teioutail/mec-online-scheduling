@@ -35,6 +35,7 @@ const EditCalendarScheduleModal = (props) => {
     artid, calendarScheduleDetails, size,
     notify, setShow2, setShowInventory
   } = props
+
   // Redux
   const dispatch = useDispatch()
   // setState

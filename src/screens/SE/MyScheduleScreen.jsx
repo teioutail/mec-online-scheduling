@@ -26,6 +26,7 @@ import {
 } from '../../actions/Sales/salesCalendarScheduleAction'
 import ExpandableRowComponent from '../Approvers/ExpandableRowComponent'
 import ExpandableRowComponentTraining from '../Approvers/ExpandableRowComponentTraining'
+import { ACTIVITY_UPDATE_CREATE_RESET } from '../../constants/SE/seActivityUpdateConstants'
 
 
 const MyScheduleScreen = () => {
@@ -54,6 +55,9 @@ const MyScheduleScreen = () => {
     // Approver Activity Update
     const approverActivityUpdate = useSelector(state => state.approverActivityUpdate)
     const { error:errorUpdate } = approverActivityUpdate
+    // SE Activity Update Error
+    const seActivityUpdateCreate = useSelector(state => state.seActivityUpdateCreate)
+    const { error:seActivityUpdateCreateError } = seActivityUpdateCreate
     // User Login Info
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -67,7 +71,8 @@ const MyScheduleScreen = () => {
     const [show, setShow] = useState(false)
     // UpdateRequestModal
     const [show2, setShow2] = useState(false) 
-
+    // UpdateInventoryModal
+    const [showInventory, setShowInventory] = useState(false)
     // Modal State
     const handleClose = () => setShow(false)
     // const handleShow = () => setShow(true)
@@ -200,7 +205,22 @@ const MyScheduleScreen = () => {
             //
             dispatch({ type: ACTIVITY_FOR_APPROVER_UPDATE_RESET })
         }
-    }, [errorUpdate])
+
+        // Show Activity Update Error
+        if(seActivityUpdateCreateError) {
+            // Loop Error Back-End Validation
+            for(const key in seActivityUpdateCreateError) {
+                if (seActivityUpdateCreateError.hasOwnProperty(key)) {
+                    // Show Error
+                    notify(`${seActivityUpdateCreateError[key]}`)
+                }
+            }
+            //
+            dispatch({ type: ACTIVITY_UPDATE_CREATE_RESET })
+        }
+    }, [errorUpdate,
+        seActivityUpdateCreateError,
+    ])
 
     // Set Row Value
     useEffect(() => {
@@ -259,10 +279,12 @@ const MyScheduleScreen = () => {
                         size="lg"
                         show={show} 
                         setShow2={setShow2} // 
+                        setShowInventory={setShowInventory} // 
                         onHide={handleClose} 
                         artid={artid}
                         mode="Edit"
                         calendarScheduleDetails={calendarScheduleDetail}
+                        notify={notify}
                     />
 
                     <UpdateRequestModal 
