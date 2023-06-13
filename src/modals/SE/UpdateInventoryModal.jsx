@@ -32,7 +32,6 @@ const UpdateInventoryModal = (props) => {
   const [rows, setRows] = useState([])
   // Selected Data
   const [selectedData, setSelectedData] = React.useState();
-
   // Schedule Reference Create Success Message
   const motherFolderInventoryCreate = useSelector(state => state.motherFolderInventoryCreate)
   const { success:motherFolderInventoryCreateSuccess, message:motherFolderInventoryCreateMessage } = motherFolderInventoryCreate
@@ -44,8 +43,9 @@ const UpdateInventoryModal = (props) => {
   const { loading, inventory } = motherFolderInventoryList
   // Calendar Schedule Details
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
-  const { calendar: { ar_id, art_id } } = calendarScheduleDetails
+  const { calendar: { ar_id, art_id, activity_updates } } = calendarScheduleDetails
 
+//   console.warn(activity_updates)
   // CommonJS
   const Swal = require('sweetalert2')
   // Columns
@@ -96,11 +96,19 @@ const UpdateInventoryModal = (props) => {
      */
     const handleSubmit = () => {
         // 
+        if(activity_updates === 0) {
+            alert("testing lang muna.");
+
+            return
+        }
+
+        // 
         const data = {
             device: selectedData,
             art_id: art_id,
         }
-        console.warn(data)
+
+        // console.warn(data)
         if(selectedData) {
             Swal.fire({
                 title: 'Are you sure?',
