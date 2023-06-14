@@ -215,7 +215,7 @@ const SubMenuCategoryScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="z-3 float-end" onClick={handleMenuCategoryView}>
+                    <Button variant="btn bg-gradient-info" size="sm" className="z-3 float-end" onClick={handleMenuCategoryView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

@@ -161,7 +161,7 @@ const RoleAccessModal = (props) => {
             </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="btn bg-gradient-secondary" onClick={onHide}>
               Close
           </Button>
         </Modal.Footer>

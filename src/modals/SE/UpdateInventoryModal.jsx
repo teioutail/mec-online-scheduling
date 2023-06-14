@@ -23,7 +23,8 @@ import { Link } from 'react-router-dom'
 const UpdateInventoryModal = (props) => {
   //
   const { 
-    onHide, showInventory, setShowInventory,
+    onHide, showInventory, 
+    setShowInventory,notify,
   } = props
   // Redux
   const dispatch = useDispatch()
@@ -45,7 +46,8 @@ const UpdateInventoryModal = (props) => {
   const calendarScheduleDetails = useSelector(state => state.calendarScheduleDetails)
   const { calendar: { ar_id, art_id, activity_updates } } = calendarScheduleDetails
 
-//   console.warn(activity_updates)
+  //   console.warn(activity_updates)
+
   // CommonJS
   const Swal = require('sweetalert2')
   // Columns
@@ -97,17 +99,14 @@ const UpdateInventoryModal = (props) => {
     const handleSubmit = () => {
         // 
         if(activity_updates === 0) {
-            alert("testing lang muna.");
-
+           notify('Please complete the `Update Inventory Request.` to proceed.')
             return
         }
-
         // 
         const data = {
             device: selectedData,
             art_id: art_id,
         }
-
         // console.warn(data)
         if(selectedData) {
             Swal.fire({

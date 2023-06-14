@@ -340,7 +340,7 @@ const UpdateRequestModal = (props) => {
             Close
           </Button>
 
-          { ! ['Completed'].includes(status) && <Button variant="btn bg-gradient-primary" onClick={handleSubmit}>Update</Button> }
+          { ! ['Completed'].includes(status) && <Button variant="btn bg-gradient-info btn-sm" onClick={handleSubmit}>Update</Button> }
 
         </Modal.Footer>
       </Modal>

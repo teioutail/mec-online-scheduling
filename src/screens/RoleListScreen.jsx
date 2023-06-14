@@ -278,7 +278,7 @@ const RoleListScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleRoleView}>
+                    <Button variant="btn bg-gradient-info" size="sm" className="float-end" onClick={handleRoleView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

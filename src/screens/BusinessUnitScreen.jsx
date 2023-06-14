@@ -228,7 +228,7 @@ const BusinessUnitScreen = () => {
             {/* <SideMenu /> */}
             <FormContainer>
                 <Header headerTitle={headerTitle} />
-                    <Button variant="primary" size="sm" className="float-end" onClick={handleBusinessUnitView}>
+                    <Button variant="btn bg-gradient-info" size="sm" className="float-end" onClick={handleBusinessUnitView}>
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add New
                     </Button>
 

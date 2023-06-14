@@ -293,7 +293,7 @@ const UserListScreen = () => {
         {/* <SideMenu /> */}
         <FormContainer>
           <Header headerTitle={headerTitle} />
-            <Button variant="primary" size="sm" className="float-end" onClick={handleAddUserView}>
+            <Button variant="btn bg-gradient-info" size="sm" className="float-end" onClick={handleAddUserView}>
                 <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
             

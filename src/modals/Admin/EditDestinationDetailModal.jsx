@@ -118,10 +118,10 @@ const EditDestinationDetailModal = ({ show , mode, onHide, ddid, destinationDeta
             }
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+        <Button variant="btn bg-gradient-secondary" onClick={onHide}>
             Close
         </Button>
-        <Button variant="primary" onClick={handleSubmit} >
+        <Button variant="btn bg-gradient-info" onClick={handleSubmit} >
             Save Changes
         </Button>
         </Modal.Footer>

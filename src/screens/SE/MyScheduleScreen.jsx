@@ -292,6 +292,7 @@ const MyScheduleScreen = () => {
                         show={show2}
                         artid={artid}
                         setShow2={setShow2} // 
+                        onHide={handleClose}
                     />
 
                     <UpdateInventoryModal
