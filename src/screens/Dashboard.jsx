@@ -14,7 +14,7 @@ const Dashboard = () => {
       {/* <SideMenu /> */}
       <FormContainer>
         <Header headerTitle={headerTitle} />
-          <Content />
+          {/* <Content /> */}
         <Footer />
       </FormContainer>
   </>

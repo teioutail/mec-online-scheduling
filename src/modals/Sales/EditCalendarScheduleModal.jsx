@@ -1008,7 +1008,6 @@ const EditCalendarScheduleModal = (props) => {
                   }
                 </> }
                 <Button size='sm' variant="btn bg-gradient-secondary" onClick={onHide}>
-                  <FontAwesomeIcon icon={['fas', 'xmark']} className="text-light text-lg opacity-10" aria-hidden="true"/>
                   &nbsp;Close
                 </Button>
               </ButtonGroup> 

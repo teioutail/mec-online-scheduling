@@ -13,6 +13,7 @@ const HomeScreen = () => {
         <FormContainer>
           <Header />
             {/* Home Page Content Here */}
+            <h3>Welcome to MEC Online Scheduling</h3>
           <Footer />
         </FormContainer>
     </>
