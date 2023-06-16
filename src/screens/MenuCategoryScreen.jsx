@@ -33,7 +33,6 @@ const MenuCategoryScreen = () => {
     const headerTitle = 'Menu Categories'
     // Redux
     const dispatch = useDispatch()
-
     // useNavigate to redirect the user
     const navigate = useNavigate() 
 
