@@ -79,7 +79,7 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // Register Action
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (name, email, password, password_confirmation) => async (dispatch) => {
     // console.warn(name, email , password) 
     try {
         
@@ -97,7 +97,7 @@ export const register = (name, email, password) => async (dispatch) => {
         // Call API Request
         const { data } = await axios.post(
             '/auth/register',
-            { name, email, password },
+            { name, email, password, password_confirmation },
             config
         )
 
@@ -119,10 +119,7 @@ export const register = (name, email, password) => async (dispatch) => {
         //
         dispatch({
             type: USER_REGISTER_FAIL,
-            payload: 
-            error.response && error.response.data.message 
-            ? error.response.data.message 
-            : error.message,
+            payload: error.response.data.errors,
         })
     }
 }

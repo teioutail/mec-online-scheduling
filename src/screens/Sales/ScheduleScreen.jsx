@@ -234,6 +234,7 @@ const ScheduleScreen = () => {
     useEffect(() => {
         // Show Create Error
         if(errorCreate) {
+
             // Loop Error Back-End Validation
             for(const key in errorCreate) {
                 if (errorCreate.hasOwnProperty(key)) {

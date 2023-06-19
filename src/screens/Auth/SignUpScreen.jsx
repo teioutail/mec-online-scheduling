@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../../components/Loader'
-import Message from '../../components/Message'
 import { register } from '../../actions/userActions'
+import { ToastContainer, toast } from 'react-toastify';
+import LoaderFullScreen from '../../components/LoaderFullScreen'
+import { USER_REGISTER_RESET } from '../../constants/userConstants'
 
 const SignUpScreen = () => {
-  //
+
+  // Toastify
+  const notify = (msg) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
+  // Email
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [password_confirmation, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
   //
   const dispatch = useDispatch()
 
   // Get Details
-  const userRegister = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userRegister
-  // const { loading, error, userInfo } = userRegister
+  const userRegister = useSelector((state) => state.userRegister)
+  const { loading , error } = userRegister
+
+  // User Login Info
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
 
   // Search 
   const [searchParams] = useSearchParams()
@@ -30,27 +47,57 @@ const SignUpScreen = () => {
 
   //
   useEffect(() => {
-    //
+
+    // Show Create Error
+    if(error) {
+      // Loop Error Back-End Validation
+      for(const key in error) {
+          if (error.hasOwnProperty(key)) {
+              // Show Error
+              notify(`${error[key]}`)
+          }
+      }
+      //
+      dispatch({ type: USER_REGISTER_RESET })
+    }
+
     if(userInfo) {
+      // redirect user to home page if already logged-in
       navigate('/home')
     }
-  }, [navigate, userInfo, password])
+
+  }, [navigate, error])
   
   //
   const submitHandler = (e) => {
     e.preventDefault()
 
-    if(password !== confirmPassword)
-      setMessage('Passwords do not match')
-    else
-      dispatch(register(name, email, password))
+    // if(password !== confirmPassword)
+    //   setMessage('Passwords do not match')
+    // else
+      dispatch(register(name, email, password, password_confirmation))
   } 
 
   return (
     <>
-      {message && <Message variant='danger'>{message}</Message>}
+      {/* {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
+      {loading && <Loader />} */}
+
+      {<ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />}
+
+    { loading && <LoaderFullScreen /> }
 
       <main className="main-content  mt-0">
         <section className="min-vh-100 mb-8">
@@ -59,8 +106,8 @@ const SignUpScreen = () => {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-5 text-center mx-auto">
-                  <h1 className="text-white mb-2 mt-5">Welcome!</h1>
-                  <p className="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+                  <h1 className="text-white mb-2 mt-5">Welcome to MEC Online Scheduling!</h1>
+                  {/* <p className="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p> */}
                 </div>
               </div>
             </div>
@@ -70,6 +117,7 @@ const SignUpScreen = () => {
               <div className="col-xl-4 col-lg-5 col-md-7 mx-auto">
                 <div className="card z-index-0">
                   <div className="card-header text-center pt-4">
+                    
                     <h5>Online Scheduling System</h5>
                   </div>
                   <div className="card-body">

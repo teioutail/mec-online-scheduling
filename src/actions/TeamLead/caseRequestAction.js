@@ -31,8 +31,6 @@ export const listCases = () => async (dispatch, getState) => {
             payload: data,
         })
 
-        console.warn(data)
-
     } catch (error) {
         //
         dispatch({

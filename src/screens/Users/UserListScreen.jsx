@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Header from '../../components/template/Header'
 import Footer from '../../components/template/Footer'
-import SideMenu from '../../components/template/SideMenu'
 import FormContainer from '../../components/template/FormContainer'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -214,11 +213,11 @@ const UserListScreen = () => {
                                         <FontAwesomeIcon icon={faUserPen} /> Edit User
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link className="dropdown-item" onClick={handleButtonClick} id={row.id}>
                                         <FontAwesomeIcon icon={faUniversalAccess} /> Access Rights
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Link className="dropdown-item" onClick={handleResetPassword} id={row.id}>
                                         <FontAwesomeIcon icon={faUnlock} /> Reset Password

@@ -192,6 +192,12 @@ const CalendarScheduleScreen = () => {
 
     //
     useEffect(() => {
+        // Check if user is admin else, Redirect user
+        if( ! userInfo) {
+            // Redirect to login page
+            navigate('/signin')
+        } 
+
         // Validate User Login Access
         if(userInfo.mainmenu.find(x => x.url === window.location.pathname)) {
             // Get List of Calendar Schedule
