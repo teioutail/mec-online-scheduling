@@ -74,7 +74,6 @@ const SignInScreen = () => {
         theme="light"
       />}
 
-    {/* {error && <Message variant='danger'>{error}</Message>} */}
     { loading && <LoaderFullScreen /> }
 
       <main className="main-content  mt-0">
