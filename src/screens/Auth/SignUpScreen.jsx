@@ -26,6 +26,11 @@ const SignUpScreen = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [password_confirmation, setConfirmPassword] = useState('')
+  // New
+  const [manage_team , setManageTeam] = useState('')
+  const [reporting_team , setReportingTeam] = useState('')
+  const [designation, setDesignation] = useState('')
+
   //
   const dispatch = useDispatch()
 
@@ -36,9 +41,6 @@ const SignUpScreen = () => {
   // User Login Info
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
-  // Search 
-  const [searchParams] = useSearchParams()
   
   // useNavigate to redirect the user
   const navigate = useNavigate()
@@ -70,7 +72,15 @@ const SignUpScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     // Register User
-    dispatch(register(name, email, password, password_confirmation))
+    dispatch(register(
+        name, 
+        email, 
+        password, 
+        password_confirmation,
+        manage_team,
+        reporting_team,
+        designation,
+    ))
   } 
 
   return (
@@ -170,6 +180,56 @@ const SignUpScreen = () => {
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                       </div>
+
+                      <div className="mb-3">
+                       <label>Manage Team</label>
+                        <select 
+                          class="form-select" 
+                          aria-label="Manage Team"
+                          onChange={(e) => setManageTeam(e.target.value)}
+                          >
+                        <option value="">- Select -</option>
+                        <option value="1">Pre-Sales</option>
+                        <option value="2">Post-Sales</option>
+                        </select>
+                      </div>
+
+                      <div className="mb-3">
+                       <label>Reporting Team</label>
+                        <select 
+                          class="form-select" 
+                          aria-label="Reporting Team"
+                          onChange={(e) => setReportingTeam(e.target.value)}
+                        >
+                        <option value="">- Select -</option>
+                        <option value="1">Pre-Sales</option>
+                        <option value="2">Post-Sales</option>
+                        </select>
+                      </div>
+
+                      <div className="mb-3">
+                       <label>Designation</label>
+                        <select 
+                          class="form-select" 
+                          aria-label="Designation"
+                          onChange={(e) => setDesignation(e.target.value)}
+                        >
+                        <option value="">- Select -</option>
+                        <option value="1">Sales</option>
+                        <option value="2">Teamlead</option>
+                        <option value="3">Supervisor</option>
+                        <option value="5">System Engineer</option>
+                        <option value="7">Pre-Sales Approver</option>
+                        <option value="8">Post-Sales Approver</option>
+                        <option value="9">Super-Approver</option>
+                        <option value="10">Custodian</option>
+                        <option value="11">Training Approver</option>
+                        <option value="12">TCC</option>
+                        <option value="13">RMA</option>
+                        <option value="14">Project Lead</option>
+                        </select>
+                      </div>
+
                       <div className="form-check form-check-info text-left">
                         <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                         <label className="form-check-label" for="flexCheckDefault">

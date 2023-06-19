@@ -79,7 +79,15 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // Register Action
-export const register = (name, email, password, password_confirmation) => async (dispatch) => {
+export const register = (
+        name, 
+        email, 
+        password, 
+        password_confirmation,
+        manage_team,
+        reporting_team,
+        designation
+    ) => async (dispatch) => {
     // console.warn(name, email , password) 
     try {
         
@@ -97,7 +105,15 @@ export const register = (name, email, password, password_confirmation) => async 
         // Call API Request
         const { data } = await axios.post(
             '/auth/register',
-            { name, email, password, password_confirmation },
+            { // Fields
+                name, 
+                email, 
+                password, 
+                password_confirmation, 
+                manage_team, 
+                reporting_team, 
+                designation,
+            },
             config
         )
 

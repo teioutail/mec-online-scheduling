@@ -69,8 +69,8 @@ const SideMenu = () => {
             <hr className="horizontal dark mt-0" />
             <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul className="navbar-nav">
-            {
-                mainmenu.length > 0  && (
+            { mainmenu && <>
+                { mainmenu.length > 0  && (
                     // Map
                     mainmenu.map((row, key) => (
                         <li className="nav-item" key={key}>
@@ -115,6 +115,8 @@ const SideMenu = () => {
                         </li>
                     ))
                 )
+                }
+            </> 
             }
             </ul>
             </div>
