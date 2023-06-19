@@ -114,7 +114,6 @@ export const register = (name, email, password, password_confirmation) => async 
         // Save in local storage
         localStorage.setItem('userInfo', JSON.stringify(data))
 
-
     } catch(error) {
         //
         dispatch({

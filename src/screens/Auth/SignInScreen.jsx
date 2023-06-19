@@ -7,9 +7,11 @@ import Message from '../../components/Message'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoaderFullScreen from '../../components/LoaderFullScreen'
+import { USER_LOGIN_RESET } from '../../constants/userConstants'
 
 // 
 const SignInScreen = () => {
+  
   // Toastify
   const notify = (msg) => toast.error(msg, {
     position: "top-right",
@@ -44,6 +46,11 @@ const SignInScreen = () => {
   useEffect(() => {
     // Show Login Error
     notify(error)
+
+    if(error) {
+      //
+      dispatch({ type: USER_LOGIN_RESET })  
+    }
 
     if(userInfo) {
       // redirect user to home page if already logged-in
@@ -143,50 +150,11 @@ const SignInScreen = () => {
     <footer className="footer py-5">
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 mb-4 mx-auto text-center">
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Company
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              About Us
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Team
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Products
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Blog
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Pricing
-            </a>
-          </div>
-          <div className="col-lg-8 mx-auto text-center mb-4 mt-2">
-            <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-              <span className="text-lg fab fa-dribbble"></span>
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-              <span className="text-lg fab fa-twitter"></span>
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-              <span className="text-lg fab fa-instagram"></span>
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-              <span className="text-lg fab fa-pinterest"></span>
-            </a>
-            <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-              <span className="text-lg fab fa-github"></span>
-            </a>
-          </div>
-        </div>
-        <div className="row">
           <div className="col-8 mx-auto text-center mt-1">
             <p className="mb-0 text-secondary">
               Copyright © <script>
                 document.write(new Date().getFullYear())
-              </script> Soft by Creative Tim.
+              </script> MEC Network Corporation - TPO Systems.
             </p>
           </div>
         </div>

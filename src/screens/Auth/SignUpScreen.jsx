@@ -26,7 +26,6 @@ const SignUpScreen = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [password_confirmation, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState(null)
   //
   const dispatch = useDispatch()
 
@@ -40,8 +39,7 @@ const SignUpScreen = () => {
 
   // Search 
   const [searchParams] = useSearchParams()
-  const redirect = searchParams ? searchParams.get('=') : '/'
-
+  
   // useNavigate to redirect the user
   const navigate = useNavigate()
 
@@ -53,8 +51,8 @@ const SignUpScreen = () => {
       // Loop Error Back-End Validation
       for(const key in error) {
           if (error.hasOwnProperty(key)) {
-              // Show Error
-              notify(`${error[key]}`)
+            // Show Error
+            notify(`${error[key]}`)
           }
       }
       //
@@ -66,16 +64,13 @@ const SignUpScreen = () => {
       navigate('/home')
     }
 
-  }, [navigate, error])
+  }, [navigate, error , userInfo])
   
   //
   const submitHandler = (e) => {
     e.preventDefault()
-
-    // if(password !== confirmPassword)
-    //   setMessage('Passwords do not match')
-    // else
-      dispatch(register(name, email, password, password_confirmation))
+    // Register User
+    dispatch(register(name, email, password, password_confirmation))
   } 
 
   return (
@@ -106,7 +101,7 @@ const SignUpScreen = () => {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-5 text-center mx-auto">
-                  <h1 className="text-white mb-2 mt-5">Welcome to MEC Online Scheduling!</h1>
+                  <h1 className="text-white mb-2 mt-5">Welcome to MEC Online Scheduling</h1>
                   {/* <p className="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p> */}
                 </div>
               </div>
@@ -200,50 +195,11 @@ const SignUpScreen = () => {
         <footer className="footer py-5">
           <div className="container">
             <div className="row">
-              <div className="col-lg-8 mb-4 mx-auto text-center">
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  Company
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  About Us
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  Team
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  Products
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  Blog
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                  Pricing
-                </a>
-              </div>
-              <div className="col-lg-8 mx-auto text-center mb-4 mt-2">
-                <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-                  <span className="text-lg fab fa-dribbble"></span>
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-                  <span className="text-lg fab fa-twitter"></span>
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-                  <span className="text-lg fab fa-instagram"></span>
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-                  <span className="text-lg fab fa-pinterest"></span>
-                </a>
-                <a href="#" target="_blank" className="text-secondary me-xl-4 me-4">
-                  <span className="text-lg fab fa-github"></span>
-                </a>
-              </div>
-            </div>
-            <div className="row">
               <div className="col-8 mx-auto text-center mt-1">
                 <p className="mb-0 text-secondary">
                   Copyright © <script>
                     document.write(new Date().getFullYear())
-                  </script> Soft by Creative Tim.
+                  </script> MEC Network Corporation - TPO Systems.
                 </p>
               </div>
             </div>

@@ -33,6 +33,7 @@ import {
     USER_EMAIL_LIST_FAIL,
     USER_EMAIL_LIST_RESET,
     USER_REGISTER_RESET,
+    USER_LOGIN_RESET,
 } from '../constants/userConstants'
  
 // USER LOGIN REDUCER 
@@ -45,6 +46,8 @@ export const userLoginReducer = (state= {}, action) => {
         case USER_LOGIN_FAIL:
             return { loading: false, error: action.payload }
         case USER_LOGOUT:
+            return {}
+        case USER_LOGIN_RESET:
             return {}
         default: 
             return state
