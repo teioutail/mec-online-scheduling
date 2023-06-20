@@ -47,6 +47,10 @@ const SignUpScreen = () => {
 
   //
   useEffect(() => {
+    //
+    // if() {
+
+    // }
 
     // Show Create Error
     if(error) {

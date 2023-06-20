@@ -2,13 +2,10 @@ import React, { useState, useEffect} from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../actions/userActions'
-import Loader from '../../components/Loader'
-import Message from '../../components/Message'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoaderFullScreen from '../../components/LoaderFullScreen'
 import { USER_LOGIN_RESET } from '../../constants/userConstants'
-
 // 
 const SignInScreen = () => {
   
@@ -32,13 +29,18 @@ const SignInScreen = () => {
   // Get Details
   const userLogin = useSelector((state) => state.userLogin)
   // 
-  const { loading, error, userInfo } = userLogin
+  const { loading, error, userInfo} = userLogin
+
+  // const { user: { approved } } = userInfo
+  // console.warn(approved)
+  
   // useNavigate to redirect the user
   const navigate = useNavigate()
   // 
   const submitHandler = (e) => {
     e.preventDefault()
-    // 
+
+    // Login 
     dispatch(login(email, password))
   }
 
@@ -54,7 +56,11 @@ const SignInScreen = () => {
 
     if(userInfo) {
       // redirect user to home page if already logged-in
-      navigate('/home')
+      if(userInfo.user.verified === 1) {
+        navigate('/home')
+      } else {
+        navigate('/verify')
+      }
     }
     
   }, [userInfo, navigate, error])

@@ -54,9 +54,11 @@ const SideMenu = () => {
     document.body.appendChild(script);
 
   },[])
-  
-  if(!userInfo) return <></>
 
+  // 
+  if( ! userInfo ) return <></>
+  if( userInfo.user.verified === 0 ) return <></>
+  
   return (
     <>
         <aside className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -117,6 +119,7 @@ const SideMenu = () => {
                 )
                 }
             </> 
+
             }
             </ul>
             </div>

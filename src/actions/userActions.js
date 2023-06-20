@@ -88,7 +88,7 @@ export const register = (
         reporting_team,
         designation
     ) => async (dispatch) => {
-    // console.warn(name, email , password) 
+
     try {
         
         dispatch({

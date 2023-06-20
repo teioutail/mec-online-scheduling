@@ -24,6 +24,7 @@ import ApproverAllRequestScreen from './screens/Approvers/ApproverAllRequestScre
 import CasesScreen from './screens/TeamLead/CasesScreen'
 import MyScheduleScreen from './screens/SE/MyScheduleScreen'
 import MyTrainingScreen from './screens/SE/MyTrainingScreen'
+import VerifyEmail from './screens/Auth/VerifyEmail'
 import './App.css'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -31,6 +32,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import ApproverAllApprovedScreen from './screens/Approvers/ApproverAllApprovedScreen'
 import SideMenu from './components/template/SideMenu'
+import RequestVerification from './screens/Auth/RequestVerification'
 
 // This exports the whole icon packs for Brand and Solid.
 library.add(fas)
@@ -51,6 +53,8 @@ function App() {
           <Route path='/home' element={<HomeScreen/>} />
           <Route path='/signin' element={<SignInScreen/>} />
           <Route path='/signup' element={<SignUpScreen/>} />
+          <Route path='/verify' element={<VerifyEmail />} />
+          <Route path='/request' element={<RequestVerification />} />
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/user-list' element={<UserListScreen/>} />
           <Route path='/role-list' element={<RoleListScreen/>} />
