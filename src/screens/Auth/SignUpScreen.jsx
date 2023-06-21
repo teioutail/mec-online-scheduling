@@ -47,11 +47,6 @@ const SignUpScreen = () => {
 
   //
   useEffect(() => {
-    //
-    // if() {
-
-    // }
-
     // Show Create Error
     if(error) {
       // Loop Error Back-End Validation
@@ -233,14 +228,6 @@ const SignUpScreen = () => {
                         <option value="13">RMA</option>
                         <option value="14">Project Lead</option>
                         </select>
-                      </div>
-
-                      <div className="form-check form-check-info text-left">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" for="flexCheckDefault">
-                          I agree the 
-                          <a href="#" className="text-dark font-weight-bolder">Terms and Conditions</a>
-                        </label>
                       </div>
                       <div className="text-center">
                         <button 

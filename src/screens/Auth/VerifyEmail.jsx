@@ -26,7 +26,7 @@ const VerifyEmail = () => {
 
   return (
     <div>
-        Your account is not yet verified. Please check your email for a verification link. If your email is already verified, Please contact administrator. 
+        Please check your email for a verification link. If your email is already verified, Please contact administrator. 
         <Link to="/request" className="text-info text-gradient font-weight-bold"> Click here to request another.</Link>
     </div>
   )
