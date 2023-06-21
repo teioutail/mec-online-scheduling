@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../actions/userActions'
 import { ToastContainer, toast } from 'react-toastify';
@@ -84,6 +84,7 @@ const SignUpScreen = () => {
         manage_team,
         reporting_team,
         designation,
+        username,
     ))
   } 
 

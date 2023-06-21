@@ -54,15 +54,16 @@ const SignInScreen = () => {
       dispatch({ type: USER_LOGIN_RESET })  
     }
 
+    // 
     if(userInfo) {
-      // redirect user to home page if already logged-in
-      if(userInfo.user.verified === 1) {
+      // Redirect user to home page if Already Logged-in
+      if(userInfo.user.verified === 1 && userInfo.user.approved === 1) {
         navigate('/home')
       } else {
         navigate('/verify')
       }
     }
-    
+
   }, [userInfo, navigate, error])
 
   return (

@@ -57,7 +57,7 @@ const SideMenu = () => {
 
   // 
   if( ! userInfo ) return <></>
-  if( userInfo.user.verified === 0 ) return <></>
+  if( userInfo.user.verified === 0 || userInfo.user.approved === 0 ) return <></>
   
   return (
     <>

@@ -33,6 +33,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import ApproverAllApprovedScreen from './screens/Approvers/ApproverAllApprovedScreen'
 import SideMenu from './components/template/SideMenu'
 import RequestVerification from './screens/Auth/RequestVerification'
+import AccountVerified from './screens/Auth/AccountVerified'
 
 // This exports the whole icon packs for Brand and Solid.
 library.add(fas)
@@ -54,7 +55,8 @@ function App() {
           <Route path='/signin' element={<SignInScreen/>} />
           <Route path='/signup' element={<SignUpScreen/>} />
           <Route path='/verify' element={<VerifyEmail />} />
-          <Route path='/request' element={<RequestVerification />} />
+          <Route path='/account-verified/:email/:token' element={<AccountVerified />} />
+          {/* <Route path='/request' element={<RequestVerification />} /> */}
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/user-list' element={<UserListScreen/>} />
           <Route path='/role-list' element={<RoleListScreen/>} />

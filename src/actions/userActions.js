@@ -86,7 +86,8 @@ export const register = (
         password_confirmation,
         manage_team,
         reporting_team,
-        designation
+        designation,
+        username
     ) => async (dispatch) => {
 
     try {
@@ -101,18 +102,18 @@ export const register = (
                 'Content-Type' : 'application/json'
             }
         }
-
         // Call API Request
         const { data } = await axios.post(
             '/auth/register',
             { // Fields
-                name, 
-                email, 
-                password, 
-                password_confirmation, 
-                manage_team, 
-                reporting_team, 
+                name,
+                email,
+                password,
+                password_confirmation,
+                manage_team,
+                reporting_team,
                 designation,
+                username
             },
             config
         )
@@ -129,6 +130,12 @@ export const register = (
 
         // Save in local storage
         localStorage.setItem('userInfo', JSON.stringify(data))
+        
+        // Remove userInfo
+        document.location.href = '/verify'
+        localStorage.removeItem('userInfo')
+        // Clear Local Storage Data
+        dispatch({ type: USER_LOGOUT })
 
     } catch(error) {
         //
@@ -395,6 +402,15 @@ export const deleteUser = (id) => async(dispatch, getState) => {
             : error.message,
         })
     }
+}
+
+// User Account Verification 
+export const verify = (email, token) => async(dispatch, getState) => {
+    //
+    const { userLogin: { userInfo } } = getState()
+    // Call API Request
+    const { data } = await axios.post(`/auth/verify/`,{email, token})
+    console.warn(data)
 }
 
 // Logout Action
