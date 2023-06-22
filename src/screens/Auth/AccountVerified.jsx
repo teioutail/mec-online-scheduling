@@ -16,10 +16,10 @@ const AccountVerified = () => {
   })
   
   return (
-        <div>
-            Your email address has been verified. Please contact administrator for activation. 
-            <Link to="/signin" className="text-info text-gradient font-weight-bold">Go back to Sign-in page.</Link>
-        </div>
+    <div>
+        Your email address has been verified. Please contact administrator for activation. 
+        <Link to="/signin" className="text-info text-gradient font-weight-bold">Go back</Link> to Sign-in page.
+    </div>
   )
 
 }

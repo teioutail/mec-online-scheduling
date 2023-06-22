@@ -15,6 +15,7 @@ const VerifyEmail = () => {
 
   // 
   useEffect(() => {
+    
     // 
     if(userInfo) {
         setEmail(userInfo.user.email)
@@ -26,8 +27,8 @@ const VerifyEmail = () => {
 
   return (
     <div>
-        Please check your email for a verification link. If your email is already verified, Please contact administrator. 
-        <Link to="/request" className="text-info text-gradient font-weight-bold"> Click here to request another.</Link>
+      Please check your email for a verification link. If your email is already verified, Please contact administrator or 
+      <Link to="/request" className="text-info text-gradient font-weight-bold"> Click here </Link> to request for another verification.
     </div>
   )
 

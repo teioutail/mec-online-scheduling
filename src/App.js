@@ -56,7 +56,7 @@ function App() {
           <Route path='/signup' element={<SignUpScreen/>} />
           <Route path='/verify' element={<VerifyEmail />} />
           <Route path='/account-verified/:email/:token' element={<AccountVerified />} />
-          {/* <Route path='/request' element={<RequestVerification />} /> */}
+          <Route path='/request' element={<RequestVerification />} />
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/user-list' element={<UserListScreen/>} />
           <Route path='/role-list' element={<RoleListScreen/>} />
