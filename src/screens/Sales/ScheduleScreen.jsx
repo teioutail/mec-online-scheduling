@@ -213,11 +213,14 @@ const ScheduleScreen = () => {
                                       <FontAwesomeIcon icon={['fas', 'eye']} /> View Inventory
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
-                                      <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
-                                    </Link>
-                                </li>
+                                {userInfo.user_role === 'Admin' && <>
+                                    <li>
+                                        <Link className="dropdown-item" onClick={handleDeleteScheduleReference} id={row.ar_id}>
+                                        <FontAwesomeIcon icon={['fas', 'trash']} /> Delete Schedule
+                                        </Link>
+                                    </li>
+                                </>
+                                }
                             </ul>
                         </div>
                     </>
@@ -274,7 +277,6 @@ const ScheduleScreen = () => {
 
         // Show Bulk Upload Error
         if(motherFolderInventoryBulkCreateError) {
-            alert("adsf");
             // Loop Error Back-End Validation
             for(const key in motherFolderInventoryBulkCreateError) {
                 if (motherFolderInventoryBulkCreateError.hasOwnProperty(key)) {

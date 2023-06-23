@@ -118,14 +118,9 @@ const SignInScreen = () => {
                               aria-describedby="password-addon" 
                             />
                           </div>
-                          <div className="form-check form-switch">
-                            <input 
-                              className="form-check-input" 
-                              type="checkbox" 
-                              id="rememberMe" 
-                            />
+                          <div>
                             <label 
-                              className="form-check-label" 
+                              className="" 
                               >Remember me
                             </label>
                           </div>
