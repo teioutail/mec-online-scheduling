@@ -404,14 +404,38 @@ export const deleteUser = (id) => async(dispatch, getState) => {
     }
 }
 
-// User Account Verification 
-export const verify = (email, token) => async(dispatch, getState) => {
-    //
-    const { userLogin: { userInfo } } = getState()
-    // Call API Request
-    const { data } = await axios.post(`/auth/verify/`,{email, token})
-    console.warn(data)
-}
+// // User Account Verification 
+// export const verify = (email, token) => async(dispatch, getState) => {
+//     // Call API Request
+//     const { data } = await axios.post(`/auth/verify/`,{ email, token})
+//     console.warn(data)
+// }
+
+export const verify = async (email, token) => {
+    
+    try {
+
+        // Header
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        // Call API Request
+        const { data } = await axios.post(`/auth/verify/`,{ email, token}, config)
+        //
+        console.warn(data)
+
+    } catch(error) {
+        //
+        // dispatch({
+        //     type: USER_REGISTER_FAIL,
+        //     payload: error.response.data.errors,
+        // })
+        console.warn(error.response.data.errors)
+    }
+} 
 
 // Logout Action
 export const logout = () => (dispatch) => {
