@@ -148,6 +148,7 @@ const EditActivityReferenceStatus = ({ show, onHide, scheduleDetails, size, sche
                                     setCoaDate(e.target.value)
                                 }}
                             />
+                            
                             <Form.Control
                                 size='sm'
                                 type='text'

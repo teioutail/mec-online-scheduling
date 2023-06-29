@@ -24,7 +24,7 @@ const SideMenu = () => {
   // 
   useEffect(() => {
     // Get User Role
-    if(userInfo){
+    if(userInfo) {
         // console.warn(userInfo.mainmenu)
         setMainMenu(userInfo.mainmenu)
         setSubMenu(userInfo.submenu)
